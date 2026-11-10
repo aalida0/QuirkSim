@@ -30,6 +30,12 @@ for the conservative remeshing/worldsheet convergence acceptance criteria.
 Do not use these simulations as paper figures.
 
 
+**Higher-order worldsheet action validation:** [Nambu–Goto Gauss quadrature,
+13/17/21-vertex pre-contact geometric convergence PASS for one triplet
+benchmark](studies/NG_GAUSS_QUADRATURE_AUDIT_2026-11-10.md). Full physical
+string crossing, weak impulses in this gauge, radiation and annihilation
+remain **BLOCKED**. A numerical gate is not a collider prediction.
+
 **Mesh-independent first-return validation:** [common total string arclength
 convergence and remaining core-scale physics blocker](studies/NG_TOTAL_ARCLENGTH_CONVERGENCE_2026-11-10.md).
 
