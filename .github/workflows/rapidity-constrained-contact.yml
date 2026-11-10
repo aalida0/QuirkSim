@@ -1,0 +1,42 @@
+name: Zero-mass gauge plus subluminal rapidity near-core test
+on:
+  push:
+    branches: [research/variational-worldsheet]
+    paths:
+      - '.github/workflows/rapidity-constrained-contact.yml'
+      - 'scripts/rapidity_constrained_contact.py'
+      - 'tests/test_rapidity_constrained_contact.py'
+  workflow_dispatch:
+
+jobs:
+  representative:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {nodes: '11', step: '0.2'}
+          - {nodes: '15', step: '0.2'}
+          - {nodes: '21', step: '0.2'}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e '.[test]'
+      - name: Check 4ps rapidity and original-coordinate equivalence
+        run: python -m pytest -q tests/test_rapidity_constrained_contact.py
+      - name: Attempt 1000ps evolution until first length ~4 times 1/Lambda
+        run: |
+          python -u scripts/rapidity_constrained_contact.py \
+            --nodes ${{ matrix.nodes }} --max-step-ps ${{ matrix.step }} \
+            --regulator-cm 1e-12 --pinch-fraction 0.000001 \
+            --output results/rapidity_ng_n${{ matrix.nodes }}.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rapidity-ng-core-reference-n${{ matrix.nodes }}
+          path: results/rapidity_ng_n${{ matrix.nodes }}.json
+          if-no-files-found: ignore
+          retention-days: 14
