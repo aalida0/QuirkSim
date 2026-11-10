@@ -59,3 +59,31 @@ def assert_no_mesh_stop(solution):
             raise MeshQualityViolation(
                 f'worldsheet reached {name} gate at t={float(hits[0]):.9g} ps; '
                 'no physical results are valid beyond this time')
+
+
+def total_string_arclength_cm(state,nodes):
+    """Sum segment lengths irrespective of interior-label spacing.
+
+    This quantity is the physical spatial arclength of the represented
+    piecewise-linear string at a single lab time, NOT an annihilation radius.
+    """
+    pos=np.asarray(state[:3*nodes],dtype=float).reshape(nodes,3)
+    return float(np.sum(np.linalg.norm(np.diff(pos,axis=0),axis=1)))
+
+
+def make_total_arclength_stop_event(nodes,cutoff_cm):
+    """Stop contracting strings at a common TOTAL arclength.
+
+    Unlike a per-segment threshold this is directly comparable for
+    different numbers of vertices, even with imperfect gauge spacing.
+    It does not define a physical continuation through a pinch.
+    """
+    if not np.isfinite(cutoff_cm) or cutoff_cm<=0:
+        raise ValueError('total arclength cutoff must be positive and finite')
+
+    def total_arclength_pinch(_t,state):
+        return total_string_arclength_cm(state,nodes)-cutoff_cm
+
+    total_arclength_pinch.terminal=True
+    total_arclength_pinch.direction=-1
+    return total_arclength_pinch
