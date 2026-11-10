@@ -75,3 +75,53 @@ def test_invalid_radial_reference_inputs_rejected():
         ExactRadialNG(RadialNGParameters(initial_beta=0,initial_separation_cm=0))
     with pytest.raises(ValueError):
         ExactRadialNG().state(-.1)
+
+
+@pytest.mark.parametrize('t',[0.,10.,123.,217.96061652,220.03789114,250.,701.,1000.])
+def test_radial_gauge_reparametrization_preserves_physical_charges(t):
+    """Irregular interior labellings cannot change 1D string observables."""
+    s=ExactRadialNG()
+    gauges=[np.linspace(0.,1.,7),
+            np.linspace(0.,1.,7)**2,
+            np.sqrt(np.linspace(0.,1.,7)),
+            np.linspace(0.,1.,13)**3]
+    reference=s.state(t)
+    for f in gauges:
+        sl=s.gauge_slice(t,f)
+        assert sl['total_energy_gev']==pytest.approx(
+            reference['total_energy_gev'],abs=2e-10,rel=0)
+        assert sl['string_energy_gev']==pytest.approx(
+            reference['string_energy_gev'],abs=2e-10,rel=0)
+        assert sl['endpoint_momentum_gev']==0
+        assert sl['string_longitudinal_momentum_gev']==0
+        assert sl['vertex_positions_cm'][0]==pytest.approx(
+            reference['left_position_cm'])
+        assert sl['vertex_positions_cm'][-1]==pytest.approx(
+            reference['right_position_cm'])
+        assert sl['vertex_betas'][0]==pytest.approx(-reference['right_beta'])
+        assert sl['vertex_betas'][-1]==pytest.approx(reference['right_beta'])
+        assert max(map(abs,sl['vertex_betas']))<1
+
+
+def test_relabelling_can_cure_radial_mesh_condition_number_without_changing_energy():
+    s=ExactRadialNG()
+    time=217.9606165202423
+    u_bad=np.array([0.,.01,.5,.75,1.])
+    u_good=np.linspace(0,1,len(u_bad))
+    bad=s.gauge_slice(time,u_bad)
+    good=s.gauge_slice(time,u_good)
+    assert bad['max_element_ratio']>20
+    assert good['max_element_ratio']==pytest.approx(1.)
+    assert good['total_energy_gev']==pytest.approx(
+        bad['total_energy_gev'],abs=1e-10,rel=0)
+    assert s.state(time)['unsigned_separation_cm']>.05
+
+
+def test_relabel_rejects_invalid_monotone_gauges():
+    s=ExactRadialNG()
+    with pytest.raises(ValueError):
+        s.gauge_slice(10,[0,0,1])
+    with pytest.raises(ValueError):
+        s.gauge_slice(10,[0,.3,.2,1])
+    with pytest.raises(ValueError):
+        s.gauge_slice(10,[0,.5,.9])
