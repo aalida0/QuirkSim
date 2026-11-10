@@ -17,10 +17,10 @@ macroscopic string tension.
 
 Links:
 
-- https://doi.org/10.1103/PhysRevD.109.095005
-- https://arxiv.org/pdf/0805.4642
-- https://arxiv.org/pdf/2504.02940
-- https://pdg.lbl.gov/2002/accelrpp.pdf
+- [Li et al. (2024)](https://doi.org/10.1103/PhysRevD.109.095005)
+- [Kang and Luty (2009)](https://arxiv.org/pdf/0805.4642)
+- [Forsyth et al. (2025)](https://arxiv.org/pdf/2504.02940)
+- [PDG accelerator review](https://pdg.lbl.gov/2002/accelrpp.pdf)
 
 ## Normalization checks and conventions
 

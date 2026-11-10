@@ -255,12 +255,18 @@ class ConformalString:
                 return 'STOP_FLOATING_POINT_STEP'
             t, y = self.t, self.y
             caps = [self.a.next_jump(t+y[0]), self.b.next_jump(t-y[1])]
+            first_stage = self._rhs(t, y, caps)
+            trial_cache = {0.: y}
             def trial(h):
-                k1 = self._rhs(t, y, caps)
+                if h in trial_cache:
+                    return trial_cache[h]
+                k1 = first_stage
                 k2 = self._rhs(t+h/2, y+h*k1/2, caps)
                 k3 = self._rhs(t+h/2, y+h*k2/2, caps)
                 k4 = self._rhs(t+h, y+h*k3, caps)
-                return y+h*(k1+2*k2+2*k3+k4)/6
+                result = y+h*(k1+2*k2+2*k3+k4)/6
+                trial_cache[h] = result
+                return result
 
             def incident(history, z, cap):
                 near = cap is not None and z >= cap-32*np.spacing(max(1., abs(cap)))
@@ -277,7 +283,8 @@ class ConformalString:
                     def argument(dt):
                         yy = trial(dt)
                         return t+dt+(yy[0] if which == 0 else -yy[1])
-                    if cap is not None and argument(h) >= cap:
+                    end_argument = t+h+(new[0] if which == 0 else -new[1])
+                    if cap is not None and end_argument >= cap:
                         roots.append(brentq(lambda dt: argument(dt)-cap, 0., h,
                                             xtol=1e-13, rtol=1e-13))
                 if roots:

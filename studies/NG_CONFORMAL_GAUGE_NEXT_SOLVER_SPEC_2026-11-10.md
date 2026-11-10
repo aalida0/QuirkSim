@@ -4,7 +4,14 @@
 **Status:** PARTIALLY IMPLEMENTED: zero-field boundary flux and causal
 characteristic prototype, analytic radial/rotating checks and pulse refinement.
 See [implementation and remaining gates](CONFORMAL_BOUNDARY_RESULT_2026-11-10.md).
-No validated general contact continuation or physical recoil is established.
+No validated general quantum contact continuation or absolute physical
+radiation/annihilation rate is established.
+
+**Later update:** magnetic fields, local causal weak matching, explicit quantum
+censoring and conditional radiation/annihilation are implemented; see the
+[current result and remaining physical inputs](RADIATION_ANNIHILATION_RESULT_2026-11-10.md).
+The specification below is the original validation contract, not a declaration
+that its full physical gates have passed.
 
 ## Why change coordinates?
 

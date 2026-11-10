@@ -1,5 +1,9 @@
 # First conformal massive-boundary implementation: scoped validation
 
+Subsequent work is recorded in the
+[magnetic/recoil/radiation result](RADIATION_ANNIHILATION_RESULT_2026-11-10.md).
+The numerical evidence below concerns the original zero-field implementation.
+
 2026-11-10. Parent research commit:
 `4e1ea0d23ee81d7d2087083cc63cac4978eb3b63`.
 Branch: `research/variational-worldsheet`.

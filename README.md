@@ -5,6 +5,12 @@
 **Branch:** `research/variational-worldsheet` (experimental; do **not**
 merge into main or the stable development branch yet).
 
+**Current implementation:** magnetic conformal evolution, causal local weak
+recoil, explicit quantum matching, and conditional radiation/annihilation
+layers are available. [Current results, assumptions and physical limits](studies/RADIATION_ANNIHILATION_RESULT_2026-11-10.md).
+The machinery does not supply a calibrated nonperturbative radiation kernel
+or a quantum-state overlap; physical survival remains UNKNOWN.
+
 An independent spatial midpoint discretization of the classical
 **Nambu–Goto action** now evolves internal string vertices and their
 canonical energy, momentum and angular momentum. It includes a small
