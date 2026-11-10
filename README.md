@@ -1,5 +1,45 @@
 # QuirkSim — standalone charged-to-neutral quirk phenomenology
 
+## Research branch: variational string with internal degrees of freedom
+
+**Branch:** `research/variational-worldsheet` (experimental; do **not**
+merge into main or the stable development branch yet).
+
+An independent spatial midpoint discretization of the classical
+**Nambu–Goto action** now evolves internal string vertices and their
+canonical energy, momentum and angular momentum. It includes a small
+explicit unphysical gauge-mass regulator, a uniform solenoidal field,
+and a conservative canonical momentum treatment of pion/electron/muon
+endpoint decays. It is **not** an independently validated continuum
+worldsheet and is not yet able to support paper-quality annihilation
+or radiation rates.
+
+A separate encounter model brackets unknown glueball-emission and
+annihilation assumptions without claiming physical rates or feeding
+radiated energy back into the dynamics. It explicitly conditions on
+survival of encounters before a weak decay.
+
+**Scientific validation report:**
+[variational worldsheet and uncertainty envelope](studies/VARIATIONAL_WORLD_SHEET_PHYSICS_GATES_2026-11-10.md).
+
+Reproduce the action, recoil and transverse-wave checks:
+
+```bash
+git switch research/variational-worldsheet
+python -m pip install -e '.[test]'
+python -m pytest -q
+python scripts/variational_gate_report.py
+python scripts/validate_transverse_wave.py
+python -m quirksim.worldsheet_experiment \
+  --seed 25 --duration-ps 5 \
+  --output results/variational_weak_seed25.json
+```
+
+The clocked example is a **rare, deliberately chosen early-decay
+pilot on a pre-stretched string**; neither its contact history nor
+its five-picosecond runtime represents an inclusive collider sample.
+
+
 Independent, publicly reproducible project. **No ATLAS-internal code.**
 
 ## Current prototype
