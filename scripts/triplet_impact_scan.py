@@ -136,7 +136,7 @@ def main():
     p.add_argument('--beta',type=float,default=0.4)
     p.add_argument('--duration-ps',type=float,default=1000)
     p.add_argument('--nevents',type=int,default=20)
-    p.add_argument('--seed',type=int,default=101)
+    p.add_argument('--seed',type=int,default=10)
     p.add_argument('--progress-every',type=int,default=10)
     p.add_argument('--output-dir',default='results/triplet_nonradial')
     a=p.parse_args()
