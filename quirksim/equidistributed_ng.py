@@ -115,6 +115,7 @@ class EquidistributedNGString(VariationalString):
         return output
 
     def solve(self,state=None,duration_ps=None,strict_mesh=True,
+              pinch_fraction_of_initial_length=4e-4,
               gauge_length_tol_cm=2e-5,
               gauge_length_rate_tol_cm_per_ps=2e-5):
         if state is None:
@@ -125,11 +126,18 @@ class EquidistributedNGString(VariationalString):
             require_good_mesh(state,self.n,self.params.regularizer_cm)
         self.constraints(state)
         initial=self.action_quantities(state)
-        # Deliberately stop before the true zero-length pinch: the
-        # constrained mass matrix becomes singular in that limit.
-        # 10000*regulator is a NUMERICAL buffer, not a confinement scale.
+        # Mesh-independent PHYSICAL total arclength cutoff for uniform
+        # segments. An element-specific cutoff with a fixed length would
+        # falsely stop more-refined meshes sooner at the same encounter.
+        # This is an engineering stop, NOT a confinement/annihilation scale.
+        if not 0<pinch_fraction_of_initial_length<1:
+            raise ValueError('pinch fraction must be in (0,1)')
+        total_pinch_cm=(self.params.initial_length_cm*
+                        pinch_fraction_of_initial_length)
+        min_factor=max(100.,total_pinch_cm/
+                       ((self.n-1)*self.params.regularizer_cm))
         events=(make_mesh_stop_events(self.n,self.params.regularizer_cm,
-                                     minimum_factor=10000.)
+                                     minimum_factor=min_factor)
                 if strict_mesh else None)
         sol=solve_ivp(self.rhs,(0,duration_ps),state,method='DOP853',
                       atol=1e-10,rtol=2e-9,max_step=self.params.max_step_ps,
