@@ -24,7 +24,7 @@ jobs:
         run: python -m pip install -e '.[test]'
       - name: Physics unit and regression tests
         run: python -m pytest -q
-      - name: Matched pilot: 50 charged-pair events
+      - name: 'Matched pilot: 50 charged-pair events'
         run: |
           python -u scripts/triplet_field_pilot.py \
             --model triplet --mass 225 --lambda-ev 774 \
