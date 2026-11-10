@@ -83,6 +83,54 @@ continuation through a string collision. Any near-core outcomes
 must be independently checked against mesh and integration
 refinements before inclusion in a phenomenology paper.
 
+## Near-infracolor gate at ~4 reference confinement lengths
+
+A much closer test uses total-arclength cutoff
+`Lcut=1e-7 cm` (3.92 times hbar*c/Lambda_IC), spatial regulator
+`a=1e-12 cm`, 2T and the same boosted pre-stretched initial slice.
+
+**Velocity-coordinate constrained solver:** the N=11 and N=15
+calculations are **BLOCKED by a superluminal intermediate numerical
+vertex**. This is an invalid integration stage, not evidence of a
+physical faster-than-light trajectory.
+
+**Bounded-speed rapidity constrained solver:**
+
+| Method | Last valid arclength (cm) | Last valid time (ps) | Status |
+|---|---:|---:|---|
+| DOP853 | 2.823751e-7 | 458.6120574493 | Step size below float resolution |
+| Radau | 2.826045e-7 | 458.6120574458 | Step size below float resolution |
+| BDF | 5.487967e-7 | 458.6120419879 | Step size below float resolution |
+| LSODA | not certified | not certified | velocity domain error |
+
+No solver has demonstrated the prescribed `Lcut=1e-7 cm`
+trajectory. All these runs **stop before** the requested cutoff.
+
+**Disambiguation of worldsheet versus gauge speeds.** At the last valid
+DOP853 state:
+
+- Maximum **individual numerical vertex speed**: `0.999993799c`.
+- Maximum **segment transverse speed**:
+  `0.932873923c`.
+- Minimum target-time-gauge segment lapse squared
+  `1-|v_perp|² = 0.129746243`.
+- Maximum absolute segment-parallel speed `0.442346313c`.
+
+Since the transverse segment lapse remains **positive and not near
+zero**, there is NO demonstrated physical Nambu-Goto cusp at this
+failure. The problem is consistent with a singular or extremely
+stiff spatial parametrization. This makes a coordinate/gauge
+reformulation better justified than applying an arbitrary
+velocity or curvature cap.
+
+The endpoint chord is `1.62643869e-7 cm` while the total spatial
+arclength is `2.82375103e-7 cm`; the string has substantially
+nonstraight geometry on this last valid slice. Neither number
+is a physical annihilation probability.
+
+**Evidence:** [bounded-speed constrained NG](https://github.com/aalida0/QuirkSim/actions/runs/42859333149)
+and [Radau/BDF/LSODA cross-check](https://github.com/aalida0/QuirkSim/actions/runs/42858633861).
+
 ## Physical origin of possible folds
 
 Sonnenschein, Weissman and Yankielowicz,
