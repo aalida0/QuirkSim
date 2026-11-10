@@ -24,7 +24,7 @@ def boost(e, momentum, beta):
         raise ValueError('superluminal Lorentz boost')
     gamma = 1 / math.sqrt(1 - b2)
     bp = float(beta @ momentum)
-    return np.array([gamma * (e + bp), *(momentum + ((gamma - 1) * bp / b2 + gamma * e) * beta])
+    return np.array([gamma * (e + bp), *(momentum + ((gamma - 1) * bp / b2 + gamma * e) * beta)])
 
 
 def direction(rng):
