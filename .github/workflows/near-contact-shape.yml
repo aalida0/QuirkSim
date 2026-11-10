@@ -1,0 +1,72 @@
+name: Near-contact NG chord and bending convergence
+on:
+  push:
+    branches: [research/variational-worldsheet]
+    paths:
+      - '.github/workflows/near-contact-shape.yml'
+      - 'scripts/run_near_contact_shape.py'
+      - 'scripts/audit_near_contact_shape.py'
+  workflow_dispatch:
+
+jobs:
+  individual:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {nodes: 5, step: '0.5', tag: 'n5_h05'}
+          - {nodes: 11, step: '0.5', tag: 'n11_h05'}
+          - {nodes: 15, step: '0.5', tag: 'n15_h05'}
+          - {nodes: 21, step: '0.5', tag: 'n21_h05'}
+          - {nodes: 21, step: '0.2', tag: 'n21_h02'}
+          - {nodes: 31, step: '0.5', tag: 'n31_h05'}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install QuirkSim
+        run: python -m pip install -e .
+      - name: Fixed arclength, finer spatial mesh and time step
+        run: |
+          python -u scripts/run_near_contact_shape.py \
+            --nodes ${{ matrix.nodes }} --max-step-ps ${{ matrix.step }} \
+            --pinch-fraction 0.00002 \
+            --output results/near_contact_${{ matrix.tag }}.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: near-contact-case-${{ matrix.tag }}
+          path: results/near_contact_${{ matrix.tag }}.json
+          retention-days: 14
+          if-no-files-found: ignore
+
+  scientific-audit:
+    needs: individual
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: near-contact-case-*
+          path: results
+          merge-multiple: true
+      - name: Audit core-scale chord convergence, keep model caveats
+        run: |
+          python -u scripts/audit_near_contact_shape.py \
+            --input-dir results --output results/near_contact_audit.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: near-contact-geometry-physics-audit
+          path: results/near_contact_audit.json
+          retention-days: 14
+          if-no-files-found: ignore
