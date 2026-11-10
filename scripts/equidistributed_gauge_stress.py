@@ -13,18 +13,20 @@ import numpy as np
 from scipy.integrate import solve_ivp
 
 from quirksim.equidistributed_ng import EquidistributedNGString
+from quirksim.ng_quadrature import GaussQuadratureNGString
 from quirksim.variational_string import StringParameters
 from quirksim.mesh_guard import make_mesh_stop_events,make_total_arclength_stop_event,total_string_arclength_cm
 from quirksim.radial_ng_reference import ExactRadialNG,RadialNGParameters
 
 
 def case(n,b_tesla,beta_boost_x,maximum_ps=260.,pinch_fraction=4e-4,
-         max_step_ps=.5,rtol=2e-9,atol=1e-10,regulator_cm=1e-9):
+         max_step_ps=.5,rtol=2e-9,atol=1e-10,regulator_cm=1e-9,
+         quadrature_order=1):
     p=StringParameters(nodes=n,mass_gev=225.,lambda_ev=774.,
                        initial_length_cm=.1,initial_beta=.4,
                        b_tesla=b_tesla,gauge_mass_fraction=1e-3,
                        regularizer_cm=regulator_cm,max_step_ps=max_step_ps)
-    s=EquidistributedNGString(p)
+    s=GaussQuadratureNGString(p,quadrature_order) if quadrature_order>1 else EquidistributedNGString(p)
     y=(s.initial_state() if beta_boost_x==0
        else s.boosted_straight_initial_state(beta_cm_x=beta_boost_x))
     start=s.action_quantities(y)
@@ -69,6 +71,7 @@ def case(n,b_tesla,beta_boost_x,maximum_ps=260.,pinch_fraction=4e-4,
           'stops':stops,'nodes':n,'b_tesla':b_tesla,
           'common_total_length_pinch_cutoff_cm':total_pinch_cm,
           'numerical_max_step_ps':max_step_ps,
+          'spatial_quadrature_order':quadrature_order,
           'numerical_rtol':rtol,
           'numerical_atol':atol,
           'numerical_regulator_cm':regulator_cm,
@@ -108,6 +111,7 @@ def case(n,b_tesla,beta_boost_x,maximum_ps=260.,pinch_fraction=4e-4,
 def main():
     p=argparse.ArgumentParser()
     p.add_argument('--nodes',type=int,default=5)
+    p.add_argument('--quadrature-order',type=int,choices=(1,2,3),default=1)
     p.add_argument('--field-only',action='store_true',help='run one chosen B-field boosted configuration')
     p.add_argument('--pair-boost',type=float,default=.25)
     p.add_argument('--selected-b-tesla',type=float,default=2.)
@@ -123,7 +127,8 @@ def main():
     records=[]
     scenarios=((args.selected_b_tesla,args.pair_boost),) if args.field_only else ((0.,0.),(0.,.25),(2.,.25))
     for b,boost in scenarios:
-        result=case(args.nodes,b,boost,args.max_time_ps,args.pinch_fraction)
+        result=case(args.nodes,b,boost,args.max_time_ps,args.pinch_fraction,
+                    quadrature_order=args.quadrature_order)
         records.append(result)
         print('[equidistributed-gauge] '+json.dumps(result),flush=True)
     path=Path(args.output);path.parent.mkdir(parents=True,exist_ok=True)
