@@ -18,12 +18,14 @@ def main():
     p.add_argument('--rtol',type=float,default=2e-9)
     p.add_argument('--atol',type=float,default=1e-10)
     p.add_argument('--pinch-fraction',type=float,default=2e-5)
+    p.add_argument('--regulator-cm',type=float,default=1e-9)
     p.add_argument('--output',required=True)
     a=p.parse_args()
-    if not 0<a.pinch_fraction<1 or a.max_step_ps<=0:
+    if not 0<a.pinch_fraction<1 or a.max_step_ps<=0 or a.regulator_cm<=0:
         p.error('invalid time step or arclength cutoff')
     row=case(a.nodes,2.,.25,1000.,a.pinch_fraction,
-             max_step_ps=a.max_step_ps,rtol=a.rtol,atol=a.atol)
+             max_step_ps=a.max_step_ps,rtol=a.rtol,atol=a.atol,
+             regulator_cm=a.regulator_cm)
     ref=HBARC_GEV_CM/(774e-9)
     row['infracolor_reference_length_cm']=ref
     if row.get('status')=='PHYSICAL_ARCLENGTH_CUTOFF':
