@@ -7,25 +7,42 @@ import argparse
 import csv
 import json
 import statistics
+import time
 from dataclasses import replace
 from pathlib import Path
 from quirksim.dynamics import Parameters, propagate
 
 
-def run(n, base, output):
+def run(n, base, output, progress_every=10, checkpoint_every=25, skip_stable=False):
     output=Path(output)
     output.mkdir(parents=True,exist_ok=True)
     rows=[]
     pair_rows=[]
+    modes=('no_recoil', 'recoil') if skip_stable else ('stable', 'no_recoil', 'recoil')
+    started=time.monotonic()
+
+    def save_snapshot():
+        # Atomic replacement prevents leaving truncated CSV files on interruption.
+        if not rows:
+            return
+        for filename, values in [('events.csv',rows), ('pairs.csv',pair_rows)]:
+            tmp=output/(filename+'.tmp')
+            with tmp.open('w', newline='') as f:
+                w=csv.DictWriter(f, fieldnames=list(values[0]))
+                w.writeheader()
+                w.writerows(values)
+            tmp.replace(output/filename)
+
     for index in range(n):
         seed=base.seed+index
         event_results={}
-        for mode in ('stable','no_recoil','recoil'):
+        event_rows=[]
+        for mode in modes:
             a=propagate(replace(base,seed=seed,mode=mode,store_trace=False))
             event_results[mode]=a
             channels=[e['channel'] for e in a['events']]
             rmin=a['closest_post_decay_turning_point_cm']
-            rows.append(dict(model=base.representation,mass_gev=base.mass_neutral_gev,
+            event_rows.append(dict(model=base.representation,mass_gev=base.mass_neutral_gev,
                 lambda_ev=base.lambda_ev,seed=seed,mode=mode,n_decays=len(channels),
                 n_pion=channels.count('pion'),n_e=channels.count('electron_neutrino'),
                 n_mu=channels.count('muon_neutrino'),first_decay_ps=a['first_decay_time_ps'],
@@ -48,16 +65,24 @@ def run(n, base, output):
                 else recoil['closest_post_decay_turning_point_cm']*1e4,
             'nonrecoil_core_encounters':no['post_decay_geometric_core_encounters'],
             'recoil_core_encounters':recoil['post_decay_geometric_core_encounters']})
-    with (output/'events.csv').open('w',newline='') as f:
-        w=csv.DictWriter(f,fieldnames=list(rows[0]));w.writeheader();w.writerows(rows)
-    with (output/'pairs.csv').open('w',newline='') as f:
-        w=csv.DictWriter(f,fieldnames=list(pair_rows[0]));w.writeheader();w.writerows(pair_rows)
+        rows.extend(event_rows)
+        completed=index+1
+        if checkpoint_every>0 and completed % checkpoint_every==0:
+            save_snapshot()
+        if (progress_every>0 and completed % progress_every==0) or completed==n:
+            elapsed=time.monotonic()-started
+            sec_per_event=elapsed/completed
+            print(f'[QuirkSim] {completed}/{n} matched events ({100*completed/n:.1f}%), '
+                  f'elapsed={elapsed:.1f}s, avg={sec_per_event:.2f}s/event, '
+                  f'ETA≈{(n-completed)*sec_per_event/60:.1f}min',
+                  flush=True)
+    save_snapshot()
     summary={'benchmark': {'model':base.representation,'mass_gev':base.mass_neutral_gev,
                            'lambda_ev':base.lambda_ev,'beta':base.beta,
                            'duration_ps':base.duration_ps,'n':n},
              'mode_summaries':{},'paired':{},'scientific_scope':
              'central string proxy, conditional on initially charged pair; post-decay geometric core contact is NOT annihilation; finite observation window'}
-    for mode in ('stable','no_recoil','recoil'):
+    for mode in modes:
         rr=[r for r in rows if r['mode']==mode]
         dists=[r['closest_post_decay_um'] for r in rr if r['closest_post_decay_um'] is not None]
         summary['mode_summaries'][mode]={
@@ -95,12 +120,18 @@ def main():
     p.add_argument('--beta',type=float,default=.4)
     p.add_argument('--impact-cm',type=float,default=0)
     p.add_argument('--output-dir',default='results/paired')
+    p.add_argument('--progress-every',type=int,default=10,
+                   help='print progress and estimated remaining time every N seeds')
+    p.add_argument('--checkpoint-every',type=int,default=25,
+                   help='atomically write partial CSV files every N complete seeds')
+    p.add_argument('--skip-stable',action='store_true',
+                   help='omit redundant stable reference, run only matched no_recoil/recoil')
     a=p.parse_args()
     if a.nevents<=0: p.error('--nevents must be positive')
     base=Parameters(representation=a.model,mass_neutral_gev=a.mass,
         lambda_ev=a.lambda_ev,duration_ps=a.duration_ps,beta=a.beta,
         impact_cm=a.impact_cm,seed=a.seed)
-    run(a.nevents,base,a.output_dir)
+    run(a.nevents,base,a.output_dir,a.progress_every,a.checkpoint_every,a.skip_stable)
 
 
 if __name__=='__main__':
