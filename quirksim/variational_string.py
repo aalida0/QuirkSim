@@ -21,6 +21,7 @@ import math
 import numpy as np
 from scipy.integrate import solve_ivp
 from .physics import benchmark
+from .decays import sample_decay
 from .dynamics import C_CM_PER_PS, HBARC_GEV_CM
 from .field_dynamics import MAGNETIC_FORCE_GEV_PER_PS_T
 
@@ -180,6 +181,94 @@ class VariationalString:
         out[-2]=math.sqrt(1-float(v[0]@v[0]))
         out[-1]=math.sqrt(1-float(v[-1]@v[-1]))
         return out
+
+    def weak_decay_impulse(self,state,endpoint,channel,seed=1,energy_tolerance_gev=1e-4,
+                           strict=True):
+        """Apply a weak endpoint transition by a CANONICAL momentum impulse.
+
+        P_owning_vertex(after) = P_vertex(before) - sum(p_emitted).
+        Other string vertices retain their canonical momenta; invert the
+        discretized velocity->momentum relation to obtain updated velocities.
+
+        The emitted products have exact on-shell four-momentum using the
+        local parent *particle* momentum. The finite-element string can
+        experience an O(discretization) discontinuity in total energy:
+        the residual is explicitly calculated, never hidden. With
+        strict=True, any residual > tolerance REJECTS and reverts the
+        event. This is a development gate, not certified physical coupling.
+        """
+        if endpoint not in (0,self.n-1):
+            raise ValueError('weak decays allowed only at string endpoints')
+        if channel not in ('pion','electron_neutrino','muon_neutrino'):
+            raise ValueError('unknown channel')
+        if energy_tolerance_gev<0:
+            raise ValueError('invalid energy tolerance')
+        y=np.array(state,dtype=float,copy=True)
+        x,v=self._unpack(y)
+        parent_mass=float(self.masses[endpoint])
+        daughter_mass=float(self.params.mass_gev)
+        if parent_mass<=daughter_mass:
+            raise ValueError('endpoint already neutral or inconsistent masses')
+        initial=self.action_quantities(y)
+        parent_particle_p=parent_mass*v[endpoint]/math.sqrt(1-float(v[endpoint]@v[endpoint]))
+        outgoing=sample_decay(channel,parent_particle_p,parent_mass,daughter_mass,
+                              np.random.default_rng(seed))
+        emitted=[vec for name,vec in outgoing.items() if name!='daughter']
+        p_emit=sum((vec[1:] for vec in emitted),np.zeros(3))
+        e_emit=sum(float(vec[0]) for vec in emitted)
+        p_target=initial['canonical_vertex_momenta_gev'].copy()
+        p_target[endpoint]-=p_emit
+        old_charge=float(self.charge[endpoint])
+        self.masses[endpoint]=daughter_mass
+        self.charge[endpoint]=0.
+        v_guess=v.copy()
+        daughter=outgoing['daughter']
+        v_guess[endpoint]=daughter[1:]/daughter[0]
+        sz=3*self.n
+        try:
+            for step in range(24):
+                y[sz:2*sz]=v_guess.ravel()
+                current=self.action_quantities(y,derivatives=True)
+                diff=(p_target-current['canonical_vertex_momenta_gev']).ravel()
+                if float(np.max(np.abs(diff)))<3e-10:
+                    break
+                change=np.linalg.solve(current['mass_matrix'],diff).reshape(self.n,3)
+                factor=1.
+                while factor>1e-8 and np.max(np.einsum('ij,ij->i',
+                                    v_guess+factor*change,v_guess+factor*change))>=.999999:
+                    factor*=.5
+                if factor<=1e-8:
+                    raise RuntimeError('momentum inversion leaves physical velocity domain')
+                v_guess+=factor*change
+            else:
+                raise RuntimeError('finite-element momentum inversion failed to converge')
+            y[sz:2*sz]=v_guess.ravel()
+            after=self.action_quantities(y)
+            mismatch=float(initial['energy_gev']-after['energy_gev']-e_emit)
+            delta_P=np.array(initial['momentum_gev']-
+                              after['momentum_gev']-p_emit)
+            delta_J=np.array(initial['angular_momentum_over_hbar']-
+                        after['angular_momentum_over_hbar']-
+                        np.cross(x[endpoint],p_emit)/HBARC_GEV_CM)
+            passed=abs(mismatch)<=energy_tolerance_gev
+            if strict and not passed:
+                raise RuntimeError('worldsheet weak-decay energy mismatch '
+                                   f'{mismatch:.6g} GeV exceeds '
+                                   f'{energy_tolerance_gev:.6g} GeV')
+            diagnostics={
+                'channel':channel,'endpoint':endpoint,'energy_residual_gev':mismatch,
+                'emitted_energy_gev':e_emit,
+                'momentum_residual_gev':delta_P.tolist(),
+                'angular_momentum_residual_hbar':delta_J.tolist(),
+                'energy_gate_pass':passed,
+                'caveat':'finite-element instantaneous endpoint impulse; '
+                          'worldsheet-limit and causal propagation not validated'
+            }
+            return y,diagnostics
+        except Exception:
+            self.masses[endpoint]=parent_mass
+            self.charge[endpoint]=old_charge
+            raise
 
     def solve(self,state=None, duration_ps=None,store_trace=False):
         if state is None:
