@@ -19,11 +19,11 @@ from quirksim.radial_ng_reference import ExactRadialNG,RadialNGParameters
 
 
 def case(n,b_tesla,beta_boost_x,maximum_ps=260.,pinch_fraction=4e-4,
-         max_step_ps=.5,rtol=2e-9,atol=1e-10):
+         max_step_ps=.5,rtol=2e-9,atol=1e-10,regulator_cm=1e-9):
     p=StringParameters(nodes=n,mass_gev=225.,lambda_ev=774.,
                        initial_length_cm=.1,initial_beta=.4,
                        b_tesla=b_tesla,gauge_mass_fraction=1e-3,
-                       regularizer_cm=1e-9,max_step_ps=max_step_ps)
+                       regularizer_cm=regulator_cm,max_step_ps=max_step_ps)
     s=EquidistributedNGString(p)
     y=(s.initial_state() if beta_boost_x==0
        else s.boosted_straight_initial_state(beta_cm_x=beta_boost_x))
@@ -71,6 +71,7 @@ def case(n,b_tesla,beta_boost_x,maximum_ps=260.,pinch_fraction=4e-4,
           'numerical_max_step_ps':max_step_ps,
           'numerical_rtol':rtol,
           'numerical_atol':atol,
+          'numerical_regulator_cm':regulator_cm,
           'absolute_total_arclength_cutoff_residual_cm':
               abs(total_string_arclength_cm(sol.y[:,-1],n)-total_pinch_cm)
                   if 'total_arclength_cutoff' in stops else None,
