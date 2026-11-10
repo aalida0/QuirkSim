@@ -1,46 +1,115 @@
-# QuirkSim: charged-to-neutral macroscopic quirks
+# QuirkSim — standalone charged-to-neutral quirk phenomenology
 
-Independent public research on electroweak quirk multiplets, weak pion emission and recoil during macroscopic string oscillations. **Not an ATLAS analysis.** No unpublished internal ATLAS code is used.
+Independent, publicly reproducible project. **No ATLAS-internal code.**
 
-## Current implementation status
+## Current prototype
 
-Development branch: `development/standalone-simulator`.
+The simulator includes Dirac vectorlike SU(2)L doublet (Y=-1/2) and triplet (Y=0)
+mass splittings (one-loop approximation), leading pion/electron/muon branching
+fractions, independent proper-time clocks for two charged endpoints, exact
+event-by-event four-momentum conservation in two- and three-body weak decays,
+and numerical evolution with a **central straight-string potential proxy**.
 
-- Dirac SU(2)L doublet Y=-1/2 and Dirac SU(2)L triplet Y=0, each in fundamental hidden SU(2)IC.
-- One-loop charged-neutral mass splittings and leading weak-decay widths (reference formulas, not precision electroweak predictions).
-- Exponentially sampled charged endpoint decay clocks in **proper time**, exact two-body pion recoil in the parent rest frame and Lorentz boost to the lab.
-- Relativistic two-endpoint ODE with a smooth **central straight-string proxy** `V(r) = sigma (sqrt(r² + a²) - a)`.
-- Three modes: `stable`, `no_recoil` (unphysical diagnostic) and `recoil`. Leptonic decays are explicitly marked **unresolved** rather than simulated incorrectly.
+The 3-body rest-frame sampler implements the leading unpolarized
+vector-fermion-current x V-A leptonic-current angular and invariant-mass
+distribution, with widths separately fixed using published LO formulas.
 
-**Scientific limitations:** This is **not** a full moving Nambu–Goto worldsheet, and the string proxy omits radiation, annihilation, detector material, magnetic fields and LHC production. Any minimum separation measured from creation includes a trivial near-contact point, so it cannot be called an annihilation probability. The first goal is to validate physical dynamics against published calculations with nonradial initial conditions and matched decay-clock replay.
+**This is NOT a full Nambu–Goto worldsheet solver.** The string is represented
+by a regulated central potential; no internal worldsheet dynamics, gluonic
+radiation, pion-medium effects, annihilation, magnetic fields, detector matter,
+or realistic pp production kinematics are yet implemented. No conclusions
+about physical annihilation probabilities or LHC reach are supported.
 
-## Setup
+## Install
 
 ```bash
 git clone https://github.com/aalida0/QuirkSim.git
 cd QuirkSim
-git checkout development/standalone-simulator
+git switch development/standalone-simulator
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -e '.[test]'
-pytest -q
-python -m quirksim.cli --model triplet --mass 225 --lambda-ev 774 --mode recoil --duration-ps 500 --seed 8 --output result.json
+python -m pytest -q
 ```
 
-## Physics roadmap
+You do **not** need Key4hep, Athena or Geant4. If using CVMFS/Key4hep anyway,
+prefer `python -m pytest` to avoid a mismatched external `pytest` executable.
 
-1. Verify one-loop splittings and LO pion/leptonic decay widths against original publications, scheme by scheme.
-2. Validate exact undecayed radial solutions, energy conservation and convergence with solver and regulator variation.
-3. Simulate both endpoint decays including leptonic channels and exact matched-clock replay.
-4. Validate an independent moving Nambu–Goto string treatment for nonradial trajectories.
-5. Add an uncertainty-bracketed contact-dependent infracolor radiation model; keep geometric contacts separate from annihilation.
-6. Add a separately generated doublet/triplet UFO and realistic pp initial conditions.
+## Single-event examples
 
-## References
+```bash
+python -m quirksim.cli --model triplet --mass 225 --lambda-ev 774 \
+    --mode recoil --duration-ps 1000 --seed 42 --trace \
+    --output results/triplet_recoil.json
 
-- Thomas & Wells (1998), arXiv:hep-ph/9804359.
-- Kang & Luty (2009), arXiv:0805.4642.
-- Martin (2011), arXiv:1012.2072.
-- *The Quirk Trajectory* (2020), arXiv:2002.07503.
+python -m quirksim.cli --model doublet --mass 150 --lambda-ev 2154 \
+    --mode recoil --duration-ps 1000 --seed 1 \
+    --output results/doublet_leptonic.json
+```
 
-No results from this pilot should be interpreted as collider exclusions or validated physical annihilation rates.
+The second example explicitly exercises an electron-neutrino decay, which is
+now fully evolved rather than terminating as `leptonic_unresolved`.
+
+## Matched paired ensembles
+
+```bash
+python scripts/paired_compare.py --model triplet --mass 225 --lambda-ev 774 \
+    --duration-ps 1000 --seed 10 --nevents 100 \
+    --output-dir results/paired_triplet
+
+python scripts/paired_compare.py --model doublet --mass 150 --lambda-ev 2154 \
+    --duration-ps 1000 --seed 10 --nevents 100 \
+    --output-dir results/paired_doublet
+```
+
+Each run outputs `events.csv` (three modes), `pairs.csv` (matched decay
+histories) and `summary.json`. Each endpoint reuses its sampled *proper*
+lifetime, chosen decay channel, and rest-frame random seed in both modes.
+**Lab-frame decay times need not match** after the first recoil.
+
+- `stable`: no weak decays, charged endpoints throughout.
+- `no_recoil`: both endpoints weak-decay but momentum is artificially unchanged
+  (unphysical control; does not conserve whole-system energy at transitions).
+- `recoil`: explicit two-/three-body decay products, momentum-conserving
+  endpoint updates and continuation through both decays.
+
+### Observables, limitations and interpretation
+
+`minimum_separation_including_production_cm` contains the trivial near-contact
+production geometry and **must not** be interpreted as post-decay contact.
+`turning_points` contain local minima of endpoint separation, found by event
+root-finding for d|r|²/dt=0. `closest_post_decay_turning_point_cm` is measured
+only after the first weak decay. Values are `null` if no such minimum occurs
+within the observation window (not zero).
+
+The geometric core radius `hbar*c/Lambda_IC` is a **reference length**, not an
+annihilation criterion. Encounters closer than this radius are *geometric
+contacts*, not physical infracolor-emission or quirkonium-annihilation rates.
+Ensemble fractions are conditional on producing an *initially charged*
+pair with fixed input beta, not inclusive pp production predictions.
+
+**Known important bias:** radial production geometry guarantees perfect
+zero-impact-parameter returns in stable/no-recoil controls. A nonzero impact
+parameter or realistic 3-D momentum distribution and moving-string
+worldsheet are mandatory before asserting a genuine recoil effect.
+The no-recoil control is deliberately unphysical, not a competing model.
+
+## Required validation before paper-quality phenomenology
+
+1. Independent physics audit of pion and leptonic normalization and
+   electroweak mass-splitting input schemes, with quoted uncertainties.
+2. Systematic solver convergence for nonzero impact parameter and regulator.
+3. Correct moving Nambu–Goto worldsheet dynamics, including momentum transfer
+   into/out of string degrees of freedom.
+4. Radiation and annihilation models with explicit uncertainty variations,
+   not identification with a geometric encounter.
+5. Realistic parton-level pp production via an independent UFO and MG5.
+
+## Core literature
+
+- Thomas & Wells, *Massive Doublet Leptons* (1998), hep-ph/9804359.
+- Kang & Luty, *Macroscopic Strings and Quirks at Colliders* (2009), 0805.4642.
+- Martin, *Quirks in Supersymmetry with Gauge Coupling Unification* (2011), 1012.2072.
+- *The Quirk Trajectory* (2020), 2002.07503.
+
+Development should remain on the feature branch until independently validated.
