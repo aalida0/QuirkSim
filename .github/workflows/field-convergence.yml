@@ -1,0 +1,29 @@
+name: Nonradial magnetic solver convergence
+on:
+  push:
+    branches: [development/standalone-simulator]
+    paths:
+      - '.github/workflows/field-convergence.yml'
+      - 'scripts/validate_field_solver.py'
+  workflow_dispatch:
+
+jobs:
+  convergence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install QuirkSim
+        run: python -m pip install -e .
+      - name: Compare integrator steps and short-distance regulator
+        run: python -u scripts/validate_field_solver.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: field-convergence-three-seeds
+          path: results/triplet_field_convergence.json
+          if-no-files-found: ignore
+          retention-days: 14
