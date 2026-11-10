@@ -54,6 +54,33 @@ Moreover, the vertex-count sequence **is not monotonic**:
 n=11 has a notably smaller endpoint separation than n=5,7,15.
 Tighter ODE tolerances do not resolve the mesh-level discrepancy.
 
+## Interleaved spatial meshes: stronger evidence of non-convergence
+
+An independent CI study evaluated additional vertex counts 9, 13, and
+17 at the same total-arclength cutoff 2.0e-6 cm, without changing
+the physics parameters or force prescription:
+
+| N vertices | Endpoint chord (cm) | Maximum adjacent bend angle (radians) |
+|---:|---:|---:|
+| 5 | 1.9980617e-6 | — |
+| 7 | 1.9930080e-6 | — |
+| 9 | **1.9401365e-6** | 0.1480 |
+| 11 | 1.9707123e-6 | — |
+| 13 | 1.9893920e-6 | 0.07485 |
+| 15 | 1.9961261e-6 | — |
+| 17 | 1.9984001e-6 | 0.03884 |
+
+The n=9 point is a serious nonmonotonic excursion, not a rounding
+effect; the maximum 5..17 chord spread is approximately
+**5.83e-8 cm**, or **2.29 × hbar*c/Lambda_IC**.
+The n=13..17 trend alone might look convergent, but it does not
+justify extrapolation in the presence of large n=9..11 deviations
+and a field-dependent bent worldsheet. A different spatial
+discretization and a high-frequency transverse-mode/refinement
+audit are required, not merely smaller ODE steps.
+
+[Independent 9/13/17-vertex CI](https://github.com/aalida0/QuirkSim/actions/runs/42892811180).
+
 ## Diagnostic outcome
 
 - **PASS:** Mesh-independent total arclength at the crossing; strict
