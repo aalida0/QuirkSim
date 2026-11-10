@@ -17,8 +17,6 @@ def test_rapidity_constrained_coordinate_roundtrip_for_zero_mass_gauge():
 
 
 def test_short_field_trajectory_matches_old_coordinate_physical_observables():
-    p=StringParameters(nodes=5,initial_beta=.4,initial_length_cm=.1,
-                       b_tesla=2.,regulator_cm=1e-9) if False else None
     # Verify with the exact parameters used in the standalone cross-check.
     p=StringParameters(nodes=5,initial_beta=.4,initial_length_cm=.1,
                        b_tesla=2.,regularizer_cm=1e-9,max_step_ps=.1)
