@@ -182,6 +182,40 @@ class VariationalString:
         out[-1]=math.sqrt(1-float(v[-1]@v[-1]))
         return out
 
+    def mesh_quality(self,states):
+        """Heuristic spatial mesh-health *gate*, not a continuum guarantee.
+
+        Reject under-resolved elements near the short-distance regulator
+        and extreme adjacent material-vertex spacing. A conservative
+        remeshing/worldsheet gauge algorithm is not yet implemented.
+        """
+        arr=np.asarray(states,float)
+        dim=6*self.n+2
+        if arr.ndim==1:
+            if arr.shape[0]!=dim:
+                raise ValueError('invalid state dimension')
+            arr=arr[None,:]
+        elif arr.ndim==2:
+            if arr.shape[0]==dim:
+                arr=arr.T
+            elif arr.shape[1]!=dim:
+                raise ValueError('invalid state dimension')
+        else:
+            raise ValueError('expected state or matrix of states')
+        x=arr[:,:3*self.n].reshape(-1,self.n,3)
+        length=np.linalg.norm(np.diff(x,axis=1),axis=2)
+        min_l=float(length.min())
+        worst=float(np.max(length.max(axis=1)/
+                           np.maximum(length.min(axis=1),self.params.regularizer_cm)))
+        short=min_l<100*self.params.regularizer_cm
+        unbalanced=worst>50
+        return {'minimum_segment_cm':min_l,
+                'worst_segment_length_ratio':worst,
+                'short_relative_to_regulator':bool(short),
+                'length_ratio_above_50':bool(unbalanced),
+                'quality_pass':bool(not short and not unbalanced),
+                'status':'HEURISTIC_MESH_QUALITY_ONLY'}
+
     def weak_decay_impulse(self,state,endpoint,channel,seed=1,energy_tolerance_gev=1e-4,
                            strict=True):
         """Apply a weak endpoint transition by a CANONICAL momentum impulse.
