@@ -54,6 +54,13 @@ def case(n,b_tesla,beta_boost_x,maximum_ps=260.,pinch_fraction=4e-4,
             ('total_arclength_cutoff','short_element','element_ratio'),
             sol.t_events) if len(hits)]
         separation=float(np.linalg.norm(x[-1]-x[0]))
+        arclength=float(np.sum(np.linalg.norm(np.diff(x,axis=0),axis=1)))
+        chord_deficit=max(0.0,arclength-separation)
+        tangents=np.diff(x,axis=0)
+        tangents=tangents/np.linalg.norm(tangents,axis=1)[:,None]
+        segment_bend_angles=np.arccos(np.clip(
+            np.sum(tangents[:-1]*tangents[1:],axis=1),-1.,1.))
+        maximum_bend_angle=float(np.max(segment_bend_angles))
         comparable=b_tesla==0 and beta_boost_x==0
         reference_sep=ref.state(t)['unsigned_separation_cm']
         return {
@@ -70,7 +77,10 @@ def case(n,b_tesla,beta_boost_x,maximum_ps=260.,pinch_fraction=4e-4,
           'beta_boost_x':beta_boost_x,'time_ps':t,
           'time_divided_by_radial_first_crossing':t/ref.first_crossing_ps,
           'endpoint_separation_cm':separation,
-          'total_string_polyline_length_cm':float(np.sum(np.linalg.norm(np.diff(x,axis=0),axis=1))),
+          'total_string_polyline_length_cm':arclength,
+          'chord_deficit_cm':chord_deficit,
+          'chord_deficit_over_total_length':chord_deficit/arclength,
+          'maximum_adjacent_segment_bend_angle_rad':maximum_bend_angle,
           'exact_radial_reference_separation_cm':reference_sep,
           'exact_radial_reference_comparable':comparable,
           'radial_reference_absolute_separation_error_cm':
