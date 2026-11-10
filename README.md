@@ -62,6 +62,34 @@ python scripts/paired_compare.py --model doublet --mass 150 --lambda-ev 2154 \
     --output-dir results/paired_doublet
 ```
 
+### Performance and interrupted-run safety
+
+The three-way ensemble uses three independent adaptive SciPy ODE integrations
+per seed, and large samples can take many minutes. The script now prints
+progress (completed seeds, elapsed time, average seconds/seed, estimated
+remaining minutes) every 10 seeds, and writes atomic partial `events.csv`
+and `pairs.csv` snapshots every 25 completed seeds. `summary.json` is
+written only after the complete run. Partial snapshots are **not automatically
+resumed**; use distinct seed ranges when splitting a large run.
+
+To omit the redundant stable reference and run just the matched recoil
+and no-recoil cases, pass `--skip-stable` (two ODE simulations per seed
+rather than three). This reduces work by roughly one third; it is not
+a faster integrator.
+
+On a shared login node, run only small pilots. For example:
+
+```bash
+python scripts/paired_compare.py --model triplet --mass 225 --lambda-ev 774 \
+    --duration-ps 500 --nevents 20 --skip-stable \
+    --progress-every 5 --checkpoint-every 5 \
+    --output-dir results/pilot20
+```
+
+Submit larger runs to a compute/batch node (e.g. HTCondor); do not launch
+large multi-core jobs on login nodes. Physics comparability requires keeping
+the same observation window when comparing models.
+
 Each run outputs `events.csv` (three modes), `pairs.csv` (matched decay
 histories) and `summary.json`. Each endpoint reuses its sampled *proper*
 lifetime, chosen decay channel, and rest-frame random seed in both modes.
