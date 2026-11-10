@@ -125,7 +125,11 @@ class EquidistributedNGString(VariationalString):
             require_good_mesh(state,self.n,self.params.regularizer_cm)
         self.constraints(state)
         initial=self.action_quantities(state)
-        events=(make_mesh_stop_events(self.n,self.params.regularizer_cm)
+        # Deliberately stop before the true zero-length pinch: the
+        # constrained mass matrix becomes singular in that limit.
+        # 10000*regulator is a NUMERICAL buffer, not a confinement scale.
+        events=(make_mesh_stop_events(self.n,self.params.regularizer_cm,
+                                     minimum_factor=10000.)
                 if strict_mesh else None)
         sol=solve_ivp(self.rhs,(0,duration_ps),state,method='DOP853',
                       atol=1e-10,rtol=2e-9,max_step=self.params.max_step_ps,
