@@ -1,0 +1,39 @@
+name: Zero-interior-mass NG constrained gauge first-return stress
+on:
+  push:
+    branches: [research/variational-worldsheet]
+    paths:
+      - '.github/workflows/equidistributed-gauge.yml'
+      - 'quirksim/equidistributed_ng.py'
+      - 'scripts/equidistributed_gauge_stress.py'
+  workflow_dispatch:
+
+jobs:
+  experimental-gauge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        nodes: ['5','7']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install independent solver
+        run: python -m pip install -e '.[test]'
+      - name: Validate gauge constraints and radial comparison
+        run: python -m pytest -q tests/test_equidistributed_ng.py tests/test_radial_ng_reference.py
+      - name: Long-time mesh gauge and physical pinch stress
+        run: |
+          python -u scripts/equidistributed_gauge_stress.py \
+            --nodes ${{ matrix.nodes }} --max-time-ps 260 \
+            --output results/equidistributed_${{ matrix.nodes }}.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: constrained-gauge-${{ matrix.nodes }}vertices
+          path: results/equidistributed_${{ matrix.nodes }}.json
+          if-no-files-found: ignore
+          retention-days: 14
