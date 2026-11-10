@@ -10,6 +10,7 @@ import json
 import math
 from pathlib import Path
 from equidistributed_gauge_stress import case
+from quirksim.dynamics import HBARC_GEV_CM
 
 
 def validate(cutoff_fractions=(1e-3,4e-4), horizon_ps=1000,
@@ -25,6 +26,10 @@ def validate(cutoff_fractions=(1e-3,4e-4), horizon_ps=1000,
         residuals=[r.get('absolute_total_arclength_cutoff_residual_cm',
                           float('nan')) for r in results]
         energies=[abs(r.get('energy_drift_gev',float('nan'))) for r in results]
+        chords=[r.get('endpoint_separation_cm',float('nan')) for r in results]
+        # Geometric core reference only, NOT an annihilation radius.
+        reference_core_cm=HBARC_GEV_CM/(774.0e-9)
+        chord_spread=max(chords)-min(chords)
         constraints=[abs(r.get('max_equal_length_constraint_cm',float('nan')))
                      for r in results]
         passed=(
@@ -43,6 +48,13 @@ def validate(cutoff_fractions=(1e-3,4e-4), horizon_ps=1000,
             'max_stop_time_spread_ps':max(times)-min(times),
             'max_arclength_event_residual_cm':max(residuals),
             'max_energy_drift_gev':max(energies),
+            'max_endpoint_chord_spread_cm':chord_spread,
+            'reference_infracolor_length_cm':reference_core_cm,
+            'chord_spread_in_units_of_1_over_lambda':chord_spread/reference_core_cm,
+            'core_scale_geometry_gate':(
+                 'PASS_10PCT_REFERENCE_ONLY'
+                 if chord_spread<.1*reference_core_cm else
+                 'BLOCKED_INSUFFICIENT_CORE_SCALE_CONVERGENCE'),
             'max_equal_arclength_constraint_cm':max(constraints),
             'convergence_gate_pass':bool(passed),
             'results':results
@@ -70,7 +82,9 @@ def validate(cutoff_fractions=(1e-3,4e-4), horizon_ps=1000,
        'status':report['status'],
        'trials':[{'cutoff':t['common_total_cutoff_cm'],
                   'spread_ps':t['max_stop_time_spread_ps'],
-                  'passed':t['convergence_gate_pass']} for t in trials]}),flush=True)
+                  'passed':t['convergence_gate_pass'],
+                  'core_geometry_gate':t['core_scale_geometry_gate']}
+                  for t in trials]}),flush=True)
     if report['status']!='PRE_PINCH_CONVERGENCE_VALIDATED_ONLY':
         raise AssertionError('common-arclength mesh convergence validation failed')
     return report
