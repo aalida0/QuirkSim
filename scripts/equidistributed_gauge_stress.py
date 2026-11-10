@@ -112,6 +112,8 @@ def main():
     p=argparse.ArgumentParser()
     p.add_argument('--nodes',type=int,default=5)
     p.add_argument('--quadrature-order',type=int,choices=(1,2,3),default=1)
+    p.add_argument('--regulator-cm',type=float,default=1e-9,
+                   help='short-string regularization in cm; mesh safety cut scales with this')
     p.add_argument('--field-only',action='store_true',help='run one chosen B-field boosted configuration')
     p.add_argument('--pair-boost',type=float,default=.25)
     p.add_argument('--selected-b-tesla',type=float,default=2.)
@@ -120,6 +122,8 @@ def main():
                    help='engineering total string length cutoff / initial length')
     p.add_argument('--output',default='results/equidistributed_gate.json')
     args=p.parse_args()
+    if not math.isfinite(args.regulator_cm) or args.regulator_cm<=0:
+        p.error('regulator must be positive and finite')
     if not 0<args.pinch_fraction<1:
         p.error('pinch fraction must lie in (0,1)')
     if not 0<=args.pair_boost<1:
@@ -128,7 +132,8 @@ def main():
     scenarios=((args.selected_b_tesla,args.pair_boost),) if args.field_only else ((0.,0.),(0.,.25),(2.,.25))
     for b,boost in scenarios:
         result=case(args.nodes,b,boost,args.max_time_ps,args.pinch_fraction,
-                    quadrature_order=args.quadrature_order)
+                    quadrature_order=args.quadrature_order,
+                    regulator_cm=args.regulator_cm)
         records.append(result)
         print('[equidistributed-gauge] '+json.dumps(result),flush=True)
     path=Path(args.output);path.parent.mkdir(parents=True,exist_ok=True)
