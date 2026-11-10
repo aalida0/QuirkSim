@@ -1,8 +1,12 @@
 import numpy as np
 import pytest
+from pathlib import Path
+from runpy import run_path
 from quirksim.conformal_characteristics import ConformalString
-from scripts.validate_conformal_boundary import rotating_string
 from quirksim.dynamics import C_CM_PER_PS as C
+
+rotating_string = run_path(str(Path(__file__).resolve().parents[1]/
+                              'scripts/validate_conformal_boundary.py'))['rotating_string']
 
 
 def test_quantum_matching_censors_before_the_classical_chart_collapses():

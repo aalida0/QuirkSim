@@ -33,9 +33,14 @@ def main():
     p.add_argument('--causal-fraction', type=float, default=.0015625)
     p.add_argument('--output', default='results/conformal_evolution.json')
     a = p.parse_args()
+    last_print = [-50.]
+    def progress(row):
+        if row['time_ps'] >= last_print[0]+50. or row['status'] != 'TARGET_REACHED':
+            print(json.dumps(row), flush=True)
+            last_print[0] = row['time_ps']
     r = evolve(mode=a.mode, seed=a.seed, duration_ps=a.duration_ps,
                max_step_ps=a.max_step_ps, max_ray_angle=a.ray_angle,
-               causal_fraction=a.causal_fraction)
+               causal_fraction=a.causal_fraction, progress=progress)
     passed = validate(r)
     path = Path(a.output); path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(r, indent=2)+'\n')

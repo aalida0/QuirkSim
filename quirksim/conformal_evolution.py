@@ -14,7 +14,8 @@ from .decays import sample_decay
 def evolve(representation='triplet', mass_gev=225., lambda_ev=774., seed=25,
            duration_ps=1000., mode='recoil', max_step_ps=.1,
            max_ray_angle=.003125, causal_fraction=.00625,
-           matching_radius_in_confinement_units=8., observation_step_ps=5.):
+           matching_radius_in_confinement_units=8., observation_step_ps=5.,
+           progress=None):
     if (mode not in ('stable', 'recoil') or duration_ps <= 0
             or not np.isfinite(duration_ps) or observation_step_ps <= 0
             or not np.isfinite(matching_radius_in_confinement_units)
@@ -49,6 +50,11 @@ def evolve(representation='triplet', mass_gev=225., lambda_ev=774., seed=25,
         status = solver.advance(target, max_step_ps, causal_fraction=causal_fraction,
                                  max_ray_angle=max_ray_angle, matching_radius_cm=radius)
         records.append(solver.snapshot(samples=9))
+        if progress is not None:
+            progress({'time_ps': solver.t, 'decays': len(solver.emissions),
+                      'reflections': len(solver.reflections), 'status': status,
+                      'closure_cm': records[-1]['chord_closure_error_cm'],
+                      'observations': len(records), 'ray_samples': len(solver.a.z)})
         if status != 'TARGET_REACHED':
             break
         if len(records) > 20000:

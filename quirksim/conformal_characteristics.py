@@ -207,7 +207,8 @@ class ConformalString:
         e = np.hypot(self.masses, np.linalg.norm(p, axis=1))
         v = p/e[:, None]
         def incoming(history, z, cap):
-            return history.left_value(cap) if cap is not None and z >= cap else history.value(z)
+            near = cap is not None and z >= cap-32*np.spacing(max(1., abs(cap)))
+            return history.left_value(cap) if near else history.value(z)
         ka = incoming(self.a, t+y[0], incoming_caps[0])
         kb = incoming(self.b, t-y[1], incoming_caps[1])
         ql, _, fl = massive_boundary(p[0], self.masses[0], ka)
@@ -262,7 +263,8 @@ class ConformalString:
                 return y+h*(k1+2*k2+2*k3+k4)/6
 
             def incident(history, z, cap):
-                return history.left_value(cap) if cap is not None and z >= cap else history.value(z)
+                near = cap is not None and z >= cap-32*np.spacing(max(1., abs(cap)))
+                return history.left_value(cap) if near else history.value(z)
 
             rejections = 0
             while True:
