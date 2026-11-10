@@ -1,0 +1,362 @@
+[
+  {
+    "causal_fraction": 0.00625,
+    "max_ray_angle": 0.003125,
+    "termination": "QUANTUM_MATCHING_SURFACE",
+    "time_ps": 458.61205542294493,
+    "chord_closure_error_cm": 6.1849263895629834e-09,
+    "final": {
+      "time_ps": 458.61205542294493,
+      "positions_cm": [
+        [
+          3.422227887698502,
+          -1.573939758448222e-05,
+          0.0
+        ],
+        [
+          3.422227690395767,
+          -1.5687730467636266e-05,
+          0.0
+        ]
+      ],
+      "momenta_gev": [
+        [
+          -41.875615952324075,
+          -0.06486551514572861,
+          0.0
+        ],
+        [
+          168.7373093933029,
+          0.06428455762973305,
+          0.0
+        ]
+      ],
+      "proper_times_ps": [
+        430.0827643624612,
+        430.84236406134454
+      ],
+      "string_energy_gev": 6.3172274655444154e-06,
+      "total_energy_gev": 510.3863261196764,
+      "total_momentum_gev": [
+        126.86169362912088,
+        -0.0005805176507771683,
+        0.0
+      ],
+      "chord_closure_error_cm": 6.1849263895629834e-09,
+      "max_conformal_norm_residual": 2.220446049250313e-16,
+      "max_conformal_orthogonality_residual": 1.3183898417423734e-16,
+      "energy_coordinate_interval_ps": 6.9408132729043e-06,
+      "external_impulse_gev": [
+        -3.0978823914746774e-10,
+        -0.0005805467815737054,
+        0.0
+      ],
+      "external_angular_impulse_gev_cm": [
+        0.0,
+        0.0,
+        -4.048491619707404e-09
+      ],
+      "external_boost_impulse_gev_cm": [
+        2.0646678749177257e-05,
+        -3.6668559662147194e-05,
+        0.0
+      ]
+    },
+    "poincare_129": {
+      "orbital_angular_momentum_gev_cm": [
+        0.0,
+        0.0,
+        1.3321767497530542e-06
+      ],
+      "orbital_angular_momentum_hbar": [
+        0.0,
+        0.0,
+        67511130.34595081
+      ],
+      "boost_charge_gev_cm": [
+        2.4566867666367216,
+        -3.718947667989865e-05,
+        0.0
+      ],
+      "orbital_angular_minus_external_gev_cm": [
+        0.0,
+        0.0,
+        1.3362252413727616e-06
+      ],
+      "boost_minus_external_gev_cm": [
+        2.4566661199579722,
+        -5.20917017751456e-07,
+        0.0
+      ],
+      "quadrature_samples": 129
+    },
+    "poincare_257": {
+      "orbital_angular_momentum_gev_cm": [
+        0.0,
+        0.0,
+        1.3320820198133806e-06
+      ],
+      "orbital_angular_momentum_hbar": [
+        0.0,
+        0.0,
+        67506329.6877002
+      ],
+      "boost_charge_gev_cm": [
+        2.4566867666367216,
+        -3.718947667989865e-05,
+        0.0
+      ],
+      "orbital_angular_minus_external_gev_cm": [
+        0.0,
+        0.0,
+        1.336130511433088e-06
+      ],
+      "boost_minus_external_gev_cm": [
+        2.4566661199579722,
+        -5.20917017751456e-07,
+        0.0
+      ],
+      "quadrature_samples": 257
+    }
+  },
+  {
+    "causal_fraction": 0.003125,
+    "max_ray_angle": 0.0015625,
+    "termination": "QUANTUM_MATCHING_SURFACE",
+    "time_ps": 458.6120555240307,
+    "chord_closure_error_cm": 1.8736882555802165e-09,
+    "final": {
+      "time_ps": 458.6120555240307,
+      "positions_cm": [
+        [
+          3.4222278870973257,
+          -1.574411516513797e-05,
+          0.0
+        ],
+        [
+          3.422227692234345,
+          -1.5683896571111134e-05,
+          0.0
+        ]
+      ],
+      "momenta_gev": [
+        [
+          -41.875616006223474,
+          -0.06486210388313797,
+          0.0
+        ],
+        [
+          168.7373094212004,
+          0.06428108234284835,
+          0.0
+        ]
+      ],
+      "proper_times_ps": [
+        430.08276446220907,
+        430.8423641420835
+      ],
+      "string_energy_gev": 6.29240271307682e-06,
+      "total_energy_gev": 510.3863261196771,
+      "total_momentum_gev": [
+        126.86169362815619,
+        -0.0005805504148378368,
+        0.0
+      ],
+      "chord_closure_error_cm": 1.8736882555802165e-09,
+      "max_conformal_norm_residual": 2.220446049250313e-16,
+      "max_conformal_orthogonality_residual": 1.235990476633475e-16,
+      "energy_coordinate_interval_ps": 6.913538020847376e-06,
+      "external_impulse_gev": [
+        -3.6106160642486126e-10,
+        -0.0005805467669454914,
+        0.0
+      ],
+      "external_angular_impulse_gev_cm": [
+        0.0,
+        0.0,
+        -3.998431208357181e-09
+      ],
+      "external_boost_impulse_gev_cm": [
+        2.0646733030860856e-05,
+        -3.666875971563511e-05,
+        0.0
+      ]
+    },
+    "poincare_129": {
+      "orbital_angular_momentum_gev_cm": [
+        0.0,
+        0.0,
+        3.7566439454163826e-07
+      ],
+      "orbital_angular_momentum_hbar": [
+        0.0,
+        0.0,
+        19037659.91332194
+      ],
+      "boost_charge_gev_cm": [
+        2.4566867750879737,
+        -3.674068232005154e-05,
+        0.0
+      ],
+      "orbital_angular_minus_external_gev_cm": [
+        0.0,
+        0.0,
+        3.7966282574999545e-07
+      ],
+      "boost_minus_external_gev_cm": [
+        2.456666128354943,
+        -7.192260441642802e-08,
+        0.0
+      ],
+      "quadrature_samples": 129
+    },
+    "poincare_257": {
+      "orbital_angular_momentum_gev_cm": [
+        0.0,
+        0.0,
+        3.756454032718075e-07
+      ],
+      "orbital_angular_momentum_hbar": [
+        0.0,
+        0.0,
+        19036697.486907262
+      ],
+      "boost_charge_gev_cm": [
+        2.4566867750879737,
+        -3.674068232005154e-05,
+        0.0
+      ],
+      "orbital_angular_minus_external_gev_cm": [
+        0.0,
+        0.0,
+        3.796438344801647e-07
+      ],
+      "boost_minus_external_gev_cm": [
+        2.456666128354943,
+        -7.192260441642802e-08,
+        0.0
+      ],
+      "quadrature_samples": 257
+    }
+  },
+  {
+    "causal_fraction": 0.0015625,
+    "max_ray_angle": 0.00078125,
+    "termination": "QUANTUM_MATCHING_SURFACE",
+    "time_ps": 458.6120555610954,
+    "chord_closure_error_cm": 5.035835453493913e-10,
+    "final": {
+      "time_ps": 458.6120555610954,
+      "positions_cm": [
+        [
+          3.4222278868943627,
+          -1.5745410749684302e-05,
+          0.0
+        ],
+        [
+          3.4222276928849267,
+          -1.568249652869068e-05,
+          0.0
+        ]
+      ],
+      "momenta_gev": [
+        [
+          -41.87561602631352,
+          -0.06486101903972857,
+          0.0
+        ],
+        [
+          168.7373094320063,
+          0.06427999226233475,
+          0.0
+        ]
+      ],
+      "proper_times_ps": [
+        430.0827644986621,
+        430.8423641718873
+      ],
+      "string_energy_gev": 6.282807023985336e-06,
+      "total_energy_gev": 510.3863261196789,
+      "total_momentum_gev": [
+        126.86169362755673,
+        -0.0005805466012872008,
+        0.0
+      ],
+      "chord_closure_error_cm": 5.035835453493913e-10,
+      "max_conformal_norm_residual": 3.3306690738754696e-16,
+      "max_conformal_orthogonality_residual": 9.974659986866641e-17,
+      "energy_coordinate_interval_ps": 6.902995122626265e-06,
+      "external_impulse_gev": [
+        -3.772241790936687e-10,
+        -0.0005805467618273782,
+        0.0
+      ],
+      "external_angular_impulse_gev_cm": [
+        0.0,
+        0.0,
+        -3.980916447518541e-09
+      ],
+      "external_boost_impulse_gev_cm": [
+        2.0646747388007706e-05,
+        -3.6668830551450886e-05,
+        0.0
+      ]
+    },
+    "poincare_129": {
+      "orbital_angular_momentum_gev_cm": [
+        0.0,
+        0.0,
+        9.830305146546359e-08
+      ],
+      "orbital_angular_momentum_hbar": [
+        0.0,
+        0.0,
+        4981733.934419619
+      ],
+      "boost_charge_gev_cm": [
+        2.456686778941503,
+        -3.669589864965794e-05,
+        0.0
+      ],
+      "orbital_angular_minus_external_gev_cm": [
+        0.0,
+        0.0,
+        1.0228396791298213e-07
+      ],
+      "boost_minus_external_gev_cm": [
+        2.4566661321941146,
+        -2.706809820705744e-08,
+        0.0
+      ],
+      "quadrature_samples": 129
+    },
+    "poincare_257": {
+      "orbital_angular_momentum_gev_cm": [
+        0.0,
+        0.0,
+        9.825238369931626e-08
+      ],
+      "orbital_angular_momentum_hbar": [
+        0.0,
+        0.0,
+        4979166.228471182
+      ],
+      "boost_charge_gev_cm": [
+        2.456686778941503,
+        -3.669589864965794e-05,
+        0.0
+      ],
+      "orbital_angular_minus_external_gev_cm": [
+        0.0,
+        0.0,
+        1.022333001468348e-07
+      ],
+      "boost_minus_external_gev_cm": [
+        2.4566661321941146,
+        -2.706809820705744e-08,
+        0.0
+      ],
+      "quadrature_samples": 257
+    }
+  }
+]

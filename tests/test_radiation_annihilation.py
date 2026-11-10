@@ -8,6 +8,7 @@ from quirksim.radiation_annihilation import (
     linear_cooling_time_ps, radiation_recoil_scale, coulomb_ground_reference,
     evolve_quantum_levels)
 from quirksim.physics import HBAR_GEV_PS
+from quirksim.conformal_evolution import quantum_handoff
 
 
 def test_lienard_matches_angular_larmor_integral_and_longitudinal_force_limit():
@@ -114,3 +115,18 @@ def test_radiation_small_energy_can_still_have_a_large_short_distance_recoil_sca
     assert r['scale_over_confinement_reference'] > 10
     assert r['worldsheet_geometry_error_bound'] is None
     assert wkb_crossing_exponent(225., .4, 1e-7, 0.) == 0
+
+
+def test_classical_to_quantum_handoff_uses_proper_time_and_rejects_energy_mismatch():
+    classical = {'termination': 'QUANTUM_MATCHING_SURFACE', 'duration_requested_ps': 1000.,
+                 'final': {'time_ps': 400., 'total_energy_gev': 625.,
+                           'total_momentum_gev': [375., 0., 0.]}}
+    card = {'energies_gev': [500.], 'initial_probabilities': [1.],
+            'transition_rates_per_ps': [[0.]], 'annihilation_rates_per_ps': [.002],
+            'weak_rates_per_ps': [0.], 'rate_source': 'analytic proper-time check'}
+    result = quantum_handoff(classical, card)
+    assert result['fixed_pair_boost_gamma'] == pytest.approx(1.25)
+    assert result['quantum_evolution']['time_ps'] == pytest.approx(480.)
+    assert result['quantum_evolution']['annihilation_probability'] == pytest.approx(1-math.exp(-.96))
+    with pytest.raises(ValueError, match='energy'):
+        quantum_handoff(classical, {**card, 'energies_gev': [499.]})

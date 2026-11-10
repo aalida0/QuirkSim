@@ -437,6 +437,7 @@ class ConformalString:
         start = 8+3*endpoint
         oldp = self.y[start:start+3]
         parent = np.r_[np.hypot(self.masses[endpoint], np.linalg.norm(oldp)), oldp]
+        parent_charge = float(self.charges[endpoint])
         daughter = products['daughter']
         if abs(daughter[0]-np.hypot(daughter_mass_gev, np.linalg.norm(daughter[1:]))) > 1e-9:
             raise ValueError('daughter mass-shell mismatch')
@@ -456,6 +457,10 @@ class ConformalString:
         self.charges[endpoint] = 0.
         record = {'kind': 'weak_decay', 'time_ps': self.t, 'endpoint': endpoint,
                   'position_cm': self.y[2+3*endpoint:5+3*endpoint].tolist(),
+                  'parent_four_vector_gev': parent.tolist(),
+                  'daughter_four_vector_gev': daughter.tolist(),
+                  'parent_charge': parent_charge, 'daughter_charge': 0.,
+                  'emitted_charge': parent_charge,
                   'products_gev': {k: v.tolist() for k, v in products.items() if k != 'daughter'},
                   'four_momentum_residual_gev': residual.tolist(),
                   'matching': 'LOCAL_MASSIVE_BOUNDARY_WITH_CAUSAL_NULL_RAY_JUMP'}

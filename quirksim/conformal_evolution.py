@@ -81,3 +81,43 @@ def evolve(representation='triplet', mass_gev=225., lambda_ev=774., seed=25,
             'annihilation_status': 'UNKNOWN_QUANTUM_STATE_AND_TOTAL_KERNEL',
             'conditional_on': 'NO_UNMODELED_RADIATION_OR_ANNIHILATION_BEFORE_CENSORING',
             'physical_survival_probability': None}
+
+
+def quantum_handoff(classical, quantum_card):
+    """Continue a censored trajectory ONLY with an explicit quantum rate card.
+
+    The card supplies a CM level model and initial population. Subsequent
+    evolution assumes a fixed pair boost and isotropic mean radiation in its
+    rest frame. Recoil fluctuations and external-field evolution are absent.
+    A successful calculation does not certify its physical matching.
+    """
+    from .radiation_annihilation import evolve_quantum_levels
+    if classical['termination'] != 'QUANTUM_MATCHING_SURFACE':
+        raise ValueError('a quantum matching surface is required for handoff')
+    final = classical['final']
+    energy = float(final['total_energy_gev'])
+    momentum = np.asarray(final['total_momentum_gev'], float)
+    if energy <= np.linalg.norm(momentum):
+        raise ValueError('a future timelike pair four-momentum is required')
+    invariant_mass = np.sqrt(energy*energy-momentum@momentum)
+    levels = np.asarray(quantum_card['energies_gev'], float)
+    populations = np.asarray(quantum_card['initial_probabilities'], float)
+    if abs(levels@populations-invariant_mass) > 1e-8*invariant_mass:
+        raise ValueError('initial quantum energy does not match the classical invariant mass')
+    remaining_lab = classical['duration_requested_ps']-final['time_ps']
+    if remaining_lab <= 0:
+        raise ValueError('no observation time remains after matching')
+    gamma = energy/invariant_mass
+    result = evolve_quantum_levels(levels, quantum_card['transition_rates_per_ps'],
+        quantum_card['annihilation_rates_per_ps'], quantum_card['weak_rates_per_ps'],
+        populations, remaining_lab/gamma, quantum_card['rate_source'])
+    mean_rad = result['expected_radiated_energy_gev']
+    return {'status': 'CONDITIONAL_CLASSICAL_TO_QUANTUM_HANDOFF',
+            'matching_time_ps': final['time_ps'], 'matched_invariant_mass_gev': float(invariant_mass),
+            'fixed_pair_boost_gamma': float(gamma), 'quantum_evolution': result,
+            'mean_radiated_lab_four_momentum_gev':
+                np.r_[gamma*mean_rad, momentum/invariant_mass*mean_rad].tolist(),
+            'assumptions': ['supplied quantum population and rate matrix',
+                            'fixed pair boost after matching', 'isotropic CM mean radiation',
+                            'weak sink ends the modeled flavor sector'],
+            'physical_prediction_status': 'UNKNOWN_UNTIL_QUANTUM_CARD_IS_MATCHED'}

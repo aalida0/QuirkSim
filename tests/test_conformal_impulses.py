@@ -4,6 +4,7 @@ import pytest
 from quirksim.conformal_characteristics import ConformalString, UnitRayHistory
 from quirksim.physics import benchmark
 from quirksim.decays import sample_decay
+from quirksim.conformal_evolution import evolve
 
 
 def test_one_sided_null_jump_has_zero_integrated_impulse():
@@ -59,3 +60,16 @@ def test_magnetic_work_is_zero_and_momentum_impulse_is_accounted():
     assert abs(z['total_energy_gev']-initial['total_energy_gev']) < 1e-9
     np.testing.assert_allclose(np.array(z['total_momentum_gev'])-z['external_impulse_gev'],
                               initial['total_momentum_gev'], atol=1e-8)
+
+
+def test_boosted_early_weak_pilot_reflects_one_sided_wave_without_smeared_impulse():
+    # This catches using the right-hand incident ray in the final RK stage at
+    # an incoming jump, which had generated a false ~3e-8 cm geometry jump.
+    r = evolve(seed=25, duration_ps=30., max_step_ps=.05,
+               max_ray_angle=.0015625, causal_fraction=.003125)
+    assert r['termination'] == 'TARGET_REACHED'
+    assert len(r['decays']) == 2
+    assert len(r['wave_reflections']) >= 2
+    assert max(z['chord_closure_error_cm'] for z in r['records']) < 1e-10
+    assert max(abs(x) for x in r['momentum_with_weak_products_minus_field_residual_gev']) < 1e-9
+    assert all(d['parent_charge'] == d['daughter_charge']+d['emitted_charge'] for d in r['decays'])

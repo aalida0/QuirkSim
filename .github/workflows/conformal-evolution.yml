@@ -34,17 +34,20 @@ jobs:
           path: results/radiation_annihilation_audit.json
   classical-pilots:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
         include:
           - mode: stable
             seed: 25
+            extra: ''
           - mode: recoil
             seed: 25
+            extra: '--max-step-ps 0.025 --ray-angle 0.0001953125 --causal-fraction 0.000390625'
           - mode: recoil
             seed: 1
+            extra: '--max-step-ps 0.025 --ray-angle 0.0001953125 --causal-fraction 0.000390625'
     env:
       OPENBLAS_NUM_THREADS: 1
       OMP_NUM_THREADS: 1
@@ -54,7 +57,7 @@ jobs:
         with:
           python-version: '3.11'
       - run: python -m pip install -e '.[test]'
-      - run: python scripts/validate_conformal_evolution.py --mode ${{ matrix.mode }} --seed ${{ matrix.seed }}
+      - run: python scripts/validate_conformal_evolution.py --mode ${{ matrix.mode }} --seed ${{ matrix.seed }} ${{ matrix.extra }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
