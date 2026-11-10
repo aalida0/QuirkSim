@@ -30,6 +30,9 @@ for the conservative remeshing/worldsheet convergence acceptance criteria.
 Do not use these simulations as paper figures.
 
 
+**Mesh-independent first-return validation:** [common total string arclength
+convergence and remaining core-scale physics blocker](studies/NG_TOTAL_ARCLENGTH_CONVERGENCE_2026-11-10.md).
+
 **Scientific validation report:**
 [variational worldsheet and uncertainty envelope](studies/VARIATIONAL_WORLD_SHEET_PHYSICS_GATES_2026-11-10.md).
 
