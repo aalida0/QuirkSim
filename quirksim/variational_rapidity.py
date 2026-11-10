@@ -9,6 +9,7 @@ It does NOT cure poorly resolved folds, gauge modes, or continuum issues.
 import math
 import numpy as np
 from scipy.integrate import solve_ivp
+from .mesh_guard import make_mesh_stop_events,require_good_mesh,assert_no_mesh_stop
 
 
 def physical_to_rapidity(y,nodes):
@@ -45,17 +46,23 @@ def rhs_rapidity(engine,t,yw):
     return out
 
 
-def solve_rapidity(engine,state,duration_ps,max_step_ps=None):
+def solve_rapidity(engine,state,duration_ps,max_step_ps=None,strict_mesh=True):
     n=engine.n
     if max_step_ps is None:
         max_step_ps=engine.params.max_step_ps
+    if strict_mesh:
+        require_good_mesh(state,n,engine.params.regularizer_cm)
     start=engine.action_quantities(state)
     w0=physical_to_rapidity(state,n)
+    mesh_events=(make_mesh_stop_events(n,engine.params.regularizer_cm)
+                 if strict_mesh else None)
     sol=solve_ivp(lambda t,y:rhs_rapidity(engine,t,y),
         (0,duration_ps),w0,method='DOP853',atol=1e-10,rtol=2e-9,
-        max_step=max_step_ps)
+        max_step=max_step_ps,events=mesh_events)
     if not sol.success:
         raise RuntimeError(f'rapidity-string solver: {sol.message}')
+    if strict_mesh:
+        assert_no_mesh_stop(sol)
     velocities=sol.y[3*n:6*n,:].T.reshape(-1,n,3)
     vmax=float(np.max(np.sqrt(np.sum(velocities**2,axis=2)/
                             (1+np.sum(velocities**2,axis=2)))))
