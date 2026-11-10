@@ -62,6 +62,40 @@ python scripts/paired_compare.py --model doublet --mass 150 --lambda-ev 2154 \
     --output-dir results/paired_doublet
 ```
 
+### Triplet nonradial / pre-existing angular momentum sensitivity
+
+The straight-string proxy can be tested away from the artificially radial
+production geometry by setting `impact_cm`, interpreted **only** as a
+controlled transverse separation between endpoints at simulation start.
+For initial back-to-back longitudinal endpoint momenta `+pz, -pz`,
+
+`|L_initial|/hbar = impact_cm * pz / (hbar*c)`.
+
+To scan matched triplet recoil vs no-recoil histories, without touching
+other running jobs:
+
+```bash
+python scripts/triplet_impact_scan.py \
+  --mass 225 --lambda-ev 774 --duration-ps 1000 \
+  --impact-um 0,0.01,0.1,1,3,10 \
+  --nevents 20 --seed 10 --progress-every 10 \
+  --output-dir results/triplet_impact_pilot
+```
+
+Outputs include `summary.json`, `summary.csv` and `paired_events.csv`,
+with per-offset median post-decay distances, *paired* median differences,
+fraction of pairs where recoil increases the distance, contact-reference
+fractions, and the initial orbital angular momentum in units of hbar.
+
+**Crucial physics warning:** A pair of quirks from a pointlike pp vertex
+does not obtain relative orbital angular momentum merely from a nonzero
+opening angle between its initial momenta; in the CM frame that motion is
+radial. Offsets of 0.01–10 micrometres are far larger than a hard-production
+vertex and are used here exclusively as sensitivity tests. Physically
+motivated nonradial motion requires a validated mechanism (magnetic forces,
+material interactions, radiative kicks, or a moving-string model). The
+`impact_um` scan **cannot** be called a realistic LHC production model.
+
 ### Performance and interrupted-run safety
 
 The three-way ensemble uses three independent adaptive SciPy ODE integrations
