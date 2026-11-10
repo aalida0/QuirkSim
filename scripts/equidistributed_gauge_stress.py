@@ -30,10 +30,15 @@ def case(n,b_tesla,beta_boost_x,maximum_ps=260.):
     ref=ExactRadialNG(RadialNGParameters(initial_separation_cm=.1,
                   mass_neutral_gev=225.,lambda_ev=774.,initial_beta=.4))
     try:
+        # An equal-arclength constraint implies each segment is ~L/(n-1).
+        # Compare physical PINCH LENGTH rather than a fixed per-edge length,
+        # which otherwise artificially rejects refined meshes earlier.
+        total_pinch_cm=p.initial_length_cm*4e-4
+        min_factor=max(100.,total_pinch_cm/((n-1)*p.regularizer_cm))
         sol=solve_ivp(s.rhs,(0,maximum_ps),y,method='DOP853',
             rtol=2e-9,atol=1e-10,max_step=p.max_step_ps,
             events=make_mesh_stop_events(n,p.regularizer_cm,
-                                         minimum_factor=10000.))
+                                         minimum_factor=min_factor))
         if not sol.success:
             raise RuntimeError(sol.message)
         t=float(sol.t[-1])
@@ -54,9 +59,11 @@ def case(n,b_tesla,beta_boost_x,maximum_ps=260.):
         return {
           'status':'FIRST_MESH_STOP' if stops else 'REACHED_HORIZON',
           'stops':stops,'nodes':n,'b_tesla':b_tesla,
+          'common_total_length_pinch_cutoff_cm':total_pinch_cm,
           'beta_boost_x':beta_boost_x,'time_ps':t,
           'time_divided_by_radial_first_crossing':t/ref.first_crossing_ps,
           'endpoint_separation_cm':separation,
+          'total_string_polyline_length_cm':float(np.sum(np.linalg.norm(np.diff(x,axis=0),axis=1))),
           'exact_radial_reference_separation_cm':reference_sep,
           'exact_radial_reference_comparable':comparable,
           'radial_reference_absolute_separation_error_cm':
