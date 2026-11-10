@@ -16,7 +16,7 @@ def run(b_field=0,duration=260,nodes=5):
     s=VariationalString(p)
     y=pair_boost_initial_state(s,.25)
     try:
-        diag,sol=solve_rapidity(s,y,duration,.5)
+        diag,sol=solve_rapidity(s,y,duration,.5,strict_mesh=False)  # historical post-failure diagnostic ONLY
         pos=sol.y[:3*nodes,:].T.reshape(-1,nodes,3)
         edges=np.linalg.norm(np.diff(pos,axis=1),axis=2)
         short=float(edges.min())
