@@ -1,5 +1,11 @@
 # Next Step-1 gate: independent conformal-gauge massive-endpoint worldsheet
 
+**Implementation update:** the zero-field boundary/characteristic prototype
+and explicitly reduced signed radial adapter now exist. See
+[scoped validation](CONFORMAL_BOUNDARY_RESULT_2026-11-10.md).
+Stages A–E below retain their full scope: the radial convention check and
+selected pulse/rotation checks do not constitute a pass of full 3D continuation.
+
 **Scientific state (2026-11-10):** the pre-contact Gauss-quadrature
 constrained finite-element worldsheet PASSES selected triplet near-core
 geometry refinement. **No physical post-contact Nambu-Goto worldsheet
@@ -104,3 +110,4 @@ Radiation/annihilation assumptions and any collider reach remain
 out of scope until stage E and the survival model are validated.
 
 **Do not merge this research branch to main.**
+

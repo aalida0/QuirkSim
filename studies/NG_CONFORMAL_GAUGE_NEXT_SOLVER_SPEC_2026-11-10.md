@@ -1,8 +1,10 @@
 # Step 1 next solver: conformal/double-null Nambu–Goto with massive charged boundaries
 
 **Date:** 2026-11-10  
-**Status:** DESIGN/DERIVATION GATE ONLY — **NOT IMPLEMENTED**, and not a claim
-of a validated moving quirk worldsheet.
+**Status:** PARTIALLY IMPLEMENTED: zero-field boundary flux and causal
+characteristic prototype, analytic radial/rotating checks and pulse refinement.
+See [implementation and remaining gates](CONFORMAL_BOUNDARY_RESULT_2026-11-10.md).
+No validated general contact continuation or physical recoil is established.
 
 ## Why change coordinates?
 
@@ -127,3 +129,4 @@ the current gauge problem, but neither 1000 ps full 3D trajectories
 nor an annihilation probability has been validated. No
 LHC discovery/exclusion claim may use the present short-distance
 geometric encounter fractions.
+

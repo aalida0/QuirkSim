@@ -36,6 +36,15 @@ benchmark](studies/NG_GAUSS_QUADRATURE_AUDIT_2026-11-10.md). Full physical
 string crossing, weak impulses in this gauge, radiation and annihilation
 remain **BLOCKED**. A numerical gate is not a collider prediction.
 
+**Independent conformal-gauge prototype:** moving massive-boundary flux,
+causal characteristic histories, exact rotating-string comparison and
+four signed radial crossings now have a separate
+[derivation](studies/CONFORMAL_BOUNDARY_DERIVATION.md) and
+[scoped validation result](studies/CONFORMAL_BOUNDARY_RESULT_2026-11-10.md).
+The radial crossing rule is explicitly prescribed in a reduced adapter;
+general chart collapse still stops. Electromagnetic boundaries, near-contact
+cross-validation and weak recoil in this solver remain pending.
+
 **Mesh-independent first-return validation:** [common total string arclength
 convergence and remaining core-scale physics blocker](studies/NG_TOTAL_ARCLENGTH_CONVERGENCE_2026-11-10.md).
 
@@ -271,3 +280,4 @@ The no-recoil control is deliberately unphysical, not a competing model.
 - *The Quirk Trajectory* (2020), 2002.07503.
 
 Development should remain on the feature branch until independently validated.
+
