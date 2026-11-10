@@ -1,0 +1,42 @@
+name: High-resolution Gauss NG spatial convergence
+on:
+  push:
+    branches: [research/variational-worldsheet]
+    paths:
+      - '.github/workflows/ng-gauss-high-resolution.yml'
+  workflow_dispatch:
+
+jobs:
+  high_n:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - nodes: '17'
+            quadrature_order: '2'
+          - nodes: '17'
+            quadrature_order: '3'
+          - nodes: '21'
+            quadrature_order: '2'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: python -m pip install -e .
+      - name: Fine near-contact string with action-consistent Gauss quadrature
+        run: |
+          python -u scripts/equidistributed_gauge_stress.py \
+            --nodes ${{ matrix.nodes }} --quadrature-order ${{ matrix.quadrature_order }} \
+            --field-only --pinch-fraction 0.00002 --max-time-ps 1000 \
+            --output results/fine_n${{ matrix.nodes }}_q${{ matrix.quadrature_order }}.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fine-ng-n${{ matrix.nodes }}-q${{ matrix.quadrature_order }}
+          path: results/fine_n${{ matrix.nodes }}_q${{ matrix.quadrature_order }}.json
+          if-no-files-found: ignore
+          retention-days: 14
