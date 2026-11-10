@@ -18,7 +18,7 @@ from quirksim.mesh_guard import make_mesh_stop_events
 from quirksim.radial_ng_reference import ExactRadialNG,RadialNGParameters
 
 
-def case(n,b_tesla,beta_boost_x,maximum_ps=260.):
+def case(n,b_tesla,beta_boost_x,maximum_ps=260.,pinch_fraction=4e-4):
     p=StringParameters(nodes=n,mass_gev=225.,lambda_ev=774.,
                        initial_length_cm=.1,initial_beta=.4,
                        b_tesla=b_tesla,gauge_mass_fraction=1e-3,
@@ -33,7 +33,7 @@ def case(n,b_tesla,beta_boost_x,maximum_ps=260.):
         # An equal-arclength constraint implies each segment is ~L/(n-1).
         # Compare physical PINCH LENGTH rather than a fixed per-edge length,
         # which otherwise artificially rejects refined meshes earlier.
-        total_pinch_cm=p.initial_length_cm*4e-4
+        total_pinch_cm=p.initial_length_cm*pinch_fraction
         min_factor=max(100.,total_pinch_cm/((n-1)*p.regularizer_cm))
         sol=solve_ivp(s.rhs,(0,maximum_ps),y,method='DOP853',
             rtol=2e-9,atol=1e-10,max_step=p.max_step_ps,
@@ -92,12 +92,16 @@ def main():
     p.add_argument('--nodes',type=int,default=5)
     p.add_argument('--field-only',action='store_true',help='run 2T boosted case only')
     p.add_argument('--max-time-ps',type=float,default=260.)
+    p.add_argument('--pinch-fraction',type=float,default=4e-4,
+                   help='engineering total string length cutoff / initial length')
     p.add_argument('--output',default='results/equidistributed_gate.json')
     args=p.parse_args()
+    if not 0<args.pinch_fraction<1:
+        p.error('pinch fraction must lie in (0,1)')
     records=[]
     scenarios=((2.,.25),) if args.field_only else ((0.,0.),(0.,.25),(2.,.25))
     for b,boost in scenarios:
-        result=case(args.nodes,b,boost,args.max_time_ps)
+        result=case(args.nodes,b,boost,args.max_time_ps,args.pinch_fraction)
         records.append(result)
         print('[equidistributed-gauge] '+json.dumps(result),flush=True)
     path=Path(args.output);path.parent.mkdir(parents=True,exist_ok=True)
