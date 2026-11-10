@@ -74,10 +74,12 @@ def run(cutoff_fraction=2e-5,nodes=(5,7,11,15),
     # integration settings; preserving total energy alone is insufficient.
     numerical_pass=(errors['max_timestep_chord_shift_cm']<0.1*REFERENCE_CORE_CM
                     and errors['max_regulator_chord_shift_cm']<0.1*REFERENCE_CORE_CM)
-    core_pass=(numerical_pass and mesh_spread<0.1*REFERENCE_CORE_CM)
+    core_pass=(numerical_pass and len(nodes)>=3 and
+               mesh_spread<0.1*REFERENCE_CORE_CM)
     report={
-       'status':'CORE_REFERENCE_GEOMETRY_CONVERGED_DIAGNOSTIC_ONLY' if core_pass
-                else 'CORE_REFERENCE_GEOMETRY_BLOCKED',
+       'status':('CORE_REFERENCE_GEOMETRY_CONVERGED_DIAGNOSTIC_ONLY' if core_pass
+                  else 'SPATIAL_CONVERGENCE_NOT_ASSESSED' if len(nodes)<3
+                  else 'CORE_REFERENCE_GEOMETRY_BLOCKED'),
        'numerical_stability_gate':bool(numerical_pass),
        'core_reference_geometry_gate':bool(core_pass),
        'cutoff_fraction_of_initial_length':cutoff_fraction,
