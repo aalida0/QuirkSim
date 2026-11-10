@@ -1,0 +1,41 @@
+name: Solenoid plus straight-string NG endpoint-force physics pilot
+on:
+  push:
+    branches: [development/standalone-simulator]
+    paths:
+      - '.github/workflows/triplet-field-pilot.yml'
+  workflow_dispatch:
+
+jobs:
+  field-benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        b_tesla: ['0', '2']
+        force_model: ['central_proxy', 'ng_endpoint']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install standalone QuirkSim
+        run: python -m pip install -e '.[test]'
+      - name: Physics unit and regression tests
+        run: python -m pytest -q
+      - name: Matched pilot: 50 charged-pair events
+        run: |
+          python -u scripts/triplet_field_pilot.py \
+            --model triplet --mass 225 --lambda-ev 774 \
+            --duration-ps 1000 --beta-cm-x 0.25 --beta-rel 0.4 \
+            --seed 10 --nevents 50 --force-model ${{ matrix.force_model }} \
+            --b-tesla ${{ matrix.b_tesla }} \
+            --output-dir results/field_${{ matrix.b_tesla }}_${{ matrix.force_model }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: triplet-field-${{ matrix.b_tesla }}-${{ matrix.force_model }}
+          path: results/field_${{ matrix.b_tesla }}_${{ matrix.force_model }}/
+          if-no-files-found: ignore
+          retention-days: 14
