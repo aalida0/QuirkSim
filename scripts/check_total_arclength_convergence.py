@@ -5,13 +5,15 @@ mistake successful GitHub job execution for physical 1000ps completion.
 All cases evolve until the earliest near-zero-length boundary, not through
 an unvalidated folded/reconnected/annihilating worldsheet.
 """
+import argparse
 import json
 import math
 from pathlib import Path
 from equidistributed_gauge_stress import case
 
 
-def validate(cutoff_fractions=(1e-3,4e-4), horizon_ps=1000):
+def validate(cutoff_fractions=(1e-3,4e-4), horizon_ps=1000,
+             output_path='results/constrained_ng_common_arclength.json'):
     trials=[]
     for fraction in cutoff_fractions:
         results=[]
@@ -61,9 +63,9 @@ def validate(cutoff_fractions=(1e-3,4e-4), horizon_ps=1000):
               'no continuation of dynamically moving string through contact',
               'nonzero solenoid: mechanical momentum changes under magnetic force'
             ]}
-    Path('results').mkdir(exist_ok=True)
-    Path('results/constrained_ng_common_arclength.json').write_text(
-        json.dumps(report,indent=2)+'\n')
+    path=Path(output_path)
+    path.parent.mkdir(parents=True,exist_ok=True)
+    path.write_text(json.dumps(report,indent=2)+'\n')
     print('[common-arclength-summary] '+json.dumps({
        'status':report['status'],
        'trials':[{'cutoff':t['common_total_cutoff_cm'],
@@ -75,4 +77,12 @@ def validate(cutoff_fractions=(1e-3,4e-4), horizon_ps=1000):
 
 
 if __name__=='__main__':
-    validate()
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--fractions',default='0.001,0.0004',
+                        help='comma-separated total-arclength/initial-length thresholds')
+    parser.add_argument('--output',default='results/constrained_ng_common_arclength.json')
+    args=parser.parse_args()
+    fractions=tuple(float(z.strip()) for z in args.fractions.split(','))
+    if not fractions or any(not 0<z<1 for z in fractions):
+        parser.error('all fractions must lie strictly between 0 and 1')
+    validate(fractions,output_path=args.output)
