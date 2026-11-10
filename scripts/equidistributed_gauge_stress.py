@@ -32,13 +32,19 @@ def case(n,b_tesla,beta_boost_x,maximum_ps=260.):
     try:
         sol=solve_ivp(s.rhs,(0,maximum_ps),y,method='DOP853',
             rtol=2e-9,atol=1e-10,max_step=p.max_step_ps,
-            events=make_mesh_stop_events(n,p.regularizer_cm))
+            events=make_mesh_stop_events(n,p.regularizer_cm,
+                                         minimum_factor=10000.))
         if not sol.success:
             raise RuntimeError(sol.message)
         t=float(sol.t[-1])
         final=s.action_quantities(sol.y[:,-1])
         x,v=s._unpack(sol.y[:,-1])
         q=s.mesh_quality(sol.y)
+        all_pos=sol.y[:3*n,:].T.reshape(-1,n,3)
+        all_len=np.linalg.norm(np.diff(all_pos,axis=1),axis=2)
+        worst_global=float(np.max(all_len.max(axis=1)/
+                                   np.maximum(all_len.min(axis=1),p.regularizer_cm)))
+        smallest_global=float(all_len.min())
         _,_,g,gdot=s.constraints(sol.y[:,-1])
         stops=[name for name, hits in zip(('short_element','element_ratio'),
                                       sol.t_events) if len(hits)]
@@ -59,6 +65,8 @@ def case(n,b_tesla,beta_boost_x,maximum_ps=260.):
           'max_equal_length_rate_constraint_cm_per_ps':
               float(np.max(np.abs(gdot))),
           'mesh':q,
+          'minimum_segment_over_trajectory_cm':smallest_global,
+          'worst_segment_ratio_over_trajectory':worst_global,
           'gauge_point_mass_gev':s.gauge_mass,
           'energy_drift_gev':final['energy_gev']-start['energy_gev'],
           'momentum_drift_gev':float(np.linalg.norm(
@@ -75,11 +83,13 @@ def case(n,b_tesla,beta_boost_x,maximum_ps=260.):
 def main():
     p=argparse.ArgumentParser()
     p.add_argument('--nodes',type=int,default=5)
+    p.add_argument('--field-only',action='store_true',help='run 2T boosted case only')
     p.add_argument('--max-time-ps',type=float,default=260.)
     p.add_argument('--output',default='results/equidistributed_gate.json')
     args=p.parse_args()
     records=[]
-    for b,boost in ((0.,0.),(0.,.25),(2.,.25)):
+    scenarios=((2.,.25),) if args.field_only else ((0.,0.),(0.,.25),(2.,.25))
+    for b,boost in scenarios:
         result=case(args.nodes,b,boost,args.max_time_ps)
         records.append(result)
         print('[equidistributed-gauge] '+json.dumps(result),flush=True)
