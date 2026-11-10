@@ -24,6 +24,7 @@ from .physics import benchmark
 from .decays import sample_decay
 from .dynamics import C_CM_PER_PS, HBARC_GEV_CM
 from .field_dynamics import MAGNETIC_FORCE_GEV_PER_PS_T
+from .mesh_guard import make_mesh_stop_events,require_good_mesh,assert_no_mesh_stop
 
 IDENTITY=np.eye(3)
 
@@ -304,18 +305,24 @@ class VariationalString:
             self.charge[endpoint]=old_charge
             raise
 
-    def solve(self,state=None, duration_ps=None,store_trace=False):
+    def solve(self,state=None, duration_ps=None,store_trace=False,strict_mesh=True):
         if state is None:
             state=self.initial_state()
         if duration_ps is None:
             duration_ps=self.params.duration_ps
+        if strict_mesh:
+            require_good_mesh(state,self.n,self.params.regularizer_cm)
         initial=self.action_quantities(state)
         t_eval=np.linspace(0,duration_ps,41) if store_trace else None
+        mesh_events=(make_mesh_stop_events(self.n,self.params.regularizer_cm)
+                     if strict_mesh else None)
         sol=solve_ivp(self.rhs,(0,duration_ps),state,method='DOP853',
                       atol=1e-10,rtol=2e-9,max_step=self.params.max_step_ps,
-                      t_eval=t_eval)
+                      t_eval=t_eval,events=mesh_events)
         if not sol.success:
             raise RuntimeError(sol.message)
+        if strict_mesh:
+            assert_no_mesh_stop(sol)
         final=self.action_quantities(sol.y[:,-1])
         diagnostics={
             'model':'variational_midpoint_Nambu_Goto_finite_elements',
