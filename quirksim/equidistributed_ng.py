@@ -28,8 +28,8 @@ from scipy.integrate import solve_ivp
 
 from .dynamics import C_CM_PER_PS
 from .variational_string import VariationalString
-from .mesh_guard import (make_mesh_stop_events,MeshQualityViolation,
-                         require_good_mesh,assert_no_mesh_stop)
+from .mesh_guard import (make_mesh_stop_events,make_total_arclength_stop_event,
+                         MeshQualityViolation,require_good_mesh,assert_no_mesh_stop)
 
 
 class EquidistributedNGString(VariationalString):
@@ -126,18 +126,15 @@ class EquidistributedNGString(VariationalString):
             require_good_mesh(state,self.n,self.params.regularizer_cm)
         self.constraints(state)
         initial=self.action_quantities(state)
-        # Mesh-independent PHYSICAL total arclength cutoff for uniform
-        # segments. An element-specific cutoff with a fixed length would
-        # falsely stop more-refined meshes sooner at the same encounter.
-        # This is an engineering stop, NOT a confinement/annihilation scale.
+        # Explicit arclength event, independent of the number and spacing
+        # of finite elements. This is a numerical cutoff, NOT a physical
+        # annihilation radius or an automatic worldsheet crossing rule.
         if not 0<pinch_fraction_of_initial_length<1:
             raise ValueError('pinch fraction must be in (0,1)')
         total_pinch_cm=(self.params.initial_length_cm*
                         pinch_fraction_of_initial_length)
-        min_factor=max(100.,total_pinch_cm/
-                       ((self.n-1)*self.params.regularizer_cm))
-        events=(make_mesh_stop_events(self.n,self.params.regularizer_cm,
-                                     minimum_factor=min_factor)
+        events=([make_total_arclength_stop_event(self.n,total_pinch_cm)]+
+                make_mesh_stop_events(self.n,self.params.regularizer_cm)
                 if strict_mesh else None)
         sol=solve_ivp(self.rhs,(0,duration_ps),state,method='DOP853',
                       atol=1e-10,rtol=2e-9,max_step=self.params.max_step_ps,
@@ -145,6 +142,13 @@ class EquidistributedNGString(VariationalString):
         if not sol.success:
             raise RuntimeError(sol.message)
         if strict_mesh:
+            # A true near-zero arclength pinch is a boundary of this gauge:
+            # return no post-pinch physics even if the mesh is well balanced.
+            if len(sol.t_events[0]):
+                raise MeshQualityViolation(
+                    f'NG gauge reached common total-arclength cutoff '
+                    f'{total_pinch_cm:g} cm at t={sol.t_events[0][0]:.9g} ps; '
+                    'post-pinch continuation is not validated')
             assert_no_mesh_stop(sol)
         final=self.action_quantities(sol.y[:,-1])
         J,b,g,gdot=self.constraints(sol.y[:,-1])
