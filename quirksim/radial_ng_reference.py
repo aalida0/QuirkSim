@@ -132,6 +132,52 @@ class ExactRadialNG:
         }
         return result
 
+    def gauge_slice(self,t,fractions):
+        """Exact radial worldsheet snapshot with an arbitrary monotone labelling.
+
+        In the strictly 1D sector, longitudinal string motion is a gauge
+        direction. Any fixed monotone u in [0,1] parameterizes the *same*
+        straight radial string at the given physical time. Each material
+        worldsheet vertex has velocity xdot(u)=(1-u)xdot_L+u xdot_R,
+        with NO artificial vertex rest masses. Consequently the string's
+        physical canonical longitudinal momentum vanishes identically,
+        regardless of label spacing, and its total energy is T*|r|.
+
+        This does NOT prescribe remapping or conserved canonical momenta
+        of a curved, transversely excited 3D worldsheet.
+        """
+        u=np.asarray(fractions,dtype=float)
+        if (u.ndim!=1 or len(u)<2 or not np.all(np.isfinite(u))
+                or abs(float(u[0]))>1e-13 or abs(float(u[-1])-1)>1e-13
+                or np.any(np.diff(u)<=0)):
+            raise ValueError('strictly increasing gauge fractions from 0 to 1 needed')
+        state=self.state(t)
+        right=state['right_position_cm']
+        left=state['left_position_cm']
+        br=state['right_beta']
+        bl=state['left_beta']
+        positions=(1-u)*left+u*right
+        velocities=(1-u)*bl+u*br
+        lengths=np.abs(np.diff(positions))
+        string_energy=float(self.tension*np.sum(lengths))
+        end_momentum=(state['left_momentum_gev']+
+                      state['right_momentum_gev'])
+        total_energy=2*state['endpoint_energy_each_gev']+string_energy
+        return {
+            'time_ps':t,
+            'fractions':u.tolist(),
+            'vertex_positions_cm':positions.tolist(),
+            'vertex_betas':velocities.tolist(),
+            'endpoint_momentum_gev':end_momentum,
+            'string_longitudinal_momentum_gev':0.0,
+            'string_energy_gev':string_energy,
+            'total_energy_gev':total_energy,
+            'max_element_ratio':float(np.max(lengths)/np.min(lengths))
+                if np.min(lengths)>0 else None,
+            'gauge_status':'EXACT_RADIAL_REPARAMETRIZATION_ONLY',
+            'limits':'not a conservative remesh of a moving 3D worldsheet'
+        }
+
     def summary(self,duration_ps,samples=201):
         if samples<2:
             raise ValueError('samples must be >= 2')
