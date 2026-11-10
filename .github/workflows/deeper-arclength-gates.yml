@@ -4,6 +4,7 @@ on:
     branches: [research/variational-worldsheet]
     paths:
       - '.github/workflows/deeper-arclength-gates.yml'
+      - 'scripts/check_total_arclength_convergence.py'
   workflow_dispatch:
 
 jobs:
