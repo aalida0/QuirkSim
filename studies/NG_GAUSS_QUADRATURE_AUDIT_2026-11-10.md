@@ -2,7 +2,8 @@
 
 **Date:** 2026-11-10.  
 **Status:** MIDPOINT_APPROXIMATION_INADEQUATE; GAUSS2/GAUSS3_AGREEMENT_PASS;
-CORE_GEOMETRY_SPATIAL_REFINEMENT_STILL_OPEN.
+**SELECTED_PRE_CONTACT_CORE_REFERENCE_GEOMETRY_PASS** (13/17/21 vertices);
+FULL_CONTACT_CONTINUATION_AND_ANNIHILATION_BLOCKED.
 
 ## Motivation
 
@@ -69,6 +70,43 @@ endpoint-geometry convergence test.
 GitHub CI:
 - [Gauss 2/3 benchmark, 5/9/13 vertices](https://github.com/aalida0/QuirkSim/actions/runs/42893666233)
 - [Independent midpoint spatial-refinement anomaly](https://github.com/aalida0/QuirkSim/actions/runs/42892811180)
+
+## Final independent 13/17/21-vertex validation: PASS for this selected slice
+
+A **new independent CI workflow** runs all four physics configurations
+in separate jobs, downloads the actual per-run JSON artifacts, and then
+runs `scripts/validate_ng_gauss_refinement.py` as a fail-closed
+aggregate geometry test.
+
+Common inputs: Bz=2 T, pair boost=0.25, Lambda_IC=774 eV,
+neutral mass=225 GeV, initial stretched length=0.1 cm,
+Gauss–Legendre order=2, short-distance regulator
+**2.0e-10 cm**, total arclength cutoff **2.0e-6 cm**.
+
+| Mesh vertices | Gauss-2 endpoint chord (cm) |
+|---:|---:|
+| 13 | 1.997965607203e-6 |
+| 17 | 1.999469084312e-6 |
+| 21 | 1.999712177476e-6 |
+
+- Largest mesh chord spread: **1.74657027e-9 cm**,
+  **0.0685079 × (hbar*c/Lambda_IC)**.
+- Required convergence diagnostic: **< 0.1 × reference length — PASS**.
+- Gauss-2 vs Gauss-3 at 21 vertices: **1.77547e-14 cm**, PASS.
+- 13/17/21 total-length hitting-time spread:
+  **7.34e-8 ps**, PASS.
+- All four configurations reached the shared **total-arclength cutoff**,
+  with no per-element mesh stop.
+- These checks deliberately **stop before the unresolved gauge pinch**.
+  The requested 1000 ps was not physically completed.
+- [Passing CI and four raw JSON trajectories' endpoint summaries](https://github.com/aalida0/QuirkSim/actions/runs/42895003435).
+
+**Interpretation:** The higher-order action and sufficient spatial
+resolution substantially mitigate the previous midpoint aliasing.
+This establishes pre-contact geometric stability in one controlled
+benchmark, *not* full continuum Nambu–Goto validation. A 10% tolerance
+relative to a confinement reference length is a chosen **numerical
+diagnostic**, not an annihilation error budget or a quantum calculation.
 
 ## Remaining physics gates
 
