@@ -90,7 +90,9 @@ def case(n,b_tesla,beta_boost_x,maximum_ps=260.,pinch_fraction=4e-4):
 def main():
     p=argparse.ArgumentParser()
     p.add_argument('--nodes',type=int,default=5)
-    p.add_argument('--field-only',action='store_true',help='run 2T boosted case only')
+    p.add_argument('--field-only',action='store_true',help='run one chosen B-field boosted configuration')
+    p.add_argument('--pair-boost',type=float,default=.25)
+    p.add_argument('--selected-b-tesla',type=float,default=2.)
     p.add_argument('--max-time-ps',type=float,default=260.)
     p.add_argument('--pinch-fraction',type=float,default=4e-4,
                    help='engineering total string length cutoff / initial length')
@@ -98,8 +100,10 @@ def main():
     args=p.parse_args()
     if not 0<args.pinch_fraction<1:
         p.error('pinch fraction must lie in (0,1)')
+    if not 0<=args.pair_boost<1:
+        p.error('pair boost must lie in [0,1)')
     records=[]
-    scenarios=((2.,.25),) if args.field_only else ((0.,0.),(0.,.25),(2.,.25))
+    scenarios=((args.selected_b_tesla,args.pair_boost),) if args.field_only else ((0.,0.),(0.,.25),(2.,.25))
     for b,boost in scenarios:
         result=case(args.nodes,b,boost,args.max_time_ps,args.pinch_fraction)
         records.append(result)
