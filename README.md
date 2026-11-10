@@ -19,6 +19,17 @@ annihilation assumptions without claiming physical rates or feeding
 radiated energy back into the dynamics. It explicitly conditions on
 survival of encounters before a weak decay.
 
+**CRITICAL PHYSICS BLOCKER:** the 260 ps long-time test failed the
+spatial mesh-quality gate. A rapidity-coordinate integrator removes the
+superluminal numerical integration error, but string segments collapse
+below the spatial regularizer and their length ratio exceeds 20 million.
+Short-time tests and a 5 ps weak-decay event pass; **multi-oscillation
+recoil/annihilation predictions are NOT validated**. See
+[GitHub issue #3](https://github.com/aalida0/QuirkSim/issues/3)
+for the conservative remeshing/worldsheet convergence acceptance criteria.
+Do not use these simulations as paper figures.
+
+
 **Scientific validation report:**
 [variational worldsheet and uncertainty envelope](studies/VARIATIONAL_WORLD_SHEET_PHYSICS_GATES_2026-11-10.md).
 
