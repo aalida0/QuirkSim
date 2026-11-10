@@ -25,6 +25,23 @@ from quirksim.mesh_guard import (
 from quirksim.dynamics import HBARC_GEV_CM
 
 
+
+def worldsheet_metric_diagnostic(state,engine):
+    """Target-time NG transverse speed distinguishes gauge motion from a cusp."""
+    x,v=engine._unpack(state)
+    delta=np.diff(x,axis=0)
+    ell=np.linalg.norm(delta,axis=1)
+    tangent=delta/np.maximum(ell[:,None],1e-300)
+    vmid=.5*(v[:-1]+v[1:])
+    v_parallel=np.sum(vmid*tangent,axis=1)
+    v_perp2=np.maximum(0.,np.sum(vmid*vmid,axis=1)-v_parallel*v_parallel)
+    return {
+        'min_segment_lapse_squared':float(np.min(1-v_perp2)),
+        'max_segment_transverse_beta':float(np.sqrt(np.max(v_perp2))),
+        'max_segment_parallel_beta':float(np.max(np.abs(v_parallel))),
+        'max_node_speed_beta':float(np.max(np.linalg.norm(v,axis=1)))
+    }
+
 def run_case(nodes=11, b_tesla=2., beta_cm_x=.25,
              duration_ps=1000., pinch_fraction=1e-6,
              regulator_cm=1e-12, max_step_ps=.2,
@@ -59,6 +76,8 @@ def run_case(nodes=11, b_tesla=2., beta_cm_x=.25,
                     float(np.linalg.norm(lastx[-1]-lastx[0])),
                 'last_valid_max_vertex_beta':
                     float(np.max(np.linalg.norm(lastv,axis=1))),
+                'last_valid_worldsheet_segment_metric':
+                    worldsheet_metric_diagnostic(last,s),
                 'infracolor_reference_length_cm':HBARC_GEV_CM/(774e-9),
                 'requested_arclength_cutoff_cm':cutoff,
                 'physics_gate':'BLOCKED_NO_POST_FAILURE_CONTINUATION'
@@ -97,6 +116,7 @@ def run_case(nodes=11, b_tesla=2., beta_cm_x=.25,
             'chord_deficit_cm':length-chord,
             'maximum_adjacent_bend_angle_rad':float(np.max(adjacent)),
             'max_vertex_beta':maximum_beta,
+            'worldsheet_segment_metric':worldsheet_metric_diagnostic(final,s),
             'min_segment_length_cm':float(np.min(np.linalg.norm(dv,axis=1))),
             'max_gauge_length_deviation_cm':gauge_residual,
             'energy_drift_gev':after['energy_gev']-pre['energy_gev'],
