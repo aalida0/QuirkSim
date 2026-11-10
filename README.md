@@ -62,6 +62,42 @@ python scripts/paired_compare.py --model doublet --mass 150 --lambda-ev 2154 \
     --output-dir results/paired_doublet
 ```
 
+### Physical source of nonradial motion: a uniform solenoid
+
+**New model:** `quirksim/field_dynamics.py` implements the published
+Li et al. (2020) transverse-velocity-dependent Nambu-Goto *endpoint-force
+approximation* alongside the legacy central-force proxy. A uniform B field
+causes (q (\mathbf v \times \mathbf B)) deflection **until each endpoint
+weakly decays to its electrically neutral state**.
+
+The benchmark pair starts essentially at a common pp-like production point
+with zero initial internal orbital angular momentum; it can carry a
+longitudinal pair CM boost (ISR-like kinematic slice). No unphysical
+micrometre initial offset is required. This is *not* a full moving
+Nambu-Goto worldsheet calculation.
+
+**Three reference commands:**
+
+```bash
+# Inspect all field validation tests
+python -m pytest -q tests/test_field_dynamics.py
+
+# Paired sample, physical 2T solenoid, published endpoint-force approximation
+python scripts/triplet_field_pilot.py \
+  --mass 225 --lambda-ev 774 --b-tesla 2 \
+  --beta-cm-x 0.25 --force-model ng_endpoint \
+  --nevents 20 --output-dir results/field_2T_pilot
+
+# Check the numerical integration and short-distance regulator
+python scripts/validate_field_solver.py
+```
+
+**Results and caveats:** [2026-11-10 solenoid study](studies/TRIPLET_SOLENOID_NG_ENDPOINT_2026-11-10.md).
+The field-on vs field-off pilot and numerical convergence run were completed
+on public GitHub Actions. The recoil-induced geometric change persists,
+but physical annihilation rates **cannot** be inferred and worldsheet
+dynamics remain an open validation gate.
+
 ### Triplet nonradial / pre-existing angular momentum sensitivity
 
 The straight-string proxy can be tested away from the artificially radial
