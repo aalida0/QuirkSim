@@ -330,6 +330,9 @@ class VariationalString:
             'final_angular_momentum_hbar':final['angular_momentum_over_hbar'].tolist(),
             'final_endpoint_positions_cm':self._unpack(sol.y[:,-1])[0][[0,-1]].tolist(),
             'n_rhs_evaluations':sol.nfev,
+            'mesh_quality':self.mesh_quality(sol.y),
+            'physics_gate':'SHORT_TIME_NUMERICAL_ONLY' if self.mesh_quality(sol.y)['quality_pass']
+                           else 'BLOCKED_MESH_QUALITY',
             'limitations':[
                 'midpoint finite-element Nambu-Goto action; not continuum validated',
                 'interior tangent gauge regulator adds artificial massive degrees',
