@@ -4,6 +4,8 @@ on:
     branches: [research/variational-worldsheet]
     paths:
       - '.github/workflows/equidistributed-1000ps.yml'
+      - 'quirksim/equidistributed_ng.py'
+      - 'scripts/equidistributed_gauge_stress.py'
   workflow_dispatch:
 
 jobs:
