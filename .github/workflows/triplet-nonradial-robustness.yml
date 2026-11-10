@@ -1,0 +1,37 @@
+name: Triplet nonradial robustness (200 pairs per offset)
+on:
+  push:
+    branches: [development/standalone-simulator]
+    paths:
+      - '.github/workflows/triplet-nonradial-robustness.yml'
+  workflow_dispatch:
+
+jobs:
+  offsets:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        impact_um: ['0.1', '1', '3', '10']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install QuirkSim
+        run: python -m pip install -e .
+      - name: Paired recoil/no-recoil triplet, 200 events
+        run: |
+          python -u scripts/triplet_impact_scan.py \
+            --mass 225 --lambda-ev 774 --duration-ps 1000 \
+            --impact-um ${{ matrix.impact_um }} --seed 10 \
+            --nevents 200 --progress-every 50 \
+            --output-dir results/impact_${{ matrix.impact_um }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: triplet-200-impact-${{ matrix.impact_um }}um
+          path: results/impact_${{ matrix.impact_um }}/
+          if-no-files-found: ignore
+          retention-days: 14
