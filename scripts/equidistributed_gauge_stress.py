@@ -14,7 +14,7 @@ from scipy.integrate import solve_ivp
 
 from quirksim.equidistributed_ng import EquidistributedNGString
 from quirksim.variational_string import StringParameters
-from quirksim.mesh_guard import make_mesh_stop_events
+from quirksim.mesh_guard import make_mesh_stop_events,make_total_arclength_stop_event,total_string_arclength_cm
 from quirksim.radial_ng_reference import ExactRadialNG,RadialNGParameters
 
 
@@ -30,15 +30,13 @@ def case(n,b_tesla,beta_boost_x,maximum_ps=260.,pinch_fraction=4e-4):
     ref=ExactRadialNG(RadialNGParameters(initial_separation_cm=.1,
                   mass_neutral_gev=225.,lambda_ev=774.,initial_beta=.4))
     try:
-        # An equal-arclength constraint implies each segment is ~L/(n-1).
-        # Compare physical PINCH LENGTH rather than a fixed per-edge length,
-        # which otherwise artificially rejects refined meshes earlier.
+        # Enforce the SAME physical total arclength for each resolution.
+        # Independent first-invalid-mesh stops retain their own thresholds.
         total_pinch_cm=p.initial_length_cm*pinch_fraction
-        min_factor=max(100.,total_pinch_cm/((n-1)*p.regularizer_cm))
+        stop_events=[make_total_arclength_stop_event(n,total_pinch_cm)]
+        stop_events+=make_mesh_stop_events(n,p.regularizer_cm)
         sol=solve_ivp(s.rhs,(0,maximum_ps),y,method='DOP853',
-            rtol=2e-9,atol=1e-10,max_step=p.max_step_ps,
-            events=make_mesh_stop_events(n,p.regularizer_cm,
-                                         minimum_factor=min_factor))
+            rtol=2e-9,atol=1e-10,max_step=p.max_step_ps,events=stop_events)
         if not sol.success:
             raise RuntimeError(sol.message)
         t=float(sol.t[-1])
@@ -51,15 +49,20 @@ def case(n,b_tesla,beta_boost_x,maximum_ps=260.,pinch_fraction=4e-4):
                                    np.maximum(all_len.min(axis=1),p.regularizer_cm)))
         smallest_global=float(all_len.min())
         _,_,g,gdot=s.constraints(sol.y[:,-1])
-        stops=[name for name, hits in zip(('short_element','element_ratio'),
-                                      sol.t_events) if len(hits)]
+        stops=[name for name,hits in zip(
+            ('total_arclength_cutoff','short_element','element_ratio'),
+            sol.t_events) if len(hits)]
         separation=float(np.linalg.norm(x[-1]-x[0]))
         comparable=b_tesla==0 and beta_boost_x==0
         reference_sep=ref.state(t)['unsigned_separation_cm']
         return {
-          'status':'FIRST_MESH_STOP' if stops else 'REACHED_HORIZON',
+          'status':('PHYSICAL_ARCLENGTH_CUTOFF' if 'total_arclength_cutoff' in stops
+                    else 'FIRST_MESH_STOP' if stops else 'REACHED_HORIZON'),
           'stops':stops,'nodes':n,'b_tesla':b_tesla,
           'common_total_length_pinch_cutoff_cm':total_pinch_cm,
+          'absolute_total_arclength_cutoff_residual_cm':
+              abs(total_string_arclength_cm(sol.y[:,-1],n)-total_pinch_cm)
+                  if 'total_arclength_cutoff' in stops else None,
           'beta_boost_x':beta_boost_x,'time_ps':t,
           'time_divided_by_radial_first_crossing':t/ref.first_crossing_ps,
           'endpoint_separation_cm':separation,
