@@ -20,6 +20,7 @@ from .dynamics import C_CM_PER_PS,sample_plan
 from .physics import benchmark
 from .variational_string import StringParameters,VariationalString
 from .encounter_hazards import scenario_envelope
+from .mesh_guard import make_mesh_stop_events,require_good_mesh
 
 
 def pair_boost_initial_state(s,beta_cm_x):
@@ -46,6 +47,7 @@ def simulate(seed=25,params=None,duration_ps=5, beta_cm_x=.25,
     bench=benchmark('triplet',params.mass_gev)
     latent=sample_plan(bench['lifetime_ps'],bench['widths_gev'],seed)
     y=pair_boost_initial_state(engine,beta_cm_x)
+    require_good_mesh(y,engine.n,params.regularizer_cm)
     t=0.
     events=[]
     closest_minima=[]
@@ -74,14 +76,23 @@ def simulate(seed=25,params=None,duration_ps=5, beta_cm_x=.25,
 
         initial_E=engine.action_quantities(y)['energy_gev']
         try:
+            mesh_events=make_mesh_stop_events(engine.n,params.regularizer_cm)
             sol=solve_ivp(engine.rhs,(t,duration_ps),y,method='DOP853',
                           atol=1e-10,rtol=2e-9,max_step=params.max_step_ps,
-                          events=[radial_min]+[decay_event(i) for i in active])
+                          events=[radial_min]+[decay_event(i) for i in active]+mesh_events)
         except (RuntimeError,ValueError,np.linalg.LinAlgError) as exc:
             failed=f'worldsheet integration failed: {exc}'
             break
         if not sol.success:
             failed=f'worldsheet integrator: {sol.message}'
+            break
+        # The final two events terminate BEFORE invalid continuation.
+        bad=[k for k in range(2) if len(sol.t_events[-2+k])]
+        if bad:
+            t=float(sol.t[-1])
+            failed=('BLOCKED_MESH_QUALITY: first violation of '+
+                    ('short element' if bad[0]==0 else 'element imbalance')+
+                    f' at t={t:.8g} ps')
             break
         quality=engine.mesh_quality(sol.y)
         mesh_diagnostics.append(quality)
