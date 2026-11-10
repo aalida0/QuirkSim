@@ -148,7 +148,55 @@ prescription: we require geometric proximity and never claim a
 quantitatively calibrated emission rate. The nonperturbative
 normalization is unknown.
 
-## 6. Remaining blockers
+## 6. Long-time first-return stress: explicit NO-GO for current mesh
+
+The initial 260 ps test with velocity-coordinate integration
+([run](https://github.com/aalida0/QuirkSim/actions/runs/42840791123))
+stopped for both B=0 and B=2 Tesla with the numerical diagnostic
+`superluminal discretized string vertex`. This is a violation of
+the velocity-coordinate solver domain, not evidence for physical faster-
+than-light propagation.
+
+A rapidity-coordinate solver was then added in
+[`quirksim/variational_rapidity.py`](../quirksim/variational_rapidity.py):
+each vertex's spatial rapidity w=gamma*v is evolved, with
+v=w/sqrt(1+w²), explicitly enforcing |v|<1 in the ODE variables.
+It reproduces the previous short-time solver and permits the
+**260 ps evolution to finish numerically**, but this does NOT
+resolve mesh quality.
+
+[Rapidity first-return stress (both fields)](https://github.com/aalida0/QuirkSim/actions/runs/42841392131):
+
+| Property | 0 T | 2 T |
+|---|---:|---:|
+| Reached 260 ps | yes | yes |
+| Maximum vertex speed / c | 0.998885 | 0.998837 |
+| Maximum vertex spatial rapidity | 21.15 | 20.72 |
+| Energy drift (GeV) | -8.09e-6 | -3.81e-10 |
+| Minimum segment length (cm) | 8.00e-12 | 3.33e-10 |
+| Maximum segment length ratio | 4.61e7 | 2.42e7 |
+| Mesh-health physics gate | **BLOCKED** | **BLOCKED** |
+
+Segments collapse below the 1e-9 cm regularization scale and
+adjacent segments become extremely unequal. The resulting motion
+**is not trustworthy**, even though the global energy remains
+approximately conserved. **Conservation alone is not sufficient
+for physics validation.**
+
+A fail-closed `mesh_quality` monitor now checks every integrated
+segment and prevents silently accepting underresolved trajectories.
+The threshold of 100 times the regulator and element-length ratio 50
+are **engineering guardrails, not physical scales**.
+
+**Required next solver milestone:** develop and separately validate
+a conservative moving-mesh / worldsheet reparameterization
+preserving canonical energy, momentum, angular momentum and
+the relativistic constraints. Remeshing cannot simply reposition
+nodes without redistributing field momenta and retesting the
+weak-decay boundary impulse. Until this is achieved, the solver
+is a verified short-time prototype only.
+
+## 7. Remaining blockers
 
 **Cannot yet certify the publishable recoil–annihilation claim:**
 
