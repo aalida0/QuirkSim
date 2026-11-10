@@ -18,11 +18,12 @@ from quirksim.mesh_guard import make_mesh_stop_events,make_total_arclength_stop_
 from quirksim.radial_ng_reference import ExactRadialNG,RadialNGParameters
 
 
-def case(n,b_tesla,beta_boost_x,maximum_ps=260.,pinch_fraction=4e-4):
+def case(n,b_tesla,beta_boost_x,maximum_ps=260.,pinch_fraction=4e-4,
+         max_step_ps=.5,rtol=2e-9,atol=1e-10):
     p=StringParameters(nodes=n,mass_gev=225.,lambda_ev=774.,
                        initial_length_cm=.1,initial_beta=.4,
                        b_tesla=b_tesla,gauge_mass_fraction=1e-3,
-                       regularizer_cm=1e-9,max_step_ps=.5)
+                       regularizer_cm=1e-9,max_step_ps=max_step_ps)
     s=EquidistributedNGString(p)
     y=(s.initial_state() if beta_boost_x==0
        else s.boosted_straight_initial_state(beta_cm_x=beta_boost_x))
@@ -36,7 +37,7 @@ def case(n,b_tesla,beta_boost_x,maximum_ps=260.,pinch_fraction=4e-4):
         stop_events=[make_total_arclength_stop_event(n,total_pinch_cm)]
         stop_events+=make_mesh_stop_events(n,p.regularizer_cm)
         sol=solve_ivp(s.rhs,(0,maximum_ps),y,method='DOP853',
-            rtol=2e-9,atol=1e-10,max_step=p.max_step_ps,events=stop_events)
+            rtol=rtol,atol=atol,max_step=p.max_step_ps,events=stop_events)
         if not sol.success:
             raise RuntimeError(sol.message)
         t=float(sol.t[-1])
@@ -60,6 +61,9 @@ def case(n,b_tesla,beta_boost_x,maximum_ps=260.,pinch_fraction=4e-4):
                     else 'FIRST_MESH_STOP' if stops else 'REACHED_HORIZON'),
           'stops':stops,'nodes':n,'b_tesla':b_tesla,
           'common_total_length_pinch_cutoff_cm':total_pinch_cm,
+          'numerical_max_step_ps':max_step_ps,
+          'numerical_rtol':rtol,
+          'numerical_atol':atol,
           'absolute_total_arclength_cutoff_residual_cm':
               abs(total_string_arclength_cm(sol.y[:,-1],n)-total_pinch_cm)
                   if 'total_arclength_cutoff' in stops else None,
