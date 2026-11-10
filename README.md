@@ -11,6 +11,10 @@ layers are available. [Current results, assumptions and physical limits](studies
 The machinery does not supply a calibrated nonperturbative radiation kernel
 or a quantum-state overlap; physical survival remains UNKNOWN.
 
+**Run the remaining numerical pilots on UChicago AF:**
+[pinned-source HTCondor submission and collection](studies/AF_CONFORMAL_VALIDATION_2026-11-11.md).
+Submit seed 1 first, then the separate doublet/triplet resolution batch.
+
 An independent spatial midpoint discretization of the classical
 **Nambu–Goto action** now evolves internal string vertices and their
 canonical energy, momentum and angular momentum. It includes a small
