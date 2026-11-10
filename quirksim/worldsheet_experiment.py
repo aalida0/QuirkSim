@@ -50,6 +50,7 @@ def simulate(seed=25,params=None,duration_ps=5, beta_cm_x=.25,
     events=[]
     closest_minima=[]
     segment_drift=[]
+    mesh_diagnostics=[]
     failed=None
     while t<duration_ps-1e-11:
         active=[i for i in (0,1) if engine.charge[[0,engine.n-1][i]]!=0]
@@ -81,6 +82,14 @@ def simulate(seed=25,params=None,duration_ps=5, beta_cm_x=.25,
             break
         if not sol.success:
             failed=f'worldsheet integrator: {sol.message}'
+            break
+        quality=engine.mesh_quality(sol.y)
+        mesh_diagnostics.append(quality)
+        if not quality['quality_pass']:
+            t=float(sol.t[-1])
+            failed=('worldsheet MESH QUALITY BLOCKED at t='+
+                    f'{t:.6g} ps; min_seg={quality["minimum_segment_cm"]:.3g} cm; '+
+                    f'max_seg_ratio={quality["worst_segment_length_ratio"]:.3g}')
             break
         for tt,zz in zip(sol.t_events[0],sol.y_events[0]):
             if tt>1e-6:
@@ -118,6 +127,7 @@ def simulate(seed=25,params=None,duration_ps=5, beta_cm_x=.25,
       'latent_decay_plan':latent,
       'decays':events,
       'string_energy_drift_by_free_segment_gev':segment_drift,
+      'mesh_quality_by_free_segment':mesh_diagnostics,
       'geometric_closest_encounters':closest_minima,
       'post_decay_closest_cm':min((e['separation_cm'] for e in post),default=None),
       'radiation_annihilation_hazard_envelope_summary':{
