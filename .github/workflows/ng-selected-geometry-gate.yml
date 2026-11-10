@@ -1,0 +1,75 @@
+name: Selected triplet NG Gauss geometry physics gate
+on:
+  push:
+    branches: [research/variational-worldsheet]
+    paths:
+      - '.github/workflows/ng-selected-geometry-gate.yml'
+      - 'scripts/validate_ng_gauss_refinement.py'
+  workflow_dispatch:
+
+jobs:
+  quadrature_mesh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - nodes: '13'
+            quadrature_order: '2'
+          - nodes: '17'
+            quadrature_order: '2'
+          - nodes: '21'
+            quadrature_order: '2'
+          - nodes: '21'
+            quadrature_order: '3'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: python -m pip install -e .
+      - name: Run action-consistent string to shared pre-contact boundary
+        run: |
+          python -u scripts/equidistributed_gauge_stress.py \
+            --nodes ${{ matrix.nodes }} \
+            --quadrature-order ${{ matrix.quadrature_order }} \
+            --regulator-cm 0.0000000002 --field-only \
+            --pinch-fraction 0.00002 --max-time-ps 1000 \
+            --output results/ng-gauss-validated/ng_n${{ matrix.nodes }}_q${{ matrix.quadrature_order }}.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ng-gauss-fixture-n${{ matrix.nodes }}-q${{ matrix.quadrature_order }}
+          path: results/ng-gauss-validated/*.json
+          if-no-files-found: error
+          retention-days: 14
+
+  independent_geometry_gate:
+    needs: quadrature_mesh
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: python -m pip install -e .
+      - name: Retrieve every independently computed mesh and quadrature artifact
+        uses: actions/download-artifact@v4
+        with:
+          pattern: ng-gauss-fixture-*
+          path: results/ng-gauss-validated
+          merge-multiple: true
+      - name: Fail if core-reference geometry or quadrature disagree
+        run: |
+          python -u scripts/validate_ng_gauss_refinement.py \
+            --input-dir results/ng-gauss-validated \
+            --output results/ng_selected_geometry_gate.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ng-selected-geometry-validation-report
+          path: results/ng_selected_geometry_gate.json
+          if-no-files-found: error
+          retention-days: 14
