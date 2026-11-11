@@ -18,6 +18,9 @@ from .field_dynamics import MAGNETIC_FORCE_GEV_PER_PS_T
 from .radiation_annihilation import lienard_power_gev_per_ps
 
 
+_GAUSS_NODES, _GAUSS_WEIGHTS = np.polynomial.legendre.leggauss(5)
+
+
 class UnitRayHistory:
     """Causal unit-vector samples with exact great-circle segment primitives."""
 
@@ -26,6 +29,8 @@ class UnitRayHistory:
         self.n = []
         self.integrals = []
         self.jumps = []
+        self.derivatives = []
+        self.derivative_fronts = []
         for z, n in zip(coordinates, directions, strict=True):
             self.append(z, n)
         if len(self.z) < 2:
@@ -47,7 +52,17 @@ class UnitRayHistory:
         primitive = (np.sin(angle)*a+2*np.sin(angle/2)**2*tangent)/theta
         return direction, primitive
 
-    def append(self, z, n):
+    @staticmethod
+    def _checked_derivative(n, derivative):
+        if derivative is None:
+            return None
+        derivative = np.asarray(derivative,float)
+        if (derivative.shape != (3,) or not np.all(np.isfinite(derivative))
+                or abs(n@derivative) > 1e-8*max(1.,np.linalg.norm(derivative))):
+            raise ValueError('finite tangent derivative required')
+        return derivative.copy()
+
+    def append(self, z, n, derivative=None):
         z = float(z)
         n = np.array(n, dtype=float, copy=True)
         if (not np.isfinite(z) or n.shape != (3,) or not np.all(np.isfinite(n))
@@ -56,6 +71,7 @@ class UnitRayHistory:
         # Remove roundoff in an analytically unit outgoing ray. Reject a physical
         # constraint violation above; repeated reflections must not amplify it.
         n /= np.linalg.norm(n)
+        derivative = self._checked_derivative(n,derivative)
         if self.z and z <= self.z[-1]:
             raise ValueError('characteristic coordinates must strictly increase')
         integral = np.zeros(3) if not self.z else self.integrals[-1]+(
@@ -63,6 +79,42 @@ class UnitRayHistory:
         self.z.append(z)
         self.n.append(n)
         self.integrals.append(integral)
+        self.derivatives.append(None if derivative is None else np.asarray(derivative, float).copy())
+        if len(self.z) > 1 and self.derivatives[-2] is not None and derivative is not None:
+            self.integrals[-1] = self.integrals[-2]+self._segment_integral(len(self.z)-2, 1.)
+
+    def _segment(self, i, r):
+        """Unit direction and derivative per null coordinate on a smooth segment."""
+        h = self.z[i+1]-self.z[i]
+        a, b = self.n[i], self.n[i+1]
+        da, db = self.derivatives[i], self.derivatives[i+1]
+        if da is not None and db is not None:
+            q = ((2*r**3-3*r*r+1)*a+(r**3-2*r*r+r)*h*da
+                 +(-2*r**3+3*r*r)*b+(r**3-r*r)*h*db)
+            dq = ((6*r*r-6*r)*a+(3*r*r-4*r+1)*h*da
+                  +(-6*r*r+6*r)*b+(3*r*r-2*r)*h*db)
+            norm = np.linalg.norm(q)
+            if norm < .5:
+                raise ValueError('unresolved cubic characteristic segment')
+            n = q/norm
+            return n, (dq-n*(n@dq))/(norm*h)
+        n = self._arc(a,b,r)[0]
+        dot = np.clip(a@b,-1.,1.)
+        tangent = b-dot*a
+        sine = np.linalg.norm(tangent)
+        theta = np.arctan2(sine,dot)
+        if theta < 1e-12:
+            return n, (b-a)/h
+        tangent /= sine
+        return n, theta/h*(-np.sin(r*theta)*a+np.cos(r*theta)*tangent)
+
+    def _segment_integral(self, i, r):
+        h = self.z[i+1]-self.z[i]
+        if self.derivatives[i] is None or self.derivatives[i+1] is None:
+            return h*self._arc(self.n[i],self.n[i+1],r)[1]
+        # Fixed five-point Gauss quadrature of the normalized Hermite curve.
+        nodes, weights = _GAUSS_NODES, _GAUSS_WEIGHTS
+        return h*r/2*sum(w*self._segment(i,r*(x+1)/2)[0] for x,w in zip(nodes,weights))
 
     def _locate(self, z):
         tol = 1e-12*max(1., abs(z), abs(self.z[-1]))
@@ -75,17 +127,37 @@ class UnitRayHistory:
         h = self.z[i+1]-self.z[i]
         return i, h, (z-self.z[i])/h
 
-    def value(self, z):
+    def _jump_coordinate(self, z):
         if self.jumps:
             j = bisect_left(self.jumps, z)
             for candidate in self.jumps[max(0, j-1):j+1]:
                 if abs(z-candidate) <= 16*np.spacing(max(1., abs(candidate))):
                     z = candidate
                     break
+        return z
+
+    def value(self, z):
+        z = self._jump_coordinate(z)
         i, _, r = self._locate(z)
         if i == len(self.z)-1:
             return self.n[i].copy()
+        if self.derivatives[i] is not None and self.derivatives[i+1] is not None:
+            return self._segment(i,r)[0]
         return self._arc(self.n[i], self.n[i+1], r)[0]
+
+    def gradient(self, z, left=False):
+        if not left:
+            z = self._jump_coordinate(z)
+        if left:
+            index = bisect_left(self.z,z)
+            if index < len(self.z) and self.z[index] == z and index > 0:
+                return self._segment(index-1,1.)[1]
+        i, _, r = self._locate(z)
+        if i == len(self.z)-1:
+            if self.derivatives[i] is not None:
+                return self.derivatives[i].copy()
+            return self._segment(i-1,1.)[1]
+        return self._segment(i,r)[1]
 
     def left_value(self, z):
         i = bisect_left(self.z, z)
@@ -101,9 +173,9 @@ class UnitRayHistory:
         i, h, r = self._locate(z)
         if h == 0:
             return self.integrals[i].copy()
-        return self.integrals[i]+h*self._arc(self.n[i], self.n[i+1], r)[1]
+        return self.integrals[i]+self._segment_integral(i,r)
 
-    def jump(self, z, n):
+    def jump(self, z, n, derivative=None, derivative_front=False):
         """One-sided outgoing ray discontinuity; its integral has no impulse.
 
         The left limit is retained at the same null coordinate. The right limit
@@ -114,10 +186,17 @@ class UnitRayHistory:
                 or abs(np.linalg.norm(n)-1) > 1e-9):
             raise ValueError('jump requires the current boundary coordinate and a unit ray')
         n /= np.linalg.norm(n)
+        derivative = self._checked_derivative(n,derivative)
         self.z.append(float(z))
         self.n.append(n)
         self.integrals.append(self.integrals[-1].copy())
         self.jumps.append(float(z))
+        if derivative_front:
+            self.derivative_fronts.append(float(z))
+        elif z in self.derivative_fronts:
+            # A direction jump at the same coordinate supersedes a slope front.
+            self.derivative_fronts = [point for point in self.derivative_fronts if point != z]
+        self.derivatives.append(None if derivative is None else np.asarray(derivative,float).copy())
 
 
 class ConformalString:
@@ -170,6 +249,7 @@ class ConformalString:
         self.emissions = []
         self.reflections = []
         self.last_advance_diagnostic = None
+        self.cubic_history = False
 
     @classmethod
     def radial(cls, mass_gev, lambda_ev, length_cm=.1, beta=.4):
@@ -205,6 +285,41 @@ class ConformalString:
                    momenta, [-length/2, 0., 0.], magnetic_field_tesla=[0., 0., b_tesla],
                    track_photons=track_photons)
 
+    def boundary_ray_derivative(self, endpoint, t, y, cap=None, mass=None, charge=None, right_cap=None):
+        history = self.a if endpoint == 0 else self.b
+        z = t+(y[0] if endpoint == 0 else -y[1])
+        left = cap is not None and z >= cap-32*np.spacing(max(1.,abs(cap)))
+        if left: z = cap
+        if right_cap is not None:
+            z, left = right_cap, False
+        k = history.left_value(z) if left else history.value(z)
+        kz = history.gradient(z,left=left)
+        p = y[8+3*endpoint:11+3*endpoint]
+        m = self.masses[endpoint] if mass is None else mass
+        charge = self.charges[endpoint] if charge is None else charge
+        energy = np.hypot(m,np.linalg.norm(p))
+        v = p/energy
+        q, outgoing, force = massive_boundary(p,m,k)
+        force = self.force*force+charge*MAGNETIC_FORCE_GEV_PER_PS_T*np.cross(v,self.magnetic_field)
+        dv = (force-v*(v@force))/energy
+        dk = (1+q)*kz
+        vk = v@k; vv=v@v
+        d_vk = dv@k+v@dk
+        dq = ((d_vk-2*v@dv)*(1-vk)+(vk-vv)*d_vk)/(1-vk)**2
+        slope = (2*dv-dq*k-(1+q)*dk+dq*outgoing)/(1-q)**2
+        return slope-outgoing*(outgoing@slope)
+
+    def enable_cubic_history(self):
+        if self.cubic_history:
+            return
+        self.cubic_history = True
+        da = self.boundary_ray_derivative(1,self.t,self.y)
+        db = self.boundary_ray_derivative(0,self.t,self.y)
+        # Initial bulk rays and newly emitted rays can agree in direction while
+        # having different slopes. Carry that front causally, like a weak kink.
+        self.a.jump(self.a.z[-1],self.a.n[-1],da,derivative_front=True)
+        self.b.jump(self.b.z[-1],self.b.n[-1],db,derivative_front=True)
+
     def _rhs(self, t, y, incoming_caps=(None, None)):
         p = y[8:14].reshape(2, 3)
         e = np.hypot(self.masses, np.linalg.norm(p, axis=1))
@@ -229,10 +344,19 @@ class ConformalString:
         return np.r_[ql, -qr, C*v.ravel(), total_force.ravel(),
                      self.masses/e, impulse, torque, -C*t*impulse, powers]
 
-    def advance(self, target_ps, max_step_ps=.02, minimum_interval_ps=1e-8,
+    def advance(self, *args, **kwargs):
+        from .conformal_flux import FluxSolveFailure
+        try:
+            return self._advance_impl(*args, **kwargs)
+        except FluxSolveFailure as error:
+            self.last_advance_diagnostic = {'reason': 'STOP_FLUX_SOLVE',
+                'time_ps': self.t, 'message': str(error)}
+            return 'STOP_FLUX_SOLVE'
+
+    def _advance_impl(self, target_ps, max_step_ps=.02, minimum_interval_ps=1e-8,
                 causal_fraction=.05, max_ray_angle=.025, max_steps=200000,
                 matching_radius_cm=None, max_rejected_ray_trials=None,
-                minimum_step_ulps=0, deadline_monotonic=None):
+                minimum_step_ulps=0, deadline_monotonic=None, integration_scheme="rk4"):
         """Advance until target or explicit chart-collapse cutoff; never cross it."""
         if (not np.isfinite(target_ps) or target_ps < self.t
                 or not np.isfinite(max_step_ps) or max_step_ps <= 0
@@ -243,6 +367,10 @@ class ConformalString:
             raise ValueError('invalid time/step/cutoff')
         if (max_rejected_ray_trials is not None and max_rejected_ray_trials < 1) or minimum_step_ulps < 0:
             raise ValueError('invalid diagnostic resource/resolution limit')
+        if integration_scheme == 'flux' and self.cubic_history:
+            raise ValueError('flux trial currently requires spherical segment history')
+        if integration_scheme not in ('rk4', 'flux'):
+            raise ValueError('unknown boundary integration scheme')
         steps = 0
         rejected_ray_trials = 0
         event_root_truncations = 0
@@ -301,6 +429,10 @@ class ConformalString:
             def trial(h):
                 if h in trial_cache:
                     return trial_cache[h]
+                if integration_scheme == 'flux':
+                    from .conformal_flux import flux_trial
+                    trial_cache[h] = flux_trial(self, t, y, h, caps)
+                    return trial_cache[h]
                 k1 = first_stage
                 k2 = self._rhs(t+h/2, y+h*k1/2, caps)
                 k3 = self._rhs(t+h/2, y+h*k2/2, caps)
@@ -322,6 +454,11 @@ class ConformalString:
                                      np.spacing(max(1., abs(self.a.z[-1]))),
                                      np.spacing(max(1., abs(self.b.z[-1]))))
                     if h <= minimum_step_ulps*resolution:
+                        if h == target_ps-self.t:
+                            # A sub-ULP observation remainder is not a stalled
+                            # physical trial. As in the existing target test,
+                            # return without changing time, coordinates or state.
+                            return 'TARGET_REACHED'
                         return stop('STOP_DIAGNOSTIC_TIME_RESOLUTION', locals())
                 new = trial(h)
                 trial_context = "current unaccepted trial"
@@ -388,8 +525,10 @@ class ConformalString:
             if az <= self.a.z[-1] or bz <= self.b.z[-1]:
                 return stop('STOP_FLOATING_POINT_CHARACTERISTIC_LABEL', locals())
             min_accepted_step_ps = h if min_accepted_step_ps is None else min(min_accepted_step_ps, h)
-            self.a.append(az, aout)
-            self.b.append(bz, bout)
+            da = self.boundary_ray_derivative(1,tn,new,caps[1]) if self.cubic_history else None
+            db = self.boundary_ray_derivative(0,tn,new,caps[0]) if self.cubic_history else None
+            self.a.append(az, aout, da)
+            self.b.append(bz, bout, db)
             self.t, self.y = tn, new
             trial_context = "last accepted step"
             for which, cap in enumerate(caps):
@@ -397,12 +536,18 @@ class ConformalString:
                 if cap is not None and abs(argument-cap) <= 32*np.spacing(max(1., abs(cap))):
                     if which == 0:
                         _, reflected, _ = massive_boundary(new[8:11], self.masses[0], self.a.value(cap))
-                        self.b.jump(bz, reflected)
+                        derivative = self.boundary_ray_derivative(0,tn,new,right_cap=cap) if self.cubic_history else None
+                        front = cap in self.a.derivative_fronts
+                        self.b.jump(bz, reflected, derivative,derivative_front=front)
                     else:
                         _, reflected, _ = massive_boundary(new[11:14], self.masses[1], self.b.value(cap))
-                        self.a.jump(az, reflected)
+                        derivative = self.boundary_ray_derivative(1,tn,new,right_cap=cap) if self.cubic_history else None
+                        front = cap in self.b.derivative_fronts
+                        self.a.jump(az, reflected, derivative,derivative_front=front)
                     self.reflections.append({'time_ps': tn, 'endpoint': which,
                                              'incoming_null_coordinate_ps': cap})
+                    if self.cubic_history:
+                        self.reflections[-1]['front_kind'] = 'derivative' if front else 'direction'
             if matched:
                 return 'QUANTUM_MATCHING_SURFACE'
         return 'TARGET_REACHED'
@@ -419,6 +564,11 @@ class ConformalString:
                 payload[name+'_'+field] = np.asarray(getattr(history, field))
         metadata = dict(format=1, emissions=self.emissions, reflections=self.reflections,
                         last_advance_diagnostic=self.last_advance_diagnostic)
+        metadata['cubic_history'] = self.cubic_history
+        for name in ('a','b'):
+            payload[name+'_derivative_fronts'] = np.asarray(getattr(self,name).derivative_fronts)
+            payload[name+'_derivatives'] = np.asarray([
+                [np.nan]*3 if v is None else v for v in getattr(self,name).derivatives])
         payload['metadata'] = np.asarray(json.dumps(metadata))
         # Open explicitly so numpy never silently appends a filename suffix.
         with open(path, 'wb') as handle:
@@ -442,7 +592,12 @@ class ConformalString:
                     setattr(history, field, payload[name+'_'+field].tolist())
                 for field in ('n', 'integrals'):
                     setattr(history, field, [row.copy() for row in payload[name+'_'+field]])
+                key = name+'_derivatives'
+                history.derivative_fronts = payload[name+'_derivative_fronts'].tolist() if name+'_derivative_fronts' in payload else []
+                history.derivatives = ([None if np.isnan(row).all() else row.copy() for row in payload[key]]
+                                       if key in payload else [None]*len(history.z))
                 setattr(solver, name, history)
+            solver.cubic_history = metadata.get('cubic_history',False)
             solver.emissions = metadata['emissions']
             solver.reflections = metadata['reflections']
             solver.last_advance_diagnostic = metadata['last_advance_diagnostic']
@@ -556,10 +711,16 @@ class ConformalString:
                     else self.b.value(self.t-self.y[1]))
         _, outgoing, _ = massive_boundary(daughter[1:], daughter_mass_gev, incoming)
         # All validation above precedes this local mutation.
+        derivative = None
+        if self.cubic_history:
+            candidate = self.y.copy()
+            candidate[start:start+3] = daughter[1:]
+            derivative = self.boundary_ray_derivative(endpoint,self.t,candidate,
+                                                       mass=daughter_mass_gev,charge=0.)
         if endpoint == 0:
-            self.b.jump(self.t-self.y[0], outgoing)
+            self.b.jump(self.t-self.y[0], outgoing, derivative)
         else:
-            self.a.jump(self.t+self.y[1], outgoing)
+            self.a.jump(self.t+self.y[1], outgoing, derivative)
         self.y[start:start+3] = daughter[1:]
         self.masses[endpoint] = daughter_mass_gev
         self.charges[endpoint] = 0.

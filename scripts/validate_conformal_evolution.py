@@ -24,6 +24,8 @@ def validate(result):
 
 def main():
     p = argparse.ArgumentParser()
+    p.add_argument('--cubic-history', action='store_true')
+    p.add_argument('--scheme', choices=['rk4','flux'], default='rk4', help='flux is an experimental balance-law method')
     p.add_argument('--mode', choices=['stable', 'recoil'], default='recoil')
     p.add_argument('--model', choices=['triplet', 'doublet'], default='triplet')
     p.add_argument('--mass', type=float)
@@ -60,7 +62,8 @@ def main():
                    max_rejected_ray_trials=50000 if a.bounded_diagnostic else None,
                    minimum_step_ulps=16 if a.bounded_diagnostic else 0,
                    wall_time_limit_seconds=120. if a.bounded_diagnostic else None,
-                   checkpoint_path=path.with_suffix('.npz') if a.bounded_diagnostic else None)
+                   checkpoint_path=path.with_suffix('.npz') if a.bounded_diagnostic else None,
+                   integration_scheme=a.scheme, cubic_history=a.cubic_history)
         passed = validate(r)
         attempts.append({'refinement': refinement, 'integration': r['integration'],
                          'validation': r['numerical_validation'], 'termination': r['termination']})

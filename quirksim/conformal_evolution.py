@@ -18,7 +18,7 @@ def evolve(representation='triplet', mass_gev=225., lambda_ev=774., seed=25,
            matching_radius_in_confinement_units=8., observation_step_ps=5.,
            progress=None, max_steps_per_advance=200000,
            closure_stop_in_reference_units=None, max_rejected_ray_trials=None,
-           minimum_step_ulps=0, wall_time_limit_seconds=None, checkpoint_path=None):
+           minimum_step_ulps=0, wall_time_limit_seconds=None, checkpoint_path=None, integration_scheme="rk4", cubic_history=False):
     if (mode not in ('stable', 'recoil') or duration_ps <= 0
             or not np.isfinite(duration_ps) or observation_step_ps <= 0
             or not np.isfinite(matching_radius_in_confinement_units)
@@ -32,6 +32,8 @@ def evolve(representation='triplet', mass_gev=225., lambda_ev=774., seed=25,
     b = benchmark(representation, mass_gev)
     solver = ConformalString.boosted_radial(b['charged_mass_gev'], lambda_ev,
                                            track_photons=True)
+    if cubic_history:
+        solver.enable_cubic_history()
     initial = solver.snapshot()
     plan = sample_plan(b['lifetime_ps'], b['widths_gev'], seed)
     threshold = np.array([item['proper_time_ps'] for item in plan])
@@ -59,7 +61,8 @@ def evolve(representation='triplet', mass_gev=225., lambda_ev=774., seed=25,
                                  max_ray_angle=max_ray_angle, matching_radius_cm=radius,
                                  max_steps=max_steps_per_advance,
                                  max_rejected_ray_trials=max_rejected_ray_trials,
-                                 minimum_step_ulps=minimum_step_ulps, deadline_monotonic=deadline)
+                                 minimum_step_ulps=minimum_step_ulps, deadline_monotonic=deadline,
+                                 integration_scheme=integration_scheme)
         records.append(solver.snapshot(samples=9))
         if (status == 'TARGET_REACHED' and closure_stop_in_reference_units is not None
                 and records[-1]['chord_closure_error_cm'] >=
@@ -89,7 +92,7 @@ def evolve(representation='triplet', mass_gev=225., lambda_ev=774., seed=25,
     return {'representation': representation, 'mass_neutral_gev': mass_gev,
             'lambda_tension_ev': lambda_ev, 'seed': seed, 'mode': mode,
             'duration_requested_ps': duration_ps, 'termination': status,
-            'integration': {'max_step_ps': max_step_ps, 'max_ray_angle': max_ray_angle,
+            'integration': {'scheme': integration_scheme, 'cubic_history': cubic_history, 'max_step_ps': max_step_ps, 'max_ray_angle': max_ray_angle,
                             'causal_fraction': causal_fraction},
             'last_advance_diagnostic': solver.last_advance_diagnostic,
             'checkpoint_path': str(checkpoint_path) if checkpoint_path is not None else None,

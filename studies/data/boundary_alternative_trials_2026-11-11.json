@@ -1,0 +1,725 @@
+{
+  "scope": "EXPLORATORY_BOUNDARY_ALTERNATIVES_NOT_RELEASED",
+  "provenance_note": "Local prototypes evolved between trials; records are a development ledger, not all reruns of one frozen source revision. No alternative is certified.",
+  "trials": [
+    {
+      "file": "cubic_doublet1_90.json",
+      "sha256": "b2ebe850596e1e850505fa4459070b55246305cb92a92875e7eeaef1b1a222d2",
+      "integration": {
+        "scheme": "rk4",
+        "cubic_history": true,
+        "max_step_ps": 0.05,
+        "max_ray_angle": 0.01,
+        "causal_fraction": 0.05
+      },
+      "termination": "TARGET_REACHED",
+      "final_time_ps": 90.0,
+      "validation": {
+        "status": "FAIL",
+        "max_chord_closure_error_cm": 1.0257102863798248e-05,
+        "max_closure_over_confinement_reference": 1119.6542671916523,
+        "energy_tolerance_gev": 1e-07,
+        "momentum_tolerance_gev": 5e-06,
+        "closure_tolerance_in_confinement_units": 0.1,
+        "meaning": "SELECTED_CLASSICAL_EVOLUTION_ONLY_NOT_QUANTUM_SURVIVAL"
+      },
+      "final_positions_cm": [
+        [
+          0.7419446873461003,
+          -0.0020352749261828987,
+          0.003117693463155979
+        ],
+        [
+          0.5331421129371349,
+          8.310325574615351e-05,
+          -0.0011531284728936715
+        ]
+      ],
+      "weak_times_ps": [
+        15.232293666288475,
+        53.235787393130714
+      ],
+      "reflections": 62,
+      "diagnostic": null
+    },
+    {
+      "file": "cubic_doublet1_90_fine.json",
+      "sha256": "f251c67bced7f38a4698afa3ad1a39bcff5e22edf332371212c4cf40819dfd8c",
+      "integration": {
+        "scheme": "rk4",
+        "cubic_history": true,
+        "max_step_ps": 0.025,
+        "max_ray_angle": 0.005,
+        "causal_fraction": 0.025
+      },
+      "termination": "TARGET_REACHED",
+      "final_time_ps": 90.0,
+      "validation": {
+        "status": "FAIL",
+        "max_chord_closure_error_cm": 4.4677606807832615e-07,
+        "max_closure_over_confinement_reference": 48.76959290995811,
+        "energy_tolerance_gev": 1e-07,
+        "momentum_tolerance_gev": 5e-06,
+        "closure_tolerance_in_confinement_units": 0.1,
+        "meaning": "SELECTED_CLASSICAL_EVOLUTION_ONLY_NOT_QUANTUM_SURVIVAL"
+      },
+      "final_positions_cm": [
+        [
+          0.7419441192833934,
+          -0.002024589283080846,
+          0.0031323474481946664
+        ],
+        [
+          0.5331425152724768,
+          7.551792403702547e-05,
+          -0.0011724511765140097
+        ]
+      ],
+      "weak_times_ps": [
+        15.232293666288692,
+        53.23578738935522
+      ],
+      "reflections": 62,
+      "diagnostic": null
+    },
+    {
+      "file": "cubic_fronts_doublet1_90.json",
+      "sha256": "d3ee4a055d775c228183e13584bcfde1ce986c06a1f151542fdd9c3069039504",
+      "integration": {
+        "scheme": "rk4",
+        "cubic_history": true,
+        "max_step_ps": 0.05,
+        "max_ray_angle": 0.01,
+        "causal_fraction": 0.05
+      },
+      "termination": "TARGET_REACHED",
+      "final_time_ps": 90.0,
+      "validation": {
+        "status": "FAIL",
+        "max_chord_closure_error_cm": 3.0007661952403233e-07,
+        "max_closure_over_confinement_reference": 32.756039594801635,
+        "energy_tolerance_gev": 1e-07,
+        "momentum_tolerance_gev": 5e-06,
+        "closure_tolerance_in_confinement_units": 0.1,
+        "meaning": "SELECTED_CLASSICAL_EVOLUTION_ONLY_NOT_QUANTUM_SURVIVAL"
+      },
+      "final_positions_cm": [
+        [
+          0.7419441130196338,
+          -0.002026034824041543,
+          0.003131675542058443
+        ],
+        [
+          0.5331425432765261,
+          7.690832480434881e-05,
+          -0.0011718935865580372
+        ]
+      ],
+      "weak_times_ps": [
+        15.232293666288474,
+        53.23578738793623
+      ],
+      "reflections": 157,
+      "diagnostic": null
+    },
+    {
+      "file": "cubic_fronts_doublet1_90_fine.json",
+      "sha256": "af51f71ffe9c1d2c9c9bb81165e59322b0bfab9890eab31f05b69194aa1cfc9e",
+      "integration": {
+        "scheme": "rk4",
+        "cubic_history": true,
+        "max_step_ps": 0.025,
+        "max_ray_angle": 0.005,
+        "causal_fraction": 0.025
+      },
+      "termination": "TARGET_REACHED",
+      "final_time_ps": 90.0,
+      "validation": {
+        "status": "FAIL",
+        "max_chord_closure_error_cm": 3.6670308107722225e-08,
+        "max_closure_over_confinement_reference": 4.002891215701415,
+        "energy_tolerance_gev": 1e-07,
+        "momentum_tolerance_gev": 5e-06,
+        "closure_tolerance_in_confinement_units": 0.1,
+        "meaning": "SELECTED_CLASSICAL_EVOLUTION_ONLY_NOT_QUANTUM_SURVIVAL"
+      },
+      "final_positions_cm": [
+        [
+          0.7419441109921379,
+          -0.002025963197644236,
+          0.003131688838602305
+        ],
+        [
+          0.5331425407870204,
+          7.687173394118485e-05,
+          -0.0011718637527774883
+        ]
+      ],
+      "weak_times_ps": [
+        15.232293666288681,
+        53.235787390877434
+      ],
+      "reflections": 157,
+      "diagnostic": null
+    },
+    {
+      "file": "cubic_fronts_doublet1_90_level2.json",
+      "sha256": "e1b57e36fefd915ec5a23e093e277089dc6b2b6343573a610fbe98d185e7a369",
+      "integration": {
+        "scheme": "rk4",
+        "cubic_history": true,
+        "max_step_ps": 0.0125,
+        "max_ray_angle": 0.0025,
+        "causal_fraction": 0.0125
+      },
+      "termination": "TARGET_REACHED",
+      "final_time_ps": 90.0,
+      "validation": {
+        "status": "FAIL",
+        "max_chord_closure_error_cm": 1.8295672416299394e-08,
+        "max_closure_over_confinement_reference": 1.9971358349490713,
+        "energy_tolerance_gev": 1e-07,
+        "momentum_tolerance_gev": 5e-06,
+        "closure_tolerance_in_confinement_units": 0.1,
+        "meaning": "SELECTED_CLASSICAL_EVOLUTION_ONLY_NOT_QUANTUM_SURVIVAL"
+      },
+      "final_positions_cm": [
+        [
+          0.7419441111050432,
+          -0.0020259578061432686,
+          0.0031316627163641697
+        ],
+        [
+          0.5331425404554772,
+          7.687585033610192e-05,
+          -0.0011718602173516365
+        ]
+      ],
+      "weak_times_ps": [
+        15.232293666288214,
+        53.23578739113945
+      ],
+      "reflections": 157,
+      "diagnostic": null
+    },
+    {
+      "file": "cubic_fronts_doublet1_90_level3.json",
+      "sha256": "dec0ce2ace39db25c206350e2ce4d43ac592d1dc4d72862994b8d2f67f183de1",
+      "integration": {
+        "scheme": "rk4",
+        "cubic_history": true,
+        "max_step_ps": 0.00625,
+        "max_ray_angle": 0.00125,
+        "causal_fraction": 0.00625
+      },
+      "termination": "STOP_DIAGNOSTIC_WALL_TIME",
+      "final_time_ps": 76.02756773909383,
+      "validation": {
+        "status": "FAIL",
+        "max_chord_closure_error_cm": 8.054095484037221e-10,
+        "max_closure_over_confinement_reference": 0.08791763616702154,
+        "energy_tolerance_gev": 1e-07,
+        "momentum_tolerance_gev": 5e-06,
+        "closure_tolerance_in_confinement_units": 0.1,
+        "meaning": "SELECTED_CLASSICAL_EVOLUTION_ONLY_NOT_QUANTUM_SURVIVAL"
+      },
+      "final_positions_cm": [
+        [
+          0.5388629396779758,
+          -0.0007143246541000262,
+          0.0007319096325280354
+        ],
+        [
+          0.5384267152659451,
+          -0.0008107107268448257,
+          0.0009935324097118555
+        ]
+      ],
+      "weak_times_ps": [
+        15.232293666287983,
+        53.23578739115081
+      ],
+      "reflections": 130,
+      "diagnostic": {
+        "reason": "STOP_DIAGNOSTIC_WALL_TIME",
+        "time_ps": 76.02756773909383,
+        "target_ps": 78.23578739115081,
+        "attempted_steps": 3720,
+        "max_steps": 200000,
+        "max_rejected_ray_trials": 50000,
+        "minimum_step_ulps": 16,
+        "rejected_ray_trials": 15583,
+        "event_root_truncations": 2013,
+        "min_accepted_step_ps": 2.771589188182696e-08,
+        "null_coordinate_ulps_ps": [
+          1.4210854715202004e-14,
+          1.4210854715202004e-14
+        ],
+        "trial_context": "last accepted step",
+        "energy_coordinate_interval_ps": 0.018448769862100534,
+        "ray_history_samples": [
+          18726,
+          18726
+        ],
+        "last_outgoing_null_coordinates_ps": [
+          83.15717736685643,
+          68.91640688119332
+        ],
+        "h": 4.822151966590615e-07,
+        "angle": 0.0009158964827196868,
+        "angle_step_ps": 4.822151966590615e-07,
+        "rejections": 7.0,
+        "az": 83.15717736685643,
+        "bz": 68.91640688119332,
+        "incoming_jump_caps_ps": [
+          83.14194447832857,
+          68.89801163811119
+        ],
+        "event_roots_ps": [],
+        "proposed_null_increments_ps": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "file": "flux_doublet1_90.json",
+      "sha256": "17c3d199c21c8d8ee160e7e67e310b95dd2d4418b728732def33063417f40d75",
+      "integration": {
+        "scheme": "flux",
+        "max_step_ps": 0.025,
+        "max_ray_angle": 0.0001953125,
+        "causal_fraction": 0.01
+      },
+      "termination": "STOP_DIAGNOSTIC_WALL_TIME",
+      "final_time_ps": 49.44661507428603,
+      "validation": {
+        "status": "FAIL",
+        "max_chord_closure_error_cm": 3.418167529499444e-14,
+        "max_closure_over_confinement_reference": 3.7312347464972045e-06,
+        "energy_tolerance_gev": 1e-07,
+        "momentum_tolerance_gev": 5e-06,
+        "closure_tolerance_in_confinement_units": 0.1,
+        "meaning": "SELECTED_CLASSICAL_EVOLUTION_ONLY_NOT_QUANTUM_SURVIVAL"
+      },
+      "final_positions_cm": [
+        [
+          0.3519948495342029,
+          -0.00044521925874743456,
+          0.0006991644946250655
+        ],
+        [
+          0.35198369401806895,
+          -0.00031367378468541294,
+          0.0004903422623734514
+        ]
+      ],
+      "weak_times_ps": [
+        15.232294561232113
+      ],
+      "reflections": 22,
+      "diagnostic": {
+        "reason": "STOP_DIAGNOSTIC_WALL_TIME",
+        "time_ps": 49.44661507428603,
+        "target_ps": 50.23229456123211,
+        "attempted_steps": 1839,
+        "max_steps": 200000,
+        "max_rejected_ray_trials": 50000,
+        "minimum_step_ulps": 16,
+        "rejected_ray_trials": 5963,
+        "event_root_truncations": 93,
+        "min_accepted_step_ps": 4.354128661561907e-07,
+        "null_coordinate_ulps_ps": [
+          7.105427357601002e-15,
+          7.105427357601002e-15
+        ],
+        "trial_context": "rejected trial; h is proposed for next trial",
+        "energy_coordinate_interval_ps": 0.011146435600634552,
+        "ray_history_samples": [
+          4870,
+          4869
+        ],
+        "last_outgoing_null_coordinates_ps": [
+          50.35709555962639,
+          48.54728102454631
+        ],
+        "h": 2.786608900158638e-05,
+        "angle": 0.01647777875653507,
+        "angle_step_ps": 5.573217800317276e-05,
+        "rejections": 2.0,
+        "az": 50.35709555962639,
+        "bz": 48.54728102454631,
+        "incoming_jump_caps_ps": [
+          50.34611062015502,
+          null
+        ],
+        "event_roots_ps": [],
+        "proposed_null_increments_ps": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "file": "flux_doublet1_90_coarse_v2.json",
+      "sha256": "e525640e96b716b1c03b8b78361e63a559efbd586b60b0807e67f87dc7aa103a",
+      "integration": {
+        "scheme": "flux",
+        "max_step_ps": 0.05,
+        "max_ray_angle": 0.01,
+        "causal_fraction": 0.05
+      },
+      "termination": "TARGET_REACHED",
+      "final_time_ps": 90.0,
+      "validation": {
+        "status": "PASS",
+        "max_chord_closure_error_cm": 2.2530934110932472e-14,
+        "max_closure_over_confinement_reference": 2.459452425904393e-06,
+        "energy_tolerance_gev": 1e-07,
+        "momentum_tolerance_gev": 5e-06,
+        "closure_tolerance_in_confinement_units": 0.1,
+        "meaning": "SELECTED_CLASSICAL_EVOLUTION_ONLY_NOT_QUANTUM_SURVIVAL"
+      },
+      "final_positions_cm": [
+        [
+          0.7419441176581085,
+          -0.002026701574546728,
+          0.003130439811637957
+        ],
+        [
+          0.5331425331081622,
+          7.901172977391227e-05,
+          -0.0011711348357157127
+        ]
+      ],
+      "weak_times_ps": [
+        15.232293666288646,
+        53.23578748198134
+      ],
+      "reflections": 62,
+      "diagnostic": null
+    },
+    {
+      "file": "flux_doublet1_90_fast.json",
+      "sha256": "a11fb4ff315c5bc0953c19ec5c62e5ab95e7856145a9305514419d094464bfae",
+      "integration": {
+        "scheme": "flux",
+        "max_step_ps": 0.05,
+        "max_ray_angle": 0.01,
+        "causal_fraction": 0.05
+      },
+      "termination": "STOP_DIAGNOSTIC_TIME_RESOLUTION",
+      "final_time_ps": 4.99999999999999,
+      "validation": {
+        "status": "FAIL",
+        "max_chord_closure_error_cm": 3.3306690738792665e-16,
+        "max_closure_over_confinement_reference": 3.635722377645389e-08,
+        "energy_tolerance_gev": 1e-07,
+        "momentum_tolerance_gev": 5e-06,
+        "closure_tolerance_in_confinement_units": 0.1,
+        "meaning": "SELECTED_CLASSICAL_EVOLUTION_ONLY_NOT_QUANTUM_SURVIVAL"
+      },
+      "final_positions_cm": [
+        [
+          -0.056109390762661415,
+          3.706952020009488e-08,
+          0.0
+        ],
+        [
+          0.12667246024899237,
+          1.9812552922866382e-07,
+          0.0
+        ]
+      ],
+      "weak_times_ps": [],
+      "reflections": 0,
+      "diagnostic": {
+        "reason": "STOP_DIAGNOSTIC_TIME_RESOLUTION",
+        "time_ps": 4.99999999999999,
+        "target_ps": 5.0,
+        "attempted_steps": 101,
+        "max_steps": 200000,
+        "max_rejected_ray_trials": 50000,
+        "minimum_step_ulps": 16,
+        "rejected_ray_trials": 0,
+        "event_root_truncations": 0,
+        "min_accepted_step_ps": 0.05,
+        "null_coordinate_ulps_ps": [
+          1.7763568394002505e-15,
+          8.881784197001252e-16
+        ],
+        "trial_context": "last accepted step",
+        "energy_coordinate_interval_ps": 6.096946275142419,
+        "ray_history_samples": [
+          102,
+          102
+        ],
+        "last_outgoing_null_coordinates_ps": [
+          10.840198690949542,
+          5.256747584192858
+        ],
+        "h": 9.769962616701378e-15,
+        "angle": 2.9802322387695312e-08,
+        "angle_step_ps": 0.05,
+        "rejections": 0.0,
+        "az": 10.840198690949542,
+        "bz": 5.256747584192858,
+        "incoming_jump_caps_ps": [
+          null,
+          null
+        ],
+        "event_roots_ps": [],
+        "proposed_null_increments_ps": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "file": "flux_doublet1_90_fastfine.json",
+      "sha256": "360129ecd5483899e0f1b27894eac7d023c9029bca652bca55523413ec1ac0be",
+      "integration": {
+        "scheme": "flux",
+        "max_step_ps": 0.025,
+        "max_ray_angle": 0.005,
+        "causal_fraction": 0.025
+      },
+      "termination": "STOP_DIAGNOSTIC_WALL_TIME",
+      "final_time_ps": 76.01594673394783,
+      "validation": {
+        "status": "FAIL",
+        "max_chord_closure_error_cm": 6.310076139929555e-14,
+        "max_closure_over_confinement_reference": 6.888010942458385e-06,
+        "energy_tolerance_gev": 1e-07,
+        "momentum_tolerance_gev": 5e-06,
+        "closure_tolerance_in_confinement_units": 0.1,
+        "meaning": "SELECTED_CLASSICAL_EVOLUTION_ONLY_NOT_QUANTUM_SURVIVAL"
+      },
+      "final_positions_cm": [
+        [
+          0.538629169758853,
+          -0.0007126518955417105,
+          0.0007293010395310053
+        ],
+        [
+          0.5385393232514308,
+          -0.0008121749574456713,
+          0.0009967403996509264
+        ]
+      ],
+      "weak_times_ps": [
+        15.232294561232113,
+        53.235790601277984
+      ],
+      "reflections": 47,
+      "diagnostic": {
+        "reason": "STOP_DIAGNOSTIC_WALL_TIME",
+        "time_ps": 76.01594673394783,
+        "target_ps": 78.23579060127798,
+        "attempted_steps": 834,
+        "max_steps": 200000,
+        "max_rejected_ray_trials": 50000,
+        "minimum_step_ulps": 16,
+        "rejected_ray_trials": 3135,
+        "event_root_truncations": 477,
+        "min_accepted_step_ps": 3.009943296769904e-07,
+        "null_coordinate_ulps_ps": [
+          1.4210854715202004e-14,
+          1.4210854715202004e-14
+        ],
+        "trial_context": "rejected trial; h is proposed for next trial",
+        "energy_coordinate_interval_ps": 0.01037526759901386,
+        "ray_history_samples": [
+          4610,
+          4609
+        ],
+        "last_outgoing_null_coordinates_ps": [
+          83.14421836589158,
+          68.8980503696031
+        ],
+        "h": 9.115156929111983e-07,
+        "angle": 0.008464121941616389,
+        "angle_step_ps": 1.8230313858223966e-06,
+        "rejections": 4.0,
+        "az": 83.14421836589158,
+        "bz": 68.8980503696031,
+        "incoming_jump_caps_ps": [
+          83.13386007080126,
+          null
+        ],
+        "event_roots_ps": [],
+        "proposed_null_increments_ps": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "file": "flux_doublet1_90_fine.json",
+      "sha256": "ade40c6b619d5344da3fa81bfeb9c1dc60b731f0a7023bd833caab267fdaa57e",
+      "integration": {
+        "scheme": "flux",
+        "max_step_ps": 0.0125,
+        "max_ray_angle": 9.765625e-05,
+        "causal_fraction": 0.005
+      },
+      "termination": "STOP_DIAGNOSTIC_WALL_TIME",
+      "final_time_ps": 49.43495109393451,
+      "validation": {
+        "status": "FAIL",
+        "max_chord_closure_error_cm": 8.409745889733982e-14,
+        "max_closure_over_confinement_reference": 9.179987757236282e-06,
+        "energy_tolerance_gev": 1e-07,
+        "momentum_tolerance_gev": 5e-06,
+        "closure_tolerance_in_confinement_units": 0.1,
+        "meaning": "SELECTED_CLASSICAL_EVOLUTION_ONLY_NOT_QUANTUM_SURVIVAL"
+      },
+      "final_positions_cm": [
+        [
+          0.3521074679763488,
+          -0.0004461094202867342,
+          0.0007005885084638576
+        ],
+        [
+          0.35174900331568976,
+          -0.00031275444243255657,
+          0.0004888820321830887
+        ]
+      ],
+      "weak_times_ps": [
+        15.232293890075958
+      ],
+      "reflections": 21,
+      "diagnostic": {
+        "reason": "STOP_DIAGNOSTIC_WALL_TIME",
+        "time_ps": 49.43495109393451,
+        "target_ps": 50.23229389007596,
+        "attempted_steps": 2070,
+        "max_steps": 200000,
+        "max_rejected_ray_trials": 50000,
+        "minimum_step_ulps": 16,
+        "rejected_ray_trials": 3634,
+        "event_root_truncations": 25,
+        "min_accepted_step_ps": 1.1614001942236805e-06,
+        "null_coordinate_ulps_ps": [
+          7.105427357601002e-15,
+          7.105427357601002e-15
+        ],
+        "trial_context": "rejected trial; h is proposed for next trial",
+        "energy_coordinate_interval_ps": 0.014864843662232174,
+        "ray_history_samples": [
+          8106,
+          8106
+        ],
+        "last_outgoing_null_coordinates_ps": [
+          50.34600874461838,
+          48.538758286912866
+        ],
+        "h": 2.3226318222237772e-06,
+        "angle": 0.00022772743264844818,
+        "angle_step_ps": 4.6452636444475545e-06,
+        "rejections": 5.0,
+        "az": 50.34600874461838,
+        "bz": 48.538758286912866,
+        "incoming_jump_caps_ps": [
+          null,
+          48.5243910920311
+        ],
+        "event_roots_ps": [],
+        "proposed_null_increments_ps": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "file": "flux_doublet1_90_fine_replayed.json",
+      "sha256": "b1c65b81006ae704aa64a7609557f3b36bb9c73192b95906e80fb444970ccfb0",
+      "integration": {
+        "scheme": "flux",
+        "max_step_ps": 0.025,
+        "max_ray_angle": 0.005,
+        "causal_fraction": 0.025
+      },
+      "termination": "TARGET_REACHED",
+      "final_time_ps": 90.0,
+      "validation": {
+        "status": "PASS",
+        "max_chord_closure_error_cm": 6.352245524173067e-14,
+        "max_closure_over_confinement_reference": 6.934042586715102e-06,
+        "energy_tolerance_gev": 1e-07,
+        "momentum_tolerance_gev": 5e-06,
+        "closure_tolerance_in_confinement_units": 0.1,
+        "meaning": "SELECTED_CLASSICAL_EVOLUTION_ONLY_NOT_QUANTUM_SURVIVAL"
+      },
+      "final_positions_cm": [
+        [
+          0.7419441106952667,
+          -0.0020261619585712175,
+          0.0031314749853783718
+        ],
+        [
+          0.5331425376879796,
+          7.731930274657051e-05,
+          -0.0011716219644024115
+        ]
+      ],
+      "weak_times_ps": [
+        15.232293666288706,
+        53.235787412753794
+      ],
+      "reflections": 62,
+      "diagnostic": null
+    },
+    {
+      "file": "flux_doublet1_90_fine_v2.json",
+      "sha256": "8e5bb0fea386a6ef16524e207e028c4fc5b3cfb211947ff3a0708f88a2bde0e8",
+      "integration": {
+        "scheme": "flux",
+        "max_step_ps": 0.025,
+        "max_ray_angle": 0.005,
+        "causal_fraction": 0.025
+      },
+      "termination": "STOP_FLUX_SOLVE",
+      "final_time_ps": 76.01585041334043,
+      "validation": {
+        "status": "FAIL",
+        "max_chord_closure_error_cm": 6.352245524173067e-14,
+        "max_closure_over_confinement_reference": 6.934042586715102e-06,
+        "energy_tolerance_gev": 1e-07,
+        "momentum_tolerance_gev": 5e-06,
+        "closure_tolerance_in_confinement_units": 0.1,
+        "meaning": "SELECTED_CLASSICAL_EVOLUTION_ONLY_NOT_QUANTUM_SURVIVAL"
+      },
+      "final_positions_cm": [
+        [
+          0.5386272318312452,
+          -0.000712639689994364,
+          0.0007292791682171724
+        ],
+        [
+          0.5385402567965694,
+          -0.000812187434142038,
+          0.000996766208273801
+        ]
+      ],
+      "weak_times_ps": [
+        15.232293666288706,
+        53.235787412753794
+      ],
+      "reflections": 47,
+      "diagnostic": {
+        "reason": "STOP_FLUX_SOLVE",
+        "time_ps": 76.01585041334043,
+        "message": "implicit endpoint label became null"
+      }
+    }
+  ],
+  "matched_time_comparison": {
+    "case": "doublet seed1 at 90 ps",
+    "flux_coarse_vs_replayed_fine_max_endpoint_difference_in_reference_lengths": 192.24446436797697,
+    "cubic_without_derivative_fronts_coarse_vs_fine": 2266.371585282428,
+    "cubic_with_derivative_fronts_coarse_vs_fine": 7.9553187386011155
+  },
+  "physical_survival_probability": null
+}
