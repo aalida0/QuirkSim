@@ -17,6 +17,7 @@ def audit(path):
     with tarfile.open(path) as archive:
         manifest_member = next(m for m in archive.getmembers() if m.name.endswith("/manifest.json"))
         manifest = json.load(archive.extractfile(manifest_member))
+        duration = manifest["nominal_stop_ps"]
         prefix = manifest_member.name.rsplit("/", 1)[0] + "/"
         mass = manifest["mass_gev"] * 1000
         sigma = (manifest["lambda_ev"] * 1e-6)**2 / HBARC_MEV_MM
@@ -25,6 +26,10 @@ def audit(path):
             name = case["name"]
             macro = archive.extractfile(prefix + name + ".mac").read()
             macro_hash_matches = hashlib.sha256(macro).hexdigest() == case["macro_sha256"]
+            if prefix + name + ".root" not in archive.getnames():
+                cases[name] = {"execution": case["execution"], "macro_hash_matches": macro_hash_matches,
+                               "missing_root": True, "endpoints": []}
+                continue
             root = uproot.open(io.BytesIO(archive.extractfile(prefix + name + ".root").read()))
             e = root["events"].arrays(library="ak")
             a = root["steps"].arrays(library="np")
@@ -45,9 +50,14 @@ def audit(path):
                 ep = {"endpoint": q, "rows": len(t), "reported_steps": int(e["q_steps"][0][q]),
                       "end_reason": int(e["q_reason"][0][q]), "last_time_ps": float(t[-1]),
                       "covers_20_ps": bool(t[-1] >= 20),
+                      "covers_requested_duration": bool(t[-1] >= duration),
                       "strictly_increasing_times": bool(np.all(np.diff(t) > 0)),
                       "finite_values": bool(np.all(np.isfinite(np.r_[t, x.ravel(), p.ravel(), E]))),
                       "max_edep_mev": float(max(a["edep"][mask]))}
+                sign_change = np.flatnonzero(p[:-1, 0] * p[1:, 0] < 0)
+                ep["first_px_sign_change_bracket_ps"] = ([float(t[sign_change[0]]), float(t[sign_change[0]+1])]
+                                                          if len(sign_change) else None)
+                # Straight-string solution is valid through first turnaround, before re-encounter.
                 if case["field_tesla"] == 0:
                     beta = initial_p[2] / initial_E
                     gamma = 1 / np.sqrt(1 - beta**2)
@@ -57,8 +67,10 @@ def audit(path):
                                                np.zeros_like(t), beta * C_MM_PS * t])
                     p_exact = np.column_stack([np.sign(initial_p[0]) * p_abs, np.zeros_like(t),
                                                gamma * beta * E_rest])
-                    ep["analytic_outbound_max_position_error_mm"] = float(max(np.linalg.norm(x-x_exact, axis=1)))
-                    ep["analytic_outbound_max_momentum_error_mev"] = float(max(np.linalg.norm(p-p_exact, axis=1)))
+                    if max(t) >= 2 * abs(initial_p[0]) * gamma / (sigma*C_MM_PS):
+                        raise ValueError("Radial analytic audit restricted to before first re-encounter")
+                    ep["analytic_radial_max_position_error_mm"] = float(max(np.linalg.norm(x-x_exact, axis=1)))
+                    ep["analytic_radial_max_momentum_error_mev"] = float(max(np.linalg.norm(p-p_exact, axis=1)))
                     ep["analytic_first_turn_time_ps"] = float(abs(initial_p[0]) * gamma / (sigma*C_MM_PS))
                 v = C_MM_PS * p / E[:, None]
                 if t[0] > 0:
@@ -69,31 +81,49 @@ def audit(path):
                 result["endpoints"].append(ep)
             cases[name] = result
         comparison = []
-        grid = np.linspace(0, 20, 2001)
         for field in (0, 2):
-            for q in (0, 1):
-                interpolants = []
-                for level in (0, 1):
-                    t, x, v = trajectories[(f"stable_B{field}_level{level}", q)]
-                    hermite = CubicHermiteSpline(t, x, v)(grid)
-                    linear = np.column_stack([np.interp(grid, t, x[:, j]) for j in range(3)])
-                    interpolants.append((hermite, linear))
-                diff = np.linalg.norm(interpolants[0][0]-interpolants[1][0], axis=1)
-                comparison.append({"field_tesla": field, "endpoint": q,
-                    "hermite_max_position_difference_mm": float(max(diff)),
-                    "hermite_max_difference_over_reference": float(max(diff)/reference_mm),
-                    "linear_max_position_difference_mm": float(max(np.linalg.norm(interpolants[0][1]-interpolants[1][1], axis=1))),
-                    "hermite_y_at_20ps_mm": [float(h[-1,1]) for h,l in interpolants],
-                    "interpolation_error_bound_established": False})
+            selected = sorted((c for c in manifest["cases"] if c["field_tesla"] == field),
+                              key=lambda c: -c["max_boost"])
+            for coarse, fine in zip(selected[:-1], selected[1:]):
+                for q in (0, 1):
+                    if any((c["name"], q) not in trajectories for c in (coarse, fine)):
+                        continue
+                    stop = min(duration, *(trajectories[(c["name"],q)][0][-1] for c in (coarse,fine)))
+                    grid = np.linspace(0, stop, 2001)
+                    interpolants = []
+                    for case in (coarse, fine):
+                        t, x, v = trajectories[(case["name"], q)]
+                        hermite = CubicHermiteSpline(t, x, v, extrapolate=False)(grid)
+                        linear = np.column_stack([np.interp(grid, t, x[:, j]) for j in range(3)])
+                        interpolants.append((hermite, linear))
+                    diff = np.linalg.norm(interpolants[0][0]-interpolants[1][0], axis=1)
+                    comparison.append({"field_tesla": field, "endpoint": q,
+                        "coarse_case": coarse["name"], "fine_case": fine["name"],
+                        "comparison_stop_ps": float(stop),
+                        "hermite_max_position_difference_mm": float(max(diff)),
+                        "hermite_max_difference_over_reference": float(max(diff)/reference_mm),
+                        "linear_max_position_difference_mm": float(max(np.linalg.norm(interpolants[0][1]-interpolants[1][1], axis=1))),
+                        "hermite_y_at_comparison_stop_mm": [float(h[-1,1]) for h,l in interpolants],
+                        "interpolation_error_bound_established": False})
+        smoke_pass = manifest["build"]["returncode"] == 0 and all(
+            c["execution"]["returncode"] == 0 and not c["execution"]["timeout"]
+            and c["macro_hash_matches"] and not c.get("missing_root", False)
+            and c.get("event_entries") == 1 and not c.get("geant4_exception_lines")
+            and len(c["endpoints"]) == 2 and all(
+                e["end_reason"] == 6 and e["covers_requested_duration"]
+                and e["rows"] == e["reported_steps"] and e["finite_values"]
+                and e["strictly_increasing_times"] for e in c["endpoints"])
+            for c in cases.values())
     with open(path, "rb") as stream:
         digest = hashlib.sha256(stream.read()).hexdigest()
     return {"archive_sha256": digest, "source_commit": manifest["observed_source_commit"],
             "build": manifest["build"], "confinement_reference_mm": reference_mm,
             "cases": cases, "resolution_comparisons": comparison,
-            "scope": "STABLE_OUTBOUND_TRANSPORT_ONLY_NO_RECOIL",
-            "verdict": "SMOKE_PASS_B0_ANALYTIC_AGREEMENT_B2_REFINEMENT_UNRESOLVED",
+            "scope": "STABLE_TRANSPORT_ONLY_NO_RECOIL",
+            "requested_duration_ps": duration, "smoke_pass": smoke_pass,
+            "verdict": "SMOKE_PASS_ACCURACY_REQUIRES_REVIEW" if smoke_pass else "SMOKE_FAIL",
             "physical_survival_probability": None,
-            "limitations": ["No weak decays, turnaround, crossing, radiation or annihilation tested.",
+            "limitations": ["No weak decays, quantum matching, radiation or annihilation tested; inspect turnaround brackets separately.",
                 "Interpolation is exploratory; no certified error bound for B2.",
                 "Endpoint data alone do not establish total string energy-momentum conservation.",
                 "Upstream point-production state differs from stretched conformal benchmark."]}
@@ -108,3 +138,4 @@ if __name__ == "__main__":
         json.dump(result, stream, indent=2, allow_nan=False)
         stream.write("\n")
     print(result["verdict"])
+
