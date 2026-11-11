@@ -113,7 +113,7 @@
  
  #include "G4ios.hh"
  
-@@ -102,14 +106,41 @@
+@@ -102,14 +106,40 @@
                             &spin);
  
    currentMinimumStep = std::min(currentMinimumStep, quirkStepper.GetMaxLength());
@@ -129,10 +129,9 @@
 +  };
 +  if (localizedClock && !fMoveTinySteps)
 +    G4Exception("QuirkTransportation","ClockNeedsMovingSteps",FatalException,"localized clock requires moveTinySteps");
-+  const bool weakEndpoint=QPWeakConfig::enabled() && std::abs(pParticle->GetPDGcode())==17 &&
-+                         (pParticle->GetPDGcode()>0 ? 0 : 1)==QPWeakConfig::endpoint();
++  const bool weakEndpoint=QPWeakConfig::endpointEnabled(pParticle->GetPDGcode());
 +  if (localizedClock && weakEndpoint && currentMinimumStep>0.) {
-+    const double remaining=QPWeakConfig::tauPs()*CLHEP::picosecond-track.GetProperTime();
++    const double remaining=QPWeakConfig::tauPs(pParticle->GetPDGcode())*CLHEP::picosecond-track.GetProperTime();
 +    if (remaining>0. && properAtLength(currentMinimumStep)>=remaining)
 +      currentMinimumStep=QPClock::eventLength(currentMinimumStep,remaining,properAtLength,
 +                                               1e-9*CLHEP::picosecond);
@@ -157,7 +156,7 @@
    } else {
      fGeometryLimitedStep = false;
    }
-@@ -171,7 +202,8 @@
+@@ -171,7 +201,8 @@
    fParticleChange.ProposeGlobalTime(fCandidateEndGlobalTime);
  
    // proper time from the Lorentz factor
@@ -167,7 +166,7 @@
    fParticleChange.ProposeProperTime(track.GetProperTime() + deltaProperTime);
  
    // kill a particle stuck looping in the field
-@@ -274,12 +306,18 @@
+@@ -274,12 +305,18 @@
    fCurrentTrack = aTrack;
  
    // first string vector at the first step of the pair
@@ -228,7 +227,7 @@
    m_quirk = new Quirk("quirk", m_mass, m_charge, m_pdg);
    m_antiQuirk = new Quirk("antiquirk", m_mass, -m_charge, -m_pdg);
 +  if (QPWeakConfig::enabled()) {
-+    if (std::abs(m_pdg)!=17 || (QPWeakConfig::endpoint()!=0 && QPWeakConfig::endpoint()!=1) ||
++    if (std::abs(m_pdg)!=17 || (QPWeakConfig::endpoint()!=-1 && QPWeakConfig::endpoint()!=0 && QPWeakConfig::endpoint()!=1) ||
 +        m_mass <= (QPWeakConfig::neutralGeV()+0.13957039)*CLHEP::GeV)
 +      G4Exception("QuirkPhysics","BadWeakSpecies",FatalException,"weak pilot requires PDG +/-17 and open pion channel");
 +    if (table->FindParticle(9900017) || table->FindParticle(-9900017))
@@ -261,7 +260,7 @@
        pmanager->AddProcess(new G4hPairProduction, -1, 4, 4);
      }
 +    }
-+    if (QPWeakConfig::enabled() && q->GetPDGCharge()!=0. && (q->GetPDGEncoding()>0 ? 0 : 1)==QPWeakConfig::endpoint())
++    if (q->GetPDGCharge()!=0. && QPWeakConfig::endpointEnabled(q->GetPDGEncoding()))
 +      pmanager->AddProcess(new QuirkWeakProcess(q->GetPDGEncoding()>0 ? m_neutral : m_antiNeutral),-1,-1,6);
      pmanager->AddProcess(new QuirkWatcher(m_rMax, m_zMax, m_keepStopped, m_stopThreshold), -1, -1, 5);
      if (m_verbose > 1) {

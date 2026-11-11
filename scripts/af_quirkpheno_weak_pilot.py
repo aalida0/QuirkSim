@@ -3,6 +3,7 @@ import argparse
 import hashlib
 import json
 import math
+import random
 from pathlib import Path
 import re
 import shlex
@@ -15,7 +16,7 @@ M_NEUTRAL = 225.
 M_PARENT = 225.1571702763212
 ASSETS = Path(__file__).resolve().parents[1] / 'research' / 'quirkpheno_recoil'
 
-def prepare(out, clock_mode="localized"):
+def prepare_fixed(out, clock_mode="localized"):
     state = stable_prepare(out, 'precision')
     templates = {c['level']: (out / (c['name']+'.mac')).read_text()
                  for c in state['cases'] if c['field_tesla']==2 and c['level'] in (7,8)}
@@ -62,12 +63,62 @@ def prepare(out, clock_mode="localized"):
                               for p in sorted(ASSETS.iterdir()) if p.is_file()}
     return state
 
+def prepare(out, clock_mode="localized", sampled_pion_seeds=0):
+    if not sampled_pion_seeds:
+        return prepare_fixed(out,clock_mode)
+    if clock_mode!='localized' or not 1<=sampled_pion_seeds<=32:
+        raise ValueError('Sampled pion pilot requires localized clock and 1-32 complete seeds')
+    state=prepare_fixed(out,clock_mode)
+    templates={c['level']:(out/(c['name']+'.mac')).read_text() for c in state['cases'] if c['mode']=='stable_parent'}
+    for c in state['cases']:
+        (out/(c['name']+'.mac')).unlink();(out/(c['name']+'.card')).unlink()
+    rate_file=ASSETS/'triplet_pion_rate_reference.json'
+    rates=json.loads(rate_file.read_text())
+    if abs(rates['charged_mass_gev']-M_PARENT)>1e-12 or rates['neutral_mass_gev']!=M_NEUTRAL:
+        raise ValueError('Frozen rate reference and transport masses disagree')
+    cases=[]
+    def add(name,mode,level,plan=None,seed=None):
+        card=out/(name+'.card');card.write_text('world 100 100 G4_Galactic\nfield 2 0 100 0 100\n')
+        macro=templates[level].replace('stable_parent_level'+str(level),name)
+        path=out/(name+'.mac');path.write_text(macro)
+        case={'name':name,'mode':mode,'level':level,'macro':str(path),
+              'macro_sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'field_tesla':2,
+              'weak_enabled':plan is not None,'endpoint':-1 if plan else 0,'seed':seed,
+              'clock_mode':'localized','max_boost':.01/2**level,'max_merge_mm':1e-8/2**level}
+        if plan:
+            plan_path=out/(name+'.plan')
+            text='QP_PION_PLAN_V1\n'+''.join(str(i)+' '+' '.join(format(x,'.17g') for x in [p['proper_ps'],*p['direction']])+'\n' for i,p in enumerate(plan))
+            plan_path.write_text(text)
+            case.update(plan_file=str(plan_path),plan_sha256=hashlib.sha256(plan_path.read_bytes()).hexdigest(),plan=plan)
+        cases.append(case)
+    for level in (7,8):add('sampled_stable_level'+str(level),'sampled_stable',level)
+    for seed in range(1,sampled_pion_seeds+1):
+        rng=random.Random(seed);plan=[]
+        for endpoint in (0,1):
+            proper=rng.expovariate(1/rates['lifetime_ps']);costheta=rng.uniform(-1,1);phi=rng.uniform(0,2*math.pi)
+            st=math.sqrt(max(0.,1-costheta*costheta))
+            plan.append({'proper_ps':proper,'direction':[st*math.cos(phi),st*math.sin(phi),costheta]})
+        for level in ((7,8) if seed==1 else (8,)):
+            for opposite in (False,True):
+                mode=('antipodal' if opposite else 'sampled')+'_seed'+str(seed)
+                selected=[{'proper_ps':p['proper_ps'],'direction':[(-1 if opposite else 1)*x for x in p['direction']]} for p in plan]
+                add(mode+'_level'+str(level),mode,level,selected,seed)
+    state.update(suite='sampled_pion',scope='FORCED_PION_CHANNEL_FIXED_KINEMATICS_FINITE_WINDOW_NO_SURVIVAL',
+                 sampled_seeds=list(range(1,sampled_pion_seeds+1)),cases=cases,
+                 pion_only_conditional=True,inclusive_channel_sampling=False,
+                 lifetime_mean_ps=rates['lifetime_ps'],reference_pion_branching=rates['pion_branching'],
+                 rate_reference_sha256=hashlib.sha256(rate_file.read_bytes()).hexdigest(),
+                 decay_clock='independent exponential proper thresholds for both endpoints; localized roots',
+                 random_generator='Python random.Random(seed); per endpoint expovariate, cos(theta), phi')
+    return state
+
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--output-dir',required=True)
     p.add_argument('--prepare-only',action='store_true')
     p.add_argument('--clock-mode',choices=('localized','legacy'),default='localized')
-    a=p.parse_args();out=Path(a.output_dir).expanduser().resolve();state=prepare(out,a.clock_mode)
+    p.add_argument('--sampled-pion-seeds',type=int,default=0,help='Optional complete forced-pion seed block; 8 seeds gives 20 cases')
+    a=p.parse_args();out=Path(a.output_dir).expanduser().resolve();state=prepare(out,a.clock_mode,a.sampled_pion_seeds)
     def save(): (out/'manifest.json').write_text(json.dumps(state,indent=2)+'\n')
     save();print(f'Manifest: {out/"manifest.json"}',flush=True)
     if a.prepare_only:return
@@ -95,7 +146,7 @@ def main():
     patch=ASSETS/'weak_handoff.patch' 
     checked(['git','apply','--check',str(patch)],source,'patch_check.log',60)
     checked(['git','apply',str(patch)],source,'patch_apply.log',60)
-    for name in ('EndpointHandoff.h','TwoBodyKinematics.h','ProperTimeClock.h','QuirkWeakProcess.h'):
+    for name in ('EndpointHandoff.h','TwoBodyKinematics.h','ProperTimeClock.h','SampledPionPlan.h','QuirkWeakProcess.h'):
         shutil.copyfile(ASSETS/name,source/'quirkcore/include/quirkcore'/name)
     shutil.copyfile(ASSETS/'QuirkWeakProcess.cc',source/'quirkcore/src/QuirkWeakProcess.cc')
     build=out/'build'
@@ -110,7 +161,7 @@ def main():
     for case in state['cases']:
         print('Running '+case['name'],flush=True)
         env={'QP_WEAK_ENABLED':int(case['weak_enabled']),'QP_WEAK_ENDPOINT':case['endpoint'],
-             'QP_WEAK_TAU_PS':50,'QP_WEAK_CLOCK_MODE':case['clock_mode'],'QP_NEUTRAL_MASS_GEV':M_NEUTRAL,'QP_WEAK_DIR_SIGN':case['pion_rest_y_sign']}
+             'QP_WEAK_TAU_PS':50,'QP_WEAK_CLOCK_MODE':case['clock_mode'],'QP_NEUTRAL_MASS_GEV':M_NEUTRAL,'QP_WEAK_DIR_SIGN':case.get('pion_rest_y_sign',1),'QP_WEAK_PLAN':case.get('plan_file','')}
         command='env '+' '.join(shlex.quote(k+'='+str(v)) for k,v in env.items())
         command+=' timeout --kill-after=5s 120s '+shlex.quote(str(exe))
         command+=' --mt -t 1 -n 1 -s 1 -m '+shlex.quote(case['macro'])

@@ -2,6 +2,7 @@
 #include "G4VDiscreteProcess.hh"
 #include "G4ParticleChange.hh"
 #include <cstdlib>
+#include "quirkcore/SampledPionPlan.h"
 #include <cfloat>
 #include <string>
 class G4ParticleDefinition;
@@ -12,6 +13,21 @@ inline int endpoint() { const char* p=std::getenv("QP_WEAK_ENDPOINT"); return p 
 inline double tauPs() { const char* p=std::getenv("QP_WEAK_TAU_PS"); return p ? std::stod(p) : 50.; }
 inline double neutralGeV() { const char* p=std::getenv("QP_NEUTRAL_MASS_GEV"); return p ? std::stod(p) : 225.; }
 inline double directionSign() { const char* p=std::getenv("QP_WEAK_DIR_SIGN"); return p ? std::stod(p) : 1.; }
+inline const PionPairPlan* sampledPlan() {
+  const char* path=std::getenv("QP_WEAK_PLAN");
+  if (!path || !*path) return nullptr;
+  static thread_local const PionPairPlan plan=loadPionPairPlan(path);
+  return &plan;
+}
+inline double tauPs(int pdg) {
+  const auto* plan=sampledPlan();return plan ? plan->endpoint[pdg>0 ? 0 : 1].properPs : tauPs();
+}
+inline std::array<double,3> pionDirection(int pdg) {
+  const auto* plan=sampledPlan();return plan ? plan->endpoint[pdg>0 ? 0 : 1].direction : std::array<double,3>{0.,directionSign(),0.};
+}
+inline bool endpointEnabled(int pdg) {
+  return enabled() && std::abs(pdg)==17 && (endpoint()==-1 || (pdg>0 ? 0 : 1)==endpoint());
+}
 }
 class QuirkWeakProcess : public G4VDiscreteProcess {
 public:

@@ -1,0 +1,18 @@
+{
+  "representation": "triplet",
+  "neutral_mass_gev": 225.0,
+  "charged_mass_gev": 225.1571702763212,
+  "delta_mev": 157.1702763212056,
+  "widths_gev": {
+    "pion": 2.485093029961731e-15,
+    "electron_neutrino": 5.610446303263734e-17,
+    "muon_neutrino": 4.8791378973960464e-18
+  },
+  "lifetime_ps": 258.5200888747253,
+  "pion_branching": 0.9760480104211656,
+  "scope": "LO_RATE_REFERENCE_FOR_FORCED_PION_PILOT_NOT_INCLUSIVE_PHYSICS",
+  "physics_source": "quirksim/physics.py",
+  "physics_source_sha256": "4a3d268984e711df9750a3d6314962544146d84711560217aa82c5e1706414b8",
+  "reference_pion_mass_mev": 139.57039,
+  "backend_pion_mass_mev": 139.5701
+}

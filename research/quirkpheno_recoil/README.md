@@ -7,8 +7,9 @@ Keep upstream LICENSE/NOTICE in the checked-out source. This directory stores
 an integration patch and new source, not a second independent transport solver.
 
 **Status: first deterministic AF pilot compiled and local handoff checks passed.
-Micrometre directional recoil is resolved; event-time and input precision remain
-limited. The subsequent UI-precision and localized-clock changes are pending AF verification.**
+The UI precision and localized clock passed the ten-case AF check at 66eef0b1.
+Micrometre directional recoil is resolved in the deterministic pilot.
+The new sampled-plan/two-endpoint extension is pending Geant4 verification.**
 Do not merge into stable code.
 
 The patch registers neutral Quirk definitions with sign-preserving endpoint
@@ -119,8 +120,8 @@ not a no-recoil or survival result; see the saved study for precision limits.
 Actual backend mass logging exposed UI rounding of 225.157170... to 225.157 GeV.
 The patch now enables G4UImanager::UseDoublePrecisionStr(true) before macro
 commands, preserving input precision during Geant4 unit normalization. The
-new main-file preimage is pinned and checked. That added UI change has not yet
-been compiled/run in Geant4. Proper-threshold localization is still approximate.
+new main-file preimage is pinned and checked. That UI change and the localized clock subsequently passed the AF checks.
+This establishes the computed-clock pilot, not continuum or quantum validity.
 
 ## Localized clock update
 
@@ -140,4 +141,36 @@ Native C++ tests compare clocks and roots with exact constant-gamma and
 constant-force references, including turnaround, and reject invalid brackets.
 The synthetic audit covers all ten cases and the legacy-control comparisons.
 The previously uploaded archive remains readable with unchanged local-check
-results. Full Geant4 compilation/execution of this clock update is pending.
+results. The clock update subsequently compiled and passed the AF pilot; see the localized-clock result study.
+
+## Sampled-lifetime forced-pion pilot
+
+`python3 scripts/af_quirkpheno_weak_pilot.py --sampled-pion-seeds 8 --output-dir <new-directory>`
+
+Prepares the complete seed block 1-8: independent exponential proper thresholds
+for both endpoints and isotropic pion directions, paired with antipodal directions
+at the same thresholds. Uses the existing nominal free-particle triplet lifetime
+258.5200888747253 ps and reference pion branching 0.976048. The channel is forced
+to pion: this is not an inclusive decay ensemble or a survival calculation.
+The LO rate reference uses pion mass 139.57039 MeV; transport uses Geant4's
+139.5701 MeV, and this small mass-scheme difference is explicitly retained.
+
+Main seeds run at level 8; seed 1 also at level 7; two stable references give
+20 cases total. Initial kinematics remain fixed, and the nominal window is
+130 ps. Each process executes exactly one event; a worker's immutable plan
+is not a multi-event schedule. `QP_WEAK_ENDPOINT=-1` enables both charged
+endpoints; neutral daughters never receive another weak process.
+
+Plans use a versioned, ordered two-row text format with times in ps and unit
+rest-frame directions. Manifest records each file hash. The parser rejects
+missing/reordered endpoints, nonpositive/nonfinite lifetimes, nonunit directions
+and trailing data. Native tests and exact Python/C++ roundtrips pass.
+`check_sampled.py` tests synthetic zero/one/two decays and bad handoffs; it
+provides no Geant4 transport evidence. The new extension has not run on AF.
+
+Audit with `scripts/audit_quirkpheno_sampled_pion.py`. Local checks include
+proper thresholds, both endpoint handoffs, mass/charge/identity, physical pion
+directions, four-momentum and censoring. Refinement/causal trajectory analysis
+remains a separate returned-data task. Decay-count histograms refer to events
+inside nominal 130 ps, not post-step end-time overshoots. Do not interpret them
+as inclusive rates, collider efficiencies or quantum survival probabilities.

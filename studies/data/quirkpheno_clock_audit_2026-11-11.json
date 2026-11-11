@@ -1,0 +1,990 @@
+{
+  "archive_sha256": "3f08df392f1044f4101feef1826c30ff60889ad15a60c194e7711d8e0da37ccf",
+  "source_commit": "d91cb27ed3786bc63900faad892513841b5b6ed4",
+  "adapter_sha256": {
+    "EndpointHandoff.h": "27c7cdf8d356b39d856e32b829428a15a390a5a77f8f11818e8a600fde93b63f",
+    "ProperTimeClock.h": "5ab88c3e18183f83d2540ab8f8a1b7b045d0ffd83bab2c9d1f1b40dfe80a9b24",
+    "QuirkWeakProcess.cc": "96bdbad85776bb8dfb08a3db806652181bbfb15faee91bc825f5db560f0aef34",
+    "QuirkWeakProcess.h": "4ad070f91caff5a1ffbeac1795a56650d3b86e4c0593f19cf96ecdb0c5a856df",
+    "README.md": "2a36c50e95fa8111837951b182567322c4839da696da7ea4828237d0c16b6fb8",
+    "TwoBodyKinematics.h": "d15db2917e3e35b11305bbcf79b18f2cb9b1ed746d51249ce853e4116b38d48b",
+    "UPSTREAM_LICENSE": "8c6db340475136df3c1201d458fa5755698eace76e510471ecc9d857d6083dac",
+    "UPSTREAM_NOTICE": "4c09449868b703bc6c9089def700d2bf1654727bd9c3648eb6e9ef8186e0f333",
+    "check_audit.py": "fd2df63e5739ffc74f2fa2d4bccca0c029074a4b5da5878aabeeaf8855306f48",
+    "check_native.py": "4f85a41d98e4b9f29f3f5753c909dc8965ae3056670ecb2b4800d8b08ae1173b",
+    "native_check.cc": "51644b411a34d9afd8e35d2073836b84ffc3e256878d3e7c29e9dcbcbe49e50d",
+    "native_clock_check.cc": "feb87986b9d15a4819c71ea61be680bac5fa21887958f1eecb6a3f11a0eccbe5",
+    "upstream_preimages.json": "6277d0bbb3c6c495ceddcd4f44eb6e23351562806c678f845a6c256faec2e20f",
+    "weak_handoff.patch": "4955ac6e0854de2cebcd794c3bcc3ad4bf92311066ae8482f1b639180b3f85ef"
+  },
+  "scope": "EXPERIMENTAL_SINGLE_PION_HANDOFF_NOT_LIFETIME_ENSEMBLE",
+  "cases": {
+    "stable_parent_level7": {
+      "checks": {
+        "execution": true,
+        "root_present": true,
+        "macro_hash": true,
+        "no_exception": true,
+        "decay_count": true,
+        "handoff_count": true,
+        "one_event": true,
+        "end0_complete": true,
+        "end0_rows": true,
+        "end0_finite": true,
+        "end0_time_order": true,
+        "end0_species": true,
+        "end1_complete": true,
+        "end1_rows": true,
+        "end1_finite": true,
+        "end1_time_order": true,
+        "end1_species": true
+      },
+      "weak_records": [],
+      "endpoints": [
+        {
+          "q": 0,
+          "rows": 8220,
+          "last_time_ps": 130.0058376582345,
+          "final_pdg": 17
+        },
+        {
+          "q": 1,
+          "rows": 8222,
+          "last_time_ps": 130.006323173303,
+          "final_pdg": -17
+        }
+      ],
+      "local_handoff_checks_pass": true
+    },
+    "stable_parent_level8": {
+      "checks": {
+        "execution": true,
+        "root_present": true,
+        "macro_hash": true,
+        "no_exception": true,
+        "decay_count": true,
+        "handoff_count": true,
+        "one_event": true,
+        "end0_complete": true,
+        "end0_rows": true,
+        "end0_finite": true,
+        "end0_time_order": true,
+        "end0_species": true,
+        "end1_complete": true,
+        "end1_rows": true,
+        "end1_finite": true,
+        "end1_time_order": true,
+        "end1_species": true
+      },
+      "weak_records": [],
+      "endpoints": [
+        {
+          "q": 0,
+          "rows": 16435,
+          "last_time_ps": 130.00681375414555,
+          "final_pdg": 17
+        },
+        {
+          "q": 1,
+          "rows": 16436,
+          "last_time_ps": 130.00400971318473,
+          "final_pdg": -17
+        }
+      ],
+      "local_handoff_checks_pass": true
+    },
+    "pion_yplus_end0_level7": {
+      "checks": {
+        "execution": true,
+        "root_present": true,
+        "macro_hash": true,
+        "no_exception": true,
+        "decay_count": true,
+        "handoff_count": true,
+        "four_momentum": true,
+        "rest_frame_direction": true,
+        "parent_on_shell": true,
+        "daughter_on_shell": true,
+        "pion_on_shell": true,
+        "threshold": true,
+        "endpoint_sign": true,
+        "pion_charge": true,
+        "transfer_identity": true,
+        "history_fingerprint": true,
+        "one_event": true,
+        "end0_complete": true,
+        "end0_rows": true,
+        "end0_finite": true,
+        "end0_time_order": true,
+        "end0_species": true,
+        "end0_neutral_charge": true,
+        "end0_neutral_mass": true,
+        "end1_complete": true,
+        "end1_rows": true,
+        "end1_finite": true,
+        "end1_time_order": true,
+        "end1_species": true
+      },
+      "weak_records": [
+        {
+          "kind": "decay",
+          "parent_track": 1,
+          "parent_pdg": 17,
+          "daughter_pdg": 9900017,
+          "pion_pdg": 211,
+          "parent_mass_mev": 225157.1702763212,
+          "daughter_mass_mev": 225000,
+          "pion_mass_mev": 139.5701,
+          "time_ps": 54.44266345716183,
+          "position_mm": [
+            4.928201351370102,
+            -0.0001045583565987308,
+            4.0803749744725195
+          ],
+          "proper_ps": 49.999999999997016,
+          "clock_mode": "localized",
+          "threshold_ps": 50,
+          "residual_mev": 5.968558980384842e-11,
+          "parent_mev": [
+            238270.90489861567,
+            50288.75400179383,
+            -2.7813554051313036,
+            59567.726224659375
+          ],
+          "daughter_mev": [
+            238104.5937855814,
+            50253.65277758475,
+            -75.02231958135539,
+            59526.14833800578
+          ],
+          "pion_mev": [
+            166.3111130341989,
+            35.101224209072285,
+            72.24096417622408,
+            41.57788665358104
+          ]
+        },
+        {
+          "kind": "handoff",
+          "parent_track": 1,
+          "daughter_track": 3,
+          "daughter_pdg": 9900017,
+          "own_fingerprint": "17715971401361556341",
+          "partner_fingerprint": "18279717037711132772",
+          "history_preserved": true
+        }
+      ],
+      "endpoints": [
+        {
+          "q": 0,
+          "rows": 8224,
+          "last_time_ps": 130.01862432125543,
+          "final_pdg": 9900017
+        },
+        {
+          "q": 1,
+          "rows": 8222,
+          "last_time_ps": 130.00369162876456,
+          "final_pdg": -17
+        }
+      ],
+      "observed_parent_mass_gev": 225.1571702763212,
+      "observed_pion_mass_mev": 139.5701,
+      "observed_mass_gap_mev": 157.1702763212088,
+      "parent_mass_parameter_matches_manifest": true,
+      "proper_threshold_overshoot_ps": -2.9842794901924208e-12,
+      "clock_mode": "localized",
+      "local_handoff_checks_pass": true
+    },
+    "pion_yplus_end0_level8": {
+      "checks": {
+        "execution": true,
+        "root_present": true,
+        "macro_hash": true,
+        "no_exception": true,
+        "decay_count": true,
+        "handoff_count": true,
+        "four_momentum": true,
+        "rest_frame_direction": true,
+        "parent_on_shell": true,
+        "daughter_on_shell": true,
+        "pion_on_shell": true,
+        "threshold": true,
+        "endpoint_sign": true,
+        "pion_charge": true,
+        "transfer_identity": true,
+        "history_fingerprint": true,
+        "one_event": true,
+        "end0_complete": true,
+        "end0_rows": true,
+        "end0_finite": true,
+        "end0_time_order": true,
+        "end0_species": true,
+        "end0_neutral_charge": true,
+        "end0_neutral_mass": true,
+        "end1_complete": true,
+        "end1_rows": true,
+        "end1_finite": true,
+        "end1_time_order": true,
+        "end1_species": true
+      },
+      "weak_records": [
+        {
+          "kind": "decay",
+          "parent_track": 1,
+          "parent_pdg": 17,
+          "daughter_pdg": 9900017,
+          "pion_pdg": 211,
+          "parent_mass_mev": 225157.1702763212,
+          "daughter_mass_mev": 225000,
+          "pion_mass_mev": 139.5701,
+          "time_ps": 54.44266345716375,
+          "position_mm": [
+            4.928201351369625,
+            -0.00010457488960104035,
+            4.080374974472833
+          ],
+          "proper_ps": 49.99999999999906,
+          "clock_mode": "localized",
+          "threshold_ps": 50,
+          "residual_mev": 2.9103830456733704e-11,
+          "parent_mev": [
+            238270.90489861547,
+            50288.75400178765,
+            -2.781344333829372,
+            59567.72622466443
+          ],
+          "daughter_mev": [
+            238104.5937855777,
+            50253.65277757819,
+            -75.02230851778114,
+            59526.14833801038
+          ],
+          "pion_mev": [
+            166.31111303775106,
+            35.101224209453456,
+            72.24096418395176,
+            41.57788665404117
+          ]
+        },
+        {
+          "kind": "handoff",
+          "parent_track": 1,
+          "daughter_track": 3,
+          "daughter_pdg": 9900017,
+          "own_fingerprint": "10655937800958033155",
+          "partner_fingerprint": "1443271989793526846",
+          "history_preserved": true
+        }
+      ],
+      "endpoints": [
+        {
+          "q": 0,
+          "rows": 16439,
+          "last_time_ps": 130.00418469662154,
+          "final_pdg": 9900017
+        },
+        {
+          "q": 1,
+          "rows": 16435,
+          "last_time_ps": 130.00137164111058,
+          "final_pdg": -17
+        }
+      ],
+      "observed_parent_mass_gev": 225.1571702763212,
+      "observed_pion_mass_mev": 139.5701,
+      "observed_mass_gap_mev": 157.1702763212088,
+      "parent_mass_parameter_matches_manifest": true,
+      "proper_threshold_overshoot_ps": -9.379164112033322e-13,
+      "clock_mode": "localized",
+      "local_handoff_checks_pass": true
+    },
+    "pion_yminus_end0_level7": {
+      "checks": {
+        "execution": true,
+        "root_present": true,
+        "macro_hash": true,
+        "no_exception": true,
+        "decay_count": true,
+        "handoff_count": true,
+        "four_momentum": true,
+        "rest_frame_direction": true,
+        "parent_on_shell": true,
+        "daughter_on_shell": true,
+        "pion_on_shell": true,
+        "threshold": true,
+        "endpoint_sign": true,
+        "pion_charge": true,
+        "transfer_identity": true,
+        "history_fingerprint": true,
+        "one_event": true,
+        "end0_complete": true,
+        "end0_rows": true,
+        "end0_finite": true,
+        "end0_time_order": true,
+        "end0_species": true,
+        "end0_neutral_charge": true,
+        "end0_neutral_mass": true,
+        "end1_complete": true,
+        "end1_rows": true,
+        "end1_finite": true,
+        "end1_time_order": true,
+        "end1_species": true
+      },
+      "weak_records": [
+        {
+          "kind": "decay",
+          "parent_track": 1,
+          "parent_pdg": 17,
+          "daughter_pdg": 9900017,
+          "pion_pdg": 211,
+          "parent_mass_mev": 225157.1702763212,
+          "daughter_mass_mev": 225000,
+          "pion_mass_mev": 139.5701,
+          "time_ps": 54.44266345716183,
+          "position_mm": [
+            4.928201351370102,
+            -0.0001045583565987308,
+            4.0803749744725195
+          ],
+          "proper_ps": 49.999999999997016,
+          "clock_mode": "localized",
+          "threshold_ps": 50,
+          "residual_mev": 1.745092959026806e-11,
+          "parent_mev": [
+            238270.90489861567,
+            50288.75400179383,
+            -2.7813554051313036,
+            59567.726224659375
+          ],
+          "daughter_mev": [
+            238104.59200075537,
+            50253.6525839049,
+            69.4634915178804,
+            59526.14810858931
+          ],
+          "pion_mev": [
+            166.31289786028793,
+            35.10141788892238,
+            -72.2448469230117,
+            41.57811607004829
+          ]
+        },
+        {
+          "kind": "handoff",
+          "parent_track": 1,
+          "daughter_track": 3,
+          "daughter_pdg": 9900017,
+          "own_fingerprint": "17715971401361556341",
+          "partner_fingerprint": "18279717037711132772",
+          "history_preserved": true
+        }
+      ],
+      "endpoints": [
+        {
+          "q": 0,
+          "rows": 8224,
+          "last_time_ps": 130.01862383708857,
+          "final_pdg": 9900017
+        },
+        {
+          "q": 1,
+          "rows": 8223,
+          "last_time_ps": 130.00369166904952,
+          "final_pdg": -17
+        }
+      ],
+      "observed_parent_mass_gev": 225.1571702763212,
+      "observed_pion_mass_mev": 139.5701,
+      "observed_mass_gap_mev": 157.1702763212088,
+      "parent_mass_parameter_matches_manifest": true,
+      "proper_threshold_overshoot_ps": -2.9842794901924208e-12,
+      "clock_mode": "localized",
+      "local_handoff_checks_pass": true
+    },
+    "pion_yminus_end0_level8": {
+      "checks": {
+        "execution": true,
+        "root_present": true,
+        "macro_hash": true,
+        "no_exception": true,
+        "decay_count": true,
+        "handoff_count": true,
+        "four_momentum": true,
+        "rest_frame_direction": true,
+        "parent_on_shell": true,
+        "daughter_on_shell": true,
+        "pion_on_shell": true,
+        "threshold": true,
+        "endpoint_sign": true,
+        "pion_charge": true,
+        "transfer_identity": true,
+        "history_fingerprint": true,
+        "one_event": true,
+        "end0_complete": true,
+        "end0_rows": true,
+        "end0_finite": true,
+        "end0_time_order": true,
+        "end0_species": true,
+        "end0_neutral_charge": true,
+        "end0_neutral_mass": true,
+        "end1_complete": true,
+        "end1_rows": true,
+        "end1_finite": true,
+        "end1_time_order": true,
+        "end1_species": true
+      },
+      "weak_records": [
+        {
+          "kind": "decay",
+          "parent_track": 1,
+          "parent_pdg": 17,
+          "daughter_pdg": 9900017,
+          "pion_pdg": 211,
+          "parent_mass_mev": 225157.1702763212,
+          "daughter_mass_mev": 225000,
+          "pion_mass_mev": 139.5701,
+          "time_ps": 54.44266345716375,
+          "position_mm": [
+            4.928201351369625,
+            -0.00010457488960104035,
+            4.080374974472833
+          ],
+          "proper_ps": 49.99999999999906,
+          "clock_mode": "localized",
+          "threshold_ps": 50,
+          "residual_mev": 1.921307557495311e-11,
+          "parent_mev": [
+            238270.90489861547,
+            50288.75400178765,
+            -2.781344333829372,
+            59567.72622466443
+          ],
+          "daughter_mev": [
+            238104.5920007587,
+            50253.65258389911,
+            69.46350258145458,
+            59526.148108594825
+          ],
+          "pion_mev": [
+            166.3128978567355,
+            35.10141788853259,
+            -72.24484691528394,
+            41.57811606959521
+          ]
+        },
+        {
+          "kind": "handoff",
+          "parent_track": 1,
+          "daughter_track": 3,
+          "daughter_pdg": 9900017,
+          "own_fingerprint": "10655937800958033155",
+          "partner_fingerprint": "1443271989793526846",
+          "history_preserved": true
+        }
+      ],
+      "endpoints": [
+        {
+          "q": 0,
+          "rows": 16439,
+          "last_time_ps": 130.00418421256512,
+          "final_pdg": 9900017
+        },
+        {
+          "q": 1,
+          "rows": 16437,
+          "last_time_ps": 130.00136628320817,
+          "final_pdg": -17
+        }
+      ],
+      "observed_parent_mass_gev": 225.1571702763212,
+      "observed_pion_mass_mev": 139.5701,
+      "observed_mass_gap_mev": 157.1702763212088,
+      "parent_mass_parameter_matches_manifest": true,
+      "proper_threshold_overshoot_ps": -9.379164112033322e-13,
+      "clock_mode": "localized",
+      "local_handoff_checks_pass": true
+    },
+    "pion_yplus_end1_level7": {
+      "checks": {
+        "execution": true,
+        "root_present": true,
+        "macro_hash": true,
+        "no_exception": true,
+        "decay_count": true,
+        "handoff_count": true,
+        "four_momentum": true,
+        "rest_frame_direction": true,
+        "parent_on_shell": true,
+        "daughter_on_shell": true,
+        "pion_on_shell": true,
+        "threshold": true,
+        "endpoint_sign": true,
+        "pion_charge": true,
+        "transfer_identity": true,
+        "history_fingerprint": true,
+        "one_event": true,
+        "end0_complete": true,
+        "end0_rows": true,
+        "end0_finite": true,
+        "end0_time_order": true,
+        "end0_species": true,
+        "end1_complete": true,
+        "end1_rows": true,
+        "end1_finite": true,
+        "end1_time_order": true,
+        "end1_species": true,
+        "end1_neutral_charge": true,
+        "end1_neutral_mass": true
+      },
+      "weak_records": [
+        {
+          "kind": "decay",
+          "parent_track": 2,
+          "parent_pdg": -17,
+          "daughter_pdg": -9900017,
+          "pion_pdg": -211,
+          "parent_mass_mev": 225157.1702763212,
+          "daughter_mass_mev": 225000,
+          "pion_mass_mev": 139.5701,
+          "time_ps": 54.442663457159234,
+          "position_mm": [
+            -4.928201351369952,
+            -0.00010455835572817468,
+            4.080374974472285
+          ],
+          "proper_ps": 49.99999999999443,
+          "clock_mode": "localized",
+          "threshold_ps": 50,
+          "residual_mev": 2.7682744985213503e-11,
+          "parent_mev": [
+            238270.90489861625,
+            -50288.75400179739,
+            -2.7813553974189595,
+            59567.726224658814
+          ],
+          "daughter_mev": [
+            238104.59378558202,
+            -50253.65277758831,
+            -75.02231957364843,
+            59526.14833800523
+          ],
+          "pion_mev": [
+            166.3111130342018,
+            -35.10122420907504,
+            72.24096417622947,
+            41.577886653580975
+          ]
+        },
+        {
+          "kind": "handoff",
+          "parent_track": 2,
+          "daughter_track": 3,
+          "daughter_pdg": -9900017,
+          "own_fingerprint": "7146298206176280668",
+          "partner_fingerprint": "3463526020745302395",
+          "history_preserved": true
+        }
+      ],
+      "endpoints": [
+        {
+          "q": 0,
+          "rows": 8220,
+          "last_time_ps": 130.00319784329912,
+          "final_pdg": 17
+        },
+        {
+          "q": 1,
+          "rows": 8226,
+          "last_time_ps": 130.00219424881072,
+          "final_pdg": -9900017
+        }
+      ],
+      "observed_parent_mass_gev": 225.1571702763212,
+      "observed_pion_mass_mev": 139.5701,
+      "observed_mass_gap_mev": 157.1702763212088,
+      "parent_mass_parameter_matches_manifest": true,
+      "proper_threshold_overshoot_ps": -5.5706550483591855e-12,
+      "clock_mode": "localized",
+      "local_handoff_checks_pass": true
+    },
+    "pion_yplus_end1_level8": {
+      "checks": {
+        "execution": true,
+        "root_present": true,
+        "macro_hash": true,
+        "no_exception": true,
+        "decay_count": true,
+        "handoff_count": true,
+        "four_momentum": true,
+        "rest_frame_direction": true,
+        "parent_on_shell": true,
+        "daughter_on_shell": true,
+        "pion_on_shell": true,
+        "threshold": true,
+        "endpoint_sign": true,
+        "pion_charge": true,
+        "transfer_identity": true,
+        "history_fingerprint": true,
+        "one_event": true,
+        "end0_complete": true,
+        "end0_rows": true,
+        "end0_finite": true,
+        "end0_time_order": true,
+        "end0_species": true,
+        "end1_complete": true,
+        "end1_rows": true,
+        "end1_finite": true,
+        "end1_time_order": true,
+        "end1_species": true,
+        "end1_neutral_charge": true,
+        "end1_neutral_mass": true
+      },
+      "weak_records": [
+        {
+          "kind": "decay",
+          "parent_track": 2,
+          "parent_pdg": -17,
+          "daughter_pdg": -9900017,
+          "pion_pdg": -211,
+          "parent_mass_mev": 225157.1702763212,
+          "daughter_mass_mev": 225000,
+          "pion_mass_mev": 139.5701,
+          "time_ps": 54.442663457163995,
+          "position_mm": [
+            -4.928201351369586,
+            -0.00010457488974961367,
+            4.080374974472788
+          ],
+          "proper_ps": 49.99999999999904,
+          "clock_mode": "localized",
+          "threshold_ps": 50,
+          "residual_mev": 7.275957614183426e-12,
+          "parent_mev": [
+            238270.90489861515,
+            -50288.75400178662,
+            -2.781344310549469,
+            59567.72622466395
+          ],
+          "daughter_mev": [
+            238104.5937855774,
+            -50253.65277757717,
+            -75.02230849451747,
+            59526.14833800991
+          ],
+          "pion_mev": [
+            166.31111303775833,
+            -35.10122420945355,
+            72.24096418396802,
+            41.5778866540418
+          ]
+        },
+        {
+          "kind": "handoff",
+          "parent_track": 2,
+          "daughter_track": 3,
+          "daughter_pdg": -9900017,
+          "own_fingerprint": "4771139526080449621",
+          "partner_fingerprint": "13189879870959229000",
+          "history_preserved": true
+        }
+      ],
+      "endpoints": [
+        {
+          "q": 0,
+          "rows": 16436,
+          "last_time_ps": 130.0041806648806,
+          "final_pdg": 17
+        },
+        {
+          "q": 1,
+          "rows": 16441,
+          "last_time_ps": 130.0013841682171,
+          "final_pdg": -9900017
+        }
+      ],
+      "observed_parent_mass_gev": 225.1571702763212,
+      "observed_pion_mass_mev": 139.5701,
+      "observed_mass_gap_mev": 157.1702763212088,
+      "parent_mass_parameter_matches_manifest": true,
+      "proper_threshold_overshoot_ps": -9.592326932761353e-13,
+      "clock_mode": "localized",
+      "local_handoff_checks_pass": true
+    },
+    "clock_legacy_stable_parent_level8": {
+      "checks": {
+        "execution": true,
+        "root_present": true,
+        "macro_hash": true,
+        "no_exception": true,
+        "decay_count": true,
+        "handoff_count": true,
+        "one_event": true,
+        "end0_complete": true,
+        "end0_rows": true,
+        "end0_finite": true,
+        "end0_time_order": true,
+        "end0_species": true,
+        "end1_complete": true,
+        "end1_rows": true,
+        "end1_finite": true,
+        "end1_time_order": true,
+        "end1_species": true
+      },
+      "weak_records": [],
+      "endpoints": [
+        {
+          "q": 0,
+          "rows": 16435,
+          "last_time_ps": 130.00681375414555,
+          "final_pdg": 17
+        },
+        {
+          "q": 1,
+          "rows": 16436,
+          "last_time_ps": 130.00400971318473,
+          "final_pdg": -17
+        }
+      ],
+      "local_handoff_checks_pass": true
+    },
+    "clock_legacy_pion_yplus_end0_level8": {
+      "checks": {
+        "execution": true,
+        "root_present": true,
+        "macro_hash": true,
+        "no_exception": true,
+        "decay_count": true,
+        "handoff_count": true,
+        "four_momentum": true,
+        "rest_frame_direction": true,
+        "parent_on_shell": true,
+        "daughter_on_shell": true,
+        "pion_on_shell": true,
+        "threshold": true,
+        "endpoint_sign": true,
+        "pion_charge": true,
+        "transfer_identity": true,
+        "history_fingerprint": true,
+        "one_event": true,
+        "end0_complete": true,
+        "end0_rows": true,
+        "end0_finite": true,
+        "end0_time_order": true,
+        "end0_species": true,
+        "end0_neutral_charge": true,
+        "end0_neutral_mass": true,
+        "end1_complete": true,
+        "end1_rows": true,
+        "end1_finite": true,
+        "end1_time_order": true,
+        "end1_species": true
+      },
+      "weak_records": [
+        {
+          "kind": "decay",
+          "parent_track": 1,
+          "parent_pdg": 17,
+          "daughter_pdg": 9900017,
+          "pion_pdg": 211,
+          "parent_mass_mev": 225157.1702763212,
+          "daughter_mass_mev": 225000,
+          "pion_mass_mev": 139.5701,
+          "time_ps": 54.447575536191984,
+          "position_mm": [
+            4.928512142134524,
+            -0.00010459207876564672,
+            4.080743125534274
+          ],
+          "proper_ps": 50.00436335975592,
+          "clock_mode": "legacy",
+          "threshold_ps": 50,
+          "residual_mev": 4.644107320928015e-11,
+          "parent_mev": [
+            238269.93040742294,
+            50284.42520559859,
+            -2.78150715875934,
+            59567.482601866286
+          ],
+          "daughter_mev": [
+            238103.6199746278,
+            50249.327002866674,
+            -75.02247122906068,
+            59525.904885266325
+          ],
+          "pion_mev": [
+            166.3104327950977,
+            35.09820273191009,
+            72.24096407030135,
+            41.57771659995137
+          ]
+        },
+        {
+          "kind": "handoff",
+          "parent_track": 1,
+          "daughter_track": 3,
+          "daughter_pdg": 9900017,
+          "own_fingerprint": "6852516746381732770",
+          "partner_fingerprint": "6014366377264838371",
+          "history_preserved": true
+        }
+      ],
+      "endpoints": [
+        {
+          "q": 0,
+          "rows": 16438,
+          "last_time_ps": 130.00418562473507,
+          "final_pdg": 9900017
+        },
+        {
+          "q": 1,
+          "rows": 16435,
+          "last_time_ps": 130.0013724701,
+          "final_pdg": -17
+        }
+      ],
+      "observed_parent_mass_gev": 225.1571702763212,
+      "observed_pion_mass_mev": 139.5701,
+      "observed_mass_gap_mev": 157.1702763212088,
+      "parent_mass_parameter_matches_manifest": true,
+      "proper_threshold_overshoot_ps": 0.004363359755920726,
+      "clock_mode": "legacy",
+      "local_handoff_checks_pass": true
+    }
+  },
+  "resolution_comparisons": [
+    {
+      "mode": "pion_yminus_end0",
+      "endpoint": 0,
+      "max_position_difference_mm": 1.7272995167961972e-08,
+      "sampled_times": 13001,
+      "stop_ps": 130.0,
+      "interpolation_error_bound_established": false
+    },
+    {
+      "mode": "pion_yminus_end0",
+      "endpoint": 1,
+      "max_position_difference_mm": 2.185719793685757e-08,
+      "sampled_times": 13001,
+      "stop_ps": 130.0,
+      "interpolation_error_bound_established": false
+    },
+    {
+      "mode": "pion_yplus_end0",
+      "endpoint": 0,
+      "max_position_difference_mm": 1.7272995030591174e-08,
+      "sampled_times": 13001,
+      "stop_ps": 130.0,
+      "interpolation_error_bound_established": false
+    },
+    {
+      "mode": "pion_yplus_end0",
+      "endpoint": 1,
+      "max_position_difference_mm": 2.185720556213711e-08,
+      "sampled_times": 13001,
+      "stop_ps": 130.0,
+      "interpolation_error_bound_established": false
+    },
+    {
+      "mode": "pion_yplus_end1",
+      "endpoint": 0,
+      "max_position_difference_mm": 2.185914784356742e-08,
+      "sampled_times": 13001,
+      "stop_ps": 130.0,
+      "interpolation_error_bound_established": false
+    },
+    {
+      "mode": "pion_yplus_end1",
+      "endpoint": 1,
+      "max_position_difference_mm": 1.7274015491110247e-08,
+      "sampled_times": 13001,
+      "stop_ps": 130.0,
+      "interpolation_error_bound_established": false
+    },
+    {
+      "mode": "stable_parent",
+      "endpoint": 0,
+      "max_position_difference_mm": 2.1984003353761852e-08,
+      "sampled_times": 13001,
+      "stop_ps": 130.0,
+      "interpolation_error_bound_established": false
+    },
+    {
+      "mode": "stable_parent",
+      "endpoint": 1,
+      "max_position_difference_mm": 2.1981194312969697e-08,
+      "sampled_times": 13001,
+      "stop_ps": 130.0,
+      "interpolation_error_bound_established": false
+    }
+  ],
+  "paired_direction_comparisons": [
+    {
+      "level": 7,
+      "same_predecay_parent_state_and_time": true,
+      "endpoint_plus_minus_position_delta_at_130ps_mm": [
+        [
+          2.8273031915659885e-08,
+          -0.012124621740121765,
+          -1.8192174877640355e-08
+        ],
+        [
+          7.695723169831581e-09,
+          -0.0007037960815366689,
+          -1.0559499941109607e-09
+        ]
+      ],
+      "partner_pre_euclidean_lightcone_max_difference_mm": 0.0,
+      "causal_validation_requires_resolution_and_interpolation_review": true
+    },
+    {
+      "level": 8,
+      "same_predecay_parent_state_and_time": true,
+      "endpoint_plus_minus_position_delta_at_130ps_mm": [
+        [
+          2.8272031826759303e-08,
+          -0.012124621740121567,
+          -1.8192139350503567e-08
+        ],
+        [
+          7.69830332814081e-09,
+          -0.0007037960815603413,
+          -1.0560192720276973e-09
+        ]
+      ],
+      "partner_pre_euclidean_lightcone_max_difference_mm": 0.0,
+      "causal_validation_requires_resolution_and_interpolation_review": true
+    }
+  ],
+  "clock_control_comparisons": [
+    {
+      "mode": "stable_parent",
+      "endpoint": 0,
+      "max_localized_minus_legacy_position_difference_mm": 0.0,
+      "comparison_stop_ps": 130
+    },
+    {
+      "mode": "stable_parent",
+      "endpoint": 1,
+      "max_localized_minus_legacy_position_difference_mm": 0.0,
+      "comparison_stop_ps": 130
+    },
+    {
+      "mode": "pion_yplus_end0",
+      "endpoint": 0,
+      "max_localized_minus_legacy_position_difference_mm": 4.467928915556422e-07,
+      "comparison_stop_ps": 130
+    },
+    {
+      "mode": "pion_yplus_end0",
+      "endpoint": 1,
+      "max_localized_minus_legacy_position_difference_mm": 1.0952728364476184e-07,
+      "comparison_stop_ps": 130
+    }
+  ],
+  "local_handoff_checks_pass": true,
+  "benchmark_mass_parameters_match": true,
+  "causal_propagation_validation": "NOT_ESTABLISHED_BY_LOCAL_HANDOFF_CHECKS",
+  "physical_survival_probability": null,
+  "note": "Fixed-threshold pion pilot, not sampled lifetimes or a no-recoil control. Stable-versus-decay mixes charge/mass/recoil."
+}

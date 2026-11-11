@@ -24,7 +24,13 @@ def check(output=None):
         clock=Path(tmp)/'clock'
         subprocess.run(['g++','-std=c++17','-O2','-Wall','-Wextra','-Werror','-pedantic',str(here/'native_clock_check.cc'),'-o',str(clock)],check=True)
         subprocess.run([str(clock)],check=True)
-    assert abs(benchmark('triplet',225.)['charged_mass_gev']-225.1571702763212)<1e-12
+        plan=Path(tmp)/'plan'
+        subprocess.run(['g++','-std=c++17','-O2','-Wall','-Wextra','-Werror','-pedantic',str(here/'native_plan_check.cc'),'-o',str(plan)],check=True)
+        subprocess.run([str(plan)],check=True)
+    reference=benchmark('triplet',225.)
+    assert abs(reference['charged_mass_gev']-225.1571702763212)<1e-12
+    rates=json.loads((here/'triplet_pion_rate_reference.json').read_text())
+    assert abs(rates['lifetime_ps']-reference['lifetime_ps'])<1e-10
     maximum=0.
     for fixture in fixtures:
         py=sample_decay('pion',np.array(fixture['parent'][1:])/1000,225.1571702763212,225.,FixedDirection(fixture['sign']))

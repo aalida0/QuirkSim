@@ -13,7 +13,7 @@
 
 QuirkWeakProcess::QuirkWeakProcess(const G4ParticleDefinition* neutral)
  : G4VDiscreteProcess("QuirkWeakPilot", fDecay), m_neutral(neutral) {
-  if (!(QPWeakConfig::tauPs()>0) || (QPWeakConfig::directionSign()!=1 && QPWeakConfig::directionSign()!=-1))
+  if (!(QPWeakConfig::tauPs(m_neutral->GetPDGEncoding())>0) || (QPWeakConfig::directionSign()!=1 && QPWeakConfig::directionSign()!=-1))
     G4Exception("QuirkWeakProcess", "BadWeakPilot", FatalException, "positive threshold and +/-1 direction required");
 }
 G4double QuirkWeakProcess::PostStepGetPhysicalInteractionLength(const G4Track&, G4double, G4ForceCondition* condition) {
@@ -23,7 +23,7 @@ G4double QuirkWeakProcess::PostStepGetPhysicalInteractionLength(const G4Track&, 
 G4VParticleChange* QuirkWeakProcess::PostStepDoIt(const G4Track& track, const G4Step&) {
   m_change.Initialize(track);
   if (track.GetTrackStatus()==fStopAndKill || track.GetTrackStatus()==fKillTrackAndSecondaries ||
-      track.GetProperTime() + (QPWeakConfig::localizedClock() ? 1e-9*CLHEP::picosecond : 0.) < QPWeakConfig::tauPs()*CLHEP::picosecond) return &m_change;
+      track.GetProperTime() + (QPWeakConfig::localizedClock() ? 1e-9*CLHEP::picosecond : 0.) < QPWeakConfig::tauPs(track.GetDefinition()->GetPDGEncoding())*CLHEP::picosecond) return &m_change;
   auto& store=QuirkStringStore::instance();
   auto& string=store.stringFor(track.GetDefinition()->GetPDGEncoding());
   if (!string.IsSourceAlive() || !string.IsSourceInitialized())
@@ -33,7 +33,7 @@ G4VParticleChange* QuirkWeakProcess::PostStepDoIt(const G4Track& track, const G4
   if (!pion) G4Exception("QuirkWeakProcess", "MissingPion", FatalException, "pion not registered");
   const auto p=track.GetMomentum();
   auto k=QPWeak::pionDecay(track.GetDynamicParticle()->GetMass(), m_neutral->GetPDGMass(),
-                          pion->GetPDGMass(), {p.x(),p.y(),p.z()}, {0,QPWeakConfig::directionSign(),0});
+                          pion->GetPDGMass(), {p.x(),p.y(),p.z()}, QPWeakConfig::pionDirection(track.GetDefinition()->GetPDGEncoding()));
   double residual=0;
   for (int i=0;i<4;++i) residual=std::max(residual,std::abs(k.parent[i]-k.daughter[i]-k.pion[i]));
   if (residual>1e-6*CLHEP::MeV)
@@ -66,7 +66,7 @@ G4VParticleChange* QuirkWeakProcess::PostStepDoIt(const G4Track& track, const G4
     << ",\"position_mm\":[" << track.GetPosition().x()/CLHEP::mm << "," << track.GetPosition().y()/CLHEP::mm << "," << track.GetPosition().z()/CLHEP::mm << "]"
     << ",\"proper_ps\":" << track.GetProperTime()/CLHEP::picosecond
     << ",\"clock_mode\":\"" << (QPWeakConfig::localizedClock() ? "localized" : "legacy") << "\""
-    << ",\"threshold_ps\":" << QPWeakConfig::tauPs() << ",\"residual_mev\":" << residual;
+    << ",\"threshold_ps\":" << QPWeakConfig::tauPs(track.GetDefinition()->GetPDGEncoding()) << ",\"residual_mev\":" << residual;
   auto vector=[&](const char* name,const QPWeak::Four& v) {
     s << ",\"" << name << "\":[" << v[0] << ',' << v[1] << ',' << v[2] << ',' << v[3] << ']';
   };

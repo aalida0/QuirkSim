@@ -12,7 +12,9 @@ def audit(path, plot_path=None):
     results={};curves={};plans={}
     with tarfile.open(path) as archive:
         item=next(m for m in archive.getmembers() if m.name.endswith('/manifest.json'))
-        manifest=json.load(archive.extractfile(item));prefix=item.name.rsplit('/',1)[0]+'/'
+        manifest=json.load(archive.extractfile(item))
+        if manifest.get('suite')=='sampled_pion':raise ValueError('Use audit_quirkpheno_sampled_pion.py for sampled plans')
+        prefix=item.name.rsplit('/',1)[0]+'/'
         for case in manifest['cases']:
             name=case['name'];plans[name]=case
             result={'checks':{},'weak_records':[],'endpoints':[]};results[name]=result;checks=result['checks']
