@@ -251,3 +251,14 @@
      am->AddNtupleRow(kSteps);
    }
  }
+--- a/quirksim/quirksim.cc
++++ b/quirksim/quirksim.cc
+@@ -91,6 +91,8 @@
+       lines.push_back(l);
+   }
+   G4UImanager* ui = G4UImanager::GetUIpointer();
++  // Preserve split masses and momenta during unit-command normalization.
++  G4UImanager::UseDoublePrecisionStr(true);
+   size_t iline = 0;
+   for (; iline < lines.size(); ++iline) {
+     std::string l = lines[iline];

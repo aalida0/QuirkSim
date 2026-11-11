@@ -6,8 +6,10 @@ its NOTICE credits the ATLAS quirk extension and Geant4 transportation.
 Keep upstream LICENSE/NOTICE in the checked-out source. This directory stores
 an integration patch and new source, not a second independent transport solver.
 
-**Status: native core and synthetic audit tested; full Geant4 compilation and
-transport/causal validation pending AF execution.** Do not merge into stable code.
+**Status: first deterministic AF pilot compiled and local handoff checks passed.
+Micrometre directional recoil is resolved; event-time and input precision remain
+limited. The subsequent UI-precision change is pending AF verification.**
+Do not merge into stable code.
 
 The patch registers neutral Quirk definitions with sign-preserving endpoint
 slots, transfers parent ownership through a one-use token, suppresses ordinary
@@ -100,3 +102,17 @@ three added expressions in quirkStep used the caller-local name `def`.
 They now obtain the definition from the local track `t`. The corrected patch
 applies to the exact upstream bytes, and all three references were inspected
 in the resulting function. Full executable compilation remains pending rerun.
+
+## First returned weak run and UI precision correction
+
+The d846f752 adapter compiled and all eight AF cases completed. The audit
+reports one conserved pion event and one consumed handoff in each weak case.
+Opposite physical directions change the decaying endpoint by 12.062 micrometres
+and its partner by 0.700 micrometres at 130 ps. This is a direction comparison,
+not a no-recoil or survival result; see the saved study for precision limits.
+
+Actual backend mass logging exposed UI rounding of 225.157170... to 225.157 GeV.
+The patch now enables G4UImanager::UseDoublePrecisionStr(true) before macro
+commands, preserving input precision during Geant4 unit normalization. The
+new main-file preimage is pinned and checked. That added UI change has not yet
+been compiled/run in Geant4. Proper-threshold localization is still approximate.

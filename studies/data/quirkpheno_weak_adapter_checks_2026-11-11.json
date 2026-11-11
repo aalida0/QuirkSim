@@ -6,24 +6,24 @@
   "max_native_python_difference_gev": 1.7053025658242404e-13,
   "local_four_momentum_tolerance_mev": 1e-06,
   "handoff_identity_and_history_negative_tests": "PASS",
-  "patch_application_check": "PASS_BYTE_EXACT_PINNED_GIT_WORKING_TREE",
+  "patch_application_check": "PASS_BYTE_EXACT_NINE_PINNED_FILES",
   "synthetic_root_audit_and_corruption_rejection": "PASS",
-  "full_geant4_build": "PENDING_AF_RERUN_AFTER_SCOPE_FIX",
+  "full_geant4_build": "PASS_AF_D846F752",
   "causal_transport_validation": "PENDING",
   "physical_survival_probability": null,
   "adapter_sha256": {
     "EndpointHandoff.h": "27c7cdf8d356b39d856e32b829428a15a390a5a77f8f11818e8a600fde93b63f",
     "QuirkWeakProcess.cc": "2053606446ef2d8e7abba2803eaaeb7fd69827e4945c51b65948b1dd5f4865d1",
     "QuirkWeakProcess.h": "8523f9e838f8295c1bfcee581657df93a1bcb2acbd69e22a8058dd3a5cf1e8f6",
-    "README.md": "af0032a010b65d30b258632299acd821381c1fd174637f6eb9030c6b40597acc",
+    "README.md": "15744cf040dd2652a851eef2ec975134418ed747122839c4faf45cfd0fa7cc84",
     "TwoBodyKinematics.h": "d15db2917e3e35b11305bbcf79b18f2cb9b1ed746d51249ce853e4116b38d48b",
     "UPSTREAM_LICENSE": "8c6db340475136df3c1201d458fa5755698eace76e510471ecc9d857d6083dac",
     "UPSTREAM_NOTICE": "4c09449868b703bc6c9089def700d2bf1654727bd9c3648eb6e9ef8186e0f333",
     "check_audit.py": "e92fd6352a65831d3e3ffcc4af8082e5a4d76f9de1e7f31986f90a02babc4a52",
     "check_native.py": "aafdec8edb2c4f291b884810469db38ad9f187f5afc4b81887a3d263419372d9",
     "native_check.cc": "51644b411a34d9afd8e35d2073836b84ffc3e256878d3e7c29e9dcbcbe49e50d",
-    "upstream_preimages.json": "96fe6b9657926fd6869686044942e17bfdc58f8ddaa0c9596db23f231e3b6345",
-    "weak_handoff.patch": "1bc21028b836d90c92eefcaf1304bad53de24aea91156ea658550b14d3e871ad"
+    "upstream_preimages.json": "13390f6f4fabc593a99bf45a339546a1a8bcb007a048ccc551bfbc54f27e4e29",
+    "weak_handoff.patch": "4c6664e7b1f732f41da5cf3795954156e34399d2f996f0bbcf7ebe10eee788ba"
   },
   "patch_regression": {
     "old_failure_reproduced": "QuirkStringStore.cc end-of-file extra blank context",
@@ -33,5 +33,11 @@
     "preparation_only_failure_no_geant4_run": true
   },
   "af_build_feedback": "Actions.cc failed: caller-local def referenced in quirkStep; all three added uses corrected to local track",
-  "post_scope_fix_patch_application": "PASS_BYTE_EXACT_UPSTREAM"
+  "post_scope_fix_patch_application": "PASS_BYTE_EXACT_UPSTREAM",
+  "deterministic_af_handoff_checks": "PASS_EIGHT_CASES_LOCAL_CHECKS_ONLY",
+  "af_archive_sha256": "98630d08a5b126753c0e71294516cf40afe65792a05ec331e0d5da82dbfd2587",
+  "observed_parent_mass_gev": 225.157,
+  "benchmark_mass_parameter_matches": false,
+  "ui_precision_fix": "G4UImanager::UseDoublePrecisionStr(true) before macro commands",
+  "full_geant4_build_for_current_ui_precision_change": "NOT_RUN"
 }

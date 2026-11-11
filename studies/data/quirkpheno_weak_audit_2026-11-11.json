@@ -1,0 +1,810 @@
+{
+  "archive_sha256": "98630d08a5b126753c0e71294516cf40afe65792a05ec331e0d5da82dbfd2587",
+  "source_commit": "d91cb27ed3786bc63900faad892513841b5b6ed4",
+  "adapter_sha256": {
+    "EndpointHandoff.h": "27c7cdf8d356b39d856e32b829428a15a390a5a77f8f11818e8a600fde93b63f",
+    "QuirkWeakProcess.cc": "2053606446ef2d8e7abba2803eaaeb7fd69827e4945c51b65948b1dd5f4865d1",
+    "QuirkWeakProcess.h": "8523f9e838f8295c1bfcee581657df93a1bcb2acbd69e22a8058dd3a5cf1e8f6",
+    "README.md": "af0032a010b65d30b258632299acd821381c1fd174637f6eb9030c6b40597acc",
+    "TwoBodyKinematics.h": "d15db2917e3e35b11305bbcf79b18f2cb9b1ed746d51249ce853e4116b38d48b",
+    "UPSTREAM_LICENSE": "8c6db340475136df3c1201d458fa5755698eace76e510471ecc9d857d6083dac",
+    "UPSTREAM_NOTICE": "4c09449868b703bc6c9089def700d2bf1654727bd9c3648eb6e9ef8186e0f333",
+    "check_audit.py": "e92fd6352a65831d3e3ffcc4af8082e5a4d76f9de1e7f31986f90a02babc4a52",
+    "check_native.py": "aafdec8edb2c4f291b884810469db38ad9f187f5afc4b81887a3d263419372d9",
+    "native_check.cc": "51644b411a34d9afd8e35d2073836b84ffc3e256878d3e7c29e9dcbcbe49e50d",
+    "upstream_preimages.json": "96fe6b9657926fd6869686044942e17bfdc58f8ddaa0c9596db23f231e3b6345",
+    "weak_handoff.patch": "1bc21028b836d90c92eefcaf1304bad53de24aea91156ea658550b14d3e871ad"
+  },
+  "scope": "EXPERIMENTAL_SINGLE_PION_HANDOFF_NOT_LIFETIME_ENSEMBLE",
+  "cases": {
+    "stable_parent_level7": {
+      "checks": {
+        "execution": true,
+        "root_present": true,
+        "macro_hash": true,
+        "no_exception": true,
+        "decay_count": true,
+        "handoff_count": true,
+        "one_event": true,
+        "end0_complete": true,
+        "end0_rows": true,
+        "end0_finite": true,
+        "end0_time_order": true,
+        "end0_species": true,
+        "end1_complete": true,
+        "end1_rows": true,
+        "end1_finite": true,
+        "end1_time_order": true,
+        "end1_species": true
+      },
+      "weak_records": [],
+      "endpoints": [
+        {
+          "q": 0,
+          "rows": 8222,
+          "last_time_ps": 130.00421881443367,
+          "final_pdg": 17
+        },
+        {
+          "q": 1,
+          "rows": 8223,
+          "last_time_ps": 130.0064166819273,
+          "final_pdg": -17
+        }
+      ],
+      "local_handoff_checks_pass": true
+    },
+    "stable_parent_level8": {
+      "checks": {
+        "execution": true,
+        "root_present": true,
+        "macro_hash": true,
+        "no_exception": true,
+        "decay_count": true,
+        "handoff_count": true,
+        "one_event": true,
+        "end0_complete": true,
+        "end0_rows": true,
+        "end0_finite": true,
+        "end0_time_order": true,
+        "end0_species": true,
+        "end1_complete": true,
+        "end1_rows": true,
+        "end1_finite": true,
+        "end1_time_order": true,
+        "end1_species": true
+      },
+      "weak_records": [],
+      "endpoints": [
+        {
+          "q": 0,
+          "rows": 16432,
+          "last_time_ps": 130.0055078058388,
+          "final_pdg": 17
+        },
+        {
+          "q": 1,
+          "rows": 16437,
+          "last_time_ps": 130.00410896056403,
+          "final_pdg": -17
+        }
+      ],
+      "local_handoff_checks_pass": true
+    },
+    "pion_yplus_end0_level7": {
+      "checks": {
+        "execution": true,
+        "root_present": true,
+        "macro_hash": true,
+        "no_exception": true,
+        "decay_count": true,
+        "handoff_count": true,
+        "four_momentum": true,
+        "rest_frame_direction": true,
+        "parent_on_shell": true,
+        "daughter_on_shell": true,
+        "pion_on_shell": true,
+        "threshold": true,
+        "endpoint_sign": true,
+        "pion_charge": true,
+        "transfer_identity": true,
+        "history_fingerprint": true,
+        "one_event": true,
+        "end0_complete": true,
+        "end0_rows": true,
+        "end0_finite": true,
+        "end0_time_order": true,
+        "end0_species": true,
+        "end0_neutral_charge": true,
+        "end0_neutral_mass": true,
+        "end1_complete": true,
+        "end1_rows": true,
+        "end1_finite": true,
+        "end1_time_order": true,
+        "end1_species": true
+      },
+      "weak_records": [
+        {
+          "kind": "decay",
+          "parent_track": 1,
+          "parent_pdg": 17,
+          "daughter_pdg": 9900017,
+          "pion_pdg": 211,
+          "parent_mass_mev": 225157,
+          "daughter_mass_mev": 225000,
+          "pion_mass_mev": 139.5701,
+          "time_ps": 54.462702929223845,
+          "position_mm": [
+            4.929469724547494,
+            -0.0001046285768268728,
+            4.081876784316129
+          ],
+          "proper_ps": 50.01837920257668,
+          "threshold_ps": 50,
+          "residual_mev": 1.1169731806148775e-11,
+          "parent_mev": [
+            238266.7475467384,
+            50271.048683477704,
+            -2.782019793127802,
+            59566.6852697457
+          ],
+          "daughter_mev": [
+            238100.61927031705,
+            50235.99778171459,
+            -74.65206966119084,
+            59525.1530939025
+          ],
+          "pion_mev": [
+            166.12827642134556,
+            35.05090176312173,
+            71.87004986806303,
+            41.532175843207625
+          ]
+        },
+        {
+          "kind": "handoff",
+          "parent_track": 1,
+          "daughter_track": 3,
+          "daughter_pdg": 9900017,
+          "own_fingerprint": "12211574111194943995",
+          "partner_fingerprint": "9462434008115724138",
+          "history_preserved": true
+        }
+      ],
+      "endpoints": [
+        {
+          "q": 0,
+          "rows": 8223,
+          "last_time_ps": 130.0170172664399,
+          "final_pdg": 9900017
+        },
+        {
+          "q": 1,
+          "rows": 8223,
+          "last_time_ps": 130.00378590871168,
+          "final_pdg": -17
+        }
+      ],
+      "observed_parent_mass_gev": 225.157,
+      "observed_pion_mass_mev": 139.5701,
+      "observed_mass_gap_mev": 157,
+      "parent_mass_parameter_matches_manifest": false,
+      "proper_threshold_overshoot_ps": 0.01837920257668202,
+      "local_handoff_checks_pass": true
+    },
+    "pion_yplus_end0_level8": {
+      "checks": {
+        "execution": true,
+        "root_present": true,
+        "macro_hash": true,
+        "no_exception": true,
+        "decay_count": true,
+        "handoff_count": true,
+        "four_momentum": true,
+        "rest_frame_direction": true,
+        "parent_on_shell": true,
+        "daughter_on_shell": true,
+        "pion_on_shell": true,
+        "threshold": true,
+        "endpoint_sign": true,
+        "pion_charge": true,
+        "transfer_identity": true,
+        "history_fingerprint": true,
+        "one_event": true,
+        "end0_complete": true,
+        "end0_rows": true,
+        "end0_finite": true,
+        "end0_time_order": true,
+        "end0_species": true,
+        "end0_neutral_charge": true,
+        "end0_neutral_mass": true,
+        "end1_complete": true,
+        "end1_rows": true,
+        "end1_finite": true,
+        "end1_time_order": true,
+        "end1_species": true
+      },
+      "weak_records": [
+        {
+          "kind": "decay",
+          "parent_track": 1,
+          "parent_pdg": 17,
+          "daughter_pdg": 9900017,
+          "pion_pdg": 211,
+          "parent_mass_mev": 225157,
+          "daughter_mass_mev": 225000,
+          "pion_mass_mev": 139.5701,
+          "time_ps": 54.445287390848705,
+          "position_mm": [
+            4.928367994340489,
+            -0.00010458416340239687,
+            4.080571522587508
+          ],
+          "proper_ps": 50.00220040257498,
+          "threshold_ps": 50,
+          "residual_mev": 9.691802915767767e-12,
+          "parent_mev": [
+            238270.20204571815,
+            50286.39622080401,
+            -2.781431519224971,
+            59567.54889447182
+          ],
+          "daughter_mev": [
+            238104.0713604933,
+            50251.334618128574,
+            -74.65148179745395,
+            59526.01611645136
+          ],
+          "pion_mev": [
+            166.1306852248284,
+            35.06160267542931,
+            71.87005027822899,
+            41.532778020452604
+          ]
+        },
+        {
+          "kind": "handoff",
+          "parent_track": 1,
+          "daughter_track": 3,
+          "daughter_pdg": 9900017,
+          "own_fingerprint": "8823401338183107824",
+          "partner_fingerprint": "6285908904664879979",
+          "history_preserved": true
+        }
+      ],
+      "endpoints": [
+        {
+          "q": 0,
+          "rows": 16436,
+          "last_time_ps": 130.00288993995403,
+          "final_pdg": 9900017
+        },
+        {
+          "q": 1,
+          "rows": 16437,
+          "last_time_ps": 130.00147412389094,
+          "final_pdg": -17
+        }
+      ],
+      "observed_parent_mass_gev": 225.157,
+      "observed_pion_mass_mev": 139.5701,
+      "observed_mass_gap_mev": 157,
+      "parent_mass_parameter_matches_manifest": false,
+      "proper_threshold_overshoot_ps": 0.002200402574978,
+      "local_handoff_checks_pass": true
+    },
+    "pion_yminus_end0_level7": {
+      "checks": {
+        "execution": true,
+        "root_present": true,
+        "macro_hash": true,
+        "no_exception": true,
+        "decay_count": true,
+        "handoff_count": true,
+        "four_momentum": true,
+        "rest_frame_direction": true,
+        "parent_on_shell": true,
+        "daughter_on_shell": true,
+        "pion_on_shell": true,
+        "threshold": true,
+        "endpoint_sign": true,
+        "pion_charge": true,
+        "transfer_identity": true,
+        "history_fingerprint": true,
+        "one_event": true,
+        "end0_complete": true,
+        "end0_rows": true,
+        "end0_finite": true,
+        "end0_time_order": true,
+        "end0_species": true,
+        "end0_neutral_charge": true,
+        "end0_neutral_mass": true,
+        "end1_complete": true,
+        "end1_rows": true,
+        "end1_finite": true,
+        "end1_time_order": true,
+        "end1_species": true
+      },
+      "weak_records": [
+        {
+          "kind": "decay",
+          "parent_track": 1,
+          "parent_pdg": 17,
+          "daughter_pdg": 9900017,
+          "pion_pdg": 211,
+          "parent_mass_mev": 225157,
+          "daughter_mass_mev": 225000,
+          "pion_mass_mev": 139.5701,
+          "time_ps": 54.462702929223845,
+          "position_mm": [
+            4.929469724547494,
+            -0.0001046285768268728,
+            4.081876784316129
+          ],
+          "proper_ps": 50.01837920257668,
+          "threshold_ps": 50,
+          "residual_mev": 1.460875864722766e-11,
+          "parent_mev": [
+            238266.7475467384,
+            50271.048683477704,
+            -2.782019793127802,
+            59566.6852697457
+          ],
+          "daughter_mev": [
+            238100.6174942293,
+            50235.99758904903,
+            69.09190954723691,
+            59525.15286561109
+          ],
+          "pion_mev": [
+            166.13005250912107,
+            35.05109442867999,
+            -71.87392934036471,
+            41.532404134619306
+          ]
+        },
+        {
+          "kind": "handoff",
+          "parent_track": 1,
+          "daughter_track": 3,
+          "daughter_pdg": 9900017,
+          "own_fingerprint": "12211574111194943995",
+          "partner_fingerprint": "9462434008115724138",
+          "history_preserved": true
+        }
+      ],
+      "endpoints": [
+        {
+          "q": 0,
+          "rows": 8223,
+          "last_time_ps": 130.01701678470636,
+          "final_pdg": 9900017
+        },
+        {
+          "q": 1,
+          "rows": 8223,
+          "last_time_ps": 130.0037913468982,
+          "final_pdg": -17
+        }
+      ],
+      "observed_parent_mass_gev": 225.157,
+      "observed_pion_mass_mev": 139.5701,
+      "observed_mass_gap_mev": 157,
+      "parent_mass_parameter_matches_manifest": false,
+      "proper_threshold_overshoot_ps": 0.01837920257668202,
+      "local_handoff_checks_pass": true
+    },
+    "pion_yminus_end0_level8": {
+      "checks": {
+        "execution": true,
+        "root_present": true,
+        "macro_hash": true,
+        "no_exception": true,
+        "decay_count": true,
+        "handoff_count": true,
+        "four_momentum": true,
+        "rest_frame_direction": true,
+        "parent_on_shell": true,
+        "daughter_on_shell": true,
+        "pion_on_shell": true,
+        "threshold": true,
+        "endpoint_sign": true,
+        "pion_charge": true,
+        "transfer_identity": true,
+        "history_fingerprint": true,
+        "one_event": true,
+        "end0_complete": true,
+        "end0_rows": true,
+        "end0_finite": true,
+        "end0_time_order": true,
+        "end0_species": true,
+        "end0_neutral_charge": true,
+        "end0_neutral_mass": true,
+        "end1_complete": true,
+        "end1_rows": true,
+        "end1_finite": true,
+        "end1_time_order": true,
+        "end1_species": true
+      },
+      "weak_records": [
+        {
+          "kind": "decay",
+          "parent_track": 1,
+          "parent_pdg": 17,
+          "daughter_pdg": 9900017,
+          "pion_pdg": 211,
+          "parent_mass_mev": 225157,
+          "daughter_mass_mev": 225000,
+          "pion_mass_mev": 139.5701,
+          "time_ps": 54.445287390848705,
+          "position_mm": [
+            4.928367994340489,
+            -0.00010458416340239687,
+            4.080571522587508
+          ],
+          "proper_ps": 50.00220040257498,
+          "threshold_ps": 50,
+          "residual_mev": 9.407585821463726e-12,
+          "parent_mev": [
+            238270.20204571815,
+            50286.39622080401,
+            -2.781431519224971,
+            59567.54889447182
+          ],
+          "daughter_mev": [
+            238104.0695847811,
+            50251.33442544639,
+            69.0924974109692,
+            59526.015888206624
+          ],
+          "pion_mev": [
+            166.13246093704007,
+            35.061795357618564,
+            -71.87392893019417,
+            41.533006265198544
+          ]
+        },
+        {
+          "kind": "handoff",
+          "parent_track": 1,
+          "daughter_track": 3,
+          "daughter_pdg": 9900017,
+          "own_fingerprint": "8823401338183107824",
+          "partner_fingerprint": "6285908904664879979",
+          "history_preserved": true
+        }
+      ],
+      "endpoints": [
+        {
+          "q": 0,
+          "rows": 16436,
+          "last_time_ps": 130.0028894583804,
+          "final_pdg": 9900017
+        },
+        {
+          "q": 1,
+          "rows": 16437,
+          "last_time_ps": 130.00147416402194,
+          "final_pdg": -17
+        }
+      ],
+      "observed_parent_mass_gev": 225.157,
+      "observed_pion_mass_mev": 139.5701,
+      "observed_mass_gap_mev": 157,
+      "parent_mass_parameter_matches_manifest": false,
+      "proper_threshold_overshoot_ps": 0.002200402574978,
+      "local_handoff_checks_pass": true
+    },
+    "pion_yplus_end1_level7": {
+      "checks": {
+        "execution": true,
+        "root_present": true,
+        "macro_hash": true,
+        "no_exception": true,
+        "decay_count": true,
+        "handoff_count": true,
+        "four_momentum": true,
+        "rest_frame_direction": true,
+        "parent_on_shell": true,
+        "daughter_on_shell": true,
+        "pion_on_shell": true,
+        "threshold": true,
+        "endpoint_sign": true,
+        "pion_charge": true,
+        "transfer_identity": true,
+        "history_fingerprint": true,
+        "one_event": true,
+        "end0_complete": true,
+        "end0_rows": true,
+        "end0_finite": true,
+        "end0_time_order": true,
+        "end0_species": true,
+        "end1_complete": true,
+        "end1_rows": true,
+        "end1_finite": true,
+        "end1_time_order": true,
+        "end1_species": true,
+        "end1_neutral_charge": true,
+        "end1_neutral_mass": true
+      },
+      "weak_records": [
+        {
+          "kind": "decay",
+          "parent_track": 2,
+          "parent_pdg": -17,
+          "daughter_pdg": -9900017,
+          "pion_pdg": -211,
+          "parent_mass_mev": 225157,
+          "daughter_mass_mev": 225000,
+          "pion_mass_mev": 139.5701,
+          "time_ps": 54.45510301428762,
+          "position_mm": [
+            -4.928988983176246,
+            -0.00010460197754543425,
+            4.081307185036728
+          ],
+          "proper_ps": 50.01119739178057,
+          "threshold_ps": 50,
+          "residual_mev": 7.617018127348274e-12,
+          "parent_mev": [
+            238268.2549217449,
+            -50277.74614959781,
+            -2.781767905340547,
+            59567.06211348671
+          ],
+          "daughter_mev": [
+            238102.12559424064,
+            -50242.6905780956,
+            -74.65181794902891,
+            59525.5296748829
+          ],
+          "pion_mev": [
+            166.12932750426296,
+            -35.05557150221542,
+            71.87005004368835,
+            41.53243860381249
+          ]
+        },
+        {
+          "kind": "handoff",
+          "parent_track": 2,
+          "daughter_track": 3,
+          "daughter_pdg": -9900017,
+          "own_fingerprint": "14730495412188403423",
+          "partner_fingerprint": "4908573198894343800",
+          "history_preserved": true
+        }
+      ],
+      "endpoints": [
+        {
+          "q": 0,
+          "rows": 8221,
+          "last_time_ps": 130.00158414564734,
+          "final_pdg": 17
+        },
+        {
+          "q": 1,
+          "rows": 8225,
+          "last_time_ps": 130.00229777468468,
+          "final_pdg": -9900017
+        }
+      ],
+      "observed_parent_mass_gev": 225.157,
+      "observed_pion_mass_mev": 139.5701,
+      "observed_mass_gap_mev": 157,
+      "parent_mass_parameter_matches_manifest": false,
+      "proper_threshold_overshoot_ps": 0.011197391780569887,
+      "local_handoff_checks_pass": true
+    },
+    "pion_yplus_end1_level8": {
+      "checks": {
+        "execution": true,
+        "root_present": true,
+        "macro_hash": true,
+        "no_exception": true,
+        "decay_count": true,
+        "handoff_count": true,
+        "four_momentum": true,
+        "rest_frame_direction": true,
+        "parent_on_shell": true,
+        "daughter_on_shell": true,
+        "pion_on_shell": true,
+        "threshold": true,
+        "endpoint_sign": true,
+        "pion_charge": true,
+        "transfer_identity": true,
+        "history_fingerprint": true,
+        "one_event": true,
+        "end0_complete": true,
+        "end0_rows": true,
+        "end0_finite": true,
+        "end0_time_order": true,
+        "end0_species": true,
+        "end1_complete": true,
+        "end1_rows": true,
+        "end1_finite": true,
+        "end1_time_order": true,
+        "end1_species": true,
+        "end1_neutral_charge": true,
+        "end1_neutral_mass": true
+      },
+      "weak_records": [
+        {
+          "kind": "decay",
+          "parent_track": 2,
+          "parent_pdg": -17,
+          "daughter_pdg": -9900017,
+          "pion_pdg": -211,
+          "parent_mass_mev": 225157,
+          "daughter_mass_mev": 225000,
+          "pion_mass_mev": 139.5701,
+          "time_ps": 54.45224630085595,
+          "position_mm": [
+            -4.928808262703181,
+            -0.00010460851551396753,
+            4.081093079757321
+          ],
+          "proper_ps": 50.00877633417932,
+          "threshold_ps": 50,
+          "residual_mev": 7.489120434911456e-12,
+          "parent_mev": [
+            238268.82157470807,
+            -50280.263643742044,
+            -2.7816621552766936,
+            59567.203776727794
+          ],
+          "daughter_mev": [
+            238102.6918520768,
+            -50245.20631694265,
+            -74.65171227269784,
+            59525.671239346455
+          ],
+          "pion_mev": [
+            166.12972263126778,
+            -35.0573267993956,
+            71.87005011742114,
+            41.53253738133186
+          ]
+        },
+        {
+          "kind": "handoff",
+          "parent_track": 2,
+          "daughter_track": 3,
+          "daughter_pdg": -9900017,
+          "own_fingerprint": "16206860280023473802",
+          "partner_fingerprint": "9421739095625851342",
+          "history_preserved": true
+        }
+      ],
+      "endpoints": [
+        {
+          "q": 0,
+          "rows": 16431,
+          "last_time_ps": 130.00287393561598,
+          "final_pdg": 17
+        },
+        {
+          "q": 1,
+          "rows": 16442,
+          "last_time_ps": 130.0014929256521,
+          "final_pdg": -9900017
+        }
+      ],
+      "observed_parent_mass_gev": 225.157,
+      "observed_pion_mass_mev": 139.5701,
+      "observed_mass_gap_mev": 157,
+      "parent_mass_parameter_matches_manifest": false,
+      "proper_threshold_overshoot_ps": 0.008776334179323442,
+      "local_handoff_checks_pass": true
+    }
+  },
+  "resolution_comparisons": [
+    {
+      "mode": "pion_yminus_end0",
+      "endpoint": 0,
+      "max_position_difference_mm": 1.5866906712864008e-06,
+      "sampled_times": 13001,
+      "stop_ps": 130.0,
+      "interpolation_error_bound_established": false
+    },
+    {
+      "mode": "pion_yminus_end0",
+      "endpoint": 1,
+      "max_position_difference_mm": 3.718550613588936e-07,
+      "sampled_times": 13001,
+      "stop_ps": 130.0,
+      "interpolation_error_bound_established": false
+    },
+    {
+      "mode": "pion_yplus_end0",
+      "endpoint": 0,
+      "max_position_difference_mm": 1.5924216226914894e-06,
+      "sampled_times": 13001,
+      "stop_ps": 130.0,
+      "interpolation_error_bound_established": false
+    },
+    {
+      "mode": "pion_yplus_end0",
+      "endpoint": 1,
+      "max_position_difference_mm": 4.0698339737504633e-07,
+      "sampled_times": 13001,
+      "stop_ps": 130.0,
+      "interpolation_error_bound_established": false
+    },
+    {
+      "mode": "pion_yplus_end1",
+      "endpoint": 0,
+      "max_position_difference_mm": 8.413038173434717e-08,
+      "sampled_times": 13001,
+      "stop_ps": 130.0,
+      "interpolation_error_bound_established": false
+    },
+    {
+      "mode": "pion_yplus_end1",
+      "endpoint": 1,
+      "max_position_difference_mm": 2.7504275161841323e-07,
+      "sampled_times": 13001,
+      "stop_ps": 130.0,
+      "interpolation_error_bound_established": false
+    },
+    {
+      "mode": "stable_parent",
+      "endpoint": 0,
+      "max_position_difference_mm": 2.1982451837404554e-08,
+      "sampled_times": 13001,
+      "stop_ps": 130.0,
+      "interpolation_error_bound_established": false
+    },
+    {
+      "mode": "stable_parent",
+      "endpoint": 1,
+      "max_position_difference_mm": 2.1979583165965387e-08,
+      "sampled_times": 13001,
+      "stop_ps": 130.0,
+      "interpolation_error_bound_established": false
+    }
+  ],
+  "paired_direction_comparisons": [
+    {
+      "level": 7,
+      "same_predecay_parent_state_and_time": true,
+      "endpoint_plus_minus_position_delta_at_130ps_mm": [
+        [
+          2.812347155156658e-08,
+          -0.012059667456276294,
+          -1.8098988974202257e-08
+        ],
+        [
+          7.639473942333552e-09,
+          -0.0006992870025520571,
+          -1.0494201063693254e-09
+        ]
+      ],
+      "partner_pre_euclidean_lightcone_max_difference_mm": 0.0,
+      "causal_validation_requires_resolution_and_interpolation_review": true
+    },
+    {
+      "level": 8,
+      "same_predecay_parent_state_and_time": true,
+      "endpoint_plus_minus_position_delta_at_130ps_mm": [
+        [
+          2.8126335926970114e-08,
+          -0.012062016563045383,
+          -1.8098619491979662e-08
+        ],
+        [
+          7.656640654829516e-09,
+          -0.0007000658409944961,
+          -1.0503793390626015e-09
+        ]
+      ],
+      "partner_pre_euclidean_lightcone_max_difference_mm": 0.0,
+      "causal_validation_requires_resolution_and_interpolation_review": true
+    }
+  ],
+  "local_handoff_checks_pass": true,
+  "benchmark_mass_parameters_match": false,
+  "causal_propagation_validation": "NOT_ESTABLISHED_BY_LOCAL_HANDOFF_CHECKS",
+  "physical_survival_probability": null,
+  "note": "Fixed-threshold pion pilot, not sampled lifetimes or a no-recoil control. Stable-versus-decay mixes charge/mass/recoil."
+}

@@ -8,7 +8,7 @@ import numpy as np
 import uproot
 from scipy.interpolate import CubicHermiteSpline
 
-def audit(path):
+def audit(path, plot_path=None):
     results={};curves={};plans={}
     with tarfile.open(path) as archive:
         item=next(m for m in archive.getmembers() if m.name.endswith('/manifest.json'))
@@ -38,6 +38,10 @@ def audit(path):
                 checks['rest_frame_direction']=bool(abs(rest[0])<1e-6 and abs(rest[2])<1e-6 and rest[1]*case['pion_rest_y_sign']>0)
                 for label,v in [('parent',p),('daughter',daughter),('pion',pion)]:
                     checks[label+'_on_shell']=bool(abs(v[0]**2-v[1:]@v[1:]-d[label+'_mass_mev']**2)<.01)
+                result['observed_parent_mass_gev']=d['parent_mass_mev']/1000
+                result['observed_pion_mass_mev']=d['pion_mass_mev']
+                result['observed_mass_gap_mev']=d['parent_mass_mev']-d['daughter_mass_mev']
+                result['parent_mass_parameter_matches_manifest']=abs(d['parent_mass_mev']-manifest['mass_gev']*1000)<1e-6
                 result['proper_threshold_overshoot_ps']=d['proper_ps']-d['threshold_ps']
                 checks['threshold']=result['proper_threshold_overshoot_ps']>=0
                 checks['endpoint_sign']=(d['daughter_pdg']>0)==(case['endpoint']==0)
@@ -109,6 +113,33 @@ def audit(path):
                                 'endpoint_plus_minus_position_delta_at_130ps_mm':deltas,
                                 'partner_pre_euclidean_lightcone_max_difference_mm':max(differences) if differences else None,
                                 'causal_validation_requires_resolution_and_interpolation_review':True})
+        if plot_path is not None:
+            import matplotlib
+            matplotlib.use('Agg')
+            import matplotlib.pyplot as plt
+            grid=np.linspace(0,manifest['nominal_stop_ps'],2601)
+            delta={}
+            for level in (7,8):
+                plus=f'pion_yplus_end0_level{level}';minus=f'pion_yminus_end0_level{level}'
+                if not all(results[n]['local_handoff_checks_pass'] for n in (plus,minus)):
+                    raise ValueError('Refusing recoil plot for failed handoff checks')
+                for q in (0,1):delta[level,q]=np.array([value_at(plus,q,t)[1]-value_at(minus,q,t)[1] for t in grid])
+            fig,(ax,bx)=plt.subplots(2,1,figsize=(7.2,6.2),sharex=True,gridspec_kw={'height_ratios':[2,1]},constrained_layout=True)
+            for q,color,label in [(0,'#1764ab','decaying endpoint'),(1,'#cf6310','partner')]:
+                ax.plot(grid,delta[8,q]*1000,color=color,label=label+' (level 8)')
+                ax.plot(grid,delta[7,q]*1000,color=color,ls='--',lw=.9,alpha=.7)
+                bx.plot(grid,(delta[8,q]-delta[7,q])*1e6,color=color,label=label)
+            decay=next(r for r in results['pion_yplus_end0_level8']['weak_records'] if r['kind']=='decay')
+            for axes in (ax,bx):
+                axes.axvline(decay['time_ps'],color='.4',ls=':',lw=1)
+                axes.grid(alpha=.18);axes.set_xlim(0,130)
+            ax.text(decay['time_ps']+2,-.2,'weak decay',color='.35',fontsize=9)
+            ax.set_ylabel('Pion +y minus -y position [µm]')
+            bx.set_ylabel('Level 8 minus 7 [nm]');bx.set_xlabel('Lab time [ps]')
+            ax.legend(frameon=False,fontsize=9);bx.legend(frameon=False,fontsize=8)
+            ax.set_title('Deterministic triplet pion recoil, 2 T\nPhysical opposite-direction controls; dashed: level 7',fontsize=11)
+            fig.savefig(plot_path)
+            plt.close(fig)
         comparison=[]
         for mode in sorted({c['mode'] for c in manifest['cases']}):
             names=[c['name'] for c in sorted(manifest['cases'],key=lambda c:c['level']) if c['mode']==mode]
@@ -130,12 +161,13 @@ def audit(path):
             'source_commit':manifest.get('observed_source_commit'),'adapter_sha256':manifest['adapter_sha256'],
             'scope':manifest['scope'],'cases':results,'resolution_comparisons':comparison,
             'paired_direction_comparisons':angle_pairs,
-            'local_handoff_checks_pass':all(c.get('local_handoff_checks_pass',False) for c in results.values()),
+             'local_handoff_checks_pass':all(c.get('local_handoff_checks_pass',False) for c in results.values()),
+            'benchmark_mass_parameters_match':all(c.get('parent_mass_parameter_matches_manifest',True) for c in results.values()),
             'causal_propagation_validation':'NOT_ESTABLISHED_BY_LOCAL_HANDOFF_CHECKS',
             'physical_survival_probability':None,
             'note':'Fixed-threshold pion pilot, not sampled lifetimes or a no-recoil control. Stable-versus-decay mixes charge/mass/recoil.'}
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('archive');p.add_argument('--output',required=True);a=p.parse_args()
-    r=audit(a.archive)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('archive');p.add_argument('--output',required=True);p.add_argument('--plot');a=p.parse_args()
+    r=audit(a.archive,a.plot)
     with open(a.output,'w') as f:json.dump(r,f,indent=2,allow_nan=False);f.write('\n')
     print('LOCAL_HANDOFF_CHECKS_PASS' if r['local_handoff_checks_pass'] else 'LOCAL_HANDOFF_CHECKS_FAIL')

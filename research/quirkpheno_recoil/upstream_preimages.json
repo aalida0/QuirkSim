@@ -32,6 +32,10 @@
     "quirksim/src/Actions.cc": {
       "sha256": "fa3e89c44b5c2dde90e42611f737ec7c0dda1246d0648cabc1fcee3d5bb5c00e",
       "git_blob_sha1": "c465ab7dec5687b3969a874009ae70a63be8be97"
+    },
+    "quirksim/quirksim.cc": {
+      "sha256": "56500709bdb3b6a2b0926a6b21da3c66e4b45e0b6c4d74d7e5b7c1edef654699",
+      "git_blob_sha1": "c7583d3fbba523e7d2ffa2d901387914f3ceaac3"
     }
   }
 }
