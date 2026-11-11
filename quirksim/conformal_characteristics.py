@@ -79,7 +79,7 @@ class UnitRayHistory:
         if self.jumps:
             j = bisect_left(self.jumps, z)
             for candidate in self.jumps[max(0, j-1):j+1]:
-                if abs(z-candidate) <= 16*np.spacing(max(1., abs(candidate))):
+                if abs(z-candidate) <= 32*np.spacing(max(1., abs(candidate))):
                     z = candidate
                     break
         i, _, r = self._locate(z)

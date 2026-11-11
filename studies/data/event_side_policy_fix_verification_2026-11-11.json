@@ -1,0 +1,29 @@
+{
+  "scope": "NARROW_EVENT_SIDE_POLICY_FIX_ONLY",
+  "base_commit": "9f086d71adf639d663c3700cf5f3ea128a6f2ab2",
+  "legacy_counterexample_reproduced": true,
+  "ulp_offsets_tested": [
+    17,
+    24,
+    31
+  ],
+  "unchanged_outside_window_tested": true,
+  "focused_tests_passed": 26,
+  "full_suite_rerun": false,
+  "experimental_branch": "research/boundary-method-pilot-20261111",
+  "doublet_longtime_repair": "UNKNOWN",
+  "physical_survival_probability": null,
+  "bounded_probe": {
+    "termination": "STOP_DIAGNOSTIC_WALL_TIME",
+    "time_ps": 27.107566409226358,
+    "validation": {
+      "status": "FAIL",
+      "max_chord_closure_error_cm": 4.326642734563267e-12,
+      "max_closure_over_confinement_reference": 0.0004722916465491739,
+      "energy_tolerance_gev": 1e-07,
+      "momentum_tolerance_gev": 5e-06,
+      "closure_tolerance_in_confinement_units": 0.1,
+      "meaning": "SELECTED_CLASSICAL_EVOLUTION_ONLY_NOT_QUANTUM_SURVIVAL"
+    }
+  }
+}
