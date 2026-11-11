@@ -1,0 +1,371 @@
+{
+  "archive_sha256": "78313a66673301b20c1e638ddf0a54db0b5a9746838998a4eb6c63df82f1401e",
+  "scope": "SAVED_CLASSICAL_NUMERICAL_DIAGNOSTICS_ONLY",
+  "reference_definition": "matching radius / 8 for these fixed submitted cards",
+  "cases": [
+    {
+      "case": "doublet_recoil_seed1_level0",
+      "source_commit": "e1ea0e08aa44acab15d68cadcd4ebb8aea12542a",
+      "termination": "STOP_FLOATING_POINT_CHARACTERISTIC_LABEL",
+      "final_time_ps": 315.081015984348,
+      "numerical_validation": {
+        "status": "FAIL",
+        "max_chord_closure_error_cm": 1.0518158807252635e-08,
+        "max_closure_over_confinement_reference": 1.1481508519432855,
+        "energy_tolerance_gev": 1e-07,
+        "momentum_tolerance_gev": 5e-06,
+        "closure_tolerance_in_confinement_units": 0.1,
+        "meaning": "SELECTED_CLASSICAL_EVOLUTION_ONLY_NOT_QUANTUM_SURVIVAL"
+      },
+      "first_saved_closure_failure_ps": 78.23578739115479,
+      "decays": [
+        {
+          "endpoint": 1,
+          "time_ps": 15.232293666288617
+        },
+        {
+          "endpoint": 0,
+          "time_ps": 53.23578739115478
+        }
+      ],
+      "reflected_discontinuities": 323,
+      "final_separation_cm": 0.0008358381541427594,
+      "final_energy_coordinate_interval_ps": 0.02845953759887454,
+      "energy_residual_gev": 3.427658157306723e-11
+    },
+    {
+      "case": "doublet_recoil_seed1_level1",
+      "source_commit": "e1ea0e08aa44acab15d68cadcd4ebb8aea12542a",
+      "termination": "STOP_STEP_BUDGET",
+      "final_time_ps": 262.07734932775054,
+      "numerical_validation": {
+        "status": "FAIL",
+        "max_chord_closure_error_cm": 1.5259353995673957e-09,
+        "max_closure_over_confinement_reference": 0.16656945964874154,
+        "energy_tolerance_gev": 1e-07,
+        "momentum_tolerance_gev": 5e-06,
+        "closure_tolerance_in_confinement_units": 0.1,
+        "meaning": "SELECTED_CLASSICAL_EVOLUTION_ONLY_NOT_QUANTUM_SURVIVAL"
+      },
+      "first_saved_closure_failure_ps": 108.23578739114674,
+      "decays": [
+        {
+          "endpoint": 1,
+          "time_ps": 15.232293666288466
+        },
+        {
+          "endpoint": 0,
+          "time_ps": 53.235787391146744
+        }
+      ],
+      "reflected_discontinuities": 265,
+      "final_separation_cm": 0.004258311195067695,
+      "final_energy_coordinate_interval_ps": 0.14209825856672542,
+      "energy_residual_gev": 2.6489033189136535e-11
+    },
+    {
+      "case": "doublet_recoil_seed25_level0",
+      "source_commit": "e1ea0e08aa44acab15d68cadcd4ebb8aea12542a",
+      "termination": "STOP_STEP_BUDGET",
+      "final_time_ps": 341.7739188316612,
+      "numerical_validation": {
+        "status": "FAIL",
+        "max_chord_closure_error_cm": 1.821053289481248e-08,
+        "max_closure_over_confinement_reference": 1.9878420967653656,
+        "energy_tolerance_gev": 1e-07,
+        "momentum_tolerance_gev": 5e-06,
+        "closure_tolerance_in_confinement_units": 0.1,
+        "meaning": "SELECTED_CLASSICAL_EVOLUTION_ONLY_NOT_QUANTUM_SURVIVAL"
+      },
+      "first_saved_closure_failure_ps": 162.14934337749486,
+      "decays": [
+        {
+          "endpoint": 1,
+          "time_ps": 0.04426548695706803
+        },
+        {
+          "endpoint": 0,
+          "time_ps": 2.149343377494844
+        }
+      ],
+      "reflected_discontinuities": 408,
+      "final_separation_cm": 0.00033652976792291565,
+      "final_energy_coordinate_interval_ps": 0.011821016545335183,
+      "energy_residual_gev": 7.878497854107991e-11
+    },
+    {
+      "case": "doublet_recoil_seed25_level1",
+      "source_commit": "e1ea0e08aa44acab15d68cadcd4ebb8aea12542a",
+      "termination": "STOP_STEP_BUDGET",
+      "final_time_ps": 315.1974471071879,
+      "numerical_validation": {
+        "status": "FAIL",
+        "max_chord_closure_error_cm": 1.9598550633998147e-09,
+        "max_closure_over_confinement_reference": 0.21393566136083264,
+        "energy_tolerance_gev": 1e-07,
+        "momentum_tolerance_gev": 5e-06,
+        "closure_tolerance_in_confinement_units": 0.1,
+        "meaning": "SELECTED_CLASSICAL_EVOLUTION_ONLY_NOT_QUANTUM_SURVIVAL"
+      },
+      "first_saved_closure_failure_ps": 242.14934337749486,
+      "decays": [
+        {
+          "endpoint": 1,
+          "time_ps": 0.044265486957068015
+        },
+        {
+          "endpoint": 0,
+          "time_ps": 2.149343377494845
+        }
+      ],
+      "reflected_discontinuities": 375,
+      "final_separation_cm": 0.00021566081029807455,
+      "final_energy_coordinate_interval_ps": 0.00820250173272341,
+      "energy_residual_gev": 3.1093350116861984e-11
+    },
+    {
+      "case": "triplet_recoil_seed1_level0",
+      "source_commit": "e1ea0e08aa44acab15d68cadcd4ebb8aea12542a",
+      "termination": "TARGET_REACHED",
+      "final_time_ps": 1000.0,
+      "numerical_validation": {
+        "status": "PASS",
+        "max_chord_closure_error_cm": 1.0961216741608963e-09,
+        "max_closure_over_confinement_reference": 0.042994534953679414,
+        "energy_tolerance_gev": 1e-07,
+        "momentum_tolerance_gev": 5e-06,
+        "closure_tolerance_in_confinement_units": 0.1,
+        "meaning": "SELECTED_CLASSICAL_EVOLUTION_ONLY_NOT_QUANTUM_SURVIVAL"
+      },
+      "first_saved_closure_failure_ps": null,
+      "decays": [
+        {
+          "endpoint": 1,
+          "time_ps": 91.06936299553016
+        },
+        {
+          "endpoint": 0,
+          "time_ps": 302.3000775547411
+        }
+      ],
+      "reflected_discontinuities": 155,
+      "final_separation_cm": 1.2546927935654406,
+      "final_energy_coordinate_interval_ps": 41.852289205907404,
+      "energy_residual_gev": 4.547473508864641e-12
+    },
+    {
+      "case": "triplet_recoil_seed1_level1",
+      "source_commit": "e1ea0e08aa44acab15d68cadcd4ebb8aea12542a",
+      "termination": "TARGET_REACHED",
+      "final_time_ps": 1000.0,
+      "numerical_validation": {
+        "status": "PASS",
+        "max_chord_closure_error_cm": 2.428961104984066e-10,
+        "max_closure_over_confinement_reference": 0.009527414299996404,
+        "energy_tolerance_gev": 1e-07,
+        "momentum_tolerance_gev": 5e-06,
+        "closure_tolerance_in_confinement_units": 0.1,
+        "meaning": "SELECTED_CLASSICAL_EVOLUTION_ONLY_NOT_QUANTUM_SURVIVAL"
+      },
+      "first_saved_closure_failure_ps": null,
+      "decays": [
+        {
+          "endpoint": 1,
+          "time_ps": 91.06936299553011
+        },
+        {
+          "endpoint": 0,
+          "time_ps": 302.300077554731
+        }
+      ],
+      "reflected_discontinuities": 155,
+      "final_separation_cm": 1.2546927935519347,
+      "final_energy_coordinate_interval_ps": 41.852289205619904,
+      "energy_residual_gev": -5.684341886080801e-13
+    },
+    {
+      "case": "triplet_recoil_seed25_level0",
+      "source_commit": "e1ea0e08aa44acab15d68cadcd4ebb8aea12542a",
+      "termination": "TARGET_REACHED",
+      "final_time_ps": 1000.0,
+      "numerical_validation": {
+        "status": "PASS",
+        "max_chord_closure_error_cm": 2.731924938941978e-10,
+        "max_closure_over_confinement_reference": 0.010715766784566665,
+        "energy_tolerance_gev": 1e-07,
+        "momentum_tolerance_gev": 5e-06,
+        "closure_tolerance_in_confinement_units": 0.1,
+        "meaning": "SELECTED_CLASSICAL_EVOLUTION_ONLY_NOT_QUANTUM_SURVIVAL"
+      },
+      "first_saved_closure_failure_ps": null,
+      "decays": [
+        {
+          "endpoint": 1,
+          "time_ps": 0.25051455594754907
+        },
+        {
+          "endpoint": 0,
+          "time_ps": 12.197639711301811
+        }
+      ],
+      "reflected_discontinuities": 219,
+      "final_separation_cm": 1.2543433490704234,
+      "final_energy_coordinate_interval_ps": 41.840402072496005,
+      "energy_residual_gev": 4.718003765447065e-12
+    },
+    {
+      "case": "triplet_recoil_seed25_level1",
+      "source_commit": "e1ea0e08aa44acab15d68cadcd4ebb8aea12542a",
+      "termination": "TARGET_REACHED",
+      "final_time_ps": 1000.0,
+      "numerical_validation": {
+        "status": "PASS",
+        "max_chord_closure_error_cm": 2.930579147486804e-11,
+        "max_closure_over_confinement_reference": 0.0011494972735358068,
+        "energy_tolerance_gev": 1e-07,
+        "momentum_tolerance_gev": 5e-06,
+        "closure_tolerance_in_confinement_units": 0.1,
+        "meaning": "SELECTED_CLASSICAL_EVOLUTION_ONLY_NOT_QUANTUM_SURVIVAL"
+      },
+      "first_saved_closure_failure_ps": null,
+      "decays": [
+        {
+          "endpoint": 1,
+          "time_ps": 0.2505145559475491
+        },
+        {
+          "endpoint": 0,
+          "time_ps": 12.19763971130172
+        }
+      ],
+      "reflected_discontinuities": 219,
+      "final_separation_cm": 1.2543433490714169,
+      "final_energy_coordinate_interval_ps": 41.84040207249581,
+      "energy_residual_gev": -2.2737367544323206e-13
+    }
+  ],
+  "comparisons": [
+    {
+      "model": "triplet",
+      "seed": 1,
+      "comparison_method": "nearest saved times within 1e-7 ps; no interpolation",
+      "matched_record_count": 218,
+      "last_matched_time_ps": 1000.0,
+      "max_time_mismatch_ps": 1.0231815394945443e-11,
+      "worst_position_comparison": {
+        "time_ps": 1000.0,
+        "time_mismatch_ps": 0.0,
+        "position_difference_cm": 1.5690352512163107e-09,
+        "momentum_difference_gev": 6.294467871036956e-08
+      },
+      "max_position_difference_in_reference_lengths": 0.061544208587624924,
+      "final_times_equal": true,
+      "final_endpoint_difference_cm": 1.5690352512163107e-09,
+      "decay_endpoint_sequence_equal": true,
+      "max_decay_time_difference_ps": 1.0118128557223827e-11,
+      "reflection_counts": [
+        155,
+        155
+      ],
+      "last_saved_comparison": {
+        "time_ps": 1000.0,
+        "time_mismatch_ps": 0.0,
+        "position_difference_cm": 1.5690352512163107e-09,
+        "momentum_difference_gev": 6.294467871036956e-08
+      }
+    },
+    {
+      "model": "triplet",
+      "seed": 25,
+      "comparison_method": "nearest saved times within 1e-7 ps; no interpolation",
+      "matched_record_count": 218,
+      "last_matched_time_ps": 1000.0,
+      "max_time_mismatch_ps": 1.1368683772161603e-13,
+      "worst_position_comparison": {
+        "time_ps": 1000.0,
+        "time_mismatch_ps": 0.0,
+        "position_difference_cm": 1.5385683007168667e-10,
+        "momentum_difference_gev": 1.9700125723982497e-08
+      },
+      "max_position_difference_in_reference_lengths": 0.006034916573877045,
+      "final_times_equal": true,
+      "final_endpoint_difference_cm": 1.5385683007168667e-10,
+      "decay_endpoint_sequence_equal": true,
+      "max_decay_time_difference_ps": 9.059419880941277e-14,
+      "reflection_counts": [
+        219,
+        219
+      ],
+      "last_saved_comparison": {
+        "time_ps": 1000.0,
+        "time_mismatch_ps": 0.0,
+        "position_difference_cm": 1.5385683007168667e-10,
+        "momentum_difference_gev": 1.9700125723982497e-08
+      }
+    },
+    {
+      "model": "doublet",
+      "seed": 1,
+      "comparison_method": "nearest saved times within 1e-7 ps; no interpolation",
+      "matched_record_count": 61,
+      "last_matched_time_ps": 258.23578739115476,
+      "max_time_mismatch_ps": 8.043343768804334e-12,
+      "worst_position_comparison": {
+        "time_ps": 223.2357873911548,
+        "time_mismatch_ps": 8.043343768804334e-12,
+        "position_difference_cm": 8.50261831932293e-09,
+        "momentum_difference_gev": 7.831557328286999e-07
+      },
+      "max_position_difference_in_reference_lengths": 0.9281366298013843,
+      "final_times_equal": false,
+      "final_endpoint_difference_cm": null,
+      "decay_endpoint_sequence_equal": true,
+      "max_decay_time_difference_ps": 8.036238341446733e-12,
+      "reflection_counts": [
+        323,
+        265
+      ],
+      "last_saved_comparison": {
+        "time_ps": 258.23578739115476,
+        "time_mismatch_ps": 8.01492205937393e-12,
+        "position_difference_cm": 4.747239658589925e-09,
+        "momentum_difference_gev": 4.926024970970314e-06
+      }
+    },
+    {
+      "model": "doublet",
+      "seed": 25,
+      "comparison_method": "nearest saved times within 1e-7 ps; no interpolation",
+      "matched_record_count": 78,
+      "last_matched_time_ps": 312.14934337749486,
+      "max_time_mismatch_ps": 2.6645352591003757e-15,
+      "worst_position_comparison": {
+        "time_ps": 302.14934337749486,
+        "time_mismatch_ps": 0.0,
+        "position_difference_cm": 5.0057560607605316e-08,
+        "momentum_difference_gev": 5.630129517142667e-06
+      },
+      "max_position_difference_in_reference_lengths": 5.464229235462259,
+      "final_times_equal": false,
+      "final_endpoint_difference_cm": null,
+      "decay_endpoint_sequence_equal": true,
+      "max_decay_time_difference_ps": 1.3322676295501878e-15,
+      "reflection_counts": [
+        408,
+        375
+      ],
+      "last_saved_comparison": {
+        "time_ps": 312.14934337749486,
+        "time_mismatch_ps": 0.0,
+        "position_difference_cm": 3.833472011399064e-08,
+        "momentum_difference_gev": 1.853128760857698e-05
+      }
+    }
+  ],
+  "physical_survival_probability": null,
+  "caveats": [
+    "Saved records do not resolve every encounter minimum.",
+    "Two resolutions are a consistency check, not an observed convergence order.",
+    "Stop reasons do not identify their triggering internal RK/event state."
+  ]
+}
