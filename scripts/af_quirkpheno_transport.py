@@ -29,8 +29,9 @@ def prepare(out, suite="smoke"):
     pz = .25 * energy / math.sqrt(1 - .25**2)
     cases = []
     duration_ps = 20 if suite == "smoke" else 130
+    level_numbers = range(5, 9) if suite == "precision" else range(1, 5)
     levels = ((0, .01, 1e-8), (1, .005, 5e-9)) if suite == "smoke" else tuple(
-        (level, .01 / 2**level, 1e-8 / 2**level) for level in range(1, 5))
+        (level, .01 / 2**level, 1e-8 / 2**level) for level in level_numbers)
     for field in (0, 2):
         for level, boost, merge in levels:
             name = f"stable_B{field}_level{level}"
@@ -78,8 +79,8 @@ def main():
     p.add_argument("--output-dir", required=True)
     p.add_argument("--source-dir", default=str(Path.home() / "QuirkPheno-public-pilot"))
     p.add_argument("--prepare-only", action="store_true")
-    p.add_argument("--suite", choices=("smoke", "refinement"), default="smoke",
-                   help="refinement: 130 ps, B=0/2 T, four tighter levels, no decay")
+    p.add_argument("--suite", choices=("smoke", "refinement", "precision"), default="smoke",
+                   help="refinement: levels 1-4; precision: levels 5-8; both 130 ps, B=0/2 T, no decay")
     a = p.parse_args()
     out = Path(a.output_dir).expanduser().resolve()
     state = prepare(out, a.suite)
