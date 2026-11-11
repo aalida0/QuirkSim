@@ -1,0 +1,1568 @@
+{
+  "scope": "CLASSICAL_CONSERVATION_TARGET_NOT_DIRECT_STRING_QUADRATURE",
+  "archive_sha256": "ca6ff21c5447efa156a65732430be467d27ba993ab8218558e329d6be6773cf1",
+  "cases": [
+    {
+      "case": "benchmark_isotropic_seed1_level7",
+      "point": "benchmark",
+      "mode": "isotropic",
+      "seed": 1,
+      "level": 7,
+      "relative_L_vector_hbar": [
+        126878304.6437881,
+        1061393757024.4128,
+        1793760271852.2651
+      ],
+      "endpoint_J_vector_hbar": [
+        5590915.328792238,
+        1061190940867.5693,
+        1793582380406.515
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -121287389.31499606,
+        -202816156.84377894,
+        -177891445.7502946
+      ],
+      "axial_total_target_hbar": 1793546708161.031,
+      "axial_required_field_or_numerical_residual_hbar": -35672245.48388672,
+      "axial_external_impulse_hbar": 35436541677.24959
+    },
+    {
+      "case": "benchmark_collinear_forward_seed1_level7",
+      "point": "benchmark",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "level": 7,
+      "relative_L_vector_hbar": [
+        -0.0019817478162676865,
+        84.68354374851035,
+        35166373776.58932
+      ],
+      "endpoint_J_vector_hbar": [
+        -0.06621190915358831,
+        85.3000783266045,
+        35207853008.41282
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -0.06423016133732062,
+        0.616534578093863,
+        41479231.82347228
+      ],
+      "axial_total_target_hbar": 35204695154.67583,
+      "axial_required_field_or_numerical_residual_hbar": -3157853.7369918823,
+      "axial_external_impulse_hbar": 35436541641.04686
+    },
+    {
+      "case": "benchmark_collinear_backward_seed1_level7",
+      "point": "benchmark",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "level": 7,
+      "relative_L_vector_hbar": [
+        0.0077448538766128555,
+        -129.8156367799214,
+        35665325029.58958
+      ],
+      "endpoint_J_vector_hbar": [
+        -0.06406715431329699,
+        -130.1000996727779,
+        35595674190.90851
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -0.07181200818990986,
+        -0.28446289285628334,
+        -69650838.68107808
+      ],
+      "axial_total_target_hbar": 35592045620.161644,
+      "axial_required_field_or_numerical_residual_hbar": -3628570.746864319,
+      "axial_external_impulse_hbar": 35436541641.05402
+    },
+    {
+      "case": "benchmark_isotropic_seed1_level8",
+      "point": "benchmark",
+      "mode": "isotropic",
+      "seed": 1,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        128521992.92100994,
+        1061407143658.3295,
+        1793781114568.645
+      ],
+      "endpoint_J_vector_hbar": [
+        -949609.5824723657,
+        1061185319676.0066,
+        1793588193173.9844
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -129471602.5034821,
+        -221823982.32283875,
+        -192921394.66077784
+      ],
+      "axial_total_target_hbar": 1793546713908.511,
+      "axial_required_field_or_numerical_residual_hbar": -41479265.47338867,
+      "axial_external_impulse_hbar": 35436541677.23599
+    },
+    {
+      "case": "benchmark_collinear_forward_seed1_level8",
+      "point": "benchmark",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        -0.0026284594065174305,
+        101.31717711020565,
+        35164613561.64972
+      ],
+      "endpoint_J_vector_hbar": [
+        -0.14571319488564596,
+        102.59616359878613,
+        35206090637.40278
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -0.1430847354791285,
+        1.2789864885797901,
+        41477075.753070265
+      ],
+      "axial_total_target_hbar": 35204697427.507576,
+      "axial_required_field_or_numerical_residual_hbar": -1393209.8952026367,
+      "axial_external_impulse_hbar": 35436541641.03519
+    },
+    {
+      "case": "benchmark_collinear_backward_seed1_level8",
+      "point": "benchmark",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        -0.002266163365033046,
+        77.9575307899669,
+        35663557924.586044
+      ],
+      "endpoint_J_vector_hbar": [
+        -0.1512151983516608,
+        77.40529872638241,
+        35593905169.824234
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -0.1489490349866278,
+        -0.5522320635838365,
+        -69652754.76177883
+      ],
+      "axial_total_target_hbar": 35592041413.03913,
+      "axial_required_field_or_numerical_residual_hbar": -1863756.7851028442,
+      "axial_external_impulse_hbar": 35436541641.036804
+    },
+    {
+      "case": "benchmark_isotropic_seed4_level8",
+      "point": "benchmark",
+      "mode": "isotropic",
+      "seed": 4,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        -47450504.744075015,
+        -286383273924.4225,
+        -364183394489.84094
+      ],
+      "endpoint_J_vector_hbar": [
+        -73687858.7855075,
+        -286266599567.88477,
+        -364112699142.94226
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -26237354.041432448,
+        116674356.53836083,
+        70695346.89859298
+      ],
+      "axial_total_target_hbar": -364189756892.4288,
+      "axial_required_field_or_numerical_residual_hbar": -77057749.48651123,
+      "axial_external_impulse_hbar": -24416444978.303402
+    },
+    {
+      "case": "benchmark_collinear_forward_seed4_level8",
+      "point": "benchmark",
+      "mode": "collinear_forward",
+      "seed": 4,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        0.0006116671364363647,
+        -5.38441795394195,
+        -24246467685.8338
+      ],
+      "endpoint_J_vector_hbar": [
+        -0.15046358058862425,
+        -6.264638571874274,
+        -24274674979.551605
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -0.15107524772506065,
+        -0.8802206179324121,
+        -28207293.71780022
+      ],
+      "axial_total_target_hbar": -24273960387.974564,
+      "axial_required_field_or_numerical_residual_hbar": 714591.577041626,
+      "axial_external_impulse_hbar": -24416444978.303402
+    },
+    {
+      "case": "benchmark_collinear_backward_seed4_level8",
+      "point": "benchmark",
+      "mode": "collinear_backward",
+      "seed": 4,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        0.010789930697214095,
+        379.5940133469719,
+        -24556318873.609253
+      ],
+      "endpoint_J_vector_hbar": [
+        -0.15003324464576398,
+        379.94749067408884,
+        -24508113955.51751
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -0.1608231753429781,
+        0.3534773271168667,
+        48204918.09180077
+      ],
+      "axial_total_target_hbar": -24507170563.33593,
+      "axial_required_field_or_numerical_residual_hbar": 943392.1815795898,
+      "axial_external_impulse_hbar": -24416444978.303402
+    },
+    {
+      "case": "benchmark_isotropic_seed7_level8",
+      "point": "benchmark",
+      "mode": "isotropic",
+      "seed": 7,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        504309473.0368302,
+        -1758102421481.5056,
+        2000818260896.328
+      ],
+      "endpoint_J_vector_hbar": [
+        -213113914.99135262,
+        -1759259557512.601,
+        2002350829769.6626
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -717423388.0281823,
+        -1157136031.0954854,
+        1532568873.3348088
+      ],
+      "axial_total_target_hbar": 2002525490341.0608,
+      "axial_required_field_or_numerical_residual_hbar": 174660571.39819336,
+      "axial_external_impulse_hbar": -61160439492.16604
+    },
+    {
+      "case": "benchmark_collinear_forward_seed7_level8",
+      "point": "benchmark",
+      "mode": "collinear_forward",
+      "seed": 7,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        0.00945453941577052,
+        4.373303035126866,
+        -58623490133.91058
+      ],
+      "endpoint_J_vector_hbar": [
+        -0.11425316029991628,
+        1.665676980459374,
+        -58700936004.40198
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -0.1237076997156868,
+        -2.707626054667687,
+        -77445870.49141209
+      ],
+      "axial_total_target_hbar": -58695373265.579414,
+      "axial_required_field_or_numerical_residual_hbar": 5562738.822563171,
+      "axial_external_impulse_hbar": -61160437004.78942
+    },
+    {
+      "case": "benchmark_collinear_backward_seed7_level8",
+      "point": "benchmark",
+      "mode": "collinear_backward",
+      "seed": 7,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        0.021868001706040675,
+        194.40075307086565,
+        -63620111561.16183
+      ],
+      "endpoint_J_vector_hbar": [
+        -0.09751639761125011,
+        195.66225067041347,
+        -63488403672.13239
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -0.11938439931729079,
+        1.2614975995482518,
+        131707889.02941965
+      ],
+      "axial_total_target_hbar": -63483891466.49081,
+      "axial_required_field_or_numerical_residual_hbar": 4512205.641586304,
+      "axial_external_impulse_hbar": -61160437004.8046
+    },
+    {
+      "case": "tilted_isotropic_seed1_level7",
+      "point": "tilted",
+      "mode": "isotropic",
+      "seed": 1,
+      "level": 7,
+      "relative_L_vector_hbar": [
+        -894174950157.5754,
+        -231787528337.47366,
+        1549391712222.0518
+      ],
+      "endpoint_J_vector_hbar": [
+        -894356534102.3757,
+        -232069085378.59094,
+        1549177993793.159
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -181583944.80018777,
+        -281557041.11697364,
+        -213718428.89244813
+      ],
+      "axial_total_target_hbar": 1549149587739.4395,
+      "axial_required_field_or_numerical_residual_hbar": -28406053.719482422,
+      "axial_external_impulse_hbar": 26577360624.38381
+    },
+    {
+      "case": "tilted_collinear_forward_seed1_level7",
+      "point": "tilted",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "level": 7,
+      "relative_L_vector_hbar": [
+        -15227492689.00608,
+        -1515358.3439041902,
+        26374791003.69894
+      ],
+      "endpoint_J_vector_hbar": [
+        -15245453598.108486,
+        -1515716.9562607035,
+        26405900248.4763
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -17960909.102410734,
+        -358.6122528640955,
+        31109244.77730931
+      ],
+      "axial_total_target_hbar": 26403521348.307888,
+      "axial_required_field_or_numerical_residual_hbar": -2378900.168411255,
+      "axial_external_impulse_hbar": 26577406232.113895
+    },
+    {
+      "case": "tilted_collinear_backward_seed1_level7",
+      "point": "tilted",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "level": 7,
+      "relative_L_vector_hbar": [
+        -15443545008.246378,
+        -1523790.3659403846,
+        26749004597.51119
+      ],
+      "endpoint_J_vector_hbar": [
+        -15413377751.84402,
+        -1523432.8042373233,
+        26696753414.3463
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        30167256.40234157,
+        357.56171082245766,
+        -52251183.164893165
+      ],
+      "axial_total_target_hbar": 26694034225.3416,
+      "axial_required_field_or_numerical_residual_hbar": -2719189.004699707,
+      "axial_external_impulse_hbar": 26577406232.11417
+    },
+    {
+      "case": "tilted_isotropic_seed1_level8",
+      "point": "tilted",
+      "mode": "isotropic",
+      "seed": 1,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        -894182273406.3381,
+        -231791596053.7589,
+        1549411704900.5852
+      ],
+      "endpoint_J_vector_hbar": [
+        -894370338084.8323,
+        -232083240729.44717,
+        1549190342124.8074
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -188064678.49398872,
+        -291644675.6881817,
+        -221362775.778185
+      ],
+      "axial_total_target_hbar": 1549149592790.3076,
+      "axial_required_field_or_numerical_residual_hbar": -40749334.49975586,
+      "axial_external_impulse_hbar": 26577360624.381912
+    },
+    {
+      "case": "tilted_collinear_forward_seed1_level8",
+      "point": "tilted",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        -15226727782.16246,
+        -1515534.6873690034,
+        26373466146.12291
+      ],
+      "endpoint_J_vector_hbar": [
+        -15244687752.545013,
+        -1515890.1469231565,
+        26404573764.167633
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -17959970.3825409,
+        -355.4596649709856,
+        31107618.044722088
+      ],
+      "axial_total_target_hbar": 26403523072.496525,
+      "axial_required_field_or_numerical_residual_hbar": -1050691.6711082458,
+      "axial_external_impulse_hbar": 26577406232.415627
+    },
+    {
+      "case": "tilted_collinear_backward_seed1_level8",
+      "point": "tilted",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        -15442777180.173765,
+        -1523417.553449402,
+        26747674680.17709
+      ],
+      "endpoint_J_vector_hbar": [
+        -15412609090.531033,
+        -1523059.7802535894,
+        26695422052.88735
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        30168089.642748218,
+        357.7732141595354,
+        -52252627.28972297
+      ],
+      "axial_total_target_hbar": 26694031060.79502,
+      "axial_required_field_or_numerical_residual_hbar": -1390992.092327118,
+      "axial_external_impulse_hbar": 26577406232.111824
+    },
+    {
+      "case": "tilted_isotropic_seed4_level8",
+      "point": "tilted",
+      "mode": "isotropic",
+      "seed": 4,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        180399604672.2349,
+        -20742973105.77486,
+        -312541096883.4686
+      ],
+      "endpoint_J_vector_hbar": [
+        180380131828.7233,
+        -20708748774.33997,
+        -312515074548.55066
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -19472843.511511337,
+        34224331.43422948,
+        26022334.918137744
+      ],
+      "axial_total_target_hbar": -312568156627.4046,
+      "axial_required_field_or_numerical_residual_hbar": -53082078.85394287,
+      "axial_external_impulse_hbar": -18312333734.538296
+    },
+    {
+      "case": "tilted_collinear_forward_seed4_level8",
+      "point": "tilted",
+      "mode": "collinear_forward",
+      "seed": 4,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        10499029714.62813,
+        -1389618.3784787867,
+        -18184852890.16159
+      ],
+      "endpoint_J_vector_hbar": [
+        10511250154.470362,
+        -1389779.3958151427,
+        -18206019338.42498
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        12220439.842244444,
+        -161.01735676232548,
+        -21166448.263376553
+      ],
+      "axial_total_target_hbar": -18205470292.636322,
+      "axial_required_field_or_numerical_residual_hbar": 549045.7886581421,
+      "axial_external_impulse_hbar": -18312333734.538296
+    },
+    {
+      "case": "tilted_collinear_backward_seed4_level8",
+      "point": "tilted",
+      "mode": "collinear_backward",
+      "seed": 4,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        10633199231.147133,
+        -1396252.5320474908,
+        -18417241309.483482
+      ],
+      "endpoint_J_vector_hbar": [
+        10612337882.926361,
+        -1396088.3285839367,
+        -18381108420.636776
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -20861348.22076653,
+        164.20347124160793,
+        36132888.84668813
+      ],
+      "axial_total_target_hbar": -18380377922.816128,
+      "axial_required_field_or_numerical_residual_hbar": 730497.8206481934,
+      "axial_external_impulse_hbar": -18312333734.538296
+    },
+    {
+      "case": "tilted_isotropic_seed7_level8",
+      "point": "tilted",
+      "mode": "isotropic",
+      "seed": 7,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        -1004357369151.3798,
+        -1288199306496.386,
+        1739752225906.31
+      ],
+      "endpoint_J_vector_hbar": [
+        -1005401582179.8213,
+        -1289234787144.3792,
+        1741284052318.8816
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -1044213028.4412605,
+        -1035480647.9931844,
+        1531826412.5719547
+      ],
+      "axial_total_target_hbar": 1741366930090.452,
+      "axial_required_field_or_numerical_residual_hbar": 82877771.5703125,
+      "axial_external_impulse_hbar": -45872956382.6468
+    },
+    {
+      "case": "tilted_collinear_forward_seed7_level8",
+      "point": "tilted",
+      "mode": "collinear_forward",
+      "seed": 7,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        25384725197.700554,
+        -2249887.451264109,
+        -43967633793.0873
+      ],
+      "endpoint_J_vector_hbar": [
+        25418317679.43344,
+        -2251608.931888838,
+        -44025817770.521545
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        33592481.73289946,
+        -1721.4808120928715,
+        -58183977.43424172
+      ],
+      "axial_total_target_hbar": -44021529746.79976,
+      "axial_required_field_or_numerical_residual_hbar": 4288023.721786499,
+      "axial_external_impulse_hbar": -45870327757.37734
+    },
+    {
+      "case": "tilted_collinear_backward_seed7_level8",
+      "point": "tilted",
+      "mode": "collinear_backward",
+      "seed": 7,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        27548325076.8943,
+        -2355459.685722577,
+        -47715098710.446075
+      ],
+      "endpoint_J_vector_hbar": [
+        27491259153.206757,
+        -2353968.7932204604,
+        -47616257725.576
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -57065923.68753665,
+        1490.8925011124502,
+        98840984.87009352
+      ],
+      "axial_total_target_hbar": -47612918806.94035,
+      "axial_required_field_or_numerical_residual_hbar": 3338918.6356430054,
+      "axial_external_impulse_hbar": -45870327757.39052
+    },
+    {
+      "case": "faster_isotropic_seed1_level7",
+      "point": "faster",
+      "mode": "isotropic",
+      "seed": 1,
+      "level": 7,
+      "relative_L_vector_hbar": [
+        122897925.92532463,
+        2119000805047.9023,
+        3585266117460.904
+      ],
+      "endpoint_J_vector_hbar": [
+        36266681.09015026,
+        2118799952790.5837,
+        3585122553900.2227
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -86631244.83517452,
+        -200852257.31815234,
+        -143563560.68129635
+      ],
+      "axial_total_target_hbar": 3585260694783.999,
+      "axial_required_field_or_numerical_residual_hbar": 138140883.7763672,
+      "axial_external_impulse_hbar": 172957481558.32983
+    },
+    {
+      "case": "faster_collinear_forward_seed1_level7",
+      "point": "faster",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "level": 7,
+      "relative_L_vector_hbar": [
+        0.020693255447231863,
+        -430.62151861195673,
+        172585553082.5144
+      ],
+      "endpoint_J_vector_hbar": [
+        -0.2193395772946123,
+        -429.59155082302,
+        172667497658.76428
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -0.24003283274184414,
+        1.0299677889368803,
+        81944576.25001347
+      ],
+      "axial_total_target_hbar": 172648099510.6282,
+      "axial_required_field_or_numerical_residual_hbar": -19398148.13607788,
+      "axial_external_impulse_hbar": 172957481558.32983
+    },
+    {
+      "case": "faster_collinear_backward_seed1_level7",
+      "point": "faster",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "level": 7,
+      "relative_L_vector_hbar": [
+        0.0024726791890144493,
+        -9.866256747527494,
+        173147645058.79135
+      ],
+      "endpoint_J_vector_hbar": [
+        -0.297111475021551,
+        -9.864905977722325,
+        173032265274.87418
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -0.29958415421056545,
+        0.001350769804765834,
+        -115379783.91735145
+      ],
+      "axial_total_target_hbar": 173008565268.99155,
+      "axial_required_field_or_numerical_residual_hbar": -23700005.882629395,
+      "axial_external_impulse_hbar": 172957481558.32983
+    },
+    {
+      "case": "faster_isotropic_seed1_level8",
+      "point": "faster",
+      "mode": "isotropic",
+      "seed": 1,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        113303577.63686444,
+        2119053588321.6924,
+        3585347714659.0054
+      ],
+      "endpoint_J_vector_hbar": [
+        -11565303.89559864,
+        2118896855328.0916,
+        3585196961677.9463
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -124868881.53246225,
+        -156732993.6007917,
+        -150752981.06021976
+      ],
+      "axial_total_target_hbar": 3585260713589.6733,
+      "axial_required_field_or_numerical_residual_hbar": 63751911.72705078,
+      "axial_external_impulse_hbar": 172957481558.2905
+    },
+    {
+      "case": "faster_collinear_forward_seed1_level8",
+      "point": "faster",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        -0.0017281497085434947,
+        126.58319674953187,
+        172574172763.45047
+      ],
+      "endpoint_J_vector_hbar": [
+        -0.5967037843808297,
+        128.91598204331396,
+        172656112930.11038
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -0.5949756346722861,
+        2.3327852937812272,
+        81940166.65981056
+      ],
+      "axial_total_target_hbar": 172648111421.0479,
+      "axial_required_field_or_numerical_residual_hbar": -8001509.062469482,
+      "axial_external_impulse_hbar": 172957481558.2905
+    },
+    {
+      "case": "faster_collinear_backward_seed1_level8",
+      "point": "faster",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        0.024127579778561517,
+        -316.3973891565411,
+        173136245925.8463
+      ],
+      "endpoint_J_vector_hbar": [
+        -0.5296441585811033,
+        -316.387627170306,
+        173020862931.29443
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -0.5537717383596648,
+        0.009761986236172766,
+        -115382994.55179872
+      ],
+      "axial_total_target_hbar": 173008560299.53122,
+      "axial_required_field_or_numerical_residual_hbar": -12302631.763214111,
+      "axial_external_impulse_hbar": 172957481558.2905
+    },
+    {
+      "case": "faster_isotropic_seed3_level8",
+      "point": "faster",
+      "mode": "isotropic",
+      "seed": 3,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        -204036634.40550527,
+        -717400477385.3427,
+        -876974846174.3685
+      ],
+      "endpoint_J_vector_hbar": [
+        269536836.541255,
+        -716780480537.9811,
+        -881763089277.0203
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        473573470.94676054,
+        619996847.3614075,
+        -4788243102.6537285
+      ],
+      "axial_total_target_hbar": -881567335372.0442,
+      "axial_required_field_or_numerical_residual_hbar": 195753904.97607422,
+      "axial_external_impulse_hbar": 147850434460.88348
+    },
+    {
+      "case": "faster_collinear_forward_seed3_level8",
+      "point": "faster",
+      "mode": "collinear_forward",
+      "seed": 3,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        0.02546229165573201,
+        51.77037293291701,
+        147401244534.2387
+      ],
+      "endpoint_J_vector_hbar": [
+        -0.745131064488762,
+        53.22501259580571,
+        145849649940.83105
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -0.7705933561444942,
+        1.454639662887629,
+        -1551594593.407728
+      ],
+      "axial_total_target_hbar": 145860388155.61908,
+      "axial_required_field_or_numerical_residual_hbar": 10738214.788024902,
+      "axial_external_impulse_hbar": 147850421493.87543
+    },
+    {
+      "case": "faster_collinear_backward_seed3_level8",
+      "point": "faster",
+      "mode": "collinear_backward",
+      "seed": 3,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        -0.006886193250164493,
+        946.8863638636575,
+        148194216038.10318
+      ],
+      "endpoint_J_vector_hbar": [
+        -0.8061640290688116,
+        946.6164418520061,
+        148455591756.495
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -0.7992778358186471,
+        -0.26992201165118324,
+        261375718.39158973
+      ],
+      "axial_total_target_hbar": 148439390857.79904,
+      "axial_required_field_or_numerical_residual_hbar": -16200898.69595337,
+      "axial_external_impulse_hbar": 147850421494.66467
+    },
+    {
+      "case": "faster_isotropic_seed4_level8",
+      "point": "faster",
+      "mode": "isotropic",
+      "seed": 4,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        -56901863.4674155,
+        -677855677731.5852,
+        -875209260210.3597
+      ],
+      "endpoint_J_vector_hbar": [
+        -155649038.99868017,
+        -678170054759.438,
+        -875293256602.266
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -98747175.53126362,
+        -314377027.85254806,
+        -83996391.90495825
+      ],
+      "axial_total_target_hbar": -875331760135.6738,
+      "axial_required_field_or_numerical_residual_hbar": -38503533.407836914,
+      "axial_external_impulse_hbar": -117612315280.343
+    },
+    {
+      "case": "faster_collinear_forward_seed4_level8",
+      "point": "faster",
+      "mode": "collinear_forward",
+      "seed": 4,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        0.013931595802407219,
+        423.69267830640706,
+        -117356337460.68262
+      ],
+      "endpoint_J_vector_hbar": [
+        -0.46509997568631745,
+        422.36487934874134,
+        -117412510136.10109
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -0.4790315714887248,
+        -1.3277989576656841,
+        -56172675.418340266
+      ],
+      "axial_total_target_hbar": -117405890972.99327,
+      "axial_required_field_or_numerical_residual_hbar": 6619163.1078186035,
+      "axial_external_impulse_hbar": -117612315280.343
+    },
+    {
+      "case": "faster_collinear_backward_seed4_level8",
+      "point": "faster",
+      "mode": "collinear_backward",
+      "seed": 4,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        -0.04739886244268465,
+        -1560.612441605802,
+        -117731032741.99138
+      ],
+      "endpoint_J_vector_hbar": [
+        -0.5751387790341365,
+        -1560.5591070377252,
+        -117648578762.62776
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -0.5277399165914517,
+        0.05333456807710524,
+        82453979.36372292
+      ],
+      "axial_total_target_hbar": -117643969931.9282,
+      "axial_required_field_or_numerical_residual_hbar": 4608830.699554443,
+      "axial_external_impulse_hbar": -117612315280.343
+    },
+    {
+      "case": "faster_isotropic_seed7_level8",
+      "point": "faster",
+      "mode": "isotropic",
+      "seed": 7,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        553203122.4099007,
+        -3912320306535.8594,
+        4079294067242.8936
+      ],
+      "endpoint_J_vector_hbar": [
+        -446086730.86182123,
+        -3914014288305.974,
+        4081569448100.9033
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -999289853.2717235,
+        -1693981770.1150415,
+        2275380858.0088296
+      ],
+      "axial_total_target_hbar": 4081075317073.26,
+      "axial_required_field_or_numerical_residual_hbar": -494131027.6435547,
+      "axial_external_impulse_hbar": -340793637028.24146
+    },
+    {
+      "case": "faster_collinear_forward_seed7_level8",
+      "point": "faster",
+      "mode": "collinear_forward",
+      "seed": 7,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        -0.006773562146974903,
+        -127.6899329423045,
+        -339918267526.3871
+      ],
+      "endpoint_J_vector_hbar": [
+        -0.44868842760876293,
+        -131.9358387007779,
+        -340122414165.6241
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -0.4419148654617881,
+        -4.245905758474057,
+        -204146639.23702112
+      ],
+      "axial_total_target_hbar": -340084092372.8612,
+      "axial_required_field_or_numerical_residual_hbar": 38321792.76287842,
+      "axial_external_impulse_hbar": -340793636313.9706
+    },
+    {
+      "case": "faster_collinear_backward_seed7_level8",
+      "point": "faster",
+      "mode": "collinear_backward",
+      "seed": 7,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        0.05364053409647232,
+        495.5553046580493,
+        -341232482242.71124
+      ],
+      "endpoint_J_vector_hbar": [
+        -0.42517752162992767,
+        495.6168351922126,
+        -341015733320.7944
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -0.4788180557263999,
+        0.0615305341629756,
+        216748921.91682714
+      ],
+      "axial_total_target_hbar": -340980780184.134,
+      "axial_required_field_or_numerical_residual_hbar": 34953136.66040039,
+      "axial_external_impulse_hbar": -340793636313.98157
+    },
+    {
+      "case": "faster_isotropic_seed8_level8",
+      "point": "faster",
+      "mode": "isotropic",
+      "seed": 8,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        960958115.8584138,
+        5614084361416.073,
+        -184330503250.32028
+      ],
+      "endpoint_J_vector_hbar": [
+        -2199100262.617809,
+        5622047092153.783,
+        -183687139107.9126
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -3160058378.4762225,
+        7962730737.710223,
+        643364142.4081496
+      ],
+      "axial_total_target_hbar": -183964663775.18237,
+      "axial_required_field_or_numerical_residual_hbar": -277524667.2697754,
+      "axial_external_impulse_hbar": -161998861753.5789
+    },
+    {
+      "case": "faster_collinear_forward_seed8_level8",
+      "point": "faster",
+      "mode": "collinear_forward",
+      "seed": 8,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        -0.04234100716939572,
+        2514.575686210756,
+        -161021832110.9969
+      ],
+      "endpoint_J_vector_hbar": [
+        -1.0086400470858226,
+        2511.98016224422,
+        -164036731128.75104
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -0.9662990399164272,
+        -2.595523966536036,
+        -3014899017.754037
+      ],
+      "axial_total_target_hbar": -164082925960.00583,
+      "axial_required_field_or_numerical_residual_hbar": -46194831.25479126,
+      "axial_external_impulse_hbar": -161998895003.5502
+    },
+    {
+      "case": "faster_collinear_backward_seed8_level8",
+      "point": "faster",
+      "mode": "collinear_backward",
+      "seed": 8,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        -0.03954641976148194,
+        1831.286640910002,
+        -162142114976.2677
+      ],
+      "endpoint_J_vector_hbar": [
+        -0.9665388318244744,
+        1831.2872933994443,
+        -162153912054.8201
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -0.9269924120629925,
+        0.0006524894422319116,
+        -11797078.552396929
+      ],
+      "axial_total_target_hbar": -162179033174.2951,
+      "axial_required_field_or_numerical_residual_hbar": -25121119.475006104,
+      "axial_external_impulse_hbar": -161998894997.512
+    },
+    {
+      "case": "zero_field_isotropic_seed1_level7",
+      "point": "zero_field",
+      "mode": "isotropic",
+      "seed": 1,
+      "level": 7,
+      "relative_L_vector_hbar": [
+        123507234.85665667,
+        1061395465467.2426,
+        1758335129788.9094
+      ],
+      "endpoint_J_vector_hbar": [
+        -6182675.8852250045,
+        1061188912534.0107,
+        1758122926522.0498
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -129689910.74188155,
+        -206552933.23194665,
+        -212203266.86031905
+      ],
+      "axial_total_target_hbar": 1758075718159.824,
+      "axial_required_field_or_numerical_residual_hbar": -47208362.22583008,
+      "axial_external_impulse_hbar": 0.0,
+      "total_J_target_vector_hbar": [
+        -724640.4521341197,
+        1061087979668.7373,
+        1758075718159.824
+      ],
+      "total_rest_J_target_hbar": [
+        126843504.46224749,
+        1061421185944.1893,
+        1758375944196.3457
+      ],
+      "total_rest_J_norm_hbar": 2053898953500.107,
+      "required_field_or_numerical_residual_hbar": [
+        5458035.433090885,
+        -100932865.2734375,
+        -47208362.22583008
+      ],
+      "relative_residual_norm": 5.432806050367232e-05
+    },
+    {
+      "case": "zero_field_collinear_forward_seed1_level7",
+      "point": "zero_field",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "level": 7,
+      "relative_L_vector_hbar": [
+        -0.0,
+        -423.5866261289319,
+        0.0
+      ],
+      "endpoint_J_vector_hbar": [
+        0.0,
+        -422.91963658687007,
+        0.0
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        0.0,
+        0.6669895420617861,
+        0.0
+      ],
+      "axial_total_target_hbar": 0.0,
+      "axial_required_field_or_numerical_residual_hbar": 0.0,
+      "axial_external_impulse_hbar": 0.0,
+      "total_J_target_vector_hbar": [
+        0.0,
+        -0.6144401272911929,
+        0.0
+      ],
+      "total_rest_J_target_hbar": [
+        0.0,
+        -0.6140811128371348,
+        0.0
+      ],
+      "total_rest_J_norm_hbar": 0.6140811128371348,
+      "required_field_or_numerical_residual_hbar": [
+        0.0,
+        422.3051964595789,
+        0.0
+      ],
+      "relative_residual_norm": 422.3051964595789
+    },
+    {
+      "case": "zero_field_collinear_backward_seed1_level7",
+      "point": "zero_field",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "level": 7,
+      "relative_L_vector_hbar": [
+        0.0,
+        -8.16495185571779,
+        0.0
+      ],
+      "endpoint_J_vector_hbar": [
+        0.0,
+        -8.431666304570555,
+        0.0
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        0.0,
+        -0.26671444885286977,
+        0.0
+      ],
+      "axial_total_target_hbar": 0.0,
+      "axial_required_field_or_numerical_residual_hbar": 0.0,
+      "axial_external_impulse_hbar": 0.0,
+      "total_J_target_vector_hbar": [
+        0.0,
+        0.3972297230790915,
+        0.0
+      ],
+      "total_rest_J_target_hbar": [
+        0.0,
+        0.39736370491309164,
+        0.0
+      ],
+      "total_rest_J_norm_hbar": 0.39736370491309164,
+      "required_field_or_numerical_residual_hbar": [
+        0.0,
+        8.828896027649646,
+        0.0
+      ],
+      "relative_residual_norm": 8.828896027649646
+    },
+    {
+      "case": "zero_field_isotropic_seed1_level8",
+      "point": "zero_field",
+      "mode": "isotropic",
+      "seed": 1,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        125162117.33769399,
+        1061408991028.6836,
+        1758357621160.5032
+      ],
+      "endpoint_J_vector_hbar": [
+        -12374410.60676925,
+        1061184428938.342,
+        1758128700670.633
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -137536527.9444631,
+        -224562090.34135088,
+        -228920489.87058896
+      ],
+      "axial_total_target_hbar": 1758075718160.1475,
+      "axial_required_field_or_numerical_residual_hbar": -52982510.4855957,
+      "axial_external_impulse_hbar": 0.0,
+      "total_J_target_vector_hbar": [
+        -724640.4265477437,
+        1061087979669.02,
+        1758075718160.1475
+      ],
+      "total_rest_J_target_hbar": [
+        126843504.48783612,
+        1061421185944.472,
+        1758375944196.6692
+      ],
+      "total_rest_J_norm_hbar": 2053898953500.5298,
+      "required_field_or_numerical_residual_hbar": [
+        11649770.180221507,
+        -96449269.32202148,
+        -52982510.4855957
+      ],
+      "relative_residual_norm": 5.3888594268682295e-05
+    },
+    {
+      "case": "zero_field_collinear_forward_seed1_level8",
+      "point": "zero_field",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        0.0,
+        -225.96013628735292,
+        0.0
+      ],
+      "endpoint_J_vector_hbar": [
+        0.0,
+        -224.61091258951188,
+        0.0
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        0.0,
+        1.349223697840853,
+        0.0
+      ],
+      "axial_total_target_hbar": 0.0,
+      "axial_required_field_or_numerical_residual_hbar": 0.0,
+      "axial_external_impulse_hbar": 0.0,
+      "total_J_target_vector_hbar": [
+        0.0,
+        -1.165807888536627,
+        0.0
+      ],
+      "total_rest_J_target_hbar": [
+        0.0,
+        -1.165134447182759,
+        0.0
+      ],
+      "total_rest_J_norm_hbar": 1.165134447182759,
+      "required_field_or_numerical_residual_hbar": [
+        0.0,
+        223.44510470097526,
+        0.0
+      ],
+      "relative_residual_norm": 191.6654595479306
+    },
+    {
+      "case": "zero_field_collinear_backward_seed1_level8",
+      "point": "zero_field",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        0.0,
+        341.6310731798704,
+        0.0
+      ],
+      "endpoint_J_vector_hbar": [
+        0.0,
+        341.05623144327404,
+        0.0
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        0.0,
+        -0.5748417365962654,
+        0.0
+      ],
+      "axial_total_target_hbar": 0.0,
+      "axial_required_field_or_numerical_residual_hbar": 0.0,
+      "axial_external_impulse_hbar": 0.0,
+      "total_J_target_vector_hbar": [
+        0.0,
+        0.8013796814611573,
+        0.0
+      ],
+      "total_rest_J_target_hbar": [
+        0.0,
+        0.8016440370838611,
+        0.0
+      ],
+      "total_rest_J_norm_hbar": 0.8016440370838611,
+      "required_field_or_numerical_residual_hbar": [
+        0.0,
+        -340.25485176181286,
+        0.0
+      ],
+      "relative_residual_norm": 340.25485176181286
+    },
+    {
+      "case": "zero_field_isotropic_seed4_level8",
+      "point": "zero_field",
+      "mode": "isotropic",
+      "seed": 4,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        -42851623.97315576,
+        -286384238010.69794,
+        -339786575692.4754
+      ],
+      "endpoint_J_vector_hbar": [
+        3901886.774136683,
+        -286267170243.8841,
+        -339772833242.3525
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        46753510.74729206,
+        117067766.8137132,
+        13742450.12314637
+      ],
+      "axial_total_target_hbar": -339841644631.8567,
+      "axial_required_field_or_numerical_residual_hbar": -68811389.50421143,
+      "axial_external_impulse_hbar": 0.0,
+      "total_J_target_vector_hbar": [
+        0.11798345415630963,
+        -286431913754.1488,
+        -339841644631.8567
+      ],
+      "total_rest_J_target_hbar": [
+        -42196761.67281805,
+        -286397469402.339,
+        -339799444252.38055
+      ],
+      "total_rest_J_norm_hbar": 444395290900.85675,
+      "required_field_or_numerical_residual_hbar": [
+        -3901886.6561532286,
+        -164743510.26470947,
+        -68811389.50421143
+      ],
+      "relative_residual_norm": 0.00040179918998870624
+    },
+    {
+      "case": "zero_field_collinear_forward_seed4_level8",
+      "point": "zero_field",
+      "mode": "collinear_forward",
+      "seed": 4,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        0.0,
+        209.96875839632764,
+        0.0
+      ],
+      "endpoint_J_vector_hbar": [
+        0.0,
+        209.03628255919617,
+        0.0
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        0.0,
+        -0.9324758371317444,
+        0.0
+      ],
+      "axial_total_target_hbar": 0.0,
+      "axial_required_field_or_numerical_residual_hbar": 0.0,
+      "axial_external_impulse_hbar": 0.0,
+      "total_J_target_vector_hbar": [
+        0.0,
+        0.7540006102036388,
+        0.0
+      ],
+      "total_rest_J_target_hbar": [
+        0.0,
+        0.7536082547377937,
+        0.0
+      ],
+      "total_rest_J_norm_hbar": 0.7536082547377937,
+      "required_field_or_numerical_residual_hbar": [
+        0.0,
+        -208.28228194899253,
+        0.0
+      ],
+      "relative_residual_norm": 208.28228194899253
+    },
+    {
+      "case": "zero_field_collinear_backward_seed4_level8",
+      "point": "zero_field",
+      "mode": "collinear_backward",
+      "seed": 4,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        -0.0,
+        -33.2096012545563,
+        0.0
+      ],
+      "endpoint_J_vector_hbar": [
+        0.0,
+        -32.8518453431989,
+        0.0
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        0.0,
+        0.3577559113571274,
+        0.0
+      ],
+      "axial_total_target_hbar": 0.0,
+      "axial_required_field_or_numerical_residual_hbar": 0.0,
+      "axial_external_impulse_hbar": 0.0,
+      "total_J_target_vector_hbar": [
+        0.0,
+        -0.45807888483312453,
+        0.0
+      ],
+      "total_rest_J_target_hbar": [
+        0.0,
+        -0.458223076728706,
+        0.0
+      ],
+      "total_rest_J_norm_hbar": 0.458223076728706,
+      "required_field_or_numerical_residual_hbar": [
+        0.0,
+        32.393766458365775,
+        0.0
+      ],
+      "relative_residual_norm": 32.393766458365775
+    },
+    {
+      "case": "zero_field_isotropic_seed7_level8",
+      "point": "zero_field",
+      "mode": "isotropic",
+      "seed": 7,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        523950660.3540253,
+        -1758098603858.1821,
+        2061913700707.6787
+      ],
+      "endpoint_J_vector_hbar": [
+        -127467950.44793372,
+        -1759252035018.942,
+        2063397424922.4211
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        -651418610.8019584,
+        -1153431160.759988,
+        1483724214.7428904
+      ],
+      "axial_total_target_hbar": 2063564129682.9836,
+      "axial_required_field_or_numerical_residual_hbar": 166704760.5625,
+      "axial_external_impulse_hbar": 0.0,
+      "total_J_target_vector_hbar": [
+        -143761787.5369699,
+        -1759222814449.497,
+        2063564129682.9836
+      ],
+      "total_rest_J_target_hbar": [
+        522934339.6728946,
+        -1758128626468.0388,
+        2061945621721.2126
+      ],
+      "total_rest_J_norm_hbar": 2709729928904.7227,
+      "required_field_or_numerical_residual_hbar": [
+        -16293837.089036182,
+        29220569.44482422,
+        166704760.5625
+      ],
+      "relative_residual_norm": 6.270259878601843e-05
+    },
+    {
+      "case": "zero_field_collinear_forward_seed7_level8",
+      "point": "zero_field",
+      "mode": "collinear_forward",
+      "seed": 7,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        0.0,
+        663.4651511480344,
+        0.0
+      ],
+      "endpoint_J_vector_hbar": [
+        0.0,
+        660.5032322232631,
+        0.0
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        0.0,
+        -2.9619189247717705,
+        0.0
+      ],
+      "axial_total_target_hbar": 0.0,
+      "axial_required_field_or_numerical_residual_hbar": 0.0,
+      "axial_external_impulse_hbar": 0.0,
+      "total_J_target_vector_hbar": [
+        0.0,
+        17.141834751676022,
+        0.0
+      ],
+      "total_rest_J_target_hbar": [
+        0.0,
+        17.12759686978536,
+        0.0
+      ],
+      "total_rest_J_norm_hbar": 17.12759686978536,
+      "required_field_or_numerical_residual_hbar": [
+        0.0,
+        -643.3613974715871,
+        0.0
+      ],
+      "relative_residual_norm": 37.531653220999765
+    },
+    {
+      "case": "zero_field_collinear_backward_seed7_level8",
+      "point": "zero_field",
+      "mode": "collinear_backward",
+      "seed": 7,
+      "level": 8,
+      "relative_L_vector_hbar": [
+        -0.0,
+        -308.76641302926464,
+        0.0
+      ],
+      "endpoint_J_vector_hbar": [
+        0.0,
+        -307.40663948870633,
+        0.0
+      ],
+      "endpoint_extrinsic_vector_hbar": [
+        0.0,
+        1.35977354055887,
+        0.0
+      ],
+      "axial_total_target_hbar": 0.0,
+      "axial_required_field_or_numerical_residual_hbar": 0.0,
+      "axial_external_impulse_hbar": 0.0,
+      "total_J_target_vector_hbar": [
+        0.0,
+        -16.24411774760326,
+        0.0
+      ],
+      "total_rest_J_target_hbar": [
+        0.0,
+        -16.250409553622404,
+        0.0
+      ],
+      "total_rest_J_norm_hbar": 16.250409553622404,
+      "required_field_or_numerical_residual_hbar": [
+        0.0,
+        291.1625217411031,
+        0.0
+      ],
+      "relative_residual_norm": 17.92418192635071
+    }
+  ],
+  "assumptions": [
+    "Fixed production CM, boost along uniform Bz, zero initial orbital angular momentum.",
+    "Only classical Lorentz torque and logged weak emissions; no material or radiation.",
+    "Zero-B target is full pair-plus-string angular momentum; 2T target is its axial component only.",
+    "Residual may be string angular momentum or numerical nonconservation; fields were not saved.",
+    "Spin and finite initialization seed corrections are not resolved at O(1) hbar.",
+    "Orbital target is not a quantum partial-wave occupation."
+  ]
+}
