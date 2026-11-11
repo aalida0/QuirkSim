@@ -1,0 +1,511 @@
+{
+  "scope": "KINEMATIC_GRID_PILOT_CONDITIONAL_NEUTRAL_SUBSET",
+  "archive_sha256": "ca6ff21c5447efa156a65732430be467d27ba993ab8218558e329d6be6773cf1",
+  "transport_cases": 116,
+  "AF_build_passed": true,
+  "AF_local_audit_passed": true,
+  "independently_checked_logged_decays": 174,
+  "preserved_handoffs": 174,
+  "max_four_component_residual_mev": 9.160316949419212e-11,
+  "max_shell_energy_residual_mev": 5.820766091346741e-11,
+  "max_proper_threshold_residual_ps": 6.120899342931807e-10,
+  "points": [
+    {
+      "point": "benchmark",
+      "isotropic_population_counts": {
+        "population_seeds": 8,
+        "decays_by_return": {
+          "0": 1,
+          "1": 4,
+          "2": 3
+        }
+      },
+      "modes": {
+        "isotropic": {
+          "neutral_qualified_seeds": [
+            1,
+            4,
+            7
+          ],
+          "CM_chord_minimum_um": {
+            "min": 0.9308420177488143,
+            "median": 4.188433186454212,
+            "max": 5.353301254167035
+          },
+          "lab_speed_bound_classifications": {
+            "OUTSIDE_MATCHING_RADIUS_OVER_WINDOW": 2,
+            "UNRESOLVED": 1
+          }
+        },
+        "collinear_forward": {
+          "neutral_qualified_seeds": [
+            1,
+            4,
+            7
+          ],
+          "CM_chord_minimum_um": {
+            "min": 0.0487267249191529,
+            "median": 0.0706687942176951,
+            "max": 0.11781435601931525
+          },
+          "lab_speed_bound_classifications": {
+            "UNRESOLVED": 3
+          }
+        },
+        "collinear_backward": {
+          "neutral_qualified_seeds": [
+            1,
+            4,
+            7
+          ],
+          "CM_chord_minimum_um": {
+            "min": 0.04931377886196311,
+            "median": 0.07161981689265265,
+            "max": 0.12776983890532545
+          },
+          "lab_speed_bound_classifications": {
+            "UNRESOLVED": 3
+          }
+        }
+      },
+      "selected_declared_model_contrasts": [
+        {
+          "point": "benchmark",
+          "conditional_direction_control": "collinear_forward",
+          "epsilon": 0.1,
+          "angular_loss": 1.0,
+          "horizon_ps": 10000000000000.0,
+          "capture_singlet_fraction": 0.25,
+          "excited_optical_depth": 0.0,
+          "matched_seeds": [
+            1,
+            4,
+            7
+          ],
+          "mean_isotropic_minus_control_probability": 0.0,
+          "paired_standard_error": 0.0,
+          "selection": "both modes neutral-qualified by first return; conditional, not inclusive; unqualified seeds remain in the ensemble manifest"
+        },
+        {
+          "point": "benchmark",
+          "conditional_direction_control": "collinear_backward",
+          "epsilon": 0.1,
+          "angular_loss": 1.0,
+          "horizon_ps": 10000000000000.0,
+          "capture_singlet_fraction": 0.25,
+          "excited_optical_depth": 0.0,
+          "matched_seeds": [
+            1,
+            4,
+            7
+          ],
+          "mean_isotropic_minus_control_probability": 0.0,
+          "paired_standard_error": 0.0,
+          "selection": "both modes neutral-qualified by first return; conditional, not inclusive; unqualified seeds remain in the ensemble manifest"
+        }
+      ],
+      "mean_paired_contrast_range_over_tested_closures": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "point": "tilted",
+      "isotropic_population_counts": {
+        "population_seeds": 8,
+        "decays_by_return": {
+          "0": 1,
+          "1": 4,
+          "2": 3
+        }
+      },
+      "modes": {
+        "isotropic": {
+          "neutral_qualified_seeds": [
+            1,
+            4,
+            7
+          ],
+          "CM_chord_minimum_um": {
+            "min": 0.726249905551531,
+            "median": 3.625127142304091,
+            "max": 4.796108997623557
+          },
+          "lab_speed_bound_classifications": {
+            "OUTSIDE_MATCHING_RADIUS_OVER_WINDOW": 2,
+            "UNRESOLVED": 1
+          }
+        },
+        "collinear_forward": {
+          "neutral_qualified_seeds": [
+            1,
+            4,
+            7
+          ],
+          "CM_chord_minimum_um": {
+            "min": 0.042198573300598334,
+            "median": 0.06120095606319335,
+            "max": 0.10203017735069903
+          },
+          "lab_speed_bound_classifications": {
+            "UNRESOLVED": 3
+          }
+        },
+        "collinear_backward": {
+          "neutral_qualified_seeds": [
+            1,
+            4,
+            7
+          ],
+          "CM_chord_minimum_um": {
+            "min": 0.04270697670009049,
+            "median": 0.062024565504755165,
+            "max": 0.11065186806665427
+          },
+          "lab_speed_bound_classifications": {
+            "UNRESOLVED": 3
+          }
+        }
+      },
+      "selected_declared_model_contrasts": [
+        {
+          "point": "tilted",
+          "conditional_direction_control": "collinear_forward",
+          "epsilon": 0.1,
+          "angular_loss": 1.0,
+          "horizon_ps": 10000000000000.0,
+          "capture_singlet_fraction": 0.25,
+          "excited_optical_depth": 0.0,
+          "matched_seeds": [
+            1,
+            4,
+            7
+          ],
+          "mean_isotropic_minus_control_probability": 0.0,
+          "paired_standard_error": 0.0,
+          "selection": "both modes neutral-qualified by first return; conditional, not inclusive; unqualified seeds remain in the ensemble manifest"
+        },
+        {
+          "point": "tilted",
+          "conditional_direction_control": "collinear_backward",
+          "epsilon": 0.1,
+          "angular_loss": 1.0,
+          "horizon_ps": 10000000000000.0,
+          "capture_singlet_fraction": 0.25,
+          "excited_optical_depth": 0.0,
+          "matched_seeds": [
+            1,
+            4,
+            7
+          ],
+          "mean_isotropic_minus_control_probability": 0.0,
+          "paired_standard_error": 0.0,
+          "selection": "both modes neutral-qualified by first return; conditional, not inclusive; unqualified seeds remain in the ensemble manifest"
+        }
+      ],
+      "mean_paired_contrast_range_over_tested_closures": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "point": "faster",
+      "isotropic_population_counts": {
+        "population_seeds": 8,
+        "decays_by_return": {
+          "0": 0,
+          "1": 3,
+          "2": 5
+        }
+      },
+      "modes": {
+        "isotropic": {
+          "neutral_qualified_seeds": [
+            1,
+            3,
+            4,
+            7,
+            8
+          ],
+          "CM_chord_minimum_um": {
+            "min": 1.2943053053019162,
+            "median": 4.870237059601954,
+            "max": 6.609559850580005
+          },
+          "lab_speed_bound_classifications": {
+            "OUTSIDE_MATCHING_RADIUS_OVER_WINDOW": 3,
+            "UNRESOLVED": 2
+          }
+        },
+        "collinear_forward": {
+          "neutral_qualified_seeds": [
+            1,
+            3,
+            4,
+            7,
+            8
+          ],
+          "CM_chord_minimum_um": {
+            "min": 0.13724840070284194,
+            "median": 0.18832749362968546,
+            "max": 0.39753856751643424
+          },
+          "lab_speed_bound_classifications": {
+            "UNRESOLVED": 5
+          }
+        },
+        "collinear_backward": {
+          "neutral_qualified_seeds": [
+            1,
+            3,
+            4,
+            7,
+            8
+          ],
+          "CM_chord_minimum_um": {
+            "min": 0.1375919657228077,
+            "median": 0.18949535764093553,
+            "max": 0.3988074944257629
+          },
+          "lab_speed_bound_classifications": {
+            "UNRESOLVED": 5
+          }
+        }
+      },
+      "selected_declared_model_contrasts": [
+        {
+          "point": "faster",
+          "conditional_direction_control": "collinear_forward",
+          "epsilon": 0.1,
+          "angular_loss": 1.0,
+          "horizon_ps": 10000000000000.0,
+          "capture_singlet_fraction": 0.25,
+          "excited_optical_depth": 0.0,
+          "matched_seeds": [
+            1,
+            3,
+            4,
+            7,
+            8
+          ],
+          "mean_isotropic_minus_control_probability": 0.0,
+          "paired_standard_error": 0.0,
+          "selection": "both modes neutral-qualified by first return; conditional, not inclusive; unqualified seeds remain in the ensemble manifest"
+        },
+        {
+          "point": "faster",
+          "conditional_direction_control": "collinear_backward",
+          "epsilon": 0.1,
+          "angular_loss": 1.0,
+          "horizon_ps": 10000000000000.0,
+          "capture_singlet_fraction": 0.25,
+          "excited_optical_depth": 0.0,
+          "matched_seeds": [
+            1,
+            3,
+            4,
+            7,
+            8
+          ],
+          "mean_isotropic_minus_control_probability": 0.0,
+          "paired_standard_error": 0.0,
+          "selection": "both modes neutral-qualified by first return; conditional, not inclusive; unqualified seeds remain in the ensemble manifest"
+        }
+      ],
+      "mean_paired_contrast_range_over_tested_closures": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "point": "zero_field",
+      "isotropic_population_counts": {
+        "population_seeds": 8,
+        "decays_by_return": {
+          "0": 1,
+          "1": 4,
+          "2": 3
+        }
+      },
+      "modes": {
+        "isotropic": {
+          "neutral_qualified_seeds": [
+            1,
+            4,
+            7
+          ],
+          "CM_chord_minimum_um": {
+            "min": 0.8928260456039728,
+            "median": 4.127324558536383,
+            "max": 5.446162289631715
+          },
+          "lab_speed_bound_classifications": {
+            "OUTSIDE_MATCHING_RADIUS_OVER_WINDOW": 2,
+            "UNRESOLVED": 1
+          }
+        },
+        "collinear_forward": {
+          "neutral_qualified_seeds": [
+            1,
+            4,
+            7
+          ],
+          "CM_chord_minimum_um": {
+            "min": 4.2196109462968636e-10,
+            "median": 4.542296788008859e-10,
+            "max": 1.3333432597835247e-09
+          },
+          "lab_speed_bound_classifications": {
+            "INSIDE_MATCHING_RADIUS_AT_SOME_TIME": 3
+          }
+        },
+        "collinear_backward": {
+          "neutral_qualified_seeds": [
+            1,
+            4,
+            7
+          ],
+          "CM_chord_minimum_um": {
+            "min": 6.671063992965893e-11,
+            "median": 6.200993477601486e-10,
+            "max": 6.860879435072347e-10
+          },
+          "lab_speed_bound_classifications": {
+            "INSIDE_MATCHING_RADIUS_AT_SOME_TIME": 3
+          }
+        }
+      },
+      "selected_declared_model_contrasts": [
+        {
+          "point": "zero_field",
+          "conditional_direction_control": "collinear_forward",
+          "epsilon": 0.1,
+          "angular_loss": 1.0,
+          "horizon_ps": 10000000000000.0,
+          "capture_singlet_fraction": 0.25,
+          "excited_optical_depth": 0.0,
+          "matched_seeds": [
+            1,
+            4,
+            7
+          ],
+          "mean_isotropic_minus_control_probability": -0.25,
+          "paired_standard_error": 0.0,
+          "selection": "both modes neutral-qualified by first return; conditional, not inclusive; unqualified seeds remain in the ensemble manifest"
+        },
+        {
+          "point": "zero_field",
+          "conditional_direction_control": "collinear_backward",
+          "epsilon": 0.1,
+          "angular_loss": 1.0,
+          "horizon_ps": 10000000000000.0,
+          "capture_singlet_fraction": 0.25,
+          "excited_optical_depth": 0.0,
+          "matched_seeds": [
+            1,
+            4,
+            7
+          ],
+          "mean_isotropic_minus_control_probability": -0.25,
+          "paired_standard_error": 0.0,
+          "selection": "both modes neutral-qualified by first return; conditional, not inclusive; unqualified seeds remain in the ensemble manifest"
+        }
+      ],
+      "mean_paired_contrast_range_over_tested_closures": [
+        -1.0,
+        0.0
+      ]
+    }
+  ],
+  "independently_checked_control_decays": 116,
+  "max_control_direction_error": 1.2947315732508482e-15,
+  "refinement_checks": [
+    {
+      "point": "benchmark",
+      "mode": "isotropic",
+      "seed": 1,
+      "CM_minimum_shift_nm": 0.03325401342468837
+    },
+    {
+      "point": "benchmark",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "CM_minimum_shift_nm": -0.0035374452974773485
+    },
+    {
+      "point": "benchmark",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "CM_minimum_shift_nm": -0.0035487311593751514
+    },
+    {
+      "point": "tilted",
+      "mode": "isotropic",
+      "seed": 1,
+      "CM_minimum_shift_nm": 0.037971094653421744
+    },
+    {
+      "point": "tilted",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "CM_minimum_shift_nm": -0.0030744114165939807
+    },
+    {
+      "point": "tilted",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "CM_minimum_shift_nm": -0.003083927450041324
+    },
+    {
+      "point": "faster",
+      "mode": "isotropic",
+      "seed": 1,
+      "CM_minimum_shift_nm": 0.04665270335646454
+    },
+    {
+      "point": "faster",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "CM_minimum_shift_nm": -0.013309390013510614
+    },
+    {
+      "point": "faster",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "CM_minimum_shift_nm": -0.013322226308204455
+    },
+    {
+      "point": "zero_field",
+      "mode": "isotropic",
+      "seed": 1,
+      "CM_minimum_shift_nm": 0.03662168931217735
+    },
+    {
+      "point": "zero_field",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "CM_minimum_shift_nm": -3.970309642781352e-07
+    },
+    {
+      "point": "zero_field",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "CM_minimum_shift_nm": 6.696157516527442e-07
+    }
+  ],
+  "angular_floor_correction": {
+    "projected_control_windows": 8,
+    "max_transverse_position_residual_mm": 1.333337558052896e-12,
+    "scope": "exact zero-field CM-collinear symmetry only; raw residuals retained in model artifact"
+  },
+  "declared_orbit_scenarios": 1296,
+  "interpretation": "2T controls already miss the gate in the central model; zero-field directional comparison shows the transverse-kick mechanism",
+  "physical_inclusive_annihilation_probability": null,
+  "limitations": [
+    "8 shared seeds across four unweighted points; only 3 or 5 neutral-qualified seeds per point",
+    "forced pion channel and conditional angular controls",
+    "2T control nanometre-scale exclusion is a convergent interpolation/model result; speed-only bounds remain unresolved",
+    "capture and spin closure choices can remove the annihilation contrast",
+    "neutral subset is not an inclusive population survival estimate"
+  ]
+}

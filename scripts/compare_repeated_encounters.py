@@ -16,6 +16,26 @@ HBARC_GEV_MM=1.973269804e-13
 C_MM_PS=.299792458
 
 
+def fitted_angular_momentum(case,separation_mm,relative_momentum):
+    """Use exact 1D symmetry only for vacuum zero-field CM-collinear controls.
+
+    Dividing tiny interpolation residuals by hbar otherwise produces spurious
+    O(100) angular quantum numbers near a symmetry-protected crossing.
+    """
+    raw=float(np.linalg.norm(np.cross(separation_mm/HBARC_GEV_MM,relative_momentum)))
+    correction={'raw_endpoint_L_over_hbar':raw,'symmetry_projection_applied':False}
+    if case.get('field_tesla')==0. and case.get('direction_mode')=='collinear_cm':
+        theta=case['theta_cm'];axis=np.array([math.sin(theta),0.,math.cos(theta)])
+        dx=float(np.linalg.norm(separation_mm-axis*(separation_mm@axis)))
+        dp=float(np.linalg.norm(relative_momentum-axis*(relative_momentum@axis)))
+        if dx>1e-8 or dp>1e-6:raise ValueError('zero-field collinear control violates expected symmetry')
+        correction.update(symmetry_projection_applied=True,transverse_position_residual_mm=dx,
+                          transverse_momentum_residual_gev=dp,
+                          reason='exact vacuum 1D collinear-control invariant; not a general L rounding threshold')
+        return 0.,correction
+    return raw,correction
+
+
 def fit_recoil_windows(archive):
     result=[]
     with tarfile.open(archive) as tar:
@@ -44,7 +64,7 @@ def fit_recoil_windows(archive):
             x=[np.array([np.interp(time,pair[i][0],pair[i][1][:,j]) for j in range(3)]) for i in (0,1)]
             p=[np.array([np.interp(time,pair[i][0],momenta[i][:,j]) for j in range(3)]) for i in (0,1)]
             r=(x[0]-x[1])/HBARC_GEV_MM;relative=(p[0]-p[1])/2
-            ell=float(np.linalg.norm(np.cross(r,relative)))
+            ell,angular_correction=fitted_angular_momentum(case,x[0]-x[1],relative)
             excess=2*(math.hypot(225.,np.linalg.norm(relative))-225.)+(774e-9)**2*np.linalg.norm(r)
             inner=pericenter_gev_inverse(225.,excess,ell,774.)
             result.append({'case':case['name'],'frame':f'fixed production CM beta_z={beta}',
@@ -52,6 +72,7 @@ def fit_recoil_windows(archive):
                 'fit':'instantaneous equal-time endpoint central Hamiltonian reduction; string field energy/angular momentum omitted',
                 'time_in_production_cm_ps':time,'separation_um':minimum['minimum_mm']*1000,
                 'fitted_energy_gev':excess,'fitted_L_over_hbar':ell,
+                'angular_fit_diagnostic':angular_correction,
                 'central_inner_turning_point_um':inner*HBARC_GEV_MM*1000,
                 'pair_endpoint_residual_momentum_gev':(p[0]+p[1]).tolist()})
     return result
