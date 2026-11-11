@@ -43,7 +43,8 @@ def audit(path, plot_path=None):
                 result['observed_mass_gap_mev']=d['parent_mass_mev']-d['daughter_mass_mev']
                 result['parent_mass_parameter_matches_manifest']=abs(d['parent_mass_mev']-manifest['mass_gev']*1000)<1e-6
                 result['proper_threshold_overshoot_ps']=d['proper_ps']-d['threshold_ps']
-                checks['threshold']=result['proper_threshold_overshoot_ps']>=0
+                checks['threshold']=(abs(result['proper_threshold_overshoot_ps'])<=2e-9 if case.get('clock_mode','legacy')=='localized' else result['proper_threshold_overshoot_ps']>=0)
+                result['clock_mode']=case.get('clock_mode','legacy')
                 checks['endpoint_sign']=(d['daughter_pdg']>0)==(case['endpoint']==0)
                 checks['pion_charge']=(d['pion_pdg']>0)==(case['endpoint']==0)
             if expected and len(decays)==1 and len(transfers)==1:
@@ -113,6 +114,15 @@ def audit(path, plot_path=None):
                                 'endpoint_plus_minus_position_delta_at_130ps_mm':deltas,
                                 'partner_pre_euclidean_lightcone_max_difference_mm':max(differences) if differences else None,
                                 'causal_validation_requires_resolution_and_interpolation_review':True})
+        clock_controls=[]
+        for mode in ('stable_parent','pion_yplus_end0'):
+            localized=mode+'_level8';legacy='clock_legacy_'+mode+'_level8'
+            if not all(results.get(n,{}).get('local_handoff_checks_pass',False) for n in (localized,legacy)):continue
+            for q in (0,1):
+                grid=np.linspace(0,manifest['nominal_stop_ps'],13001)
+                differences=[float(np.linalg.norm(value_at(localized,q,t)-value_at(legacy,q,t))) for t in grid]
+                clock_controls.append({'mode':mode,'endpoint':q,'max_localized_minus_legacy_position_difference_mm':max(differences),
+                                       'comparison_stop_ps':manifest['nominal_stop_ps']})
         if plot_path is not None:
             import matplotlib
             matplotlib.use('Agg')
@@ -160,7 +170,7 @@ def audit(path, plot_path=None):
     return {'archive_sha256':hashlib.sha256(open(path,'rb').read()).hexdigest(),
             'source_commit':manifest.get('observed_source_commit'),'adapter_sha256':manifest['adapter_sha256'],
             'scope':manifest['scope'],'cases':results,'resolution_comparisons':comparison,
-            'paired_direction_comparisons':angle_pairs,
+            'paired_direction_comparisons':angle_pairs,'clock_control_comparisons':clock_controls,
              'local_handoff_checks_pass':all(c.get('local_handoff_checks_pass',False) for c in results.values()),
             'benchmark_mass_parameters_match':all(c.get('parent_mass_parameter_matches_manifest',True) for c in results.values()),
             'causal_propagation_validation':'NOT_ESTABLISHED_BY_LOCAL_HANDOFF_CHECKS',

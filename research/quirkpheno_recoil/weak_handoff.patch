@@ -102,7 +102,72 @@
 +}
 --- a/quirkcore/src/QuirkTransportation.cc
 +++ b/quirkcore/src/QuirkTransportation.cc
-@@ -274,12 +274,18 @@
+@@ -3,6 +3,10 @@
+ #include "quirkcore/QuirkHyperbolaStepper.h"
+ #include "quirkcore/QuirkStringStore.h"
+ #include "quirkcore/Quirk.h"
++#include "quirkcore/QuirkWeakProcess.h"
++#include "quirkcore/ProperTimeClock.h"
++#include <algorithm>
++#include <stdexcept>
+ 
+ #include "G4ios.hh"
+ 
+@@ -102,14 +106,41 @@
+                            &spin);
+ 
+   currentMinimumStep = std::min(currentMinimumStep, quirkStepper.GetMaxLength());
++  const bool localizedClock=QPWeakConfig::localizedClock();
++  fProperTimeIncrement=0.;
++  auto properAtLength=[&](G4double length) {
++    auto sample=[&](double s) {
++      G4double state[9]; quirkStepper.SampleState(s,state);
++      return QPClock::Sample{state[7],state[6]+pParticle->GetMass()};
++    };
++    return QPClock::properIncrement(length,track.GetGlobalTime(),pParticle->GetMass(),sample,
++                                     1e-12*CLHEP::picosecond);
++  };
++  if (localizedClock && !fMoveTinySteps)
++    G4Exception("QuirkTransportation","ClockNeedsMovingSteps",FatalException,"localized clock requires moveTinySteps");
++  const bool weakEndpoint=QPWeakConfig::enabled() && std::abs(pParticle->GetPDGcode())==17 &&
++                         (pParticle->GetPDGcode()>0 ? 0 : 1)==QPWeakConfig::endpoint();
++  if (localizedClock && weakEndpoint && currentMinimumStep>0.) {
++    const double remaining=QPWeakConfig::tauPs()*CLHEP::picosecond-track.GetProperTime();
++    if (remaining>0. && properAtLength(currentMinimumStep)>=remaining)
++      currentMinimumStep=QPClock::eventLength(currentMinimumStep,remaining,properAtLength,
++                                               1e-9*CLHEP::picosecond);
++  }
+   if (currentMinimumStep > 0) {
+     // field propagator handles the boundary crossings
+     G4double lengthAlongCurve =
+         fFieldPropagator->ComputeStep(aFieldTrack, currentMinimumStep, currentSafety, track.GetVolume());
+     fGeometryLimitedStep = lengthAlongCurve < currentMinimumStep;
+ 
+-    // update stepper and strings with the length actually taken
+-    quirkStepper.Update(aFieldTrack, aFieldTrack.GetCurveLength() == 0 && !fGeometryLimitedStep, fMoveTinySteps);
++    // Measure proper time before Update invalidates incoming history iterators.
++    const bool forced=aFieldTrack.GetCurveLength()==0 && !fGeometryLimitedStep;
++    if (localizedClock) {
++      const double actualLength=forced ? currentMinimumStep : aFieldTrack.GetProperTimeOfFlight();
++      fProperTimeIncrement=properAtLength(actualLength);
++    }
++    // Trial sampling only changes the replay cursor; Update restores the accepted
++    // endpoint and is the sole operation that consumes/pushes string history.
++    quirkStepper.Update(aFieldTrack,forced,fMoveTinySteps,localizedClock ? currentMinimumStep : -1.);
+   } else {
+     fGeometryLimitedStep = false;
+   }
+@@ -171,7 +202,8 @@
+   fParticleChange.ProposeGlobalTime(fCandidateEndGlobalTime);
+ 
+   // proper time from the Lorentz factor
+-  G4double deltaProperTime = deltaTime * (track.GetDynamicParticle()->GetMass() / track.GetTotalEnergy());
++  G4double deltaProperTime = QPWeakConfig::localizedClock() ? fProperTimeIncrement :
++      deltaTime * (track.GetDynamicParticle()->GetMass() / track.GetTotalEnergy());
+   fParticleChange.ProposeProperTime(track.GetProperTime() + deltaProperTime);
+ 
+   // kill a particle stuck looping in the field
+@@ -274,12 +306,18 @@
    fCurrentTrack = aTrack;
  
    // first string vector at the first step of the pair
@@ -262,3 +327,60 @@
    size_t iline = 0;
    for (; iline < lines.size(); ++iline) {
      std::string l = lines[iline];
+--- a/quirkcore/include/quirkcore/QuirkHyperbolaStepper.h
++++ b/quirkcore/include/quirkcore/QuirkHyperbolaStepper.h
+@@ -36,7 +36,10 @@
+ 
+   // consume the strings used by the step, push the reflected ones to the partner;
+   // moveOnForcedStep: a step below the navigation tolerance also moves the quirk
+-  void Update(G4FieldTrack& fieldTrack, G4bool forceStep, G4bool moveOnForcedStep = false);
++  void Update(G4FieldTrack& fieldTrack, G4bool forceStep, G4bool moveOnForcedStep = false, G4double forcedLength = -1.);
++
++  // Pure trial sampling: no incoming history consumption or outgoing push.
++  void SampleState(G4double length, G4double output[]) { SetCurrStep(length); m_currStep.Dump(output); }
+ 
+   void SetDebug(G4bool debug) { m_debug = debug; }
+ 
+--- a/quirkcore/src/QuirkHyperbolaStepper.cc
++++ b/quirkcore/src/QuirkHyperbolaStepper.cc
+@@ -7,6 +7,7 @@
+ #include "G4ios.hh"
+ 
+ #include <span>
++#include <algorithm>
+ 
+ QuirkHyperbolaStepper::QuirkHyperbolaStepper(QuirkInfracolorForce& string, const G4Track& track, const G4Field* field)
+     : G4MagIntegratorStepper(new QuirkDummyEquation(), m_NUM_VARS),
+@@ -68,13 +69,18 @@
+     yerr[i] = 0;
+ }
+ 
+-void QuirkHyperbolaStepper::Update(G4FieldTrack& fieldTrack, G4bool forceStep, G4bool moveOnForcedStep) {
++void QuirkHyperbolaStepper::Update(G4FieldTrack& fieldTrack, G4bool forceStep, G4bool moveOnForcedStep, G4double forcedLength) {
+   if (forceStep) {
+     // propagator refused a too short step: take it here, update string and
+     // 4-momentum (position too if moveOnForcedStep)
+-    m_currStep = m_steps.back();
+-    m_currStep.Step(m_currStep.GetMaxLength());
+-    m_nPrevSteps = m_steps.size() - 1;
++    if (forcedLength>=0.) {
++      // A sub-navigation-tolerance step must still respect a weak-event cap.
++      SetCurrStep(std::min(forcedLength,GetMaxLength()));
++    } else {
++      m_currStep = m_steps.back();
++      m_currStep.Step(m_currStep.GetMaxLength());
++      m_nPrevSteps = m_steps.size() - 1;
++    }
+     G4LorentzVector p = m_currStep.GetMomentum();
+     fieldTrack.UpdateFourMomentum(p.t() - m_mass, p.vect().unit());
+     if (moveOnForcedStep) {
+--- a/quirkcore/include/quirkcore/QuirkTransportation.h
++++ b/quirkcore/include/quirkcore/QuirkTransportation.h
+@@ -56,6 +56,7 @@
+   G4ThreeVector fTransportEndSpin;
+   G4bool fMomentumChanged{false};
+   G4double fCandidateEndGlobalTime{0.0};
++  G4double fProperTimeIncrement{0.0};
+ 
+   G4bool fParticleIsLooping{false};
+   G4TouchableHandle fCurrentTouchableHandle;

@@ -6,24 +6,26 @@
   "max_native_python_difference_gev": 1.7053025658242404e-13,
   "local_four_momentum_tolerance_mev": 1e-06,
   "handoff_identity_and_history_negative_tests": "PASS",
-  "patch_application_check": "PASS_BYTE_EXACT_NINE_PINNED_FILES",
-  "synthetic_root_audit_and_corruption_rejection": "PASS",
+  "patch_application_check": "PASS_BYTE_EXACT_TWELVE_PINNED_FILES",
+  "synthetic_root_audit_and_corruption_rejection": "PASS_TEN_CASES_INCLUDING_SAME_INPUT_LEGACY_CONTROLS",
   "full_geant4_build": "PASS_AF_D846F752",
   "causal_transport_validation": "PENDING",
   "physical_survival_probability": null,
   "adapter_sha256": {
     "EndpointHandoff.h": "27c7cdf8d356b39d856e32b829428a15a390a5a77f8f11818e8a600fde93b63f",
-    "QuirkWeakProcess.cc": "2053606446ef2d8e7abba2803eaaeb7fd69827e4945c51b65948b1dd5f4865d1",
-    "QuirkWeakProcess.h": "8523f9e838f8295c1bfcee581657df93a1bcb2acbd69e22a8058dd3a5cf1e8f6",
-    "README.md": "15744cf040dd2652a851eef2ec975134418ed747122839c4faf45cfd0fa7cc84",
+    "ProperTimeClock.h": "5ab88c3e18183f83d2540ab8f8a1b7b045d0ffd83bab2c9d1f1b40dfe80a9b24",
+    "QuirkWeakProcess.cc": "96bdbad85776bb8dfb08a3db806652181bbfb15faee91bc825f5db560f0aef34",
+    "QuirkWeakProcess.h": "4ad070f91caff5a1ffbeac1795a56650d3b86e4c0593f19cf96ecdb0c5a856df",
+    "README.md": "2a36c50e95fa8111837951b182567322c4839da696da7ea4828237d0c16b6fb8",
     "TwoBodyKinematics.h": "d15db2917e3e35b11305bbcf79b18f2cb9b1ed746d51249ce853e4116b38d48b",
     "UPSTREAM_LICENSE": "8c6db340475136df3c1201d458fa5755698eace76e510471ecc9d857d6083dac",
     "UPSTREAM_NOTICE": "4c09449868b703bc6c9089def700d2bf1654727bd9c3648eb6e9ef8186e0f333",
-    "check_audit.py": "e92fd6352a65831d3e3ffcc4af8082e5a4d76f9de1e7f31986f90a02babc4a52",
-    "check_native.py": "aafdec8edb2c4f291b884810469db38ad9f187f5afc4b81887a3d263419372d9",
+    "check_audit.py": "fd2df63e5739ffc74f2fa2d4bccca0c029074a4b5da5878aabeeaf8855306f48",
+    "check_native.py": "4f85a41d98e4b9f29f3f5753c909dc8965ae3056670ecb2b4800d8b08ae1173b",
     "native_check.cc": "51644b411a34d9afd8e35d2073836b84ffc3e256878d3e7c29e9dcbcbe49e50d",
-    "upstream_preimages.json": "13390f6f4fabc593a99bf45a339546a1a8bcb007a048ccc551bfbc54f27e4e29",
-    "weak_handoff.patch": "4c6664e7b1f732f41da5cf3795954156e34399d2f996f0bbcf7ebe10eee788ba"
+    "native_clock_check.cc": "feb87986b9d15a4819c71ea61be680bac5fa21887958f1eecb6a3f11a0eccbe5",
+    "upstream_preimages.json": "6277d0bbb3c6c495ceddcd4f44eb6e23351562806c678f845a6c256faec2e20f",
+    "weak_handoff.patch": "4955ac6e0854de2cebcd794c3bcc3ad4bf92311066ae8482f1b639180b3f85ef"
   },
   "patch_regression": {
     "old_failure_reproduced": "QuirkStringStore.cc end-of-file extra blank context",
@@ -39,5 +41,10 @@
   "observed_parent_mass_gev": 225.157,
   "benchmark_mass_parameter_matches": false,
   "ui_precision_fix": "G4UImanager::UseDoublePrecisionStr(true) before macro commands",
-  "full_geant4_build_for_current_ui_precision_change": "NOT_RUN"
+  "full_geant4_build_for_current_ui_precision_change": "NOT_RUN",
+  "current_clock_implementation": "Gauss3 m/E lab-time quadrature and pre-consumption curve-length event root",
+  "native_clock_analytic_and_root_tests": "PASS_CXX17_WALL_WEXTRA_WERROR_PEDANTIC",
+  "proper_root_tolerance_ps": 1e-09,
+  "localized_event_audit_tolerance_ps": 2e-09,
+  "full_geant4_build_for_current_clock_change": "NOT_RUN"
 }

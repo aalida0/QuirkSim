@@ -8,7 +8,7 @@ an integration patch and new source, not a second independent transport solver.
 
 **Status: first deterministic AF pilot compiled and local handoff checks passed.
 Micrometre directional recoil is resolved; event-time and input precision remain
-limited. The subsequent UI-precision change is pending AF verification.**
+limited. The subsequent UI-precision and localized-clock changes are pending AF verification.**
 Do not merge into stable code.
 
 The patch registers neutral Quirk definitions with sign-preserving endpoint
@@ -20,10 +20,12 @@ Cached endpoint velocity and kinetic energy are updated to the daughter.
 No string restart, reset, projection or partner kick is introduced.
 
 A post-step process performs a physical charged-parent -> neutral-daughter +
-pion decay at the first accepted step at/above proper time 50 ps. This is a
+pion decay at proper time 50 ps. The default localized transport mode integrates
+Gauss3 m/E dt on trial replay states and caps the accepted step at the event.
+Legacy mode retains the first-accepted-step threshold rule as a control. This is a
 **fixed-threshold pion integration test**, not a stochastic lifetime ensemble.
-Threshold overshoot and the upstream approximate proper-clock integration need
-resolution review. The parent neutral mass is 225 GeV; the parent charged
+The computed clock root and the physical trajectory still need resolution review;
+this is not an exact proper-time certificate for a continuum string solution. The parent neutral mass is 225 GeV; the parent charged
 mass is 225.1571702763212 GeV from the existing QuirkSim LO triplet calculation.
 The pion mass used in Geant4 is read from its particle table and logged.
 
@@ -40,10 +42,13 @@ Uses an isolated fresh upstream checkout under the output directory and applies
 this patch plus the added headers/source. The earlier stable checkout is not
 modified. Manifest records upstream revision, adapter file hashes, macros and
 execution results. LCG_110, Geant4 11.4.1, one CPU, B=2 T, Lambda=774 eV,
-point production, 130 ps. Eight cases at levels 7/8:
+point production, 130 ps. Eight localized cases at levels 7/8:
 - stable charged parents;
 - endpoint-0 pion +y and -y;
 - endpoint-1 pion +y (charge-conjugate endpoint transfer).
+
+Two additional level-8 controls use the same corrected inputs with the legacy
+clock (stable parents and endpoint-0 +y pion), for ten cases in total.
 
 No Condor. Per-case timeout 120 s (+5 s kill grace), build cap 600 s.
 Runner stops on its first failed/incomplete case and keeps diagnostics.
@@ -116,3 +121,23 @@ The patch now enables G4UImanager::UseDoublePrecisionStr(true) before macro
 commands, preserving input precision during Geant4 unit normalization. The
 new main-file preimage is pinned and checked. That added UI change has not yet
 been compiled/run in Geant4. Proper-threshold localization is still approximate.
+
+## Localized clock update
+
+ProperTimeClock.h integrates m/E over lab time with three Gauss nodes, located
+on replayed trajectory states before any string consumption. It brackets the
+proper threshold in the curve-length parameter and caps the transport step.
+The sampled replay cursor is restored to the accepted state by Update; the
+sole consumption/push operation remains Update. Forced sub-navigation steps
+now respect the event cap too. Localized mode requires moveTinySteps=true.
+
+The computed root tolerance is 1e-9 ps, with 1e-12 ps lab-time node tolerance.
+The event process accepts that numerical tolerance; the audit requires a
+localized event residual within 2e-9 ps. These are tolerances on the computed
+quadrature clock, not proven physical-clock errors. Legacy checks are unchanged.
+
+Native C++ tests compare clocks and roots with exact constant-gamma and
+constant-force references, including turnaround, and reject invalid brackets.
+The synthetic audit covers all ten cases and the legacy-control comparisons.
+The previously uploaded archive remains readable with unchanged local-check
+results. Full Geant4 compilation/execution of this clock update is pending.

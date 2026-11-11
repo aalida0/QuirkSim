@@ -15,7 +15,7 @@ M_NEUTRAL = 225.
 M_PARENT = 225.1571702763212
 ASSETS = Path(__file__).resolve().parents[1] / 'research' / 'quirkpheno_recoil'
 
-def prepare(out):
+def prepare(out, clock_mode="localized"):
     state = stable_prepare(out, 'precision')
     templates = {c['level']: (out / (c['name']+'.mac')).read_text()
                  for c in state['cases'] if c['field_tesla']==2 and c['level'] in (7,8)}
@@ -41,11 +41,22 @@ def prepare(out):
                           'macro_sha256':hashlib.sha256(path.read_bytes()).hexdigest(),
                           'field_tesla':2,'weak_enabled':mode!='stable_parent',
                           'endpoint':endpoint,'pion_rest_y_sign':sign,'proper_threshold_ps':50.,
-                          'max_boost':.01/2**level,'max_merge_mm':1e-8/2**level})
+                          'max_boost':.01/2**level,'max_merge_mm':1e-8/2**level,'clock_mode':clock_mode})
+    if clock_mode=='localized':
+        for original_mode in ('stable_parent','pion_yplus_end0'):
+            template=next(c for c in cases if c['mode']==original_mode and c['level']==8)
+            name='clock_legacy_'+template['name']
+            card=out/(name+'.card');card.write_text((out/(template['name']+'.card')).read_text())
+            macro=(out/(template['name']+'.mac')).read_text().replace(template['name'],name)
+            path=out/(name+'.mac');path.write_text(macro)
+            case=dict(template,name=name,mode='clock_legacy_'+original_mode,clock_mode='legacy',macro=str(path),
+                      macro_sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+            cases.append(case)
     state.update(suite='deterministic_weak_handoff',scope='EXPERIMENTAL_SINGLE_PION_HANDOFF_NOT_LIFETIME_ENSEMBLE',
                  mass_gev=M_PARENT,neutral_mass_gev=M_NEUTRAL,delta_mev=(M_PARENT-M_NEUTRAL)*1000,
                  mass_convention='existing QuirkSim LO triplet benchmark; parent mass is loop split',
-                 decay_clock='first accepted post-step at/above proper threshold; record overshoot and refine',
+                 decay_clock='localized Gauss3 m/E clock and event root; two same-input legacy controls' if clock_mode=='localized' else 'legacy first post-step threshold',
+                 default_clock_mode=clock_mode,proper_root_tolerance_ps=1e-9 if clock_mode=='localized' else None,
                  modes_are_physical_angles=True,causal_recoil_validation='PENDING',cases=cases)
     state['adapter_sha256']={p.name:hashlib.sha256(p.read_bytes()).hexdigest()
                               for p in sorted(ASSETS.iterdir()) if p.is_file()}
@@ -55,7 +66,8 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--output-dir',required=True)
     p.add_argument('--prepare-only',action='store_true')
-    a=p.parse_args();out=Path(a.output_dir).expanduser().resolve();state=prepare(out)
+    p.add_argument('--clock-mode',choices=('localized','legacy'),default='localized')
+    a=p.parse_args();out=Path(a.output_dir).expanduser().resolve();state=prepare(out,a.clock_mode)
     def save(): (out/'manifest.json').write_text(json.dumps(state,indent=2)+'\n')
     save();print(f'Manifest: {out/"manifest.json"}',flush=True)
     if a.prepare_only:return
@@ -83,7 +95,7 @@ def main():
     patch=ASSETS/'weak_handoff.patch' 
     checked(['git','apply','--check',str(patch)],source,'patch_check.log',60)
     checked(['git','apply',str(patch)],source,'patch_apply.log',60)
-    for name in ('EndpointHandoff.h','TwoBodyKinematics.h','QuirkWeakProcess.h'):
+    for name in ('EndpointHandoff.h','TwoBodyKinematics.h','ProperTimeClock.h','QuirkWeakProcess.h'):
         shutil.copyfile(ASSETS/name,source/'quirkcore/include/quirkcore'/name)
     shutil.copyfile(ASSETS/'QuirkWeakProcess.cc',source/'quirkcore/src/QuirkWeakProcess.cc')
     build=out/'build'
@@ -98,7 +110,7 @@ def main():
     for case in state['cases']:
         print('Running '+case['name'],flush=True)
         env={'QP_WEAK_ENABLED':int(case['weak_enabled']),'QP_WEAK_ENDPOINT':case['endpoint'],
-             'QP_WEAK_TAU_PS':50,'QP_NEUTRAL_MASS_GEV':M_NEUTRAL,'QP_WEAK_DIR_SIGN':case['pion_rest_y_sign']}
+             'QP_WEAK_TAU_PS':50,'QP_WEAK_CLOCK_MODE':case['clock_mode'],'QP_NEUTRAL_MASS_GEV':M_NEUTRAL,'QP_WEAK_DIR_SIGN':case['pion_rest_y_sign']}
         command='env '+' '.join(shlex.quote(k+'='+str(v)) for k,v in env.items())
         command+=' timeout --kill-after=5s 120s '+shlex.quote(str(exe))
         command+=' --mt -t 1 -n 1 -s 1 -m '+shlex.quote(case['macro'])

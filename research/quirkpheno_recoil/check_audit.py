@@ -19,7 +19,7 @@ for case in state['cases']:
   decays=case['weak_enabled'] and q==case['endpoint'];td=60.;xd=.299792458*p[1:]/p[0]*td
   if decays:
    records=[{'kind':'decay','parent_track':q+1,'parent_pdg':17*(-1)**q,'daughter_pdg':9900017*(-1)**q,
-     'pion_pdg':211*(-1)**q,'time_ps':td,'proper_ps':50.001,'threshold_ps':50.,'position_mm':xd.tolist(),
+     'pion_pdg':211*(-1)**q,'time_ps':td,'proper_ps':50. if case['clock_mode']=='localized' else 50.001,'threshold_ps':50.,'position_mm':xd.tolist(),
      'parent_mass_mev':225157.1702763212,'daughter_mass_mev':225000.,'pion_mass_mev':139.57039,
      'parent_mev':p.tolist(),'daughter_mev':d.tolist(),'pion_mev':pi.tolist()},
      {'kind':'handoff','parent_track':q+1,'daughter_track':3,'daughter_pdg':9900017*(-1)**q,'history_preserved':True}]
@@ -47,8 +47,9 @@ def pack(path):
 pack(str(root/'good.tar.gz'));r=audit(str(root/'good.tar.gz'))
 assert r['local_handoff_checks_pass'],r
 assert len(r['resolution_comparisons'])==8 and len(r['paired_direction_comparisons'])==2
+assert len(r['clock_control_comparisons'])==4 and r['benchmark_mass_parameters_match']
 name='pion_yplus_end0_level7';p=out/(name+'.log');p.write_text(p.read_text().replace('"history_preserved": true','"history_preserved": false'))
 pack(str(root/'bad.tar.gz'));bad=audit(str(root/'bad.tar.gz'));assert not bad['local_handoff_checks_pass']
-print('PASS: synthetic eight-case ROOT/log audit; piecewise interpolation; corrupted handoff rejected (synthetic fixtures are not transport validation)')
+print('PASS: synthetic ten-case ROOT/log audit; piecewise interpolation; corrupted handoff rejected (synthetic fixtures are not transport validation)')
 
 temporary.cleanup()

@@ -21,6 +21,9 @@ def check(output=None):
         exe=Path(tmp)/'check'
         subprocess.run(['g++','-std=c++17','-O2','-Wall','-Wextra','-Werror','-pedantic',str(here/'native_check.cc'),'-o',str(exe)],check=True)
         fixtures=json.loads(subprocess.check_output([str(exe)],text=True))
+        clock=Path(tmp)/'clock'
+        subprocess.run(['g++','-std=c++17','-O2','-Wall','-Wextra','-Werror','-pedantic',str(here/'native_clock_check.cc'),'-o',str(clock)],check=True)
+        subprocess.run([str(clock)],check=True)
     assert abs(benchmark('triplet',225.)['charged_mass_gev']-225.1571702763212)<1e-12
     maximum=0.
     for fixture in fixtures:

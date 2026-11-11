@@ -6,6 +6,7 @@
 #include <string>
 class G4ParticleDefinition;
 namespace QPWeakConfig {
+inline bool localizedClock() { const char* p=std::getenv("QP_WEAK_CLOCK_MODE"); return p && std::string(p)=="localized"; }
 inline bool enabled() { const char* p=std::getenv("QP_WEAK_ENABLED"); return p && std::string(p)=="1"; }
 inline int endpoint() { const char* p=std::getenv("QP_WEAK_ENDPOINT"); return p ? std::stoi(p) : 0; }
 inline double tauPs() { const char* p=std::getenv("QP_WEAK_TAU_PS"); return p ? std::stod(p) : 50.; }

@@ -18,12 +18,12 @@ QuirkWeakProcess::QuirkWeakProcess(const G4ParticleDefinition* neutral)
 }
 G4double QuirkWeakProcess::PostStepGetPhysicalInteractionLength(const G4Track&, G4double, G4ForceCondition* condition) {
   *condition=StronglyForced;
-  return DBL_MAX; // pilot fires at the first accepted step above the proper-clock threshold
+  return DBL_MAX; // transportation caps the localized clock; legacy mode remains post-step
 }
 G4VParticleChange* QuirkWeakProcess::PostStepDoIt(const G4Track& track, const G4Step&) {
   m_change.Initialize(track);
   if (track.GetTrackStatus()==fStopAndKill || track.GetTrackStatus()==fKillTrackAndSecondaries ||
-      track.GetProperTime() < QPWeakConfig::tauPs()*CLHEP::picosecond) return &m_change;
+      track.GetProperTime() + (QPWeakConfig::localizedClock() ? 1e-9*CLHEP::picosecond : 0.) < QPWeakConfig::tauPs()*CLHEP::picosecond) return &m_change;
   auto& store=QuirkStringStore::instance();
   auto& string=store.stringFor(track.GetDefinition()->GetPDGEncoding());
   if (!string.IsSourceAlive() || !string.IsSourceInitialized())
@@ -65,6 +65,7 @@ G4VParticleChange* QuirkWeakProcess::PostStepDoIt(const G4Track& track, const G4
     << ",\"time_ps\":" << track.GetGlobalTime()/CLHEP::picosecond
     << ",\"position_mm\":[" << track.GetPosition().x()/CLHEP::mm << "," << track.GetPosition().y()/CLHEP::mm << "," << track.GetPosition().z()/CLHEP::mm << "]"
     << ",\"proper_ps\":" << track.GetProperTime()/CLHEP::picosecond
+    << ",\"clock_mode\":\"" << (QPWeakConfig::localizedClock() ? "localized" : "legacy") << "\""
     << ",\"threshold_ps\":" << QPWeakConfig::tauPs() << ",\"residual_mev\":" << residual;
   auto vector=[&](const char* name,const QPWeak::Four& v) {
     s << ",\"" << name << "\":[" << v[0] << ',' << v[1] << ',' << v[2] << ',' << v[3] << ']';
