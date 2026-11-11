@@ -16,6 +16,40 @@ from .dynamics import C_CM_PER_PS, HBARC_GEV_CM
 ALPHA_ZERO = 1/137.035999084
 
 
+def spin_singlet_two_boson_widths(mass_gev, psi_squared_gev3, n_ic,
+                                  alpha_ic_hard, charge=1., alpha_em=ALPHA_ZERO):
+    """LO partial widths of a specified same-flavor IC-singlet 1S0 state.
+
+    The two-boson channels select spin zero: project the unpolarized hard
+    coefficients of Li et al. Table II by four, then multiply by |psi(0)|^2.
+    This definition also reproduces eta_Q -> gg with the usual SU(3) factor.
+    Assumes a pure same-flavor state and its supplied wavefunction. A coupled
+    flavor state needs an amplitude matrix, including coherent interference;
+    separate component widths cannot be added. No total width, branching
+    fraction or formation probability is inferred. alpha_ic_hard is at the
+    annihilation scale, not the Bohr scale.
+    """
+    if (not all(map(math.isfinite, [mass_gev, psi_squared_gev3, alpha_ic_hard, charge, alpha_em]))
+            or mass_gev <= 0 or psi_squared_gev3 < 0
+            or type(n_ic) is not int or n_ic < 2
+            or not 0 <= alpha_ic_hard < 1 or not 0 < alpha_em < 1):
+        raise ValueError('positive mass, nonnegative density and perturbative couplings required')
+    common = math.pi*psi_squared_gev3/mass_gev**2
+    widths = {'gamma_gamma': 4*n_ic*alpha_em**2*charge**4*common,
+              'ic_gluon_pair': (n_ic*n_ic-1)/n_ic*alpha_ic_hard**2*common}
+    summed = sum(widths.values())
+    return {'state': 'SAME_FLAVOR_IC_SINGLET_SPIN_ZERO_S_WAVE',
+            'partial_widths_gev': widths, 'sum_computed_partial_widths_gev': summed,
+            'hbar_over_partial_sum_ps': HBAR_GEV_PS/summed if summed else None,
+            'total_width_gev': None, 'branching_fractions': None,
+            'formation_probability': None,
+            'approximation': 'LEADING_NONRELATIVISTIC_TWO_BOSON_HARD_KERNEL',
+            'source': '10.1103/PhysRevD.109.095005 Table II; spin-zero projection',
+            'missing': ['EW channels and coupled-flavor wavefunction matching',
+                        'higher-order and relativistic corrections',
+                        'formation from the transported pair']}
+
+
 def lienard_power_gev_per_ps(beta, beta_dot_per_ps, charge=1., alpha=ALPHA_ZERO):
     """Single smooth charge, rationalized EM: P=(2 alpha/3) hbar gamma^6(...).
 
