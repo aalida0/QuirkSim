@@ -1,0 +1,40 @@
+name: Deeper NG approach / 1000ps convergence stress
+on:
+  push:
+    branches: [research/variational-worldsheet]
+    paths:
+      - '.github/workflows/deeper-arclength-gates.yml'
+      - 'scripts/check_total_arclength_convergence.py'
+  workflow_dispatch:
+
+jobs:
+  narrower_cut:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - fraction: '0.0001'
+            tag: '1e-4'
+          - fraction: '0.00002'
+            tag: '2e-5'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install independent QuirkSim
+        run: python -m pip install -e .
+      - name: Check 5 7 11 vertex solution at common narrow total-arclength boundary
+        run: |
+          python -u scripts/check_total_arclength_convergence.py \
+            --fractions ${{ matrix.fraction }} \
+            --output results/ng_cut_${{ matrix.tag }}.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: deeper-ng-cutoff-${{ matrix.tag }}
+          path: results/ng_cut_${{ matrix.tag }}.json
+          if-no-files-found: ignore
+          retention-days: 14

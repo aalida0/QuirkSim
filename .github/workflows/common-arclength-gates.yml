@@ -1,0 +1,33 @@
+name: Common-arclength NG refinement physics gates
+on:
+  push:
+    branches: [research/variational-worldsheet]
+    paths:
+      - '.github/workflows/common-arclength-gates.yml'
+      - 'scripts/check_total_arclength_convergence.py'
+      - 'scripts/equidistributed_gauge_stress.py'
+      - 'tests/test_total_arclength_gate.py'
+  workflow_dispatch:
+
+jobs:
+  check_5_7_11:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install standalone simulator
+        run: python -m pip install -e '.[test]'
+      - name: Validate independent common total arclength events
+        run: python -m pytest -q tests/test_total_arclength_gate.py
+      - name: Compare 5, 7, 11 nodes at two common total-length cutoffs
+        run: python -u scripts/check_total_arclength_convergence.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: common-total-arclength-refinement-5-7-11
+          path: results/constrained_ng_common_arclength.json
+          if-no-files-found: ignore
+          retention-days: 14

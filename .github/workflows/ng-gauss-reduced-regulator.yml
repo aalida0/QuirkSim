@@ -1,0 +1,43 @@
+name: Fine NG Gauss mesh with reduced regulator
+on:
+  push:
+    branches: [research/variational-worldsheet]
+    paths:
+      - '.github/workflows/ng-gauss-reduced-regulator.yml'
+  workflow_dispatch:
+
+jobs:
+  high_n_reg:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - nodes: '17'
+            quadrature_order: '2'
+          - nodes: '21'
+            quadrature_order: '2'
+          - nodes: '21'
+            quadrature_order: '3'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: python -m pip install -e .
+      - name: Resolve artificial per-element short-regulator stop
+        run: |
+          python -u scripts/equidistributed_gauge_stress.py \
+            --nodes ${{ matrix.nodes }} --quadrature-order ${{ matrix.quadrature_order }} \
+            --regulator-cm 0.0000000002 \
+            --field-only --pinch-fraction 0.00002 --max-time-ps 1000 \
+            --output results/fine_reg_n${{ matrix.nodes }}_q${{ matrix.quadrature_order }}.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fine-reg-ng-n${{ matrix.nodes }}-q${{ matrix.quadrature_order }}
+          path: results/fine_reg_n${{ matrix.nodes }}_q${{ matrix.quadrature_order }}.json
+          if-no-files-found: ignore
+          retention-days: 14

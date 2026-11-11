@@ -1,0 +1,281 @@
+{
+  "scope": "selected conditional classical pilots; failed coarse attempt retained",
+  "code_commit": "e467aa44ce03d7347a4ef20b4768a4f97bd55db2",
+  "records": [
+    {
+      "mode": "stable",
+      "seed": 25,
+      "integration": {
+        "max_step_ps": 0.05,
+        "max_ray_angle": 0.0015625,
+        "causal_fraction": 0.003125
+      },
+      "termination": "QUANTUM_MATCHING_SURFACE",
+      "time_ps": 458.6120555238924,
+      "numerical_validation": {
+        "status": "PASS",
+        "max_chord_closure_error_cm": 1.878945715214083e-09,
+        "max_closure_over_confinement_reference": 0.07370020968765187,
+        "energy_tolerance_gev": 1e-07,
+        "momentum_tolerance_gev": 5e-06,
+        "closure_tolerance_in_confinement_units": 0.1,
+        "meaning": "SELECTED_CLASSICAL_EVOLUTION_ONLY_NOT_QUANTUM_SURVIVAL"
+      },
+      "decays": [],
+      "reflected_discontinuities": 0,
+      "final_photon_energy_without_backreaction_gev": [
+        2.39963969675785e-17,
+        2.399639891175614e-17
+      ],
+      "energy_residual_gev": -8.526512829121202e-13,
+      "momentum_residual_gev": [
+        7.40499217499746e-10,
+        -3.975981816245304e-09,
+        0.0
+      ],
+      "final_positions_cm": [
+        [
+          3.4222278870979594,
+          -1.5744114819124908e-05,
+          0.0
+        ],
+        [
+          3.4222276922320862,
+          -1.5683905585645526e-05,
+          0.0
+        ]
+      ],
+      "physical_survival_probability": null
+    },
+    {
+      "mode": "recoil",
+      "seed": 25,
+      "integration": {
+        "max_step_ps": 0.05,
+        "max_ray_angle": 0.00078125,
+        "causal_fraction": 0.0015625
+      },
+      "termination": "TARGET_REACHED",
+      "time_ps": 1000.0,
+      "numerical_validation": {
+        "status": "FAIL",
+        "max_chord_closure_error_cm": 5.307093272976746e-09,
+        "max_closure_over_confinement_reference": 0.20816667766569716,
+        "energy_tolerance_gev": 1e-07,
+        "momentum_tolerance_gev": 5e-06,
+        "closure_tolerance_in_confinement_units": 0.1,
+        "meaning": "SELECTED_CLASSICAL_EVOLUTION_ONLY_NOT_QUANTUM_SURVIVAL"
+      },
+      "decays": [
+        {
+          "kind": "weak_decay",
+          "time_ps": 0.2505145559475491,
+          "endpoint": 1,
+          "position_cm": [
+            0.052848161875966464,
+            3.579205589156122e-10,
+            0.0
+          ],
+          "products_gev": {
+            "pion": [
+              0.15775513417553624,
+              0.052353037417662715,
+              -0.04980647849374094,
+              0.013611126595056958
+            ]
+          },
+          "four_momentum_residual_gev": [
+            -5.684341886080802e-14,
+            -2.842170943040401e-14,
+            4.28598671310676e-18,
+            0.0
+          ],
+          "matching": "LOCAL_MASSIVE_BOUNDARY_WITH_CAUSAL_NULL_RAY_JUMP",
+          "channel": "pion",
+          "proper_clock_residual_ps": 5.36486743918374e-10
+        },
+        {
+          "kind": "weak_decay",
+          "time_ps": 12.197639711301761,
+          "endpoint": 0,
+          "position_cm": [
+            -0.10065064801283523,
+            9.769213781303486e-07,
+            -1.9535904066646623e-07
+          ],
+          "products_gev": {
+            "pion": [
+              0.1514104889852628,
+              0.03898099370852204,
+              0.017511511921685156,
+              0.04023768743003423
+            ]
+          },
+          "four_momentum_residual_gev": [
+            2.842170943040401e-14,
+            0.0,
+            -1.951563910473908e-18,
+            2.4936649967166602e-18
+          ],
+          "matching": "LOCAL_MASSIVE_BOUNDARY_WITH_CAUSAL_NULL_RAY_JUMP",
+          "channel": "pion",
+          "proper_clock_residual_ps": 3.6974867612116213e-11
+        }
+      ],
+      "reflected_discontinuities": 219,
+      "final_photon_energy_without_backreaction_gev": [
+        6.382287841940863e-19,
+        1.3107913188544962e-20
+      ],
+      "energy_residual_gev": 2.2737367544323206e-13,
+      "momentum_residual_gev": [
+        1.4000534065417014e-10,
+        1.4973456236846636e-10,
+        4.2147017126348274e-10
+      ],
+      "final_positions_cm": [
+        [
+          6.8062402635656065,
+          0.0007065699743252946,
+          -0.004521499295839897
+        ],
+        [
+          8.060578536479259,
+          0.003068295725595903,
+          -0.0018463037219109777
+        ]
+      ],
+      "physical_survival_probability": null
+    },
+    {
+      "mode": "recoil",
+      "seed": 25,
+      "integration": {
+        "max_step_ps": 0.025,
+        "max_ray_angle": 0.0001953125,
+        "causal_fraction": 0.000390625
+      },
+      "termination": "TARGET_REACHED",
+      "time_ps": 1000.0,
+      "numerical_validation": {
+        "status": "PASS",
+        "max_chord_closure_error_cm": 2.7319846689889265e-10,
+        "max_closure_over_confinement_reference": 0.010716001071110929,
+        "energy_tolerance_gev": 1e-07,
+        "momentum_tolerance_gev": 5e-06,
+        "closure_tolerance_in_confinement_units": 0.1,
+        "meaning": "SELECTED_CLASSICAL_EVOLUTION_ONLY_NOT_QUANTUM_SURVIVAL"
+      },
+      "decays": [
+        {
+          "kind": "weak_decay",
+          "time_ps": 0.25051455594754907,
+          "endpoint": 1,
+          "position_cm": [
+            0.05284816187596644,
+            3.5792055891561254e-10,
+            0.0
+          ],
+          "parent_four_vector_gev": [
+            278.9610549250223,
+            164.69219422316382,
+            2.658594139327576e-05,
+            0.0
+          ],
+          "daughter_four_vector_gev": [
+            278.80329979084684,
+            164.6398411857462,
+            0.04983306443513421,
+            -0.013611126595056958
+          ],
+          "parent_charge": -1.0,
+          "daughter_charge": 0.0,
+          "emitted_charge": -1.0,
+          "products_gev": {
+            "pion": [
+              0.15775513417553622,
+              0.05235303741766267,
+              -0.04980647849374094,
+              0.013611126595056958
+            ]
+          },
+          "four_momentum_residual_gev": [
+            -5.684341886080802e-14,
+            -5.684341886080802e-14,
+            4.28598671310676e-18,
+            0.0
+          ],
+          "matching": "LOCAL_MASSIVE_BOUNDARY_WITH_CAUSAL_NULL_RAY_JUMP",
+          "channel": "pion",
+          "proper_clock_residual_ps": 5.36486743918374e-10
+        },
+        {
+          "kind": "weak_decay",
+          "time_ps": 12.197639711301811,
+          "endpoint": 0,
+          "position_cm": [
+            -0.10065064801283531,
+            9.769213780987553e-07,
+            -1.9535904066646623e-07
+          ],
+          "parent_four_vector_gev": [
+            226.76511512620746,
+            -26.956745137312677,
+            0.0016801145986922934,
+            -0.00037551174953319097
+          ],
+          "daughter_four_vector_gev": [
+            226.61370463722224,
+            -26.995726131021204,
+            -0.01583139732299284,
+            -0.040613199179567426
+          ],
+          "parent_charge": 1.0,
+          "daughter_charge": 0.0,
+          "emitted_charge": 1.0,
+          "products_gev": {
+            "pion": [
+              0.15141048898526277,
+              0.038980993708521955,
+              0.017511511921685135,
+              0.04023768743003423
+            ]
+          },
+          "four_momentum_residual_gev": [
+            -2.842170943040401e-14,
+            7.105427357601002e-15,
+            -2.168404344971009e-19,
+            3.469446951953614e-18
+          ],
+          "matching": "LOCAL_MASSIVE_BOUNDARY_WITH_CAUSAL_NULL_RAY_JUMP",
+          "channel": "pion",
+          "proper_clock_residual_ps": 3.6974867612116213e-11
+        }
+      ],
+      "reflected_discontinuities": 219,
+      "final_photon_energy_without_backreaction_gev": [
+        6.382287841940876e-19,
+        1.3107913188544965e-20
+      ],
+      "energy_residual_gev": 4.092726157978177e-12,
+      "momentum_residual_gev": [
+        1.432454155292362e-11,
+        -8.549416353901065e-10,
+        2.7988280720814274e-09
+      ],
+      "final_positions_cm": [
+        [
+          6.806240263557607,
+          0.0007065707224278745,
+          -0.004521502293333631
+        ],
+        [
+          8.060578536478706,
+          0.0030682950506380822,
+          -0.00184630113036362
+        ]
+      ],
+      "physical_survival_probability": null
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+name: Conformal massive-boundary validation
+on:
+  push:
+    branches: [research/variational-worldsheet]
+    paths:
+      - 'quirksim/conformal_*.py'
+      - 'scripts/validate_conformal_boundary.py'
+      - 'tests/test_conformal_*.py'
+      - '.github/workflows/conformal-boundary.yml'
+  workflow_dispatch:
+
+jobs:
+  analytic-and-characteristic-gates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e '.[test]'
+      - name: Boundary, causal reflection and reduced crossing tests
+        run: python -m pytest -q tests/test_conformal_boundary.py tests/test_conformal_characteristics.py tests/test_conformal_radial.py
+      - name: Independent analytic references and refinement
+        run: python scripts/validate_conformal_boundary.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: conformal-boundary-validation
+          path: results/conformal_boundary_validation.json
+          if-no-files-found: warn

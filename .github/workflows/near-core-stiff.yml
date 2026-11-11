@@ -1,0 +1,41 @@
+name: Constrained Nambu-Goto near-core stiff integrator audit
+on:
+  push:
+    branches: [research/variational-worldsheet]
+    paths:
+      - '.github/workflows/near-core-stiff.yml'
+  workflow_dispatch:
+
+jobs:
+  alternate_integrator:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {method: 'Radau', nodes: '11'}
+          - {method: 'BDF', nodes: '11'}
+          - {method: 'LSODA', nodes: '11'}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e '.[test]'
+      - name: Validate causal coordinate transformation and short-distance physics gates
+        run: python -m pytest -q tests/test_rapidity_constrained_contact.py
+      - name: Attempt same physical NG model with independent implicit solver
+        run: |
+          python -u scripts/rapidity_constrained_contact.py \
+            --nodes ${{ matrix.nodes }} --method ${{ matrix.method }} \
+            --max-step-ps 0.5 --regulator-cm 1e-12 \
+            --pinch-fraction 0.000001 \
+            --output results/ng_near_core_${{ matrix.method }}.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ng-near-core-${{ matrix.method }}-n${{ matrix.nodes }}
+          path: results/ng_near_core_${{ matrix.method }}.json
+          if-no-files-found: ignore
+          retention-days: 14

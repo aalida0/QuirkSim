@@ -1,0 +1,36 @@
+name: Near-contact spatial refinement interleaved nodes
+on:
+  push:
+    branches: [research/variational-worldsheet]
+    paths:
+      - '.github/workflows/near-core-spatial-refinement.yml'
+  workflow_dispatch:
+
+jobs:
+  mesh_refinement:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        nodes: ['9','13','17']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install QuirkSim
+        run: python -m pip install -e .
+      - name: Evaluate near-contact chord at common spatial arclength
+        run: |
+          python -u scripts/equidistributed_gauge_stress.py \
+            --nodes ${{ matrix.nodes }} --max-time-ps 1000 \
+            --pinch-fraction 0.00002 --field-only \
+            --output results/spatial_n${{ matrix.nodes }}.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: near-core-spatial-n${{ matrix.nodes }}
+          path: results/spatial_n${{ matrix.nodes }}.json
+          if-no-files-found: ignore
+          retention-days: 14

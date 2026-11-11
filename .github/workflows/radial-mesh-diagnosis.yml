@@ -1,0 +1,38 @@
+name: Exact radial NG reference and early mesh breakdown diagnosis
+on:
+  push:
+    branches: [research/variational-worldsheet]
+    paths:
+      - '.github/workflows/radial-mesh-diagnosis.yml'
+      - 'quirksim/radial_ng_reference.py'
+      - 'tests/test_radial_ng_reference.py'
+      - 'scripts/validate_exact_radial.py'
+      - 'scripts/diagnose_mesh_breakdown.py'
+  workflow_dispatch:
+
+jobs:
+  radial-reference:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install simulation
+        run: python -m pip install -e '.[test]'
+      - name: Validate exact radial massive-endpoint NG sector
+        run: python -m pytest -q tests/test_radial_ng_reference.py
+      - name: Evolve reduced analytic NG reference for 1000 ps
+        run: python -u scripts/validate_exact_radial.py
+      - name: Locate first failing worldsheet element versus crossing time
+        run: python -u scripts/diagnose_mesh_breakdown.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: radial-ng-and-mesh-first-failure
+          path: |
+            results/radial_ng_1000ps.json
+            results/mesh_first_failure.json
+          if-no-files-found: ignore
+          retention-days: 14

@@ -1,0 +1,39 @@
+name: Constrained NG zero-gauge-mass 1000ps field run
+on:
+  push:
+    branches: [research/variational-worldsheet]
+    paths:
+      - '.github/workflows/equidistributed-1000ps.yml'
+      - 'quirksim/equidistributed_ng.py'
+      - 'scripts/equidistributed_gauge_stress.py'
+  workflow_dispatch:
+
+jobs:
+  longfield:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        nodes: ['5','7','11']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install QuirkSim
+        run: python -m pip install -e '.[test]'
+      - name: Verify local constrained gauge conservation
+        run: python -m pytest -q tests/test_equidistributed_ng.py
+      - name: Repeat 1000ps 2T triplet with no artificial gauge masses
+        run: |
+          python -u scripts/equidistributed_gauge_stress.py \
+            --nodes ${{ matrix.nodes }} --max-time-ps 1000 --field-only \
+            --output results/equidistributed_1000ps_${{ matrix.nodes }}.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: constrained-ng-1000ps-${{ matrix.nodes }}-nodes
+          path: results/equidistributed_1000ps_${{ matrix.nodes }}.json
+          if-no-files-found: ignore
+          retention-days: 14

@@ -1,0 +1,35 @@
+name: Parallel near-core numerical sensitivity by mesh
+on:
+  push:
+    branches: [research/variational-worldsheet]
+    paths:
+      - '.github/workflows/near-core-parallel.yml'
+  workflow_dispatch:
+
+jobs:
+  per_mesh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        nodes: ['5','7','11','15']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install QuirkSim
+        run: python -m pip install -e .
+      - name: Independent 3-way numerical sensitivity for this mesh
+        run: |
+          python -u scripts/near_core_error_budget.py \
+            --nodes ${{ matrix.nodes }} --cutoff-fraction 0.00002 \
+            --output results/near_core_n${{ matrix.nodes }}.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: near-core-n${{ matrix.nodes }}
+          path: results/near_core_n${{ matrix.nodes }}.json
+          if-no-files-found: ignore
+          retention-days: 14

@@ -1,5 +1,84 @@
 # QuirkSim — standalone charged-to-neutral quirk phenomenology
 
+## Research branch: variational string with internal degrees of freedom
+
+**Branch:** `research/variational-worldsheet` (experimental; do **not**
+merge into main or the stable development branch yet).
+
+**Current implementation:** magnetic conformal evolution, causal local weak
+recoil, explicit quantum matching, and conditional radiation/annihilation
+layers are available. [Current results, assumptions and physical limits](studies/RADIATION_ANNIHILATION_RESULT_2026-11-10.md).
+The machinery does not supply a calibrated nonperturbative radiation kernel
+or a quantum-state overlap; physical survival remains UNKNOWN.
+
+**Run the remaining numerical pilots on UChicago AF:**
+[pinned-source HTCondor submission and collection](studies/AF_CONFORMAL_VALIDATION_2026-11-11.md).
+Submit seed 1 first, then the separate doublet/triplet resolution batch.
+
+An independent spatial midpoint discretization of the classical
+**Nambu–Goto action** now evolves internal string vertices and their
+canonical energy, momentum and angular momentum. It includes a small
+explicit unphysical gauge-mass regulator, a uniform solenoidal field,
+and a conservative canonical momentum treatment of pion/electron/muon
+endpoint decays. It is **not** an independently validated continuum
+worldsheet and is not yet able to support paper-quality annihilation
+or radiation rates.
+
+A separate encounter model brackets unknown glueball-emission and
+annihilation assumptions without claiming physical rates or feeding
+radiated energy back into the dynamics. It explicitly conditions on
+survival of encounters before a weak decay.
+
+**CRITICAL PHYSICS BLOCKER:** the 260 ps long-time test failed the
+spatial mesh-quality gate. A rapidity-coordinate integrator removes the
+superluminal numerical integration error, but string segments collapse
+below the spatial regularizer and their length ratio exceeds 20 million.
+Short-time tests and a 5 ps weak-decay event pass; **multi-oscillation
+recoil/annihilation predictions are NOT validated**. See
+[GitHub issue #3](https://github.com/aalida0/QuirkSim/issues/3)
+for the conservative remeshing/worldsheet convergence acceptance criteria.
+Do not use these simulations as paper figures.
+
+
+**Higher-order worldsheet action validation:** [Nambu–Goto Gauss quadrature,
+13/17/21-vertex pre-contact geometric convergence PASS for one triplet
+benchmark](studies/NG_GAUSS_QUADRATURE_AUDIT_2026-11-10.md). Full physical
+string crossing, weak impulses in this gauge, radiation and annihilation
+remain **BLOCKED**. A numerical gate is not a collider prediction.
+
+**Independent conformal-gauge prototype:** moving massive-boundary flux,
+causal characteristic histories, exact rotating-string comparison and
+four signed radial crossings now have a separate
+[derivation](studies/CONFORMAL_BOUNDARY_DERIVATION.md) and
+[scoped validation result](studies/CONFORMAL_BOUNDARY_RESULT_2026-11-10.md).
+The radial crossing rule is explicitly prescribed in a reduced adapter;
+general chart collapse still stops. Electromagnetic boundaries, near-contact
+cross-validation and weak recoil in this solver remain pending.
+
+**Mesh-independent first-return validation:** [common total string arclength
+convergence and remaining core-scale physics blocker](studies/NG_TOTAL_ARCLENGTH_CONVERGENCE_2026-11-10.md).
+
+**Scientific validation report:**
+[variational worldsheet and uncertainty envelope](studies/VARIATIONAL_WORLD_SHEET_PHYSICS_GATES_2026-11-10.md).
+
+Reproduce the action, recoil and transverse-wave checks:
+
+```bash
+git switch research/variational-worldsheet
+python -m pip install -e '.[test]'
+python -m pytest -q
+python scripts/variational_gate_report.py
+python scripts/validate_transverse_wave.py
+python -m quirksim.worldsheet_experiment \
+  --seed 25 --duration-ps 5 \
+  --output results/variational_weak_seed25.json
+```
+
+The clocked example is a **rare, deliberately chosen early-decay
+pilot on a pre-stretched string**; neither its contact history nor
+its five-picosecond runtime represents an inclusive collider sample.
+
+
 Independent, publicly reproducible project. **No ATLAS-internal code.**
 
 ## Current prototype
@@ -211,3 +290,4 @@ The no-recoil control is deliberately unphysical, not a competing model.
 - *The Quirk Trajectory* (2020), 2002.07503.
 
 Development should remain on the feature branch until independently validated.
+

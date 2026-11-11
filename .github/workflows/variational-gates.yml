@@ -1,0 +1,29 @@
+name: Variational string mesh and weak recoil impulse gates
+on:
+  push:
+    branches: [research/variational-worldsheet]
+    paths:
+      - '.github/workflows/variational-gates.yml'
+      - 'scripts/variational_gate_report.py'
+  workflow_dispatch:
+
+jobs:
+  action-physics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install standalone QuirkSim
+        run: python -m pip install -e .
+      - name: Finite element conservation and weak kick diagnostics
+        run: python -u scripts/variational_gate_report.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: variational-action-mesh-weak-impulse-diagnostics
+          path: results/variational_gate_report.json
+          if-no-files-found: ignore
+          retention-days: 14

@@ -1,0 +1,9 @@
+{
+  "reference_commit": "e467aa44ce03d7347a4ef20b4768a4f97bd55db2",
+  "seed": 25,
+  "duration_ps": 30.0,
+  "all_serialized_outputs_identical": true,
+  "uncached_wall_seconds": 4.192833430999599,
+  "cached_wall_seconds": 1.1900158040007227,
+  "physics_scope": "engineering equivalence only; no new physical rate validation"
+}

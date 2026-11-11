@@ -1,0 +1,222 @@
+{
+  "archive_sha256": "5cba77d6e0c64bea5cd1fdd69054a7c736bd32a9b8ad87c9d7f1fddaca7b1432",
+  "source_commit": "d91cb27ed3786bc63900faad892513841b5b6ed4",
+  "build": {
+    "returncode": 0,
+    "timeout": false
+  },
+  "confinement_reference_mm": 2.549444191214471e-07,
+  "cases": {
+    "stable_B0_level0": {
+      "execution": {
+        "returncode": 0,
+        "timeout": false
+      },
+      "macro_hash_matches": true,
+      "event_entries": 1,
+      "endpoints": [
+        {
+          "endpoint": 0,
+          "rows": 17,
+          "reported_steps": 17,
+          "end_reason": 6,
+          "last_time_ps": 21.490629581335003,
+          "covers_20_ps": true,
+          "strictly_increasing_times": true,
+          "finite_values": true,
+          "max_edep_mev": 3.781603200729355e-26,
+          "analytic_outbound_max_position_error_mm": 6.441513988913428e-11,
+          "analytic_outbound_max_momentum_error_mev": 5.712449883731954e-06,
+          "analytic_first_turn_time_ps": 111.42978781855291
+        },
+        {
+          "endpoint": 1,
+          "rows": 18,
+          "reported_steps": 18,
+          "end_reason": 6,
+          "last_time_ps": 20.868625629717293,
+          "covers_20_ps": true,
+          "strictly_increasing_times": true,
+          "finite_values": true,
+          "max_edep_mev": 3.8041230176279436e-26,
+          "analytic_outbound_max_position_error_mm": 6.06479311215935e-11,
+          "analytic_outbound_max_momentum_error_mev": 5.547451929675056e-06,
+          "analytic_first_turn_time_ps": 111.42978781855291
+        }
+      ],
+      "event_cpu_seconds": 0.001282686,
+      "event_wall_seconds": 0.001293899,
+      "geant4_exception_lines": []
+    },
+    "stable_B0_level1": {
+      "execution": {
+        "returncode": 0,
+        "timeout": false
+      },
+      "macro_hash_matches": true,
+      "event_entries": 1,
+      "endpoints": [
+        {
+          "endpoint": 0,
+          "rows": 25,
+          "reported_steps": 25,
+          "end_reason": 6,
+          "last_time_ps": 20.682720764742534,
+          "covers_20_ps": true,
+          "strictly_increasing_times": true,
+          "finite_values": true,
+          "max_edep_mev": 1.9168576988560017e-26,
+          "analytic_outbound_max_position_error_mm": 5.954081672185132e-11,
+          "analytic_outbound_max_momentum_error_mev": 5.498058796053794e-06,
+          "analytic_first_turn_time_ps": 111.42978781855291
+        },
+        {
+          "endpoint": 1,
+          "rows": 26,
+          "reported_steps": 26,
+          "end_reason": 6,
+          "last_time_ps": 20.86855789890281,
+          "covers_20_ps": true,
+          "strictly_increasing_times": true,
+          "finite_values": true,
+          "max_edep_mev": 1.921420258254184e-26,
+          "analytic_outbound_max_position_error_mm": 6.064704294358028e-11,
+          "analytic_outbound_max_momentum_error_mev": 5.547441185746866e-06,
+          "analytic_first_turn_time_ps": 111.42978781855291
+        }
+      ],
+      "event_cpu_seconds": 0.0013149670000000002,
+      "event_wall_seconds": 0.001325148,
+      "geant4_exception_lines": []
+    },
+    "stable_B2_level0": {
+      "execution": {
+        "returncode": 0,
+        "timeout": false
+      },
+      "macro_hash_matches": true,
+      "event_entries": 1,
+      "endpoints": [
+        {
+          "endpoint": 0,
+          "rows": 17,
+          "reported_steps": 17,
+          "end_reason": 6,
+          "last_time_ps": 21.490629581116806,
+          "covers_20_ps": true,
+          "strictly_increasing_times": true,
+          "finite_values": true,
+          "max_edep_mev": 3.7816112624454916e-26
+        },
+        {
+          "endpoint": 1,
+          "rows": 18,
+          "reported_steps": 18,
+          "end_reason": 6,
+          "last_time_ps": 20.868619920753982,
+          "covers_20_ps": true,
+          "strictly_increasing_times": true,
+          "finite_values": true,
+          "max_edep_mev": 3.804115081050086e-26
+        }
+      ],
+      "event_cpu_seconds": 0.0015036119999999997,
+      "event_wall_seconds": 0.001521989,
+      "geant4_exception_lines": []
+    },
+    "stable_B2_level1": {
+      "execution": {
+        "returncode": 0,
+        "timeout": false
+      },
+      "macro_hash_matches": true,
+      "event_entries": 1,
+      "endpoints": [
+        {
+          "endpoint": 0,
+          "rows": 25,
+          "reported_steps": 25,
+          "end_reason": 6,
+          "last_time_ps": 20.682715054424875,
+          "covers_20_ps": true,
+          "strictly_increasing_times": true,
+          "finite_values": true,
+          "max_edep_mev": 1.9168496602244412e-26
+        },
+        {
+          "endpoint": 1,
+          "rows": 26,
+          "reported_steps": 26,
+          "end_reason": 6,
+          "last_time_ps": 20.868557898728263,
+          "covers_20_ps": true,
+          "strictly_increasing_times": true,
+          "finite_values": true,
+          "max_edep_mev": 1.9214202582447015e-26
+        }
+      ],
+      "event_cpu_seconds": 0.0013965109999999996,
+      "event_wall_seconds": 0.001418514,
+      "geant4_exception_lines": []
+    }
+  },
+  "resolution_comparisons": [
+    {
+      "field_tesla": 0,
+      "endpoint": 0,
+      "hermite_max_position_difference_mm": 2.168411894487622e-09,
+      "hermite_max_difference_over_reference": 0.00850542993629785,
+      "linear_max_position_difference_mm": 0.0008579948511917568,
+      "hermite_y_at_20ps_mm": [
+        0.0,
+        0.0
+      ],
+      "interpolation_error_bound_established": false
+    },
+    {
+      "field_tesla": 0,
+      "endpoint": 1,
+      "hermite_max_position_difference_mm": 2.3227135770298554e-09,
+      "hermite_max_difference_over_reference": 0.009110666493638332,
+      "linear_max_position_difference_mm": 0.0008698345242952321,
+      "hermite_y_at_20ps_mm": [
+        0.0,
+        0.0
+      ],
+      "interpolation_error_bound_established": false
+    },
+    {
+      "field_tesla": 2,
+      "endpoint": 0,
+      "hermite_max_position_difference_mm": 9.200961845613591e-07,
+      "hermite_max_difference_over_reference": 3.609006966036216,
+      "linear_max_position_difference_mm": 0.000857994909220856,
+      "hermite_y_at_20ps_mm": [
+        -1.3815840091070726e-05,
+        -1.4715852683568319e-05
+      ],
+      "interpolation_error_bound_established": false
+    },
+    {
+      "field_tesla": 2,
+      "endpoint": 1,
+      "hermite_max_position_difference_mm": 9.042126020950456e-07,
+      "hermite_max_difference_over_reference": 3.546704827707206,
+      "linear_max_position_difference_mm": 0.0008698312055935589,
+      "hermite_y_at_20ps_mm": [
+        -1.3832735049176036e-05,
+        -1.47369461844459e-05
+      ],
+      "interpolation_error_bound_established": false
+    }
+  ],
+  "scope": "STABLE_OUTBOUND_TRANSPORT_ONLY_NO_RECOIL",
+  "verdict": "SMOKE_PASS_B0_ANALYTIC_AGREEMENT_B2_REFINEMENT_UNRESOLVED",
+  "physical_survival_probability": null,
+  "limitations": [
+    "No weak decays, turnaround, crossing, radiation or annihilation tested.",
+    "Interpolation is exploratory; no certified error bound for B2.",
+    "Endpoint data alone do not establish total string energy-momentum conservation.",
+    "Upstream point-production state differs from stretched conformal benchmark."
+  ]
+}

@@ -1,0 +1,39 @@
+name: Rapidity and constrained NG gauge long-time robustness
+on:
+  push:
+    branches: [research/variational-worldsheet]
+    paths:
+      - '.github/workflows/constrained-rapidity.yml'
+      - 'scripts/equidistributed_rapidity_stress.py'
+  workflow_dispatch:
+
+jobs:
+  b2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        nodes: ['5','7']
+        boost: ['0.25','0.45','0.65','0.80']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install QuirkSim
+        run: python -m pip install -e .
+      - name: Stress constrained string in bounded velocity coordinates
+        run: |
+          python -u scripts/equidistributed_rapidity_stress.py \
+            --nodes ${{ matrix.nodes }} \
+            --beta-cm-x ${{ matrix.boost }} --horizon-ps 1000 \
+            --cutoff-fraction 1e-5 \
+            --output results/rapidity_boost_${{ matrix.boost }}_n${{ matrix.nodes }}.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ng-rapidity-2T-b${{ matrix.boost }}-n${{ matrix.nodes }}
+          path: results/rapidity_boost_${{ matrix.boost }}_n${{ matrix.nodes }}.json
+          if-no-files-found: ignore
+          retention-days: 14

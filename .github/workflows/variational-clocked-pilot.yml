@@ -1,0 +1,36 @@
+name: Clocked weak decays on variational worldsheet
+on:
+  push:
+    branches: [research/variational-worldsheet]
+    paths:
+      - '.github/workflows/variational-clocked-pilot.yml'
+      - 'quirksim/worldsheet_experiment.py'
+      - 'tests/test_worldsheet_experiment.py'
+  workflow_dispatch:
+
+jobs:
+  short-decay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: python -m pip install -e '.[test]'
+      - name: Gate regression
+        run: python -m pytest -q tests/test_worldsheet_experiment.py
+      - name: Short-time stochastic weak decay with full canonical impulse
+        run: |
+          python -m quirksim.worldsheet_experiment \
+            --seed 25 --duration-ps 5 --nodes 5 \
+            --b-tesla 2 --beta-cm-x .25 \
+            --output results/worldsheet_clocked_decay_seed25.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: worldsheet-clocked-triplet-seed25
+          path: results/worldsheet_clocked_decay_seed25.json
+          if-no-files-found: ignore
+          retention-days: 14

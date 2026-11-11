@@ -1,0 +1,66 @@
+name: Conformal recoil and radiation-annihilation audit
+on:
+  push:
+    branches: [research/variational-worldsheet]
+    paths:
+      - 'quirksim/conformal*.py'
+      - 'quirksim/radiation_annihilation.py'
+      - 'scripts/validate_conformal_evolution.py'
+      - 'scripts/validate_radiation_annihilation.py'
+      - 'tests/test_conformal*.py'
+      - 'tests/test_radiation_annihilation.py'
+      - '.github/workflows/conformal-evolution.yml'
+  workflow_dispatch:
+
+jobs:
+  radiation-and-quantum-identities:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      OPENBLAS_NUM_THREADS: 1
+      OMP_NUM_THREADS: 1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e '.[test]'
+      - run: python -m pytest -q tests/test_radiation_annihilation.py tests/test_conformal_impulses.py tests/test_conformal_matching.py
+      - run: python scripts/validate_radiation_annihilation.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: radiation-annihilation-audit
+          path: results/radiation_annihilation_audit.json
+  classical-pilots:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - mode: stable
+            seed: 25
+            extra: ''
+          - mode: recoil
+            seed: 25
+            extra: '--max-step-ps 0.025 --ray-angle 0.0001953125 --causal-fraction 0.000390625'
+          - mode: recoil
+            seed: 1
+            extra: '--max-step-ps 0.025 --ray-angle 0.0001953125 --causal-fraction 0.000390625'
+    env:
+      OPENBLAS_NUM_THREADS: 1
+      OMP_NUM_THREADS: 1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e '.[test]'
+      - run: python scripts/validate_conformal_evolution.py --mode ${{ matrix.mode }} --seed ${{ matrix.seed }} ${{ matrix.extra }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: conformal-${{ matrix.mode }}-${{ matrix.seed }}
+          path: results/conformal_evolution.json

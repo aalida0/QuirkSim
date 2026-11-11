@@ -1,0 +1,31 @@
+name: Higher-resolution NG near-contact geometry
+on:
+  push:
+    branches: [research/variational-worldsheet]
+    paths:
+      - '.github/workflows/near-contact-n25.yml'
+  workflow_dispatch:
+
+jobs:
+  high_mesh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e .
+      - name: Resolve 25-vertex core-scale chord with smaller regulator
+        run: |
+          python -u scripts/run_near_contact_shape.py \
+            --nodes 25 --max-step-ps 0.5 \
+            --regulator-cm 1e-10 --pinch-fraction 0.00002 \
+            --output results/near_contact_n25_reg1e-10.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ng-n25-reg1e-10-core-geometry
+          path: results/near_contact_n25_reg1e-10.json
+          if-no-files-found: ignore
+          retention-days: 14

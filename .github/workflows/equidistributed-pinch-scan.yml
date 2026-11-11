@@ -1,0 +1,38 @@
+name: Constrained NG physical pinch-cutoff refinement
+on:
+  push:
+    branches: [research/variational-worldsheet]
+    paths:
+      - '.github/workflows/equidistributed-pinch-scan.yml'
+  workflow_dispatch:
+
+jobs:
+  pinch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        nodes: ['5','7','11']
+        pinch_fraction: ['4e-5','1e-5']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install solver
+        run: python -m pip install -e .
+      - name: Reduce common physical string arclength cutoff across meshes
+        run: |
+          python -u scripts/equidistributed_gauge_stress.py \
+            --nodes ${{ matrix.nodes }} \
+            --max-time-ps 1000 --field-only \
+            --pinch-fraction ${{ matrix.pinch_fraction }} \
+            --output results/pinch_${{ matrix.nodes }}_${{ matrix.pinch_fraction }}.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pinch-${{ matrix.nodes }}nodes-${{ matrix.pinch_fraction }}
+          path: results/pinch_${{ matrix.nodes }}_${{ matrix.pinch_fraction }}.json
+          if-no-files-found: ignore
+          retention-days: 14

@@ -1,0 +1,43 @@
+name: Independent NG spatial quadrature near-contact sensitivity
+on:
+  push:
+    branches: [research/variational-worldsheet]
+    paths:
+      - '.github/workflows/ng-quadrature-refinement.yml'
+      - 'scripts/equidistributed_gauge_stress.py'
+      - 'quirksim/ng_quadrature.py'
+      - 'tests/test_ng_quadrature.py'
+  workflow_dispatch:
+
+jobs:
+  quadrature:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        nodes: ['5','9','13']
+        quadrature_order: ['2','3']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: python -m pip install -e '.[test]'
+      - name: Validate discrete action and canonical derivatives
+        run: python -m pytest -q tests/test_ng_quadrature.py
+      - name: Compare higher-order NG spatial action at same near-contact threshold
+        run: |
+          python -u scripts/equidistributed_gauge_stress.py \
+            --field-only --nodes ${{ matrix.nodes }} \
+            --quadrature-order ${{ matrix.quadrature_order }} \
+            --pinch-fraction 0.00002 --max-time-ps 1000 \
+            --output results/gauss_n${{ matrix.nodes }}_q${{ matrix.quadrature_order }}.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ng-quad-n${{ matrix.nodes }}-q${{ matrix.quadrature_order }}
+          path: results/gauss_n${{ matrix.nodes }}_q${{ matrix.quadrature_order }}.json
+          if-no-files-found: ignore
+          retention-days: 14
