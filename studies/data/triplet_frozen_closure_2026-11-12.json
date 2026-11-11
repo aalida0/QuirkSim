@@ -1,0 +1,2481 @@
+{
+  "status": "PHENOMENOLOGICAL_CLOSURE_DEFINED_PHYSICAL_INCLUSIVE_RATE_UNDETERMINED",
+  "source_sha256": "fa89d41fa8b610a5a905e18ff804a94ff1acdf4c78f6d141074d682ab1379586",
+  "stress_source_sha256": "b461152de8bbc2f572d2ad3bd07560e25bd3cd2ef320aab2213fc9bfad4dfe5f",
+  "archive_sha256": "ca6ff21c5447efa156a65732430be467d27ba993ab8218558e329d6be6773cf1",
+  "cases": [
+    {
+      "case": "benchmark_isotropic_seed1_level8",
+      "point": "benchmark",
+      "mode": "isotropic",
+      "seed": 1,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 53038287,
+        "max_directed_angular_removal": 53038287.0,
+        "angular_gap_to_capture": 2084283048941.7217,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 2084230010655.7217,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 38028326740671.164,
+        "log10_WKB_exponential_ceiling": -33030984918974.72,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "benchmark_collinear_forward_seed1_level8",
+      "point": "benchmark",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 53015841,
+        "max_directed_angular_removal": 53015841.0,
+        "angular_gap_to_capture": 35164613560.64978,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 35111597720.64978,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 545799403018.6097,
+        "log10_WKB_exponential_ceiling": -474075337914.1424,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "benchmark_collinear_backward_seed1_level8",
+      "point": "benchmark",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 53089100,
+        "max_directed_angular_removal": 53089100.0,
+        "angular_gap_to_capture": 35663557923.58599,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 35610468824.58599,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 553883792386.6562,
+        "log10_WKB_exponential_ceiling": -481097349298.3423,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "benchmark_isotropic_seed4_level8",
+      "point": "benchmark",
+      "mode": "isotropic",
+      "seed": 4,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 53044028,
+        "max_directed_angular_removal": 53044028.0,
+        "angular_gap_to_capture": 463297881126.6444,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 463244837099.6444,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 7991437643802.298,
+        "log10_WKB_exponential_ceiling": -6941274542354.524,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "benchmark_collinear_forward_seed4_level8",
+      "point": "benchmark",
+      "mode": "collinear_forward",
+      "seed": 4,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 53016477,
+        "max_directed_angular_removal": 53016477.0,
+        "angular_gap_to_capture": 24246467684.83377,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 24193451208.83377,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 370119918479.09753,
+        "log10_WKB_exponential_ceiling": -321482076475.9069,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "benchmark_collinear_backward_seed4_level8",
+      "point": "benchmark",
+      "mode": "collinear_backward",
+      "seed": 4,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 53089836,
+        "max_directed_angular_removal": 53089836.0,
+        "angular_gap_to_capture": 24556318872.60932,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 24503229037.60932,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 375063339554.0736,
+        "log10_WKB_exponential_ceiling": -325775877465.0796,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "benchmark_isotropic_seed7_level8",
+      "point": "benchmark",
+      "mode": "isotropic",
+      "seed": 7,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 53025301,
+        "max_directed_angular_removal": 53025301.0,
+        "angular_gap_to_capture": 2663493587729.856,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 2663440562429.856,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 49028492945362.61,
+        "log10_WKB_exponential_ceiling": -42585607884406.98,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "benchmark_collinear_forward_seed7_level8",
+      "point": "benchmark",
+      "mode": "collinear_forward",
+      "seed": 7,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 53014925,
+        "max_directed_angular_removal": 53014925.0,
+        "angular_gap_to_capture": 58623490132.910545,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 58570475208.910545,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 930284372966.5493,
+        "log10_WKB_exponential_ceiling": -808034739560.398,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "benchmark_collinear_backward_seed7_level8",
+      "point": "benchmark",
+      "mode": "collinear_backward",
+      "seed": 7,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 53083382,
+        "max_directed_angular_removal": 53083382.0,
+        "angular_gap_to_capture": 63620111560.16178,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 63567028179.16178,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 1013082930310.3251,
+        "log10_WKB_exponential_ceiling": -879952652688.3015,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "tilted_isotropic_seed1_level8",
+      "point": "tilted",
+      "mode": "isotropic",
+      "seed": 1,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 53030972,
+        "max_directed_angular_removal": 53030972.0,
+        "angular_gap_to_capture": 1803875248833.6345,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 1803822217862.6345,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 32739696458422.918,
+        "log10_WKB_exponential_ceiling": -28437339022161.016,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "tilted_collinear_forward_seed1_level8",
+      "point": "tilted",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 53015852,
+        "max_directed_angular_removal": 53015852.0,
+        "angular_gap_to_capture": 30453455596.183235,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 30400439745.183235,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 469668796586.52045,
+        "log10_WKB_exponential_ceiling": -407949133359.3333,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "tilted_collinear_backward_seed1_level8",
+      "point": "tilted",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 53089111,
+        "max_directed_angular_removal": 53089111.0,
+        "angular_gap_to_capture": 30885554391.853065,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 30832465281.853065,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 476628759471.1394,
+        "log10_WKB_exponential_ceiling": -413994480309.4162,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "tilted_isotropic_seed4_level8",
+      "point": "tilted",
+      "mode": "isotropic",
+      "seed": 4,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 53041971,
+        "max_directed_angular_removal": 53041971.0,
+        "angular_gap_to_capture": 361464003103.44037,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 361410961133.44037,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 6175360020298.563,
+        "log10_WKB_exponential_ceiling": -5363849561163.238,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "tilted_collinear_forward_seed4_level8",
+      "point": "tilted",
+      "mode": "collinear_forward",
+      "seed": 4,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 53016483,
+        "max_directed_angular_removal": 53016483.0,
+        "angular_gap_to_capture": 20998059469.258255,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 20945042987.258255,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 318427180938.8013,
+        "log10_WKB_exponential_ceiling": -276582335139.4594,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "tilted_collinear_backward_seed4_level8",
+      "point": "tilted",
+      "mode": "collinear_backward",
+      "seed": 4,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 53089842,
+        "max_directed_angular_removal": 53089842.0,
+        "angular_gap_to_capture": 21266398502.05014,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 21213308661.05014,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 322682570229.4611,
+        "log10_WKB_exponential_ceiling": -280278519314.027,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "tilted_isotropic_seed7_level8",
+      "point": "tilted",
+      "mode": "isotropic",
+      "seed": 7,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 53028989,
+        "max_directed_angular_removal": 53028989.0,
+        "angular_gap_to_capture": 2386405033888.3457,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 2386352004900.3457,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 43754455802577.23,
+        "log10_WKB_exponential_ceiling": -38004637427478.01,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "tilted_collinear_forward_seed7_level8",
+      "point": "tilted",
+      "mode": "collinear_forward",
+      "seed": 7,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 53014948,
+        "max_directed_angular_removal": 53014948.0,
+        "angular_gap_to_capture": 50769450456.807816,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 50716435509.807816,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 800707439832.0228,
+        "log10_WKB_exponential_ceiling": -695485645475.855,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "tilted_collinear_backward_seed7_level8",
+      "point": "tilted",
+      "mode": "collinear_backward",
+      "seed": 7,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 53083400,
+        "max_directed_angular_removal": 53083400.0,
+        "angular_gap_to_capture": 55096650215.12514,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 55043566816.12514,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 872000845208.4058,
+        "log10_WKB_exponential_ceiling": -757410310577.9645,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "faster_isotropic_seed1_level8",
+      "point": "faster",
+      "mode": "isotropic",
+      "seed": 1,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 145422052,
+        "max_directed_angular_removal": 145422052.0,
+        "angular_gap_to_capture": 4164745653460.6006,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 4164600231409.6006,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 77518566130944.31,
+        "log10_WKB_exponential_ceiling": -67331771031442.84,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "faster_collinear_forward_seed1_level8",
+      "point": "faster",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 145379525,
+        "max_directed_angular_removal": 145379525.0,
+        "angular_gap_to_capture": 172574172762.45047,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 172428793238.45047,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 2846359532073.693,
+        "log10_WKB_exponential_ceiling": -2472316476584.6533,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "faster_collinear_backward_seed1_level8",
+      "point": "faster",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 145559549,
+        "max_directed_angular_removal": 145559549.0,
+        "angular_gap_to_capture": 173136245924.8468,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 172990686376.8468,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 2855978877530.452,
+        "log10_WKB_exponential_ceiling": -2480671733887.4365,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "faster_isotropic_seed3_level8",
+      "point": "faster",
+      "mode": "isotropic",
+      "seed": 3,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 145476966,
+        "max_directed_angular_removal": 145476966.0,
+        "angular_gap_to_capture": 1133026198904.4902,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 1132880721939.4902,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 20111510399382.11,
+        "log10_WKB_exponential_ceiling": -17468635978383.027,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "faster_collinear_forward_seed3_level8",
+      "point": "faster",
+      "mode": "collinear_forward",
+      "seed": 3,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 145424985,
+        "max_directed_angular_removal": 145424985.0,
+        "angular_gap_to_capture": 147401244533.23868,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 147255819549.23868,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 2415440779806.1797,
+        "log10_WKB_exponential_ceiling": -2098025204067.8225,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "faster_collinear_backward_seed3_level8",
+      "point": "faster",
+      "mode": "collinear_backward",
+      "seed": 3,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 145555484,
+        "max_directed_angular_removal": 145555484.0,
+        "angular_gap_to_capture": 148194216037.1025,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 148048660554.1025,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 2428954013724.119,
+        "log10_WKB_exponential_ceiling": -2109762649914.2805,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "faster_isotropic_seed4_level8",
+      "point": "faster",
+      "mode": "isotropic",
+      "seed": 4,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 145454972,
+        "max_directed_angular_removal": 145454972.0,
+        "angular_gap_to_capture": 1107013808507.6082,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 1106868353536.6082,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 19632740436399.25,
+        "log10_WKB_exponential_ceiling": -17052781672334.066,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "faster_collinear_forward_seed4_level8",
+      "point": "faster",
+      "mode": "collinear_forward",
+      "seed": 4,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 145379919,
+        "max_directed_angular_removal": 145379919.0,
+        "angular_gap_to_capture": 117356337459.68314,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 117210957541.68314,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 1904927463619.6443,
+        "log10_WKB_exponential_ceiling": -1654598971751.9377,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "faster_collinear_backward_seed4_level8",
+      "point": "faster",
+      "mode": "collinear_backward",
+      "seed": 4,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 145559879,
+        "max_directed_angular_removal": 145559879.0,
+        "angular_gap_to_capture": 117731032740.99112,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 117585472862.99112,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 1911242992449.2493,
+        "log10_WKB_exponential_ceiling": -1660084570393.9346,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "faster_isotropic_seed7_level8",
+      "point": "faster",
+      "mode": "isotropic",
+      "seed": 7,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 145430907,
+        "max_directed_angular_removal": 145430907.0,
+        "angular_gap_to_capture": 5652158045737.779,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 5652012614831.779,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 106346441486473.27,
+        "log10_WKB_exponential_ceiling": -92371345415244.78,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "faster_collinear_forward_seed7_level8",
+      "point": "faster",
+      "mode": "collinear_forward",
+      "seed": 7,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 145378520,
+        "max_directed_angular_removal": 145378520.0,
+        "angular_gap_to_capture": 339918267525.3869,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 339772889006.3869,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 5761222651751.671,
+        "log10_WKB_exponential_ceiling": -5004134413343.541,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "faster_collinear_backward_seed7_level8",
+      "point": "faster",
+      "mode": "collinear_backward",
+      "seed": 7,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 145554378,
+        "max_directed_angular_removal": 145554378.0,
+        "angular_gap_to_capture": 341232482241.71124,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 341086927864.71124,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 5784319874047.312,
+        "log10_WKB_exponential_ceiling": -5024196405724.119,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "faster_isotropic_seed8_level8",
+      "point": "faster",
+      "mode": "isotropic",
+      "seed": 8,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 145440852,
+        "max_directed_angular_removal": 145440852.0,
+        "angular_gap_to_capture": 5617109743894.48,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 5616964303043.48,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 105663822700718.31,
+        "log10_WKB_exponential_ceiling": -91778430271451.03,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "faster_collinear_forward_seed8_level8",
+      "point": "faster",
+      "mode": "collinear_forward",
+      "seed": 8,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 145363125,
+        "max_directed_angular_removal": 145363125.0,
+        "angular_gap_to_capture": 161021832109.9962,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 160876468985.9962,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 2648283269513.695,
+        "log10_WKB_exponential_ceiling": -2300269620932.9995,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "faster_collinear_backward_seed8_level8",
+      "point": "faster",
+      "mode": "collinear_backward",
+      "seed": 8,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 145559709,
+        "max_directed_angular_removal": 145559709.0,
+        "angular_gap_to_capture": 162142114975.26776,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 161996555267.26776,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 2667436137014.4478,
+        "log10_WKB_exponential_ceiling": -2316905590269.402,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "zero_field_isotropic_seed1_level8",
+      "point": "zero_field",
+      "mode": "isotropic",
+      "seed": 1,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 53038211,
+        "max_directed_angular_removal": 53038211.0,
+        "angular_gap_to_capture": 2053876964618.669,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 2053823926408.669,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 37453580968097.63,
+        "log10_WKB_exponential_ceiling": -32531767083922.906,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "zero_field_collinear_forward_seed1_level8",
+      "point": "zero_field",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "baseline_status": "CAPTURED",
+      "capture_time_ps": 150995599107.94998,
+      "one_ns_post_handoff": {
+        "status": "HORIZON_REACHED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 1.0,
+          "spin_status": "UNSPECIFIED"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 1.0,
+          "spin_status": "SPECIFIED_SINGLET_FRACTION_OTHER_SECTOR_UNCALCULATED"
+        },
+        "0.25": {
+          "lower": 0.25,
+          "upper": 1.0,
+          "spin_status": "SPECIFIED_SINGLET_FRACTION_OTHER_SECTOR_UNCALCULATED"
+        },
+        "1.0": {
+          "lower": 1.0,
+          "upper": 1.0,
+          "spin_status": "SPECIFIED_SINGLET_FRACTION_OTHER_SECTOR_UNCALCULATED"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 1.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 53015918,
+        "max_directed_angular_removal": 53015918.0,
+        "angular_gap_to_capture": 0.0,
+        "reachable_by_any_bounded_step_sequence": true,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 1.0,
+        "deterministic_remaining_L_lower_bound": 0.0,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "NOT_IN_LARGE_L_DOMAIN",
+        "action_lower_bound": null,
+        "log10_WKB_exponential_ceiling": null
+      }
+    },
+    {
+      "case": "zero_field_collinear_backward_seed1_level8",
+      "point": "zero_field",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "baseline_status": "CAPTURED",
+      "capture_time_ps": 151311852543.32654,
+      "one_ns_post_handoff": {
+        "status": "HORIZON_REACHED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 1.0,
+          "spin_status": "UNSPECIFIED"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 1.0,
+          "spin_status": "SPECIFIED_SINGLET_FRACTION_OTHER_SECTOR_UNCALCULATED"
+        },
+        "0.25": {
+          "lower": 0.25,
+          "upper": 1.0,
+          "spin_status": "SPECIFIED_SINGLET_FRACTION_OTHER_SECTOR_UNCALCULATED"
+        },
+        "1.0": {
+          "lower": 1.0,
+          "upper": 1.0,
+          "spin_status": "SPECIFIED_SINGLET_FRACTION_OTHER_SECTOR_UNCALCULATED"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 1.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 53089179,
+        "max_directed_angular_removal": 53089179.0,
+        "angular_gap_to_capture": 0.0,
+        "reachable_by_any_bounded_step_sequence": true,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 1.0,
+        "deterministic_remaining_L_lower_bound": 0.0,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "NOT_IN_LARGE_L_DOMAIN",
+        "action_lower_bound": null,
+        "log10_WKB_exponential_ceiling": null
+      }
+    },
+    {
+      "case": "zero_field_isotropic_seed4_level8",
+      "point": "zero_field",
+      "mode": "isotropic",
+      "seed": 4,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 53043952,
+        "max_directed_angular_removal": 53043952.0,
+        "angular_gap_to_capture": 444376924060.1488,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 444323880109.1488,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 7652776311312.944,
+        "log10_WKB_exponential_ceiling": -6647117046486.267,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "zero_field_collinear_forward_seed4_level8",
+      "point": "zero_field",
+      "mode": "collinear_forward",
+      "seed": 4,
+      "baseline_status": "CAPTURED",
+      "capture_time_ps": 150998205679.13235,
+      "one_ns_post_handoff": {
+        "status": "HORIZON_REACHED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 1.0,
+          "spin_status": "UNSPECIFIED"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 1.0,
+          "spin_status": "SPECIFIED_SINGLET_FRACTION_OTHER_SECTOR_UNCALCULATED"
+        },
+        "0.25": {
+          "lower": 0.25,
+          "upper": 1.0,
+          "spin_status": "SPECIFIED_SINGLET_FRACTION_OTHER_SECTOR_UNCALCULATED"
+        },
+        "1.0": {
+          "lower": 1.0,
+          "upper": 1.0,
+          "spin_status": "SPECIFIED_SINGLET_FRACTION_OTHER_SECTOR_UNCALCULATED"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 1.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 53016522,
+        "max_directed_angular_removal": 53016522.0,
+        "angular_gap_to_capture": 0.0,
+        "reachable_by_any_bounded_step_sequence": true,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 1.0,
+        "deterministic_remaining_L_lower_bound": 0.0,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "NOT_IN_LARGE_L_DOMAIN",
+        "action_lower_bound": null,
+        "log10_WKB_exponential_ceiling": null
+      }
+    },
+    {
+      "case": "zero_field_collinear_backward_seed4_level8",
+      "point": "zero_field",
+      "mode": "collinear_backward",
+      "seed": 4,
+      "baseline_status": "CAPTURED",
+      "capture_time_ps": 151314888595.52792,
+      "one_ns_post_handoff": {
+        "status": "HORIZON_REACHED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 1.0,
+          "spin_status": "UNSPECIFIED"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 1.0,
+          "spin_status": "SPECIFIED_SINGLET_FRACTION_OTHER_SECTOR_UNCALCULATED"
+        },
+        "0.25": {
+          "lower": 0.25,
+          "upper": 1.0,
+          "spin_status": "SPECIFIED_SINGLET_FRACTION_OTHER_SECTOR_UNCALCULATED"
+        },
+        "1.0": {
+          "lower": 1.0,
+          "upper": 1.0,
+          "spin_status": "SPECIFIED_SINGLET_FRACTION_OTHER_SECTOR_UNCALCULATED"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 1.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 53089882,
+        "max_directed_angular_removal": 53089882.0,
+        "angular_gap_to_capture": 0.0,
+        "reachable_by_any_bounded_step_sequence": true,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 1.0,
+        "deterministic_remaining_L_lower_bound": 0.0,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "NOT_IN_LARGE_L_DOMAIN",
+        "action_lower_bound": null,
+        "log10_WKB_exponential_ceiling": null
+      }
+    },
+    {
+      "case": "zero_field_isotropic_seed7_level8",
+      "point": "zero_field",
+      "mode": "isotropic",
+      "seed": 7,
+      "baseline_status": "EMISSION_GATE_CLOSED",
+      "capture_time_ps": null,
+      "one_ns_post_handoff": {
+        "status": "EMISSION_GATE_CLOSED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "0.25": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 53025302,
+        "max_directed_angular_removal": 53025302.0,
+        "angular_gap_to_capture": 2709686159792.8643,
+        "reachable_by_any_bounded_step_sequence": false,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 0.0,
+        "deterministic_remaining_L_lower_bound": 2709633134491.8643,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "SPECIFIED_CENTRAL_WKB_DIAGNOSTIC",
+        "action_lower_bound": 49909620657243.48,
+        "log10_WKB_exponential_ceiling": -43350945690650.77,
+        "attractive_coulomb_ceiling": 0.2
+      }
+    },
+    {
+      "case": "zero_field_collinear_forward_seed7_level8",
+      "point": "zero_field",
+      "mode": "collinear_forward",
+      "seed": 7,
+      "baseline_status": "CAPTURED",
+      "capture_time_ps": 150991902162.5489,
+      "one_ns_post_handoff": {
+        "status": "HORIZON_REACHED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 1.0,
+          "spin_status": "UNSPECIFIED"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 1.0,
+          "spin_status": "SPECIFIED_SINGLET_FRACTION_OTHER_SECTOR_UNCALCULATED"
+        },
+        "0.25": {
+          "lower": 0.25,
+          "upper": 1.0,
+          "spin_status": "SPECIFIED_SINGLET_FRACTION_OTHER_SECTOR_UNCALCULATED"
+        },
+        "1.0": {
+          "lower": 1.0,
+          "upper": 1.0,
+          "spin_status": "SPECIFIED_SINGLET_FRACTION_OTHER_SECTOR_UNCALCULATED"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 1.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 53015062,
+        "max_directed_angular_removal": 53015062.0,
+        "angular_gap_to_capture": 0.0,
+        "reachable_by_any_bounded_step_sequence": true,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 1.0,
+        "deterministic_remaining_L_lower_bound": 0.0,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "NOT_IN_LARGE_L_DOMAIN",
+        "action_lower_bound": null,
+        "log10_WKB_exponential_ceiling": null
+      }
+    },
+    {
+      "case": "zero_field_collinear_backward_seed7_level8",
+      "point": "zero_field",
+      "mode": "collinear_backward",
+      "seed": 7,
+      "baseline_status": "CAPTURED",
+      "capture_time_ps": 151287381045.65994,
+      "one_ns_post_handoff": {
+        "status": "HORIZON_REACHED",
+        "annihilation_interval": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "spin_status": "ZERO_POST_CAPTURE_AGE"
+        }
+      },
+      "baseline_annihilation_intervals_by_spin": {
+        "None": {
+          "lower": 0.0,
+          "upper": 1.0,
+          "spin_status": "UNSPECIFIED"
+        },
+        "0.0": {
+          "lower": 0.0,
+          "upper": 1.0,
+          "spin_status": "SPECIFIED_SINGLET_FRACTION_OTHER_SECTOR_UNCALCULATED"
+        },
+        "0.25": {
+          "lower": 0.25,
+          "upper": 1.0,
+          "spin_status": "SPECIFIED_SINGLET_FRACTION_OTHER_SECTOR_UNCALCULATED"
+        },
+        "1.0": {
+          "lower": 1.0,
+          "upper": 1.0,
+          "spin_status": "SPECIFIED_SINGLET_FRACTION_OTHER_SECTOR_UNCALCULATED"
+        }
+      },
+      "closure_family_annihilation_interval": {
+        "lower": 0.0,
+        "upper": 1.0
+      },
+      "closure_paths_checked": 20,
+      "unit_emission_budget": {
+        "max_emissions": 53083512,
+        "max_directed_angular_removal": 53083512.0,
+        "angular_gap_to_capture": 0.0,
+        "reachable_by_any_bounded_step_sequence": true,
+        "unbiased_vector_walk_low_L_hitting_probability_upper_bound": 1.0,
+        "deterministic_remaining_L_lower_bound": 0.0,
+        "scope": "CONDITIONAL_NECESSARY_LOW_L_REACHABILITY_NOT_ANNIHILATION"
+      },
+      "hard_annihilation_barrier": {
+        "status": "NOT_IN_LARGE_L_DOMAIN",
+        "action_lower_bound": null,
+        "log10_WKB_exponential_ceiling": null
+      }
+    }
+  ],
+  "prescription": {
+    "scope": "post-first-return, both-neutral, vacuum Dirac triplet; central semiclassical reduction",
+    "mass_gev": 225.0,
+    "lambda_tension_ev": 774.0,
+    "n_ic": 2,
+    "alpha_ic": 0.04,
+    "mean_glueball_energy_loss": "epsilon*Lambda per full signed radial period",
+    "epsilon_scenarios": [
+      0.0,
+      0.01,
+      0.1,
+      1.0
+    ],
+    "gate_radius_in_inverse_lambda": [
+      1.0,
+      10.0
+    ],
+    "angular_envelopes": [
+      "L conserved",
+      "maximal downward 1 hbar per effective Lambda emission; not a preferred drift law"
+    ],
+    "capture": "absorbing matching boundary at E<=8 Lambda and L<=1",
+    "capture_threshold_sensitivities": "selected E=1,32 Lambda and L=0,10 cards; see source stress artifact",
+    "capture_matching_efficiency": 1.0,
+    "capture_efficiency_status": "declared idealization, not calculated overlap",
+    "capture_spin": "unspecified by default; no automatic 1/4 population",
+    "specified_singlet_width_gev": 1.9750047986576727e-05,
+    "binding_energy_gev": 0.05070835399682716,
+    "unmodeled_spin_sector": "annihilation probability retained in [0,1] after capture",
+    "excited_constant_hazard": 0.0,
+    "horizon_ps": 10000000000000.0
+  },
+  "release": {
+    "conditional_scenario_tables": true,
+    "unique_physical_annihilation_probability": false,
+    "inclusive_population": false,
+    "uncertainty_band_interpretation": false
+  },
+  "missing_physical_inputs": [
+    "quantum occupation at matching and spin-one annihilation/transition rates",
+    "off-gate emission or large-angular/coherent radiation not bounded by this prescription",
+    "mixed-charge and pre-first-return evolution not covered by this closure"
+  ]
+}
