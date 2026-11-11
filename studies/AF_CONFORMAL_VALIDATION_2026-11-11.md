@@ -16,22 +16,37 @@ git switch research/variational-worldsheet
 git pull --ff-only origin research/variational-worldsheet
 source .venv/bin/activate
 python -m pip install -e '.[test]'
-python scripts/af_conformal_validation.py prepare --suite remaining --submit
+mkdir -p results
+python -u scripts/validate_conformal_evolution.py \
+  --mode recoil --model triplet --seed 1 --duration-ps 1000 \
+  --max-step-ps 0.025 --ray-angle 0.0001953125 \
+  --causal-fraction 0.000390625 --max-refinements 0 \
+  --output results/conformal_triplet_seed1_strict.json
 ```
 
 If the research branch is not present locally, `git switch` should create it
 from the uniquely named remote tracking branch after fetching. The helper
 requires this branch and refuses tracked uncommitted changes. No Athena or
-Key4hep environment is required. Use HTCondor rather than running the
-1,000 ps solver on the login CPU.
+Key4hep environment is required. Run this single pilot directly on an AF compute node. Condor is reserved
+for the parallel convergence batch below. Seed 1 has since been reported
+PASS by the user; it need not be rerun just to recover the interruption.
 
-The helper prints its exact pinned commit, manifest and result directory.
+The parallel submission helper prints its exact pinned commit, manifest and result directory.
 It archives committed source under `~/QuirkSim/condor/`, with Condor logs
 there, and writes physics output under
 `/data/aalida/QuirkSim/conformal_validation/`. Every invocation has a unique
 directory. It records the Python executable and dependency versions; the
-shared `.venv` must remain available and unchanged while jobs run. This is
-a shared-filesystem submission, with no Condor file transfers.
+shared `.venv` must remain available and unchanged while jobs run. Source and manifest are transferred into Condor scratch; output is written
+there and transferred back as a `result/` directory under each case. Worker
+code does not read home source paths or write `/data` directly. The Python
+runtime still uses the absolute shared AF `.venv` path. The wrapper checks
+that it exists; this change does not make that runtime portable to workers
+without AF home access. A missing runtime is reported in `bootstrap_error.txt`.
+
+The initial submission used `should_transfer_files = NO`, which imposed a
+FileSystemDomain match and rejected all advertised slots (cluster 4252968).
+The corrected helper uses `YES`, explicit inputs and output directory
+transfer. Do not merely remove the scheduler requirement from the old job.
 
 Each job requests **one CPU, 4 GB memory and 2 GB scratch disk**; BLAS thread
 counts are fixed to one. A job is removed after eight running hours. Site
@@ -69,7 +84,7 @@ condor_q
 
 The submission output gives exact paths; inspect `scheduler.log` and each
 job's `.out`/`.err` under its home directory. Under the printed result
-directory each case contains:
+directory each case contains a transferred `result/` folder with:
 
 - `provenance.json`: source commit, integration settings and command;
 - `progress.log`: flushed progress and solver errors;

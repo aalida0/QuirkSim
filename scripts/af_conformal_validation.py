@@ -1,4 +1,4 @@
-"""Pinned-source HTCondor pilots on the shared UChicago AF filesystem.
+"""Pinned-source HTCondor pilots with explicit input/output transfers.
 
 No physics ensemble is implied: these are selected numerical validation cases.
 Preparation uses only the standard library and does not run on the login CPU.
@@ -58,6 +58,8 @@ def prepare(a):
         raise ValueError(f"Missing {python}; install QuirkSim in .venv first")
     if a.submit and not shutil.which("condor_submit"):
         raise ValueError("condor_submit is unavailable in this shell")
+    if a.submit and a.suite == "remaining":
+        raise ValueError("Single pilots run directly on the compute node; Condor is for the parallel convergence suite")
     stamp = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
     sha = git(root, "rev-parse", "HEAD")
     name = f"conformal_{a.suite}_{stamp}_{sha[:8]}"
@@ -78,17 +80,37 @@ def prepare(a):
                     output_dir=str(output), work_dir=str(work),
                     duration_ps=1000., cases=cases(a.suite),
                     scope="SELECTED_NUMERICAL_PILOTS_PHYSICAL_SURVIVAL_UNKNOWN")
+    manifest['transport'] = 'CONDOR_TRANSFER_WITH_SHARED_AF_PYTHON_RUNTIME'
     manifest_path = work / "manifest.json"
     manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
     shutil.copy2(manifest_path, output / "manifest.json")
     shutil.copy2(work / "requirements.freeze.txt", output / "requirements.freeze.txt")
     (work / "cases.txt").write_text("".join(c["name"] + "\n" for c in manifest["cases"]))
+    for case in manifest['cases']:
+        (output / case['name']).mkdir()
+    worker = work / "worker.sh"
+    worker.write_text(f'''#!/bin/bash
+set -eu
+mkdir -p result source
+if [ ! -x {python} ]; then
+    echo "AF Python runtime unavailable: {python}. Source transfer is enabled, but this job still requires the AF virtualenv on the worker." | tee result/bootstrap_error.txt >&2
+    exit 69
+fi
+tar -xf source.tar -C source
+exec {python} -u source/scripts/af_conformal_validation.py run manifest.json "$1" --sandbox
+''')
+    worker.chmod(0o755)
     submit = work / "pilot.sub"
     submit.write_text(f"""universe = vanilla
-executable = {python}
-arguments = {source}/scripts/af_conformal_validation.py run {manifest_path} $(case)
-initialdir = {source}
-should_transfer_files = NO
+executable = {worker}
+arguments = $(case)
+initialdir = {output}/$(case)
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT
+transfer_input_files = {archive},{manifest_path}
+transfer_output_files = result
+stream_output = True
+stream_error = True
 getenv = False
 request_cpus = 1
 request_memory = 4GB
@@ -103,6 +125,16 @@ queue case from {work}/cases.txt
     print(f"Pinned source: {sha}\nManifest: {manifest_path}\nResults: {output}", flush=True)
     print(f"Each case uses 1 CPU; eight-hour running limit. Cases: {len(manifest['cases'])}")
     if a.submit:
+        dry = subprocess.run(["condor_submit", "-dry-run", str(work / "job.ads"), str(submit)],
+                             text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        (work / "dry-run.txt").write_text(dry.stdout)
+        if dry.returncode:
+            print(dry.stdout, end="")
+            raise SystemExit(dry.returncode)
+        requirements = [line for line in (work / "job.ads").read_text().splitlines()
+                        if line.lower().startswith("requirements =")]
+        if not requirements or any("filesystemdomain" in line.lower() for line in requirements):
+            raise ValueError("Dry-run Requirements missing or still constrained by FileSystemDomain; see job.ads")
         result = subprocess.run(["condor_submit", str(submit)], text=True,
                                 stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         (work / "submission.txt").write_text(result.stdout)
@@ -116,12 +148,13 @@ queue case from {work}/cases.txt
 def run(a):
     manifest = json.loads(Path(a.manifest).read_text())
     case = next(c for c in manifest["cases"] if c["name"] == a.case)
-    destination = Path(manifest["output_dir"]) / case["name"]
+    destination = (Path.cwd() / "result" if a.sandbox
+                   else Path(manifest["output_dir"]) / case["name"])
     destination.mkdir(exist_ok=True)
     result_path = destination / "evolution.json"
     if (destination / "completion.json").exists() or result_path.exists():
         raise ValueError("Result already exists; prepare a new submission instead of overwriting")
-    source = Path(manifest["source_dir"])
+    source = Path.cwd() / "source" if a.sandbox else Path(manifest["source_dir"])
     env = dict(os.environ, PYTHONPATH=str(source), OPENBLAS_NUM_THREADS="1",
                OMP_NUM_THREADS="1", MKL_NUM_THREADS="1", PYTHONUNBUFFERED="1")
     command = [manifest["python"], "-u", str(source / "scripts/validate_conformal_evolution.py"),
@@ -154,6 +187,8 @@ def summarize(a):
     rows = []
     for case in manifest["cases"]:
         directory = output / case["name"]
+        if (directory / 'result').is_dir():
+            directory = directory / 'result'
         completion = directory / "completion.json"
         path = directory / "evolution.json"
         row = dict(case=case["name"], status="INCOMPLETE", source_commit=manifest["source_commit"])
@@ -185,6 +220,7 @@ def main():
     p = sub.add_parser("run")
     p.add_argument("manifest")
     p.add_argument("case")
+    p.add_argument("--sandbox", action="store_true")
     p = sub.add_parser("summarize")
     p.add_argument("output_dir")
     a = parser.parse_args()
