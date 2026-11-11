@@ -167,6 +167,7 @@ class ConformalString:
         self.t = 0.
         self.emissions = []
         self.reflections = []
+        self.last_advance_diagnostic = None
 
     @classmethod
     def radial(cls, mass_gev, lambda_ev, length_cm=.1, beta=.4):
@@ -238,21 +239,52 @@ class ConformalString:
                     (not np.isfinite(matching_radius_cm) or matching_radius_cm <= 0))):
             raise ValueError('invalid time/step/cutoff')
         steps = 0
+        rejected_ray_trials = 0
+        event_root_truncations = 0
+        min_accepted_step_ps = None
+        self.last_advance_diagnostic = None
+        def stop(reason, state):
+            # Capture only at a stop; do not modify trial steps, histories or state.
+            diagnostic = {'reason': reason, 'time_ps': float(self.t),
+                'target_ps': float(target_ps), 'attempted_steps': int(state['steps']),
+                'max_steps': int(max_steps),
+                'rejected_ray_trials': rejected_ray_trials,
+                'event_root_truncations': event_root_truncations,
+                'min_accepted_step_ps': min_accepted_step_ps,
+                'null_coordinate_ulps_ps': [float(np.spacing(self.a.z[-1])),
+                                            float(np.spacing(self.b.z[-1]))],
+                'trial_context': ('last accepted step' if reason == 'STOP_STEP_BUDGET'
+                                  else 'rejected or unresolved trial'),
+                'energy_coordinate_interval_ps': float(self.y[1]-self.y[0]),
+                'ray_history_samples': [len(self.a.z), len(self.b.z)],
+                'last_outgoing_null_coordinates_ps': [self.a.z[-1], self.b.z[-1]]}
+            for key in ('h', 'angle', 'rejections', 'az', 'bz'):
+                if key in state:
+                    diagnostic[key] = float(state[key])
+            if 'caps' in state:
+                diagnostic['incoming_jump_caps_ps'] = state['caps']
+            if 'roots' in state:
+                diagnostic['event_roots_ps'] = state['roots']
+            if 'az' in state:
+                diagnostic['proposed_null_increments_ps'] = [
+                    float(state['az']-self.a.z[-1]), float(state['bz']-self.b.z[-1])]
+            self.last_advance_diagnostic = diagnostic
+            return reason
         while self.t < target_ps:
             steps += 1
             if steps > max_steps:
-                return 'STOP_STEP_BUDGET'
+                return stop('STOP_STEP_BUDGET', locals())
             if matching_radius_cm is not None and np.linalg.norm(self.y[5:8]-self.y[2:5]) <= matching_radius_cm*(1+1e-9):
                 return 'QUANTUM_MATCHING_SURFACE'
             if target_ps-self.t <= 4*np.spacing(max(1., abs(target_ps))):
                 return 'TARGET_REACHED'
             interval = self.y[1]-self.y[0]
             if interval <= minimum_interval_ps:
-                return 'STOP_ENERGY_COORDINATE_COLLAPSE'
+                return stop('STOP_ENERGY_COORDINATE_COLLAPSE', locals())
             # The interval cannot shrink by more than 2h. Avoid crossing cutoff.
             h = min(max_step_ps, target_ps-self.t, causal_fraction*interval)
             if self.t+h == self.t:
-                return 'STOP_FLOATING_POINT_STEP'
+                return stop('STOP_FLOATING_POINT_STEP', locals())
             t, y = self.t, self.y
             caps = [self.a.next_jump(t+y[0]), self.b.next_jump(t-y[1])]
             first_stage = self._rhs(t, y, caps)
@@ -288,6 +320,7 @@ class ConformalString:
                         roots.append(brentq(lambda dt: argument(dt)-cap, 0., h,
                                             xtol=1e-13, rtol=1e-13))
                 if roots:
+                    event_root_truncations += 1
                     h = min(roots)
                     new = trial(h)
                 tn = t+h
@@ -301,10 +334,11 @@ class ConformalString:
                     break
                 h /= 2
                 rejections += 1
+                rejected_ray_trials += 1
                 if rejections > 64:
-                    return 'STOP_UNRESOLVED_NULL_RAY'
+                    return stop('STOP_UNRESOLVED_NULL_RAY', locals())
                 if t+h == t:
-                    return 'STOP_FLOATING_POINT_RAY_RESOLUTION'
+                    return stop('STOP_FLOATING_POINT_RAY_RESOLUTION', locals())
             matched = False
             if matching_radius_cm is not None:
                 from scipy.optimize import brentq, minimize_scalar
@@ -328,7 +362,8 @@ class ConformalString:
                         matched = True
             az, bz = tn+new[1], tn-new[0]
             if az <= self.a.z[-1] or bz <= self.b.z[-1]:
-                return 'STOP_FLOATING_POINT_CHARACTERISTIC_LABEL'
+                return stop('STOP_FLOATING_POINT_CHARACTERISTIC_LABEL', locals())
+            min_accepted_step_ps = h if min_accepted_step_ps is None else min(min_accepted_step_ps, h)
             self.a.append(az, aout)
             self.b.append(bz, bout)
             self.t, self.y = tn, new
@@ -473,3 +508,4 @@ class ConformalString:
                   'matching': 'LOCAL_MASSIVE_BOUNDARY_WITH_CAUSAL_NULL_RAY_JUMP'}
         self.emissions.append(record)
         return record
+

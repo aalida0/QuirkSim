@@ -34,6 +34,8 @@ def main():
     p.add_argument('--ray-angle', type=float, default=.00078125)
     p.add_argument('--causal-fraction', type=float, default=.0015625)
     p.add_argument('--max-refinements', type=int, choices=range(4), default=1)
+    p.add_argument('--max-steps-per-advance', type=int, default=200000)
+    p.add_argument('--stop-on-closure-failure', action='store_true')
     p.add_argument('--output', default='results/conformal_evolution.json')
     a = p.parse_args()
     last_print = [-50.]
@@ -51,7 +53,9 @@ def main():
                    lambda_ev=a.lambda_ev if a.lambda_ev is not None else (774. if a.model == 'triplet' else 2154.),
                    mode=a.mode, seed=a.seed, duration_ps=a.duration_ps,
                    max_step_ps=a.max_step_ps/factor, max_ray_angle=a.ray_angle/factor,
-                   causal_fraction=a.causal_fraction/factor, progress=progress)
+                   causal_fraction=a.causal_fraction/factor, progress=progress,
+                   max_steps_per_advance=a.max_steps_per_advance,
+                   closure_stop_in_reference_units=.1 if a.stop_on_closure_failure else None)
         passed = validate(r)
         attempts.append({'refinement': refinement, 'integration': r['integration'],
                          'validation': r['numerical_validation'], 'termination': r['termination']})
@@ -60,9 +64,10 @@ def main():
         if passed or r['termination'] not in ('TARGET_REACHED', 'QUANTUM_MATCHING_SURFACE'):
             break
     print(json.dumps({k: r[k] for k in ['mode', 'seed', 'termination',
-                    'energy_with_weak_products_residual_gev', 'numerical_validation']}), flush=True)
+                    'energy_with_weak_products_residual_gev', 'last_advance_diagnostic', 'numerical_validation']}), flush=True)
     raise SystemExit(0 if passed else 1)
 
 
 if __name__ == '__main__':
     main()
+

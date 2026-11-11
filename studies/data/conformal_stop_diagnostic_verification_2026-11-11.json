@@ -1,0 +1,29 @@
+{
+  "scope": "ENGINEERING_AND_SELECTED_CLASSICAL_DIAGNOSTICS_ONLY",
+  "unchanged_default_trajectory": {
+    "comparison": "exact serialized original vs instrumented, 15 ps triplet seed25",
+    "passed": true,
+    "decays": 2
+  },
+  "early_doublet_reproducer": {
+    "termination": "STOP_SAMPLED_CLOSURE_TOLERANCE",
+    "last_advance_diagnostic": {
+      "reason": "STOP_SAMPLED_CLOSURE_TOLERANCE",
+      "time_ps": 78.23578739115479,
+      "meaning": "first failed saved observation, not exact crossing time",
+      "chord_closure_error_cm": 1.3272624656713997e-09
+    },
+    "numerical_validation": {
+      "status": "FAIL",
+      "max_chord_closure_error_cm": 1.3272624656713997e-09,
+      "max_closure_over_confinement_reference": 0.14488253682404786,
+      "energy_tolerance_gev": 1e-07,
+      "momentum_tolerance_gev": 5e-06,
+      "closure_tolerance_in_confinement_units": 0.1,
+      "meaning": "SELECTED_CLASSICAL_EVOLUTION_ONLY_NOT_QUANTUM_SURVIVAL"
+    }
+  },
+  "focused_tests_passed": 21,
+  "full_test_suite_rerun": false,
+  "physical_survival_probability": null
+}

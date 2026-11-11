@@ -15,12 +15,15 @@ def evolve(representation='triplet', mass_gev=225., lambda_ev=774., seed=25,
            duration_ps=1000., mode='recoil', max_step_ps=.1,
            max_ray_angle=.003125, causal_fraction=.00625,
            matching_radius_in_confinement_units=8., observation_step_ps=5.,
-           progress=None):
+           progress=None, max_steps_per_advance=200000,
+           closure_stop_in_reference_units=None):
     if (mode not in ('stable', 'recoil') or duration_ps <= 0
             or not np.isfinite(duration_ps) or observation_step_ps <= 0
             or not np.isfinite(matching_radius_in_confinement_units)
             or matching_radius_in_confinement_units <= 0):
         raise ValueError('invalid evolution inputs')
+    if closure_stop_in_reference_units is not None and (not np.isfinite(closure_stop_in_reference_units) or closure_stop_in_reference_units <= 0):
+        raise ValueError('positive closure stop required')
     b = benchmark(representation, mass_gev)
     solver = ConformalString.boosted_radial(b['charged_mass_gev'], lambda_ev,
                                            track_photons=True)
@@ -48,8 +51,16 @@ def evolve(representation='triplet', mass_gev=225., lambda_ev=774., seed=25,
             delta = observation_step_ps
         target = min(duration_ps, solver.t+delta)
         status = solver.advance(target, max_step_ps, causal_fraction=causal_fraction,
-                                 max_ray_angle=max_ray_angle, matching_radius_cm=radius)
+                                 max_ray_angle=max_ray_angle, matching_radius_cm=radius,
+                                 max_steps=max_steps_per_advance)
         records.append(solver.snapshot(samples=9))
+        if (status == 'TARGET_REACHED' and closure_stop_in_reference_units is not None
+                and records[-1]['chord_closure_error_cm'] >=
+                closure_stop_in_reference_units*HBARC_GEV_CM/(lambda_ev*1e-9)):
+            status = 'STOP_SAMPLED_CLOSURE_TOLERANCE'
+            solver.last_advance_diagnostic = {'reason': status, 'time_ps': solver.t,
+                'meaning': 'first failed saved observation, not exact crossing time',
+                'chord_closure_error_cm': records[-1]['chord_closure_error_cm']}
         if progress is not None:
             progress({'time_ps': solver.t, 'decays': len(solver.emissions),
                       'reflections': len(solver.reflections), 'status': status,
@@ -71,6 +82,9 @@ def evolve(representation='triplet', mass_gev=225., lambda_ev=774., seed=25,
             'duration_requested_ps': duration_ps, 'termination': status,
             'integration': {'max_step_ps': max_step_ps, 'max_ray_angle': max_ray_angle,
                             'causal_fraction': causal_fraction},
+            'last_advance_diagnostic': solver.last_advance_diagnostic,
+            'max_steps_per_advance': max_steps_per_advance,
+            'closure_stop_in_reference_units': closure_stop_in_reference_units,
             'matching_radius_cm': radius, 'weak_plan': plan,
             'initial': initial, 'final': final, 'decays': solver.emissions,
             'wave_reflections': solver.reflections, 'records': records,
@@ -121,3 +135,4 @@ def quantum_handoff(classical, quantum_card):
                             'fixed pair boost after matching', 'isotropic CM mean radiation',
                             'weak sink ends the modeled flavor sector'],
             'physical_prediction_status': 'UNKNOWN_UNTIL_QUANTUM_CARD_IS_MATCHED'}
+
