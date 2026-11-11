@@ -30,6 +30,9 @@ def check(output=None):
         close=Path(tmp)/'close'
         subprocess.run(['g++','-std=c++17','-O2','-Wall','-Wextra','-Werror','-pedantic',str(here/'native_close_bound_check.cc'),'-o',str(close)],check=True)
         subprocess.run([str(close)],check=True)
+        direction=Path(tmp)/'direction'
+        subprocess.run(['g++','-std=c++17','-O2','-Wall','-Wextra','-Werror','-pedantic',str(here/'native_direction_check.cc'),'-o',str(direction)],check=True)
+        subprocess.run([str(direction)],check=True)
     reference=benchmark('triplet',225.)
     assert abs(reference['charged_mass_gev']-225.1571702763212)<1e-12
     rates=json.loads((here/'triplet_pion_rate_reference.json').read_text())

@@ -136,6 +136,11 @@ def main():
     def save(): (out/'manifest.json').write_text(json.dumps(state,indent=2)+'\n')
     save();print(f'Manifest: {out/"manifest.json"}',flush=True)
     if a.prepare_only:return
+    execute(state,out,a.case_timeout_seconds,a.audit_close_return)
+
+def execute(state,out,case_timeout_seconds=120,audit_close_return=False):
+    """Build the pinned adapter once and run an already prepared manifest."""
+    def save(): (out/'manifest.json').write_text(json.dumps(state,indent=2)+'\n')
     if not LCG.is_file():raise SystemExit(f'Missing Geant4 setup: {LCG}')
     source=out/'source'
     def checked(cmd,cwd,log,seconds):
@@ -160,7 +165,7 @@ def main():
     patch=ASSETS/'weak_handoff.patch' 
     checked(['git','apply','--check',str(patch)],source,'patch_check.log',60)
     checked(['git','apply',str(patch)],source,'patch_apply.log',60)
-    for name in ('EndpointHandoff.h','TwoBodyKinematics.h','ProperTimeClock.h','SampledPionPlan.h','QuirkWeakProcess.h'):
+    for name in ('EndpointHandoff.h','TwoBodyKinematics.h','ProperTimeClock.h','SampledPionPlan.h','DirectionControl.h','QuirkWeakProcess.h'):
         shutil.copyfile(ASSETS/name,source/'quirkcore/include/quirkcore'/name)
     shutil.copyfile(ASSETS/'QuirkWeakProcess.cc',source/'quirkcore/src/QuirkWeakProcess.cc')
     build=out/'build'
@@ -176,16 +181,18 @@ def main():
         print('Running '+case['name'],flush=True)
         env={'QP_WEAK_ENABLED':int(case['weak_enabled']),'QP_WEAK_ENDPOINT':case['endpoint'],
              'QP_WEAK_TAU_PS':50,'QP_WEAK_CLOCK_MODE':case['clock_mode'],'QP_NEUTRAL_MASS_GEV':M_NEUTRAL,'QP_WEAK_DIR_SIGN':case.get('pion_rest_y_sign',1),'QP_WEAK_PLAN':case.get('plan_file','')}
+        env.update(QP_WEAK_DIRECTION_MODE=case.get('direction_mode','planned'),QP_WEAK_COLLINEAR_SIGN=case.get('collinear_sign',1))
+        env['QP_WEAK_CONTROL_BOOST_Z']=case.get('pair_boost_z',0.)
         command='env '+' '.join(shlex.quote(k+'='+str(v)) for k,v in env.items())
-        command+=' timeout --kill-after=5s '+str(a.case_timeout_seconds)+'s '+shlex.quote(str(exe))
+        command+=' timeout --kill-after=5s '+str(case_timeout_seconds)+'s '+shlex.quote(str(exe))
         command+=' --mt -t 1 -n 1 -s 1 -m '+shlex.quote(case['macro'])
-        case['execution']=run_logged(lcg(command,a.case_timeout_seconds+15),source,out/(case['name']+'.log'),a.case_timeout_seconds+25)
+        case['execution']=run_logged(lcg(command,case_timeout_seconds+15),source,out/(case['name']+'.log'),case_timeout_seconds+25)
         case['root_exists']=(out/(case['name']+'.root')).is_file()
         save()
         if case['execution']['returncode']!=0 or not case['root_exists']:
             state['numerical_validation']='STOPPED_AFTER_FAILED_CASE';save()
             raise SystemExit('Failed/incomplete: '+case['name']+'; retain and return logs')
-        if a.audit_close_return:
+        if audit_close_return:
             from audit_quirkpheno_close_return import audit
             try: case['close_return']=audit(out/(case['name']+'.root'))
             except (ValueError, KeyError, OSError) as exc:
@@ -196,5 +203,6 @@ def main():
     state['numerical_validation']='PENDING_WEAK_ROOT_AND_HANDOFF_AUDIT';save()
     failed=[c['name'] for c in state['cases'] if c['execution']['returncode']!=0 or not c['root_exists']]
     if failed:raise SystemExit('Failed/incomplete: '+', '.join(failed)+'; return logs')
-    print('Finished. Upload manifest, macros, logs and ROOT files for handoff audit.')
+    print('Transport complete; preparing compact local audit.' if state.get('suite')=='triplet_ensemble' else
+          'Finished. Upload manifest, macros, logs and ROOT files for handoff audit.')
 if __name__=='__main__':main()

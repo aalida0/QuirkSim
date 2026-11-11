@@ -64,6 +64,8 @@ with tempfile.TemporaryDirectory(prefix='qp-sampled-check-') as tmp:
             for p in out.iterdir():archive.add(p,arcname=out.name+'/'+p.name)
     path=tmp/'fixture.tar.gz';pack(path);r=audit(path)
     assert r['local_checks_pass'],r
+    direct=audit(out)
+    assert direct['local_checks_pass'] and direct['sampled_seed_decay_count_histogram']==r['sampled_seed_decay_count_histogram']
     assert all(r['sampled_seed_decay_count_histogram'][i]>0 for i in (0,1,2))
     for seed in range(1,9):
         a=next(c for c in state['cases'] if c['name']==f'sampled_seed{seed}_level8')

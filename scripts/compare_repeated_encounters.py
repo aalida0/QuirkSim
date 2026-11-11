@@ -17,11 +17,13 @@ C_MM_PS=.299792458
 
 
 def fit_recoil_windows(archive):
-    result=[];beta=.25;gamma=1/math.sqrt(1-beta*beta)
+    result=[]
     with tarfile.open(archive) as tar:
         manifest=json.load(tar.extractfile('manifest.json'))
         for case in manifest['cases']:
             if not case['weak_enabled']:continue
+            if case.get('window_fit_status','BOTH_NEUTRAL_AT_FIRST_RETURN')!='BOTH_NEUTRAL_AT_FIRST_RETURN':continue
+            beta=case.get('pair_boost_z',.25);gamma=1/math.sqrt(1-beta*beta)
             pair=[];momenta=[]
             with np.load(io.BytesIO(tar.extractfile(case['name']+'.npz').read()),allow_pickle=False) as a:
                 for q in (0,1):
@@ -45,7 +47,8 @@ def fit_recoil_windows(archive):
             ell=float(np.linalg.norm(np.cross(r,relative)))
             excess=2*(math.hypot(225.,np.linalg.norm(relative))-225.)+(774e-9)**2*np.linalg.norm(r)
             inner=pericenter_gev_inverse(225.,excess,ell,774.)
-            result.append({'case':case['name'],'frame':'fixed production CM beta_z=0.25',
+            result.append({'case':case['name'],'frame':f'fixed production CM beta_z={beta}',
+                'mode':case.get('mode'),'point':case.get('point'),'seed':case.get('seed'),'level':case['level'],
                 'fit':'instantaneous equal-time endpoint central Hamiltonian reduction; string field energy/angular momentum omitted',
                 'time_in_production_cm_ps':time,'separation_um':minimum['minimum_mm']*1000,
                 'fitted_energy_gev':excess,'fitted_L_over_hbar':ell,
@@ -67,8 +70,40 @@ def probabilities(path,spin_fraction,optical_depth,width):
             'capture_probability':survive if captured else 0.}
 
 
+def paired_control_summary(fits,runs):
+    """Within-point paired seed differences; never pool controls as population."""
+    metadata={f['case']:f for f in fits};lookup={};groups={}
+    for r in runs:
+        f=metadata[r['case']]
+        if r['control']!='fitted_recoil' or f.get('level')!=8 or f.get('mode') not in ('isotropic','collinear_forward','collinear_backward'):continue
+        p=r['path'];m=p['model']
+        key=(f['point'],f['seed'],m['epsilon_per_full_period'],m['angular_loss_per_effective_emission'],p['horizon_ps'])
+        lookup.setdefault(key,{})[f['mode']]=r['closure_scenarios']
+    for key,modes in lookup.items():
+        if 'isotropic' not in modes:continue
+        point,seed,eps,loss,horizon=key
+        for control in ('collinear_forward','collinear_backward'):
+            if control not in modes:continue
+            for iso,ref in zip(modes['isotropic'],modes[control]):
+                if iso['status']!='DECLARED_MODEL_ONLY' or ref['status']!='DECLARED_MODEL_ONLY':continue
+                f,h=iso['singlet_fraction_at_capture'],iso['excited_optical_depth_per_eligible_encounter']
+                if (f,h)!=(ref['singlet_fraction_at_capture'],ref['excited_optical_depth_per_eligible_encounter']):raise ValueError('mismatched paired closure cards')
+                group=(point,control,eps,loss,horizon,f,h)
+                groups.setdefault(group,[]).append((seed,iso['annihilation_probability']-ref['annihilation_probability']))
+    result=[]
+    for key,values in groups.items():
+        point,control,eps,loss,horizon,f,h=key;delta=np.array([v for seed,v in values])
+        result.append({'point':point,'conditional_direction_control':control,'epsilon':eps,'angular_loss':loss,'horizon_ps':horizon,
+            'capture_singlet_fraction':f,'excited_optical_depth':h,'matched_seeds':[seed for seed,v in values],
+            'mean_isotropic_minus_control_probability':float(np.mean(delta)),
+            'paired_standard_error':float(np.std(delta,ddof=1)/np.sqrt(len(delta))) if len(delta)>1 else None,
+            'selection':'both modes neutral-qualified by first return; conditional, not inclusive; unqualified seeds remain in the ensemble manifest'})
+    return result
+
+
 def calculate(archive,compact_result):
     fits=fit_recoil_windows(archive);compact=json.loads(compact_result.read_text())
+    with tarfile.open(archive) as tar:input_manifest=json.load(tar.extractfile('manifest.json'))
     expected={'neutral_mass_gev':225.,'n_ic':2,'alpha_ic_hard':.04,'lambda_tension_ev':774.}
     if any(compact['model'].get(k)!=v for k,v in expected.items()):
         raise ValueError('compact-state input does not match the post-weak orbit card')
@@ -96,6 +131,10 @@ def calculate(archive,compact_result):
         'archive_sha256':hashlib.sha256(archive.read_bytes()).hexdigest(),
         'compact_result_sha256':hashlib.sha256(compact_result.read_bytes()).hexdigest(),
         'fits':fits,'runs':runs,'synthetic_angular_loss_probe':probe,
+        'paired_conditional_direction_comparisons':paired_control_summary(fits,runs),
+        'population_warning':'Fits only cover neutral-qualified first-return windows; never infer inclusive survival by dropping other categories',
+        'input_population_summary':input_manifest.get('ensemble_summary'),
+        'input_conditional_control_summary':input_manifest.get('conditional_control_summary'),
         'limitations':['model begins at a fitted first-return state after both decays',
             'zero-L reference is not a physical no-recoil weak decay control',
             'central reduction omits NG string modes and external fields',

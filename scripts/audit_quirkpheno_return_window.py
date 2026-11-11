@@ -39,7 +39,7 @@ def audit(path):
                     if np.any(np.diff(t)<0):raise ValueError('time-reversed samples')
                     keep=np.r_[np.diff(t)>0,True];pair.append((t[keep],x[keep]))
                 bound=speed_cone_window(*pair[0],*pair[1])
-                radius=case['close_return']['match_radius_mm']
+                radius=case.get('close_return',{}).get('match_radius_mm',8*1.973269804e-4/manifest['lambda_ev'])
                 lower=bound['minimum_separation_lower_bound_mm'];upper=bound['minimum_separation_upper_bound_mm']
                 status=('OUTSIDE_MATCHING_RADIUS_OVER_WINDOW' if lower>radius else
                         'INSIDE_MATCHING_RADIUS_AT_SOME_TIME' if upper<radius else 'UNRESOLVED')

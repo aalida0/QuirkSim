@@ -2,6 +2,7 @@
 #include "quirkcore/QuirkStringStore.h"
 #include "quirkcore/QuirkTrackStatus.h"
 #include "quirkcore/TwoBodyKinematics.h"
+#include "quirkcore/DirectionControl.h"
 #include "G4DynamicParticle.hh"
 #include "G4ParticleTable.hh"
 #include "G4Track.hh"
@@ -32,8 +33,11 @@ G4VParticleChange* QuirkWeakProcess::PostStepDoIt(const G4Track& track, const G4
   auto* pion=G4ParticleTable::GetParticleTable()->FindParticle(pionPDG);
   if (!pion) G4Exception("QuirkWeakProcess", "MissingPion", FatalException, "pion not registered");
   const auto p=track.GetMomentum();
+  const auto direction=QPWeak::controlledDirection(QPWeakConfig::directionMode(),QPWeakConfig::collinearSign(),
+      {p.x(),p.y(),p.z()},QPWeakConfig::pionDirection(track.GetDefinition()->GetPDGEncoding()),
+      track.GetDynamicParticle()->GetMass(),QPWeakConfig::controlBoostZ());
   auto k=QPWeak::pionDecay(track.GetDynamicParticle()->GetMass(), m_neutral->GetPDGMass(),
-                          pion->GetPDGMass(), {p.x(),p.y(),p.z()}, QPWeakConfig::pionDirection(track.GetDefinition()->GetPDGEncoding()));
+                          pion->GetPDGMass(), {p.x(),p.y(),p.z()}, direction);
   double residual=0;
   for (int i=0;i<4;++i) residual=std::max(residual,std::abs(k.parent[i]-k.daughter[i]-k.pion[i]));
   if (residual>1e-6*CLHEP::MeV)
@@ -62,6 +66,10 @@ G4VParticleChange* QuirkWeakProcess::PostStepDoIt(const G4Track& track, const G4
     << ",\"parent_mass_mev\":" << track.GetDynamicParticle()->GetMass()/CLHEP::MeV
     << ",\"daughter_mass_mev\":" << m_neutral->GetPDGMass()/CLHEP::MeV
     << ",\"pion_mass_mev\":" << pion->GetPDGMass()/CLHEP::MeV
+    << ",\"direction_mode\":\"" << QPWeakConfig::directionMode() << "\""
+    << ",\"control_boost_z\":" << QPWeakConfig::controlBoostZ()
+    << ",\"rest_frame_direction\":[" << direction[0] << ',' << direction[1] << ',' << direction[2] << ']'
+    << ",\"zero_momentum_axis_fallback\":" << (QPWeakConfig::directionMode()=="collinear" && p.mag2()==0 ? "true" : "false")
     << ",\"time_ps\":" << track.GetGlobalTime()/CLHEP::picosecond
     << ",\"position_mm\":[" << track.GetPosition().x()/CLHEP::mm << "," << track.GetPosition().y()/CLHEP::mm << "," << track.GetPosition().z()/CLHEP::mm << "]"
     << ",\"proper_ps\":" << track.GetProperTime()/CLHEP::picosecond

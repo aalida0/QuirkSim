@@ -3,17 +3,33 @@ import argparse
 import hashlib
 import io
 import json
-from pathlib import PurePosixPath
+from pathlib import PurePosixPath, Path
+from types import SimpleNamespace
 import tarfile
 import numpy as np
 import uproot
 
+class DirectoryArchive:
+    """Read the same audit inputs directly on AF without packing ROOT files."""
+    def __init__(self,path):self.path=Path(path).resolve();self.prefix=self.path.name+'/'
+    def __enter__(self):return self
+    def __exit__(self,*args):return False
+    def getnames(self):return [self.prefix+p.name for p in self.path.iterdir() if p.is_file()]
+    def getmembers(self):return [SimpleNamespace(name=name) for name in self.getnames()]
+    def extractfile(self,item):
+        name=item if isinstance(item,str) else item.name
+        if not name.startswith(self.prefix):raise ValueError('unexpected audit prefix')
+        target=(self.path/name[len(self.prefix):]).resolve()
+        if target.parent!=self.path:raise ValueError('audit path outside directory')
+        return io.BytesIO(target.read_bytes())
+
 def audit(path):
     cases={};histogram={0:0,1:0,2:0}
-    with tarfile.open(path) as archive:
+    is_directory=Path(path).is_dir()
+    with (DirectoryArchive(path) if is_directory else tarfile.open(path)) as archive:
         member=next(m for m in archive.getmembers() if m.name.endswith('/manifest.json'))
         manifest=json.load(archive.extractfile(member));prefix=member.name.rsplit('/',1)[0]+'/'
-        if manifest['suite']!='sampled_pion':raise ValueError('This auditor requires the sampled_pion suite')
+        if manifest['suite'] not in ('sampled_pion','triplet_ensemble'):raise ValueError('This auditor requires sampled-pion or triplet-ensemble plans')
         for case in manifest['cases']:
             name=case['name'];checks={};out={'checks':checks,'decays':[],'endpoints':[]};cases[name]=out
             checks['execution']=case.get('execution',{}).get('returncode')==0 and not case.get('execution',{}).get('timeout',True)
@@ -37,9 +53,10 @@ def audit(path):
                 hs=[h for h in handoffs if (h['daughter_pdg']>0)==(q==0)]
                 neutral=mask & (abs(a['pdg'])==9900017);did_decay=bool(np.any(neutral));count=int(did_decay)
                 checks[f'q{q}_event_count']=len(ds)==count and len(hs)==count
-                checks[f'q{q}_completion']=int(e['q_reason'][0][q])==6 and float(e['q_te'][0][q])*1000>=manifest['nominal_stop_ps']
+                checks[f'q{q}_completion']=int(e['q_reason'][0][q])==6 and float(e['q_te'][0][q])*1000>=case.get('nominal_stop_ps',manifest['nominal_stop_ps'])
                 checks[f'q{q}_rows']=int(np.sum(mask))==int(e['q_steps'][0][q])
                 times=a['t'][mask]*1000;proper=a['proper'][mask]*1000
+                checks[f'q{q}_last_row_matches_event']=bool(len(times)>0 and abs(float(times[-1])-float(e['q_te'][0][q])*1000)<1e-8)
                 checks[f'q{q}_finite']=bool(np.all(np.isfinite(np.r_[times,proper,a['mass'][mask],a['px'][mask],a['py'][mask],a['pz'][mask]])))
                 checks[f'q{q}_clock_order']=bool(np.all(np.diff(proper)>=-2e-9))
                 checks[f'q{q}_time_order']=bool(np.all(np.diff(times)>=0))
@@ -61,12 +78,23 @@ def audit(path):
                         checks[f'q{q}_{label}_shell']=bool(abs(v[0]*v[0]-v[1:]@v[1:]-d[label+'_mass_mev']**2)<.01)
                     beta=p[1:]/p[0];b2=float(beta@beta);gamma=p[0]/d['parent_mass_mev'];rest=pion[1:].copy()
                     if b2:rest+=((gamma-1)*float(beta@pion[1:])/b2-gamma*pion[0])*beta
-                    checks[f'q{q}_direction']=bool(np.linalg.norm(rest/np.linalg.norm(rest)-planned['direction'])<1e-8)
+                    expected=np.array(planned['direction'])
+                    if case.get('direction_mode')=='collinear':
+                        expected=(p[1:]/np.linalg.norm(p[1:]) if np.linalg.norm(p[1:]) else expected)*case['collinear_sign']
+                    if case.get('direction_mode')=='collinear_cm':
+                        bz=case['pair_boost_z'];gg=1/np.sqrt(1-bz*bz)
+                        pcm=p.copy();picm=pion.copy()
+                        pcm[0]=gg*(p[0]-bz*p[3]);pcm[3]=gg*(p[3]-bz*p[0])
+                        picm[0]=gg*(pion[0]-bz*pion[3]);picm[3]=gg*(pion[3]-bz*pion[0])
+                        bb=pcm[1:]/pcm[0];bb2=float(bb@bb);rest=picm[1:].copy()
+                        if bb2:rest+=((pcm[0]/d['parent_mass_mev']-1)*float(bb@picm[1:])/bb2-pcm[0]/d['parent_mass_mev']*picm[0])*bb
+                        expected=(pcm[1:]/np.linalg.norm(pcm[1:]) if np.linalg.norm(pcm[1:])>1e-14*d['parent_mass_mev'] else expected)*case['collinear_sign']
+                    checks[f'q{q}_direction']=bool(np.linalg.norm(rest/np.linalg.norm(rest)-expected)<1e-8)
             out['local_checks_pass']=all(checks.values())
             if case.get('seed') and case['mode'].startswith('sampled_seed') and case['level']==8:
-                count=sum(d['time_ps']<=manifest['nominal_stop_ps'] for d in decays)
+                count=sum(d['time_ps']<=case.get('nominal_stop_ps',manifest['nominal_stop_ps']) for d in decays)
                 histogram[count]=histogram.get(count,0)+1
-    return {'archive_sha256':hashlib.sha256(open(path,'rb').read()).hexdigest(),
+    return {'archive_sha256':None if is_directory else hashlib.sha256(Path(path).read_bytes()).hexdigest(),
             'scope':manifest['scope'],'source_commit':manifest.get('observed_source_commit'),
             'adapter_sha256':manifest['adapter_sha256'],'cases':cases,
             'local_checks_pass':all(c.get('local_checks_pass',False) for c in cases.values()),

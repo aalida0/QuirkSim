@@ -13,6 +13,9 @@ inline int endpoint() { const char* p=std::getenv("QP_WEAK_ENDPOINT"); return p 
 inline double tauPs() { const char* p=std::getenv("QP_WEAK_TAU_PS"); return p ? std::stod(p) : 50.; }
 inline double neutralGeV() { const char* p=std::getenv("QP_NEUTRAL_MASS_GEV"); return p ? std::stod(p) : 225.; }
 inline double directionSign() { const char* p=std::getenv("QP_WEAK_DIR_SIGN"); return p ? std::stod(p) : 1.; }
+inline std::string directionMode() { const char* p=std::getenv("QP_WEAK_DIRECTION_MODE"); return p ? p : "planned"; }
+inline double collinearSign() { const char* p=std::getenv("QP_WEAK_COLLINEAR_SIGN"); return p ? std::stod(p) : 1.; }
+inline double controlBoostZ() { const char* p=std::getenv("QP_WEAK_CONTROL_BOOST_Z"); return p ? std::stod(p) : 0.; }
 inline const PionPairPlan* sampledPlan() {
   const char* path=std::getenv("QP_WEAK_PLAN");
   if (!path || !*path) return nullptr;
