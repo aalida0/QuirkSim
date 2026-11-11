@@ -37,7 +37,10 @@ there, and writes physics output under
 `/data/aalida/QuirkSim/conformal_validation/`. Every invocation has a unique
 directory. It records the Python executable and dependency versions; the
 shared `.venv` must remain available and unchanged while jobs run. Source and manifest are transferred into Condor scratch; output is written
-there and transferred back as a `result/` directory under each case. Worker
+there and transferred back under `~/QuirkSim/condor/RUN/returned/CASE/result/`.
+All Condor working directories, transfer destinations and logs are under home;
+AF forbids submitting jobs with an initial directory under `/data`. The
+`collect` command copies completed results to `/data` after transfer. Worker
 code does not read home source paths or write `/data` directly. The Python
 runtime still uses the absolute shared AF `.venv` path. The wrapper checks
 that it exists; this change does not make that runtime portable to workers
@@ -91,10 +94,10 @@ directory each case contains a transferred `result/` folder with:
 - `evolution.json`: complete result, including a numerical FAIL when present;
 - `completion.json`: process return code; absent for interruption/removal.
 
-Summarize the **exact result directory printed at preparation**:
+Collect and summarize using the **exact manifest path printed at preparation**:
 
 ```bash
-python scripts/af_conformal_validation.py summarize /data/aalida/QuirkSim/conformal_validation/EXACT_RUN_DIRECTORY
+python scripts/af_conformal_validation.py collect ~/QuirkSim/condor/EXACT_RUN_DIRECTORY/manifest.json
 ```
 
 This saves `summary.json` and exits nonzero if any case failed or is
@@ -114,3 +117,7 @@ numerical gate. A nonzero worker return code could not become a summary
 PASS; rerunning over existing result files was refused. The eight-case matrix
 was checked. These are submission-helper checks, not completion of the AF
 1,000 ps pilots. Actual scheduling and compute-node runtime require AF.
+
+The worker uses explicit error checks and no `set -e` or `set -u`.
+Collection can be repeated; incomplete cases remain INCOMPLETE and differing
+previously collected results are never silently overwritten.

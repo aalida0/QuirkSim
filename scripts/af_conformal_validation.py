@@ -81,22 +81,24 @@ def prepare(a):
                     duration_ps=1000., cases=cases(a.suite),
                     scope="SELECTED_NUMERICAL_PILOTS_PHYSICAL_SURVIVAL_UNKNOWN")
     manifest['transport'] = 'CONDOR_TRANSFER_WITH_SHARED_AF_PYTHON_RUNTIME'
+    spool = work / 'returned'
+    spool.mkdir()
+    manifest['return_dir'] = str(spool)
     manifest_path = work / "manifest.json"
     manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
     shutil.copy2(manifest_path, output / "manifest.json")
     shutil.copy2(work / "requirements.freeze.txt", output / "requirements.freeze.txt")
     (work / "cases.txt").write_text("".join(c["name"] + "\n" for c in manifest["cases"]))
     for case in manifest['cases']:
-        (output / case['name']).mkdir()
+        (spool / case['name']).mkdir()
     worker = work / "worker.sh"
     worker.write_text(f'''#!/bin/bash
-set -eu
-mkdir -p result source
+mkdir -p result source || exit 70
 if [ ! -x {python} ]; then
     echo "AF Python runtime unavailable: {python}. Source transfer is enabled, but this job still requires the AF virtualenv on the worker." | tee result/bootstrap_error.txt >&2
     exit 69
 fi
-tar -xf source.tar -C source
+tar -xf source.tar -C source || exit 71
 exec {python} -u source/scripts/af_conformal_validation.py run manifest.json "$1" --sandbox
 ''')
     worker.chmod(0o755)
@@ -104,7 +106,7 @@ exec {python} -u source/scripts/af_conformal_validation.py run manifest.json "$1
     submit.write_text(f"""universe = vanilla
 executable = {worker}
 arguments = $(case)
-initialdir = {output}/$(case)
+initialdir = {spool}/$(case)
 should_transfer_files = YES
 when_to_transfer_output = ON_EXIT
 transfer_input_files = {archive},{manifest_path}
@@ -122,11 +124,11 @@ log = {work}/scheduler.log
 periodic_remove = (JobStatus == 2) && ((time() - JobCurrentStartDate) > 28800)
 queue case from {work}/cases.txt
 """)
-    print(f"Pinned source: {sha}\nManifest: {manifest_path}\nResults: {output}", flush=True)
+    print(f"Pinned source: {sha}\nManifest: {manifest_path}\nCondor returns: {spool}\nResults after collection: {output}", flush=True)
     print(f"Each case uses 1 CPU; eight-hour running limit. Cases: {len(manifest['cases'])}")
     if a.submit:
         dry = subprocess.run(["condor_submit", "-dry-run", str(work / "job.ads"), str(submit)],
-                             text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                             cwd=work, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         (work / "dry-run.txt").write_text(dry.stdout)
         if dry.returncode:
             print(dry.stdout, end="")
@@ -134,7 +136,7 @@ queue case from {work}/cases.txt
         # condor_submit validates its own syntax. Do not parse rendered ClassAds:
         # whitespace/serialization vary across versions, and site-added policy
         # must be assessed with condor_q -better-analyze after submission.
-        result = subprocess.run(["condor_submit", str(submit)], text=True,
+        result = subprocess.run(["condor_submit", str(submit)], cwd=work, text=True,
                                 stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         (work / "submission.txt").write_text(result.stdout)
         print(result.stdout, end="")
@@ -209,6 +211,30 @@ def summarize(a):
     return 0 if summary["all_cases_pass"] else 1
 
 
+def collect(a):
+    manifest_path = Path(a.manifest)
+    manifest = json.loads(manifest_path.read_text())
+    output = Path(manifest['output_dir'])
+    for case in manifest['cases']:
+        returned = Path(manifest['return_dir']) / case['name'] / 'result'
+        if not (returned / 'completion.json').exists():
+            print(f"Not complete: {case['name']}", file=sys.stderr)
+            continue
+        destination = output / case['name'] / 'result'
+        if destination.exists():
+            # Idempotent collection; never silently replace a different result.
+            files = [p for p in returned.rglob('*') if p.is_file()]
+            if any(not (destination / p.relative_to(returned)).is_file()
+                   or (destination / p.relative_to(returned)).read_bytes() != p.read_bytes()
+                   for p in files):
+                raise ValueError(f"Existing collected result differs: {destination}")
+        else:
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copytree(returned, destination)
+    a.output_dir = str(output)
+    return summarize(a)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="action", required=True)
@@ -222,11 +248,15 @@ def main():
     p.add_argument("--sandbox", action="store_true")
     p = sub.add_parser("summarize")
     p.add_argument("output_dir")
+    p = sub.add_parser("collect")
+    p.add_argument("manifest")
     a = parser.parse_args()
     if a.action == "prepare":
         prepare(a)
     elif a.action == "run":
         run(a)
+    elif a.action == "collect":
+        raise SystemExit(collect(a))
     else:
         raise SystemExit(summarize(a))
 
