@@ -232,7 +232,7 @@
      Q.p0 = G4LorentzVector(pre->GetMomentum(), pre->GetTotalEnergy());
      Q.x0 = pre->GetPosition();
    }
-+  if (t->GetCurrentStepNumber()==1 && std::abs(def->GetPDGEncoding())==9900017)
++  if (t->GetCurrentStepNumber()==1 && std::abs(t->GetDefinition()->GetPDGEncoding())==9900017)
 +    Q.reason=kAlive;
    ++Q.steps;
    ++m_ev->stepCount[i];
@@ -244,10 +244,10 @@
 +    am->FillNtupleDColumn(kSteps, 14, t->GetDynamicParticle()->GetMass());
 +    am->FillNtupleDColumn(kSteps, 15, t->GetDynamicParticle()->GetCharge()/CLHEP::eplus);
 +    am->FillNtupleDColumn(kSteps, 16, t->GetProperTime());
-+    am->FillNtupleDColumn(kSteps, 17, def->GetPDGEncoding());
++    am->FillNtupleDColumn(kSteps, 17, t->GetDefinition()->GetPDGEncoding());
 +    am->FillNtupleDColumn(kSteps, 18, t->GetTrackID());
 +    am->FillNtupleDColumn(kSteps, 19, t->GetParentID());
-+    am->FillNtupleDColumn(kSteps, 20, QuirkStringStore::instance().isHandoffParent(def->GetPDGEncoding(),t->GetTrackID()) ? 1. : 0.);
++    am->FillNtupleDColumn(kSteps, 20, QuirkStringStore::instance().isHandoffParent(t->GetDefinition()->GetPDGEncoding(),t->GetTrackID()) ? 1. : 0.);
      am->AddNtupleRow(kSteps);
    }
  }

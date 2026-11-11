@@ -94,3 +94,9 @@ All eight preimage Git blob IDs now independently match GitHub's pinned tree.
 The runner checks their SHA-256 values before applying and prints the end of
 any failed preparation/build log. No whitespace-ignoring or fuzzy patch option
 is used. Native and synthetic checks were rerun; full Geant4 build is still pending.
+
+The next AF build exposed a scope error in the application instrumentation:
+three added expressions in quirkStep used the caller-local name `def`.
+They now obtain the definition from the local track `t`. The corrected patch
+applies to the exact upstream bytes, and all three references were inspected
+in the resulting function. Full executable compilation remains pending rerun.

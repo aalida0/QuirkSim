@@ -8,14 +8,14 @@
   "handoff_identity_and_history_negative_tests": "PASS",
   "patch_application_check": "PASS_BYTE_EXACT_PINNED_GIT_WORKING_TREE",
   "synthetic_root_audit_and_corruption_rejection": "PASS",
-  "full_geant4_build": "NOT_RUN_GEANT4_UNAVAILABLE",
+  "full_geant4_build": "PENDING_AF_RERUN_AFTER_SCOPE_FIX",
   "causal_transport_validation": "PENDING",
   "physical_survival_probability": null,
   "adapter_sha256": {
     "EndpointHandoff.h": "27c7cdf8d356b39d856e32b829428a15a390a5a77f8f11818e8a600fde93b63f",
     "QuirkWeakProcess.cc": "2053606446ef2d8e7abba2803eaaeb7fd69827e4945c51b65948b1dd5f4865d1",
     "QuirkWeakProcess.h": "8523f9e838f8295c1bfcee581657df93a1bcb2acbd69e22a8058dd3a5cf1e8f6",
-    "README.md": "f97cfaee93b66d2f9e7f6a51c38a4eabe3153d256ee83428e87e186e869a60d2",
+    "README.md": "af0032a010b65d30b258632299acd821381c1fd174637f6eb9030c6b40597acc",
     "TwoBodyKinematics.h": "d15db2917e3e35b11305bbcf79b18f2cb9b1ed746d51249ce853e4116b38d48b",
     "UPSTREAM_LICENSE": "8c6db340475136df3c1201d458fa5755698eace76e510471ecc9d857d6083dac",
     "UPSTREAM_NOTICE": "4c09449868b703bc6c9089def700d2bf1654727bd9c3648eb6e9ef8186e0f333",
@@ -23,7 +23,7 @@
     "check_native.py": "aafdec8edb2c4f291b884810469db38ad9f187f5afc4b81887a3d263419372d9",
     "native_check.cc": "51644b411a34d9afd8e35d2073836b84ffc3e256878d3e7c29e9dcbcbe49e50d",
     "upstream_preimages.json": "96fe6b9657926fd6869686044942e17bfdc58f8ddaa0c9596db23f231e3b6345",
-    "weak_handoff.patch": "3cc2705a4ca363dc231b6096a0619e6f75d0489c600cd2575d1187251f1b4f19"
+    "weak_handoff.patch": "1bc21028b836d90c92eefcaf1304bad53de24aea91156ea658550b14d3e871ad"
   },
   "patch_regression": {
     "old_failure_reproduced": "QuirkStringStore.cc end-of-file extra blank context",
@@ -31,5 +31,7 @@
     "corrected_patch_apply": "PASS",
     "preimage_blob_ids_verified": 8,
     "preparation_only_failure_no_geant4_run": true
-  }
+  },
+  "af_build_feedback": "Actions.cc failed: caller-local def referenced in quirkStep; all three added uses corrected to local track",
+  "post_scope_fix_patch_application": "PASS_BYTE_EXACT_UPSTREAM"
 }
