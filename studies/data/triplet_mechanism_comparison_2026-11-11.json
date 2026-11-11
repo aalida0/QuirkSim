@@ -1,0 +1,2303 @@
+{
+  "scope": "PAIRED_FIRST_RETURN_GEOMETRY_MECHANISM_COMPARISON",
+  "archive_sha256": "ca6ff21c5447efa156a65732430be467d27ba993ab8218558e329d6be6773cf1",
+  "points": [
+    {
+      "point": "benchmark",
+      "stable_minimum_nm": 8.0268299697141e-07,
+      "neutral_contrasts": [
+        {
+          "control": "collinear_forward",
+          "matched_neutral_seeds": [
+            1,
+            4,
+            7
+          ],
+          "isotropic": {
+            "n": 3,
+            "median_nm": 4188.433186454212,
+            "min_nm": 930.8420177488142,
+            "max_nm": 5353.301254167035
+          },
+          "collinear": {
+            "n": 3,
+            "median_nm": 70.66879421769511,
+            "min_nm": 48.7267249191529,
+            "max_nm": 117.81435601931526
+          },
+          "paired_isotropic_minus_collinear": {
+            "n": 3,
+            "median_nm": 4117.764392236517,
+            "min_nm": 882.1152928296613,
+            "max_nm": 5235.486898147719
+          },
+          "paired_collinear_minus_stable": {
+            "n": 3,
+            "median_nm": 70.66879341501212,
+            "min_nm": 48.7267241164699,
+            "max_nm": 117.81435521663226
+          }
+        },
+        {
+          "control": "collinear_backward",
+          "matched_neutral_seeds": [
+            1,
+            4,
+            7
+          ],
+          "isotropic": {
+            "n": 3,
+            "median_nm": 4188.433186454212,
+            "min_nm": 930.8420177488142,
+            "max_nm": 5353.301254167035
+          },
+          "collinear": {
+            "n": 3,
+            "median_nm": 71.61981689265265,
+            "min_nm": 49.31377886196311,
+            "max_nm": 127.76983890532546
+          },
+          "paired_isotropic_minus_collinear": {
+            "n": 3,
+            "median_nm": 4116.813369561559,
+            "min_nm": 881.5282388868511,
+            "max_nm": 5225.531415261709
+          },
+          "paired_collinear_minus_stable": {
+            "n": 3,
+            "median_nm": 71.61981608996966,
+            "min_nm": 49.31377805928011,
+            "max_nm": 127.76983810264247
+          }
+        }
+      ],
+      "categories": [
+        {
+          "mode": "isotropic",
+          "decays": 0,
+          "seeds": [
+            5
+          ],
+          "minimum": {
+            "n": 1,
+            "median_nm": 8.0268299697141e-07,
+            "min_nm": 8.0268299697141e-07,
+            "max_nm": 8.0268299697141e-07
+          }
+        },
+        {
+          "mode": "isotropic",
+          "decays": 1,
+          "seeds": [
+            2,
+            3,
+            6,
+            8
+          ],
+          "minimum": {
+            "n": 4,
+            "median_nm": 3764.029324859728,
+            "min_nm": 1930.106338573986,
+            "max_nm": 4656.061324580874
+          }
+        },
+        {
+          "mode": "isotropic",
+          "decays": 2,
+          "seeds": [
+            1,
+            4,
+            7
+          ],
+          "minimum": {
+            "n": 3,
+            "median_nm": 4188.433186454212,
+            "min_nm": 930.8420177488142,
+            "max_nm": 5353.301254167035
+          }
+        },
+        {
+          "mode": "collinear_forward",
+          "decays": 0,
+          "seeds": [
+            5
+          ],
+          "minimum": {
+            "n": 1,
+            "median_nm": 8.0268299697141e-07,
+            "min_nm": 8.0268299697141e-07,
+            "max_nm": 8.0268299697141e-07
+          }
+        },
+        {
+          "mode": "collinear_forward",
+          "decays": 1,
+          "seeds": [
+            2,
+            3,
+            6,
+            8
+          ],
+          "minimum": {
+            "n": 4,
+            "median_nm": 107.18885595063631,
+            "min_nm": 21.02715128158287,
+            "max_nm": 121.41226918310983
+          }
+        },
+        {
+          "mode": "collinear_forward",
+          "decays": 2,
+          "seeds": [
+            1,
+            4,
+            7
+          ],
+          "minimum": {
+            "n": 3,
+            "median_nm": 70.66879421769511,
+            "min_nm": 48.7267249191529,
+            "max_nm": 117.81435601931526
+          }
+        },
+        {
+          "mode": "collinear_backward",
+          "decays": 0,
+          "seeds": [
+            5
+          ],
+          "minimum": {
+            "n": 1,
+            "median_nm": 8.0268299697141e-07,
+            "min_nm": 8.0268299697141e-07,
+            "max_nm": 8.0268299697141e-07
+          }
+        },
+        {
+          "mode": "collinear_backward",
+          "decays": 1,
+          "seeds": [
+            2,
+            3,
+            6,
+            8
+          ],
+          "minimum": {
+            "n": 4,
+            "median_nm": 108.42213563741034,
+            "min_nm": 21.62105183577289,
+            "max_nm": 123.09613995898277
+          }
+        },
+        {
+          "mode": "collinear_backward",
+          "decays": 2,
+          "seeds": [
+            1,
+            4,
+            7
+          ],
+          "minimum": {
+            "n": 3,
+            "median_nm": 71.61981689265265,
+            "min_nm": 49.31377886196311,
+            "max_nm": 127.76983890532546
+          }
+        }
+      ]
+    },
+    {
+      "point": "tilted",
+      "stable_minimum_nm": 0.02005482763259593,
+      "neutral_contrasts": [
+        {
+          "control": "collinear_forward",
+          "matched_neutral_seeds": [
+            1,
+            4,
+            7
+          ],
+          "isotropic": {
+            "n": 3,
+            "median_nm": 3625.1271423040907,
+            "min_nm": 726.249905551531,
+            "max_nm": 4796.108997623557
+          },
+          "collinear": {
+            "n": 3,
+            "median_nm": 61.200956063193345,
+            "min_nm": 42.19857330059833,
+            "max_nm": 102.03017735069902
+          },
+          "paired_isotropic_minus_collinear": {
+            "n": 3,
+            "median_nm": 3563.9261862408976,
+            "min_nm": 684.0513322509327,
+            "max_nm": 4694.078820272858
+          },
+          "paired_collinear_minus_stable": {
+            "n": 3,
+            "median_nm": 61.180901235560746,
+            "min_nm": 42.178518472965735,
+            "max_nm": 102.01012252306643
+          }
+        },
+        {
+          "control": "collinear_backward",
+          "matched_neutral_seeds": [
+            1,
+            4,
+            7
+          ],
+          "isotropic": {
+            "n": 3,
+            "median_nm": 3625.1271423040907,
+            "min_nm": 726.249905551531,
+            "max_nm": 4796.108997623557
+          },
+          "collinear": {
+            "n": 3,
+            "median_nm": 62.02456550475517,
+            "min_nm": 42.70697670009049,
+            "max_nm": 110.65186806665426
+          },
+          "paired_isotropic_minus_collinear": {
+            "n": 3,
+            "median_nm": 3563.1025767993356,
+            "min_nm": 683.5429288514405,
+            "max_nm": 4685.457129556903
+          },
+          "paired_collinear_minus_stable": {
+            "n": 3,
+            "median_nm": 62.00451067712257,
+            "min_nm": 42.686921872457894,
+            "max_nm": 110.63181323902167
+          }
+        }
+      ],
+      "categories": [
+        {
+          "mode": "isotropic",
+          "decays": 0,
+          "seeds": [
+            5
+          ],
+          "minimum": {
+            "n": 1,
+            "median_nm": 0.02005482763259593,
+            "min_nm": 0.02005482763259593,
+            "max_nm": 0.02005482763259593
+          }
+        },
+        {
+          "mode": "isotropic",
+          "decays": 1,
+          "seeds": [
+            2,
+            3,
+            6,
+            8
+          ],
+          "minimum": {
+            "n": 4,
+            "median_nm": 3457.038276128909,
+            "min_nm": 1874.6616356483955,
+            "max_nm": 4008.426014964101
+          }
+        },
+        {
+          "mode": "isotropic",
+          "decays": 2,
+          "seeds": [
+            1,
+            4,
+            7
+          ],
+          "minimum": {
+            "n": 3,
+            "median_nm": 3625.1271423040907,
+            "min_nm": 726.249905551531,
+            "max_nm": 4796.108997623557
+          }
+        },
+        {
+          "mode": "collinear_forward",
+          "decays": 0,
+          "seeds": [
+            5
+          ],
+          "minimum": {
+            "n": 1,
+            "median_nm": 0.02005482763259593,
+            "min_nm": 0.02005482763259593,
+            "max_nm": 0.02005482763259593
+          }
+        },
+        {
+          "mode": "collinear_forward",
+          "decays": 1,
+          "seeds": [
+            2,
+            3,
+            6,
+            8
+          ],
+          "minimum": {
+            "n": 4,
+            "median_nm": 92.82823753979258,
+            "min_nm": 18.210050214345475,
+            "max_nm": 105.14606252417359
+          }
+        },
+        {
+          "mode": "collinear_forward",
+          "decays": 2,
+          "seeds": [
+            1,
+            4,
+            7
+          ],
+          "minimum": {
+            "n": 3,
+            "median_nm": 61.200956063193345,
+            "min_nm": 42.19857330059833,
+            "max_nm": 102.03017735069902
+          }
+        },
+        {
+          "mode": "collinear_backward",
+          "decays": 0,
+          "seeds": [
+            5
+          ],
+          "minimum": {
+            "n": 1,
+            "median_nm": 0.02005482763259593,
+            "min_nm": 0.02005482763259593,
+            "max_nm": 0.02005482763259593
+          }
+        },
+        {
+          "mode": "collinear_backward",
+          "decays": 1,
+          "seeds": [
+            2,
+            3,
+            6,
+            8
+          ],
+          "minimum": {
+            "n": 4,
+            "median_nm": 93.89628802747762,
+            "min_nm": 18.72438293596853,
+            "max_nm": 106.6043357395975
+          }
+        },
+        {
+          "mode": "collinear_backward",
+          "decays": 2,
+          "seeds": [
+            1,
+            4,
+            7
+          ],
+          "minimum": {
+            "n": 3,
+            "median_nm": 62.02456550475517,
+            "min_nm": 42.70697670009049,
+            "max_nm": 110.65186806665426
+          }
+        }
+      ]
+    },
+    {
+      "point": "faster",
+      "stable_minimum_nm": 0.00012283628332537263,
+      "neutral_contrasts": [
+        {
+          "control": "collinear_forward",
+          "matched_neutral_seeds": [
+            1,
+            3,
+            4,
+            7,
+            8
+          ],
+          "isotropic": {
+            "n": 5,
+            "median_nm": 4870.237059601954,
+            "min_nm": 1294.3053053019162,
+            "max_nm": 6609.559850580005
+          },
+          "collinear": {
+            "n": 5,
+            "median_nm": 188.32749362968545,
+            "min_nm": 137.24840070284193,
+            "max_nm": 397.5385675164342
+          },
+          "paired_isotropic_minus_collinear": {
+            "n": 5,
+            "median_nm": 4668.410823944938,
+            "min_nm": 1152.2515495883686,
+            "max_nm": 6379.993593288083
+          },
+          "paired_collinear_minus_stable": {
+            "n": 5,
+            "median_nm": 188.3273707934021,
+            "min_nm": 137.2482778665586,
+            "max_nm": 397.5384446801509
+          }
+        },
+        {
+          "control": "collinear_backward",
+          "matched_neutral_seeds": [
+            1,
+            3,
+            4,
+            7,
+            8
+          ],
+          "isotropic": {
+            "n": 5,
+            "median_nm": 4870.237059601954,
+            "min_nm": 1294.3053053019162,
+            "max_nm": 6609.559850580005
+          },
+          "collinear": {
+            "n": 5,
+            "median_nm": 189.49535764093554,
+            "min_nm": 137.5919657228077,
+            "max_nm": 398.8074944257629
+          },
+          "paired_isotropic_minus_collinear": {
+            "n": 5,
+            "median_nm": 4667.892707122422,
+            "min_nm": 1151.410695995903,
+            "max_nm": 6378.825729276833
+          },
+          "paired_collinear_minus_stable": {
+            "n": 5,
+            "median_nm": 189.4952348046522,
+            "min_nm": 137.59184288652438,
+            "max_nm": 398.8073715894796
+          }
+        }
+      ],
+      "categories": [
+        {
+          "mode": "isotropic",
+          "decays": 0,
+          "seeds": [],
+          "minimum": null
+        },
+        {
+          "mode": "isotropic",
+          "decays": 1,
+          "seeds": [
+            2,
+            5,
+            6
+          ],
+          "minimum": {
+            "n": 3,
+            "median_nm": 5659.136713610842,
+            "min_nm": 1997.047538462726,
+            "max_nm": 5752.738339309686
+          }
+        },
+        {
+          "mode": "isotropic",
+          "decays": 2,
+          "seeds": [
+            1,
+            3,
+            4,
+            7,
+            8
+          ],
+          "minimum": {
+            "n": 5,
+            "median_nm": 4870.237059601954,
+            "min_nm": 1294.3053053019162,
+            "max_nm": 6609.559850580005
+          }
+        },
+        {
+          "mode": "collinear_forward",
+          "decays": 0,
+          "seeds": [],
+          "minimum": null
+        },
+        {
+          "mode": "collinear_forward",
+          "decays": 1,
+          "seeds": [
+            2,
+            5,
+            6
+          ],
+          "minimum": {
+            "n": 3,
+            "median_nm": 309.2188539668395,
+            "min_nm": 38.65605294363283,
+            "max_nm": 376.09035737046423
+          }
+        },
+        {
+          "mode": "collinear_forward",
+          "decays": 2,
+          "seeds": [
+            1,
+            3,
+            4,
+            7,
+            8
+          ],
+          "minimum": {
+            "n": 5,
+            "median_nm": 188.32749362968545,
+            "min_nm": 137.24840070284193,
+            "max_nm": 397.5385675164342
+          }
+        },
+        {
+          "mode": "collinear_backward",
+          "decays": 0,
+          "seeds": [],
+          "minimum": null
+        },
+        {
+          "mode": "collinear_backward",
+          "decays": 1,
+          "seeds": [
+            2,
+            5,
+            6
+          ],
+          "minimum": {
+            "n": 3,
+            "median_nm": 311.15849694901374,
+            "min_nm": 40.14626782163802,
+            "max_nm": 376.9693868367338
+          }
+        },
+        {
+          "mode": "collinear_backward",
+          "decays": 2,
+          "seeds": [
+            1,
+            3,
+            4,
+            7,
+            8
+          ],
+          "minimum": {
+            "n": 5,
+            "median_nm": 189.49535764093554,
+            "min_nm": 137.5919657228077,
+            "max_nm": 398.8074944257629
+          }
+        }
+      ]
+    },
+    {
+      "point": "zero_field",
+      "stable_minimum_nm": 1.0632098260681255e-06,
+      "neutral_contrasts": [
+        {
+          "control": "collinear_forward",
+          "matched_neutral_seeds": [
+            1,
+            4,
+            7
+          ],
+          "isotropic": {
+            "n": 3,
+            "median_nm": 4127.324558536383,
+            "min_nm": 892.8260456039728,
+            "max_nm": 5446.162289631716
+          },
+          "collinear": {
+            "n": 3,
+            "median_nm": 4.542296788008859e-07,
+            "min_nm": 4.2196109462968636e-07,
+            "max_nm": 1.3333432597835247e-06
+          },
+          "paired_isotropic_minus_collinear": {
+            "n": 3,
+            "median_nm": 4127.324558082153,
+            "min_nm": 892.8260451820117,
+            "max_nm": 5446.162288298373
+          },
+          "paired_collinear_minus_stable": {
+            "n": 3,
+            "median_nm": -6.089801472672396e-07,
+            "min_nm": -6.412487314384391e-07,
+            "max_nm": 2.7013343371539917e-07
+          }
+        },
+        {
+          "control": "collinear_backward",
+          "matched_neutral_seeds": [
+            1,
+            4,
+            7
+          ],
+          "isotropic": {
+            "n": 3,
+            "median_nm": 4127.324558536383,
+            "min_nm": 892.8260456039728,
+            "max_nm": 5446.162289631716
+          },
+          "collinear": {
+            "n": 3,
+            "median_nm": 6.200993477601486e-07,
+            "min_nm": 6.671063992965893e-08,
+            "max_nm": 6.860879435072346e-07
+          },
+          "paired_isotropic_minus_collinear": {
+            "n": 3,
+            "median_nm": 4127.324557850295,
+            "min_nm": 892.8260455372622,
+            "max_nm": 5446.162289011617
+          },
+          "paired_collinear_minus_stable": {
+            "n": 3,
+            "median_nm": -4.431104783079769e-07,
+            "min_nm": -9.964991861384665e-07,
+            "max_nm": -3.7712188256089085e-07
+          }
+        }
+      ],
+      "categories": [
+        {
+          "mode": "isotropic",
+          "decays": 0,
+          "seeds": [
+            5
+          ],
+          "minimum": {
+            "n": 1,
+            "median_nm": 1.0632098260681255e-06,
+            "min_nm": 1.0632098260681255e-06,
+            "max_nm": 1.0632098260681255e-06
+          }
+        },
+        {
+          "mode": "isotropic",
+          "decays": 1,
+          "seeds": [
+            2,
+            3,
+            6,
+            8
+          ],
+          "minimum": {
+            "n": 4,
+            "median_nm": 3693.5859552383263,
+            "min_nm": 1945.856163667351,
+            "max_nm": 4658.89407550078
+          }
+        },
+        {
+          "mode": "isotropic",
+          "decays": 2,
+          "seeds": [
+            1,
+            4,
+            7
+          ],
+          "minimum": {
+            "n": 3,
+            "median_nm": 4127.324558536383,
+            "min_nm": 892.8260456039728,
+            "max_nm": 5446.162289631716
+          }
+        },
+        {
+          "mode": "collinear_forward",
+          "decays": 0,
+          "seeds": [
+            5
+          ],
+          "minimum": {
+            "n": 1,
+            "median_nm": 1.0632098260681255e-06,
+            "min_nm": 1.0632098260681255e-06,
+            "max_nm": 1.0632098260681255e-06
+          }
+        },
+        {
+          "mode": "collinear_forward",
+          "decays": 1,
+          "seeds": [
+            2,
+            3,
+            6,
+            8
+          ],
+          "minimum": {
+            "n": 4,
+            "median_nm": 1.240417423197273e-07,
+            "min_nm": 2.6653646298787317e-08,
+            "max_nm": 4.806687251868607e-07
+          }
+        },
+        {
+          "mode": "collinear_forward",
+          "decays": 2,
+          "seeds": [
+            1,
+            4,
+            7
+          ],
+          "minimum": {
+            "n": 3,
+            "median_nm": 4.542296788008859e-07,
+            "min_nm": 4.2196109462968636e-07,
+            "max_nm": 1.3333432597835247e-06
+          }
+        },
+        {
+          "mode": "collinear_backward",
+          "decays": 0,
+          "seeds": [
+            5
+          ],
+          "minimum": {
+            "n": 1,
+            "median_nm": 1.0632098260681255e-06,
+            "min_nm": 1.0632098260681255e-06,
+            "max_nm": 1.0632098260681255e-06
+          }
+        },
+        {
+          "mode": "collinear_backward",
+          "decays": 1,
+          "seeds": [
+            2,
+            3,
+            6,
+            8
+          ],
+          "minimum": {
+            "n": 4,
+            "median_nm": 4.4785904576043083e-08,
+            "min_nm": 1.1007680729469988e-08,
+            "max_nm": 1.060406576938953e-06
+          }
+        },
+        {
+          "mode": "collinear_backward",
+          "decays": 2,
+          "seeds": [
+            1,
+            4,
+            7
+          ],
+          "minimum": {
+            "n": 3,
+            "median_nm": 6.200993477601486e-07,
+            "min_nm": 6.671063992965893e-08,
+            "max_nm": 6.860879435072346e-07
+          }
+        }
+      ]
+    }
+  ],
+  "matched_field_contrasts": [
+    {
+      "mode": "stable",
+      "seed": 0,
+      "decays_2T": 0,
+      "decays_0T": 0,
+      "minimum_2T_nm": 8.0268299697141e-07,
+      "minimum_0T_nm": 1.0632098260681255e-06,
+      "paired_2T_minus_0T_nm": -2.605268290967155e-07
+    },
+    {
+      "mode": "isotropic",
+      "seed": 1,
+      "decays_2T": 2,
+      "decays_0T": 2,
+      "minimum_2T_nm": 4188.433186454212,
+      "minimum_0T_nm": 4127.324558536383,
+      "paired_2T_minus_0T_nm": 61.108627917828926
+    },
+    {
+      "mode": "isotropic",
+      "seed": 2,
+      "decays_2T": 1,
+      "decays_0T": 1,
+      "minimum_2T_nm": 1930.106338573986,
+      "minimum_0T_nm": 1945.856163667351,
+      "paired_2T_minus_0T_nm": -15.749825093364962
+    },
+    {
+      "mode": "isotropic",
+      "seed": 3,
+      "decays_2T": 1,
+      "decays_0T": 1,
+      "minimum_2T_nm": 3362.8179316517676,
+      "minimum_0T_nm": 3252.8233335902955,
+      "paired_2T_minus_0T_nm": 109.99459806147206
+    },
+    {
+      "mode": "isotropic",
+      "seed": 4,
+      "decays_2T": 2,
+      "decays_0T": 2,
+      "minimum_2T_nm": 930.8420177488142,
+      "minimum_0T_nm": 892.8260456039728,
+      "paired_2T_minus_0T_nm": 38.015972144841385
+    },
+    {
+      "mode": "isotropic",
+      "seed": 5,
+      "decays_2T": 0,
+      "decays_0T": 0,
+      "minimum_2T_nm": 8.0268299697141e-07,
+      "minimum_0T_nm": 1.0632098260681255e-06,
+      "paired_2T_minus_0T_nm": -2.605268290967155e-07
+    },
+    {
+      "mode": "isotropic",
+      "seed": 6,
+      "decays_2T": 1,
+      "decays_0T": 1,
+      "minimum_2T_nm": 4656.061324580874,
+      "minimum_0T_nm": 4658.89407550078,
+      "paired_2T_minus_0T_nm": -2.832750919906175
+    },
+    {
+      "mode": "isotropic",
+      "seed": 7,
+      "decays_2T": 2,
+      "decays_0T": 2,
+      "minimum_2T_nm": 5353.301254167035,
+      "minimum_0T_nm": 5446.162289631716,
+      "paired_2T_minus_0T_nm": -92.86103546468075
+    },
+    {
+      "mode": "isotropic",
+      "seed": 8,
+      "decays_2T": 1,
+      "decays_0T": 1,
+      "minimum_2T_nm": 4165.240718067689,
+      "minimum_0T_nm": 4134.348576886357,
+      "paired_2T_minus_0T_nm": 30.89214118133259
+    },
+    {
+      "mode": "collinear_forward",
+      "seed": 1,
+      "decays_2T": 2,
+      "decays_0T": 2,
+      "minimum_2T_nm": 70.66879421769511,
+      "minimum_0T_nm": 4.542296788008859e-07,
+      "paired_2T_minus_0T_nm": 70.66879376346543
+    },
+    {
+      "mode": "collinear_forward",
+      "seed": 2,
+      "decays_2T": 1,
+      "decays_0T": 1,
+      "minimum_2T_nm": 21.02715128158287,
+      "minimum_0T_nm": 5.5441514702970396e-08,
+      "paired_2T_minus_0T_nm": 21.027151226141356
+    },
+    {
+      "mode": "collinear_forward",
+      "seed": 3,
+      "decays_2T": 1,
+      "decays_0T": 1,
+      "minimum_2T_nm": 110.20931105533121,
+      "minimum_0T_nm": 4.806687251868607e-07,
+      "paired_2T_minus_0T_nm": 110.20931057466248
+    },
+    {
+      "mode": "collinear_forward",
+      "seed": 4,
+      "decays_2T": 2,
+      "decays_0T": 2,
+      "minimum_2T_nm": 48.7267249191529,
+      "minimum_0T_nm": 4.2196109462968636e-07,
+      "paired_2T_minus_0T_nm": 48.7267244971918
+    },
+    {
+      "mode": "collinear_forward",
+      "seed": 5,
+      "decays_2T": 0,
+      "decays_0T": 0,
+      "minimum_2T_nm": 8.0268299697141e-07,
+      "minimum_0T_nm": 1.0632098260681255e-06,
+      "paired_2T_minus_0T_nm": -2.605268290967155e-07
+    },
+    {
+      "mode": "collinear_forward",
+      "seed": 6,
+      "decays_2T": 1,
+      "decays_0T": 1,
+      "minimum_2T_nm": 121.41226918310983,
+      "minimum_0T_nm": 2.6653646298787317e-08,
+      "paired_2T_minus_0T_nm": 121.41226915645618
+    },
+    {
+      "mode": "collinear_forward",
+      "seed": 7,
+      "decays_2T": 2,
+      "decays_0T": 2,
+      "minimum_2T_nm": 117.81435601931526,
+      "minimum_0T_nm": 1.3333432597835247e-06,
+      "paired_2T_minus_0T_nm": 117.81435468597199
+    },
+    {
+      "mode": "collinear_forward",
+      "seed": 8,
+      "decays_2T": 1,
+      "decays_0T": 1,
+      "minimum_2T_nm": 104.16840084594139,
+      "minimum_0T_nm": 1.9264196993648418e-07,
+      "paired_2T_minus_0T_nm": 104.16840065329941
+    },
+    {
+      "mode": "collinear_backward",
+      "seed": 1,
+      "decays_2T": 2,
+      "decays_0T": 2,
+      "minimum_2T_nm": 71.61981689265265,
+      "minimum_0T_nm": 6.860879435072346e-07,
+      "paired_2T_minus_0T_nm": 71.6198162065647
+    },
+    {
+      "mode": "collinear_backward",
+      "seed": 2,
+      "decays_2T": 1,
+      "decays_0T": 1,
+      "minimum_2T_nm": 21.62105183577289,
+      "minimum_0T_nm": 1.060406576938953e-06,
+      "paired_2T_minus_0T_nm": 21.62105077536631
+    },
+    {
+      "mode": "collinear_backward",
+      "seed": 3,
+      "decays_2T": 1,
+      "decays_0T": 1,
+      "minimum_2T_nm": 111.50569869193048,
+      "minimum_0T_nm": 1.1007680729469988e-08,
+      "paired_2T_minus_0T_nm": 111.50569868092279
+    },
+    {
+      "mode": "collinear_backward",
+      "seed": 4,
+      "decays_2T": 2,
+      "decays_0T": 2,
+      "minimum_2T_nm": 49.31377886196311,
+      "minimum_0T_nm": 6.671063992965893e-08,
+      "paired_2T_minus_0T_nm": 49.31377879525247
+    },
+    {
+      "mode": "collinear_backward",
+      "seed": 5,
+      "decays_2T": 0,
+      "decays_0T": 0,
+      "minimum_2T_nm": 8.0268299697141e-07,
+      "minimum_0T_nm": 1.0632098260681255e-06,
+      "paired_2T_minus_0T_nm": -2.605268290967155e-07
+    },
+    {
+      "mode": "collinear_backward",
+      "seed": 6,
+      "decays_2T": 1,
+      "decays_0T": 1,
+      "minimum_2T_nm": 123.09613995898277,
+      "minimum_0T_nm": 6.604608437682073e-08,
+      "paired_2T_minus_0T_nm": 123.09613989293669
+    },
+    {
+      "mode": "collinear_backward",
+      "seed": 7,
+      "decays_2T": 2,
+      "decays_0T": 2,
+      "minimum_2T_nm": 127.76983890532546,
+      "minimum_0T_nm": 6.200993477601486e-07,
+      "paired_2T_minus_0T_nm": 127.76983828522611
+    },
+    {
+      "mode": "collinear_backward",
+      "seed": 8,
+      "decays_2T": 1,
+      "decays_0T": 1,
+      "minimum_2T_nm": 105.3385725828902,
+      "minimum_0T_nm": 2.352572477526544e-08,
+      "paired_2T_minus_0T_nm": 105.33857255936447
+    }
+  ],
+  "refinement": [
+    {
+      "point": "benchmark",
+      "mode": "stable",
+      "seed": 0,
+      "level8_minus_level7_nm": -2.073565653754007e-06
+    },
+    {
+      "point": "benchmark",
+      "mode": "isotropic",
+      "seed": 1,
+      "level8_minus_level7_nm": 0.033254013424084405
+    },
+    {
+      "point": "benchmark",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "level8_minus_level7_nm": -0.0035374452974679116
+    },
+    {
+      "point": "benchmark",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "level8_minus_level7_nm": -0.003548731159384033
+    },
+    {
+      "point": "tilted",
+      "mode": "stable",
+      "seed": 0,
+      "level8_minus_level7_nm": 9.700211712967977e-07
+    },
+    {
+      "point": "tilted",
+      "mode": "isotropic",
+      "seed": 1,
+      "level8_minus_level7_nm": 0.037971094652675674
+    },
+    {
+      "point": "tilted",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "level8_minus_level7_nm": -0.003074411416598366
+    },
+    {
+      "point": "tilted",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "level8_minus_level7_nm": -0.003083927450035162
+    },
+    {
+      "point": "faster",
+      "mode": "stable",
+      "seed": 0,
+      "level8_minus_level7_nm": 1.4236089682316956e-05
+    },
+    {
+      "point": "faster",
+      "mode": "isotropic",
+      "seed": 1,
+      "level8_minus_level7_nm": 0.04665270335681271
+    },
+    {
+      "point": "faster",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "level8_minus_level7_nm": -0.013309390013517941
+    },
+    {
+      "point": "faster",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "level8_minus_level7_nm": -0.013322226308218887
+    },
+    {
+      "point": "zero_field",
+      "mode": "stable",
+      "seed": 0,
+      "level8_minus_level7_nm": 1.0356100957454696e-06
+    },
+    {
+      "point": "zero_field",
+      "mode": "isotropic",
+      "seed": 1,
+      "level8_minus_level7_nm": 0.03662168931259657
+    },
+    {
+      "point": "zero_field",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "level8_minus_level7_nm": -3.9703096427813524e-07
+    },
+    {
+      "point": "zero_field",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "level8_minus_level7_nm": 6.696157516527441e-07
+    }
+  ],
+  "cases": [
+    {
+      "name": "benchmark_stable_seed0_level7",
+      "point": "benchmark",
+      "mode": "stable",
+      "seed": 0,
+      "level": 7,
+      "decays_by_first_return": 0,
+      "minimum_nm": 2.876248650725417e-06,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "benchmark_stable_seed0_level8",
+      "point": "benchmark",
+      "mode": "stable",
+      "seed": 0,
+      "level": 8,
+      "decays_by_first_return": 0,
+      "minimum_nm": 8.0268299697141e-07,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "benchmark_isotropic_seed1_level7",
+      "point": "benchmark",
+      "mode": "isotropic",
+      "seed": 1,
+      "level": 7,
+      "decays_by_first_return": 2,
+      "minimum_nm": 4188.399932440788,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "benchmark_collinear_forward_seed1_level7",
+      "point": "benchmark",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "level": 7,
+      "decays_by_first_return": 2,
+      "minimum_nm": 70.67233166299258,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "benchmark_collinear_backward_seed1_level7",
+      "point": "benchmark",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "level": 7,
+      "decays_by_first_return": 2,
+      "minimum_nm": 71.62336562381203,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "benchmark_isotropic_seed1_level8",
+      "point": "benchmark",
+      "mode": "isotropic",
+      "seed": 1,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 4188.433186454212,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "benchmark_collinear_forward_seed1_level8",
+      "point": "benchmark",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 70.66879421769511,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "benchmark_collinear_backward_seed1_level8",
+      "point": "benchmark",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 71.61981689265265,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "benchmark_isotropic_seed2_level8",
+      "point": "benchmark",
+      "mode": "isotropic",
+      "seed": 2,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 1930.106338573986,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "benchmark_collinear_forward_seed2_level8",
+      "point": "benchmark",
+      "mode": "collinear_forward",
+      "seed": 2,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 21.02715128158287,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "benchmark_collinear_backward_seed2_level8",
+      "point": "benchmark",
+      "mode": "collinear_backward",
+      "seed": 2,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 21.62105183577289,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "benchmark_isotropic_seed3_level8",
+      "point": "benchmark",
+      "mode": "isotropic",
+      "seed": 3,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 3362.8179316517676,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "benchmark_collinear_forward_seed3_level8",
+      "point": "benchmark",
+      "mode": "collinear_forward",
+      "seed": 3,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 110.20931105533121,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "benchmark_collinear_backward_seed3_level8",
+      "point": "benchmark",
+      "mode": "collinear_backward",
+      "seed": 3,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 111.50569869193048,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "benchmark_isotropic_seed4_level8",
+      "point": "benchmark",
+      "mode": "isotropic",
+      "seed": 4,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 930.8420177488142,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "benchmark_collinear_forward_seed4_level8",
+      "point": "benchmark",
+      "mode": "collinear_forward",
+      "seed": 4,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 48.7267249191529,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "benchmark_collinear_backward_seed4_level8",
+      "point": "benchmark",
+      "mode": "collinear_backward",
+      "seed": 4,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 49.31377886196311,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "benchmark_isotropic_seed5_level8",
+      "point": "benchmark",
+      "mode": "isotropic",
+      "seed": 5,
+      "level": 8,
+      "decays_by_first_return": 0,
+      "minimum_nm": 8.0268299697141e-07,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "benchmark_collinear_forward_seed5_level8",
+      "point": "benchmark",
+      "mode": "collinear_forward",
+      "seed": 5,
+      "level": 8,
+      "decays_by_first_return": 0,
+      "minimum_nm": 8.0268299697141e-07,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "benchmark_collinear_backward_seed5_level8",
+      "point": "benchmark",
+      "mode": "collinear_backward",
+      "seed": 5,
+      "level": 8,
+      "decays_by_first_return": 0,
+      "minimum_nm": 8.0268299697141e-07,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "benchmark_isotropic_seed6_level8",
+      "point": "benchmark",
+      "mode": "isotropic",
+      "seed": 6,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 4656.061324580874,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "benchmark_collinear_forward_seed6_level8",
+      "point": "benchmark",
+      "mode": "collinear_forward",
+      "seed": 6,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 121.41226918310983,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "benchmark_collinear_backward_seed6_level8",
+      "point": "benchmark",
+      "mode": "collinear_backward",
+      "seed": 6,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 123.09613995898277,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "benchmark_isotropic_seed7_level8",
+      "point": "benchmark",
+      "mode": "isotropic",
+      "seed": 7,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 5353.301254167035,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "benchmark_collinear_forward_seed7_level8",
+      "point": "benchmark",
+      "mode": "collinear_forward",
+      "seed": 7,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 117.81435601931526,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "benchmark_collinear_backward_seed7_level8",
+      "point": "benchmark",
+      "mode": "collinear_backward",
+      "seed": 7,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 127.76983890532546,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "benchmark_isotropic_seed8_level8",
+      "point": "benchmark",
+      "mode": "isotropic",
+      "seed": 8,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 4165.240718067689,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "benchmark_collinear_forward_seed8_level8",
+      "point": "benchmark",
+      "mode": "collinear_forward",
+      "seed": 8,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 104.16840084594139,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "benchmark_collinear_backward_seed8_level8",
+      "point": "benchmark",
+      "mode": "collinear_backward",
+      "seed": 8,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 105.3385725828902,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "tilted_stable_seed0_level7",
+      "point": "tilted",
+      "mode": "stable",
+      "seed": 0,
+      "level": 7,
+      "decays_by_first_return": 0,
+      "minimum_nm": 0.020053857611424634,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "tilted_stable_seed0_level8",
+      "point": "tilted",
+      "mode": "stable",
+      "seed": 0,
+      "level": 8,
+      "decays_by_first_return": 0,
+      "minimum_nm": 0.02005482763259593,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "tilted_isotropic_seed1_level7",
+      "point": "tilted",
+      "mode": "isotropic",
+      "seed": 1,
+      "level": 7,
+      "decays_by_first_return": 2,
+      "minimum_nm": 3625.089171209438,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "tilted_collinear_forward_seed1_level7",
+      "point": "tilted",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "level": 7,
+      "decays_by_first_return": 2,
+      "minimum_nm": 61.204030474609944,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "tilted_collinear_backward_seed1_level7",
+      "point": "tilted",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "level": 7,
+      "decays_by_first_return": 2,
+      "minimum_nm": 62.0276494322052,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "tilted_isotropic_seed1_level8",
+      "point": "tilted",
+      "mode": "isotropic",
+      "seed": 1,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 3625.1271423040907,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "tilted_collinear_forward_seed1_level8",
+      "point": "tilted",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 61.200956063193345,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "tilted_collinear_backward_seed1_level8",
+      "point": "tilted",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 62.02456550475517,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "tilted_isotropic_seed2_level8",
+      "point": "tilted",
+      "mode": "isotropic",
+      "seed": 2,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 1874.6616356483955,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "tilted_collinear_forward_seed2_level8",
+      "point": "tilted",
+      "mode": "collinear_forward",
+      "seed": 2,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 18.210050214345475,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "tilted_collinear_backward_seed2_level8",
+      "point": "tilted",
+      "mode": "collinear_backward",
+      "seed": 2,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 18.72438293596853,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "tilted_isotropic_seed3_level8",
+      "point": "tilted",
+      "mode": "isotropic",
+      "seed": 3,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 3818.2237956145204,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "tilted_collinear_forward_seed3_level8",
+      "point": "tilted",
+      "mode": "collinear_forward",
+      "seed": 3,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 95.44402593602004,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "tilted_collinear_backward_seed3_level8",
+      "point": "tilted",
+      "mode": "collinear_backward",
+      "seed": 3,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 96.56672937716843,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "tilted_isotropic_seed4_level8",
+      "point": "tilted",
+      "mode": "isotropic",
+      "seed": 4,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 726.249905551531,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "tilted_collinear_forward_seed4_level8",
+      "point": "tilted",
+      "mode": "collinear_forward",
+      "seed": 4,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 42.19857330059833,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "tilted_collinear_backward_seed4_level8",
+      "point": "tilted",
+      "mode": "collinear_backward",
+      "seed": 4,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 42.70697670009049,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "tilted_isotropic_seed5_level8",
+      "point": "tilted",
+      "mode": "isotropic",
+      "seed": 5,
+      "level": 8,
+      "decays_by_first_return": 0,
+      "minimum_nm": 0.02005482763259593,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "tilted_collinear_forward_seed5_level8",
+      "point": "tilted",
+      "mode": "collinear_forward",
+      "seed": 5,
+      "level": 8,
+      "decays_by_first_return": 0,
+      "minimum_nm": 0.02005482763259593,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "tilted_collinear_backward_seed5_level8",
+      "point": "tilted",
+      "mode": "collinear_backward",
+      "seed": 5,
+      "level": 8,
+      "decays_by_first_return": 0,
+      "minimum_nm": 0.02005482763259593,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "tilted_isotropic_seed6_level8",
+      "point": "tilted",
+      "mode": "isotropic",
+      "seed": 6,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 4008.426014964101,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "tilted_collinear_forward_seed6_level8",
+      "point": "tilted",
+      "mode": "collinear_forward",
+      "seed": 6,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 105.14606252417359,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "tilted_collinear_backward_seed6_level8",
+      "point": "tilted",
+      "mode": "collinear_backward",
+      "seed": 6,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 106.6043357395975,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "tilted_isotropic_seed7_level8",
+      "point": "tilted",
+      "mode": "isotropic",
+      "seed": 7,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 4796.108997623557,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "tilted_collinear_forward_seed7_level8",
+      "point": "tilted",
+      "mode": "collinear_forward",
+      "seed": 7,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 102.03017735069902,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "tilted_collinear_backward_seed7_level8",
+      "point": "tilted",
+      "mode": "collinear_backward",
+      "seed": 7,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 110.65186806665426,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "tilted_isotropic_seed8_level8",
+      "point": "tilted",
+      "mode": "isotropic",
+      "seed": 8,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 3095.852756643297,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "tilted_collinear_forward_seed8_level8",
+      "point": "tilted",
+      "mode": "collinear_forward",
+      "seed": 8,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 90.21244914356512,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "tilted_collinear_backward_seed8_level8",
+      "point": "tilted",
+      "mode": "collinear_backward",
+      "seed": 8,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 91.2258466777868,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "faster_stable_seed0_level7",
+      "point": "faster",
+      "mode": "stable",
+      "seed": 0,
+      "level": 7,
+      "decays_by_first_return": 0,
+      "minimum_nm": 0.00010860019364305568,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "faster_stable_seed0_level8",
+      "point": "faster",
+      "mode": "stable",
+      "seed": 0,
+      "level": 8,
+      "decays_by_first_return": 0,
+      "minimum_nm": 0.00012283628332537263,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "faster_isotropic_seed1_level7",
+      "point": "faster",
+      "mode": "isotropic",
+      "seed": 1,
+      "level": 7,
+      "decays_by_first_return": 2,
+      "minimum_nm": 4870.190406898597,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "faster_collinear_forward_seed1_level7",
+      "point": "faster",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "level": 7,
+      "decays_by_first_return": 2,
+      "minimum_nm": 201.83954504702928,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "faster_collinear_backward_seed1_level7",
+      "point": "faster",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "level": 7,
+      "decays_by_first_return": 2,
+      "minimum_nm": 202.3576747058399,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "faster_isotropic_seed1_level8",
+      "point": "faster",
+      "mode": "isotropic",
+      "seed": 1,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 4870.237059601954,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "faster_collinear_forward_seed1_level8",
+      "point": "faster",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 201.82623565701576,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "faster_collinear_backward_seed1_level8",
+      "point": "faster",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 202.3443524795317,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "faster_isotropic_seed2_level8",
+      "point": "faster",
+      "mode": "isotropic",
+      "seed": 2,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 1997.047538462726,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "faster_collinear_forward_seed2_level8",
+      "point": "faster",
+      "mode": "collinear_forward",
+      "seed": 2,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 38.65605294363283,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "faster_collinear_backward_seed2_level8",
+      "point": "faster",
+      "mode": "collinear_backward",
+      "seed": 2,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 40.14626782163802,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "faster_isotropic_seed3_level8",
+      "point": "faster",
+      "mode": "isotropic",
+      "seed": 3,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 1324.6079081922092,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "faster_collinear_forward_seed3_level8",
+      "point": "faster",
+      "mode": "collinear_forward",
+      "seed": 3,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 172.35635860384048,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "faster_collinear_backward_seed3_level8",
+      "point": "faster",
+      "mode": "collinear_backward",
+      "seed": 3,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 173.19721219630603,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "faster_isotropic_seed4_level8",
+      "point": "faster",
+      "mode": "isotropic",
+      "seed": 4,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 1294.3053053019162,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "faster_collinear_forward_seed4_level8",
+      "point": "faster",
+      "mode": "collinear_forward",
+      "seed": 4,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 137.24840070284193,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "faster_collinear_backward_seed4_level8",
+      "point": "faster",
+      "mode": "collinear_backward",
+      "seed": 4,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 137.5919657228077,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "faster_isotropic_seed5_level8",
+      "point": "faster",
+      "mode": "isotropic",
+      "seed": 5,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 5752.738339309686,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "faster_collinear_forward_seed5_level8",
+      "point": "faster",
+      "mode": "collinear_forward",
+      "seed": 5,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 376.09035737046423,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "faster_collinear_backward_seed5_level8",
+      "point": "faster",
+      "mode": "collinear_backward",
+      "seed": 5,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 376.9693868367338,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "faster_isotropic_seed6_level8",
+      "point": "faster",
+      "mode": "isotropic",
+      "seed": 6,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 5659.136713610842,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "faster_collinear_forward_seed6_level8",
+      "point": "faster",
+      "mode": "collinear_forward",
+      "seed": 6,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 309.2188539668395,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "faster_collinear_backward_seed6_level8",
+      "point": "faster",
+      "mode": "collinear_backward",
+      "seed": 6,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 311.15849694901374,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "faster_isotropic_seed7_level8",
+      "point": "faster",
+      "mode": "isotropic",
+      "seed": 7,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 6609.559850580005,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "faster_collinear_forward_seed7_level8",
+      "point": "faster",
+      "mode": "collinear_forward",
+      "seed": 7,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 397.5385675164342,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "faster_collinear_backward_seed7_level8",
+      "point": "faster",
+      "mode": "collinear_backward",
+      "seed": 7,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 398.8074944257629,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "faster_isotropic_seed8_level8",
+      "point": "faster",
+      "mode": "isotropic",
+      "seed": 8,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 6568.321086917768,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "faster_collinear_forward_seed8_level8",
+      "point": "faster",
+      "mode": "collinear_forward",
+      "seed": 8,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 188.32749362968545,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "faster_collinear_backward_seed8_level8",
+      "point": "faster",
+      "mode": "collinear_backward",
+      "seed": 8,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 189.49535764093554,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "zero_field_stable_seed0_level7",
+      "point": "zero_field",
+      "mode": "stable",
+      "seed": 0,
+      "level": 7,
+      "decays_by_first_return": 0,
+      "minimum_nm": 2.7599730322655905e-08,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "zero_field_stable_seed0_level8",
+      "point": "zero_field",
+      "mode": "stable",
+      "seed": 0,
+      "level": 8,
+      "decays_by_first_return": 0,
+      "minimum_nm": 1.0632098260681255e-06,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "zero_field_isotropic_seed1_level7",
+      "point": "zero_field",
+      "mode": "isotropic",
+      "seed": 1,
+      "level": 7,
+      "decays_by_first_return": 2,
+      "minimum_nm": 4127.28793684707,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "zero_field_collinear_forward_seed1_level7",
+      "point": "zero_field",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "level": 7,
+      "decays_by_first_return": 2,
+      "minimum_nm": 8.512606430790212e-07,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "zero_field_collinear_backward_seed1_level7",
+      "point": "zero_field",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "level": 7,
+      "decays_by_first_return": 2,
+      "minimum_nm": 1.6472191854490488e-08,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "zero_field_isotropic_seed1_level8",
+      "point": "zero_field",
+      "mode": "isotropic",
+      "seed": 1,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 4127.324558536383,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "zero_field_collinear_forward_seed1_level8",
+      "point": "zero_field",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 4.542296788008859e-07,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "zero_field_collinear_backward_seed1_level8",
+      "point": "zero_field",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 6.860879435072346e-07,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "zero_field_isotropic_seed2_level8",
+      "point": "zero_field",
+      "mode": "isotropic",
+      "seed": 2,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 1945.856163667351,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "zero_field_collinear_forward_seed2_level8",
+      "point": "zero_field",
+      "mode": "collinear_forward",
+      "seed": 2,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 5.5441514702970396e-08,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "zero_field_collinear_backward_seed2_level8",
+      "point": "zero_field",
+      "mode": "collinear_backward",
+      "seed": 2,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 1.060406576938953e-06,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "zero_field_isotropic_seed3_level8",
+      "point": "zero_field",
+      "mode": "isotropic",
+      "seed": 3,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 3252.8233335902955,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "zero_field_collinear_forward_seed3_level8",
+      "point": "zero_field",
+      "mode": "collinear_forward",
+      "seed": 3,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 4.806687251868607e-07,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "zero_field_collinear_backward_seed3_level8",
+      "point": "zero_field",
+      "mode": "collinear_backward",
+      "seed": 3,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 1.1007680729469988e-08,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "zero_field_isotropic_seed4_level8",
+      "point": "zero_field",
+      "mode": "isotropic",
+      "seed": 4,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 892.8260456039728,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "zero_field_collinear_forward_seed4_level8",
+      "point": "zero_field",
+      "mode": "collinear_forward",
+      "seed": 4,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 4.2196109462968636e-07,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "zero_field_collinear_backward_seed4_level8",
+      "point": "zero_field",
+      "mode": "collinear_backward",
+      "seed": 4,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 6.671063992965893e-08,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "zero_field_isotropic_seed5_level8",
+      "point": "zero_field",
+      "mode": "isotropic",
+      "seed": 5,
+      "level": 8,
+      "decays_by_first_return": 0,
+      "minimum_nm": 1.0632098260681255e-06,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "zero_field_collinear_forward_seed5_level8",
+      "point": "zero_field",
+      "mode": "collinear_forward",
+      "seed": 5,
+      "level": 8,
+      "decays_by_first_return": 0,
+      "minimum_nm": 1.0632098260681255e-06,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "zero_field_collinear_backward_seed5_level8",
+      "point": "zero_field",
+      "mode": "collinear_backward",
+      "seed": 5,
+      "level": 8,
+      "decays_by_first_return": 0,
+      "minimum_nm": 1.0632098260681255e-06,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "zero_field_isotropic_seed6_level8",
+      "point": "zero_field",
+      "mode": "isotropic",
+      "seed": 6,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 4658.89407550078,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "zero_field_collinear_forward_seed6_level8",
+      "point": "zero_field",
+      "mode": "collinear_forward",
+      "seed": 6,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 2.6653646298787317e-08,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "zero_field_collinear_backward_seed6_level8",
+      "point": "zero_field",
+      "mode": "collinear_backward",
+      "seed": 6,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 6.604608437682073e-08,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "zero_field_isotropic_seed7_level8",
+      "point": "zero_field",
+      "mode": "isotropic",
+      "seed": 7,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 5446.162289631716,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "zero_field_collinear_forward_seed7_level8",
+      "point": "zero_field",
+      "mode": "collinear_forward",
+      "seed": 7,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 1.3333432597835247e-06,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "zero_field_collinear_backward_seed7_level8",
+      "point": "zero_field",
+      "mode": "collinear_backward",
+      "seed": 7,
+      "level": 8,
+      "decays_by_first_return": 2,
+      "minimum_nm": 6.200993477601486e-07,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "zero_field_isotropic_seed8_level8",
+      "point": "zero_field",
+      "mode": "isotropic",
+      "seed": 8,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 4134.348576886357,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "zero_field_collinear_forward_seed8_level8",
+      "point": "zero_field",
+      "mode": "collinear_forward",
+      "seed": 8,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 1.9264196993648418e-07,
+      "compact_vs_full_search_difference_nm": 0.0
+    },
+    {
+      "name": "zero_field_collinear_backward_seed8_level8",
+      "point": "zero_field",
+      "mode": "collinear_backward",
+      "seed": 8,
+      "level": 8,
+      "decays_by_first_return": 1,
+      "minimum_nm": 2.352572477526544e-08,
+      "compact_vs_full_search_difference_nm": 0.0
+    }
+  ],
+  "limitations": [
+    "Chord minima are estimates, not certified trajectory bounds.",
+    "Stable-to-collinear includes mass change, longitudinal recoil and charge history.",
+    "No charge-only intervention exists in this archive.",
+    "Collinear-to-isotropic changes conditional decay directions; distances are nonlinear.",
+    "0/1 decay rows are geometry only; no mixed-charge capture model is applied.",
+    "No inclusive annihilation probability or causal additive decomposition is inferred."
+  ]
+}
