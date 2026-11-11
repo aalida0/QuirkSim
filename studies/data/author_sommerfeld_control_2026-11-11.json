@@ -1,0 +1,38 @@
+{
+  "status": "PASS_SCOPED_AUTHOR_CODE_CONTROL",
+  "repository": "https://github.com/MDT-Maikel/Sommerfeld",
+  "commit": "f0c97f32d10bb0f23f791765e652426117211955",
+  "git_blob": "982db5d710283acced8e4d5b580784fd6807d93b",
+  "source_sha256": "a571733daafd3c91074ba9a7e839cf69964fb789f91f9d9fadf86811f1af143d",
+  "license": "CC-BY-4.0 per upstream README",
+  "coverage": "SU3_FUNDAMENTAL_COLOR_AND_SPIN_AVERAGED_L0_ONLY",
+  "source_processing": "execute definitions before legacy CLI, reproduce CLI global alphasommerfeld",
+  "not_validated": [
+    "SU2 general-N notebook execution",
+    "IC-singlet partial-wave projection",
+    "capture, confinement or nonperturbative emission"
+  ],
+  "cases": [
+    {
+      "beta": 1e-05,
+      "sigma_v_moller_gev_minus2": 2.574181086069003e-08,
+      "sommerfeld_ratio": 4787.188805230801,
+      "bare_relative_error": 5.551115123125783e-17,
+      "coulomb_relative_error": 2.2958874039497803e-41
+    },
+    {
+      "beta": 0.05,
+      "sigma_v_moller_gev_minus2": 2.574181086069003e-08,
+      "sommerfeld_ratio": 1.566383994167659,
+      "bare_relative_error": 5.551115123125783e-17,
+      "coulomb_relative_error": 2.9235966348412654e-17
+    },
+    {
+      "beta": 0.4,
+      "sigma_v_moller_gev_minus2": 2.574181086069003e-08,
+      "sommerfeld_ratio": 1.0413430199357325,
+      "bare_relative_error": 5.551115123125783e-17,
+      "coulomb_relative_error": 5.31142664398075e-17
+    }
+  ]
+}

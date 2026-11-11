@@ -1,0 +1,1002 @@
+{
+  "scope": "LITERATURE_MOTIVATED_REFERENCE_MODEL_AND_FIRST_RETURN_GATE",
+  "sources": {
+    "mean_loss": "2311.15486v2 Eq7",
+    "full_signed_period": "2504.02940v2 Eq6, T=4p/sigma",
+    "zero_glueball_baseline": "2504.02940v2 Sec2.1",
+    "source_scale_warning": "2504.02940 uses sigma=3.6 Lambda_prime^2; our Lambda is sqrt(sigma)"
+  },
+  "charged_endpoint_weak_lifetime_ps": 258.5200888747253,
+  "cards": [
+    {
+      "sector": "charged_stable_reference",
+      "epsilon": 0.0,
+      "mean_emission_count_multiplier": 1,
+      "initial_pair_excess_energy_gev": 41.01888613940662,
+      "stop_energy_gev": 6.192e-06,
+      "stop_convention": "declared end of linear reference; not capture or annihilation",
+      "full_signed_period_ps": 431.86694794111565,
+      "mean_loss_per_full_signed_period_gev": 0.0,
+      "reference_cooling_time_ps": 3.91970352661745e+20,
+      "status": "FINITE_REFERENCE_COOLING_TIME",
+      "comparison_to_charged_endpoint_weak_lifetime": 1.5162084864193574e+18,
+      "applicability": "radial orbit with persistent charge and all encounters eligible; not the decaying G4 trajectory"
+    },
+    {
+      "sector": "charged_stable_reference",
+      "epsilon": 0.0,
+      "mean_emission_count_multiplier": 2,
+      "initial_pair_excess_energy_gev": 41.01888613940662,
+      "stop_energy_gev": 6.192e-06,
+      "stop_convention": "declared end of linear reference; not capture or annihilation",
+      "full_signed_period_ps": 431.86694794111565,
+      "mean_loss_per_full_signed_period_gev": 0.0,
+      "reference_cooling_time_ps": 3.91970352661745e+20,
+      "status": "FINITE_REFERENCE_COOLING_TIME",
+      "comparison_to_charged_endpoint_weak_lifetime": 1.5162084864193574e+18,
+      "applicability": "radial orbit with persistent charge and all encounters eligible; not the decaying G4 trajectory"
+    },
+    {
+      "sector": "charged_stable_reference",
+      "epsilon": 0.01,
+      "mean_emission_count_multiplier": 1,
+      "initial_pair_excess_energy_gev": 41.01888613940662,
+      "stop_energy_gev": 6.192e-06,
+      "stop_convention": "declared end of linear reference; not capture or annihilation",
+      "full_signed_period_ps": 431.86694794111565,
+      "mean_loss_per_full_signed_period_gev": 7.74e-09,
+      "reference_cooling_time_ps": 1512436974296.0398,
+      "status": "FINITE_REFERENCE_COOLING_TIME",
+      "comparison_to_charged_endpoint_weak_lifetime": 5850365365.721898,
+      "applicability": "radial orbit with persistent charge and all encounters eligible; not the decaying G4 trajectory"
+    },
+    {
+      "sector": "charged_stable_reference",
+      "epsilon": 0.01,
+      "mean_emission_count_multiplier": 2,
+      "initial_pair_excess_energy_gev": 41.01888613940662,
+      "stop_energy_gev": 6.192e-06,
+      "stop_convention": "declared end of linear reference; not capture or annihilation",
+      "full_signed_period_ps": 431.86694794111565,
+      "mean_loss_per_full_signed_period_gev": 1.548e-08,
+      "reference_cooling_time_ps": 756218488794.2472,
+      "status": "FINITE_REFERENCE_COOLING_TIME",
+      "comparison_to_charged_endpoint_weak_lifetime": 2925182689.2288384,
+      "applicability": "radial orbit with persistent charge and all encounters eligible; not the decaying G4 trajectory"
+    },
+    {
+      "sector": "charged_stable_reference",
+      "epsilon": 0.1,
+      "mean_emission_count_multiplier": 1,
+      "initial_pair_excess_energy_gev": 41.01888613940662,
+      "stop_energy_gev": 6.192e-06,
+      "stop_convention": "declared end of linear reference; not capture or annihilation",
+      "full_signed_period_ps": 431.86694794111565,
+      "mean_loss_per_full_signed_period_gev": 7.74e-08,
+      "reference_cooling_time_ps": 151243698022.24585,
+      "status": "FINITE_REFERENCE_COOLING_TIME",
+      "comparison_to_charged_endpoint_weak_lifetime": 585036538.8646301,
+      "applicability": "radial orbit with persistent charge and all encounters eligible; not the decaying G4 trajectory"
+    },
+    {
+      "sector": "charged_stable_reference",
+      "epsilon": 0.1,
+      "mean_emission_count_multiplier": 2,
+      "initial_pair_excess_energy_gev": 41.01888613940662,
+      "stop_energy_gev": 6.192e-06,
+      "stop_convention": "declared end of linear reference; not capture or annihilation",
+      "full_signed_period_ps": 431.86694794111565,
+      "mean_loss_per_full_signed_period_gev": 1.548e-07,
+      "reference_cooling_time_ps": 75621849027.58514,
+      "status": "FINITE_REFERENCE_COOLING_TIME",
+      "comparison_to_charged_endpoint_weak_lifetime": 292518269.49599373,
+      "applicability": "radial orbit with persistent charge and all encounters eligible; not the decaying G4 trajectory"
+    },
+    {
+      "sector": "charged_stable_reference",
+      "epsilon": 1.0,
+      "mean_emission_count_multiplier": 1,
+      "initial_pair_excess_energy_gev": 41.01888613940662,
+      "stop_energy_gev": 6.192e-06,
+      "stop_convention": "declared end of linear reference; not capture or annihilation",
+      "full_signed_period_ps": 431.86694794111565,
+      "mean_loss_per_full_signed_period_gev": 7.74e-07,
+      "reference_cooling_time_ps": 15124369808.151049,
+      "status": "FINITE_REFERENCE_COOLING_TIME",
+      "comparison_to_charged_endpoint_weak_lifetime": 58503653.90938759,
+      "applicability": "radial orbit with persistent charge and all encounters eligible; not the decaying G4 trajectory"
+    },
+    {
+      "sector": "charged_stable_reference",
+      "epsilon": 1.0,
+      "mean_emission_count_multiplier": 2,
+      "initial_pair_excess_energy_gev": 41.01888613940662,
+      "stop_energy_gev": 6.192e-06,
+      "stop_convention": "declared end of linear reference; not capture or annihilation",
+      "full_signed_period_ps": 431.86694794111565,
+      "mean_loss_per_full_signed_period_gev": 1.548e-06,
+      "reference_cooling_time_ps": 7562184904.240115,
+      "status": "FINITE_REFERENCE_COOLING_TIME",
+      "comparison_to_charged_endpoint_weak_lifetime": 29251826.95533046,
+      "applicability": "radial orbit with persistent charge and all encounters eligible; not the decaying G4 trajectory"
+    },
+    {
+      "sector": "neutral_reference",
+      "epsilon": 0.0,
+      "mean_emission_count_multiplier": 1,
+      "initial_pair_excess_energy_gev": 40.990253030982814,
+      "stop_energy_gev": 6.192e-06,
+      "stop_convention": "declared end of linear reference; not capture or annihilation",
+      "full_signed_period_ps": 431.56548453464893,
+      "mean_loss_per_full_signed_period_gev": 0.0,
+      "reference_cooling_time_ps": null,
+      "status": "NO_COOLING_IN_THIS_REFERENCE",
+      "comparison_to_charged_endpoint_weak_lifetime": null,
+      "applicability": "radial orbit with persistent charge and all encounters eligible; not the decaying G4 trajectory"
+    },
+    {
+      "sector": "neutral_reference",
+      "epsilon": 0.0,
+      "mean_emission_count_multiplier": 2,
+      "initial_pair_excess_energy_gev": 40.990253030982814,
+      "stop_energy_gev": 6.192e-06,
+      "stop_convention": "declared end of linear reference; not capture or annihilation",
+      "full_signed_period_ps": 431.56548453464893,
+      "mean_loss_per_full_signed_period_gev": 0.0,
+      "reference_cooling_time_ps": null,
+      "status": "NO_COOLING_IN_THIS_REFERENCE",
+      "comparison_to_charged_endpoint_weak_lifetime": null,
+      "applicability": "radial orbit with persistent charge and all encounters eligible; not the decaying G4 trajectory"
+    },
+    {
+      "sector": "neutral_reference",
+      "epsilon": 0.01,
+      "mean_emission_count_multiplier": 1,
+      "initial_pair_excess_energy_gev": 40.990253030982814,
+      "stop_energy_gev": 6.192e-06,
+      "stop_convention": "declared end of linear reference; not capture or annihilation",
+      "full_signed_period_ps": 431.56548453464893,
+      "mean_loss_per_full_signed_period_gev": 7.74e-09,
+      "reference_cooling_time_ps": 1510326213797.7114,
+      "status": "FINITE_REFERENCE_COOLING_TIME",
+      "comparison_to_charged_endpoint_weak_lifetime": 5842200582.445226,
+      "applicability": "radial orbit with persistent charge and all encounters eligible; not the decaying G4 trajectory"
+    },
+    {
+      "sector": "neutral_reference",
+      "epsilon": 0.01,
+      "mean_emission_count_multiplier": 2,
+      "initial_pair_excess_energy_gev": 40.990253030982814,
+      "stop_energy_gev": 6.192e-06,
+      "stop_convention": "declared end of linear reference; not capture or annihilation",
+      "full_signed_period_ps": 431.56548453464893,
+      "mean_loss_per_full_signed_period_gev": 1.548e-08,
+      "reference_cooling_time_ps": 755163106898.8557,
+      "status": "FINITE_REFERENCE_COOLING_TIME",
+      "comparison_to_charged_endpoint_weak_lifetime": 2921100291.222613,
+      "applicability": "radial orbit with persistent charge and all encounters eligible; not the decaying G4 trajectory"
+    },
+    {
+      "sector": "neutral_reference",
+      "epsilon": 0.1,
+      "mean_emission_count_multiplier": 1,
+      "initial_pair_excess_energy_gev": 40.990253030982814,
+      "stop_energy_gev": 6.192e-06,
+      "stop_convention": "declared end of linear reference; not capture or annihilation",
+      "full_signed_period_ps": 431.56548453464893,
+      "mean_loss_per_full_signed_period_gev": 7.74e-08,
+      "reference_cooling_time_ps": 151032621379.77118,
+      "status": "FINITE_REFERENCE_COOLING_TIME",
+      "comparison_to_charged_endpoint_weak_lifetime": 584220058.2445227,
+      "applicability": "radial orbit with persistent charge and all encounters eligible; not the decaying G4 trajectory"
+    },
+    {
+      "sector": "neutral_reference",
+      "epsilon": 0.1,
+      "mean_emission_count_multiplier": 2,
+      "initial_pair_excess_energy_gev": 40.990253030982814,
+      "stop_energy_gev": 6.192e-06,
+      "stop_convention": "declared end of linear reference; not capture or annihilation",
+      "full_signed_period_ps": 431.56548453464893,
+      "mean_loss_per_full_signed_period_gev": 1.548e-07,
+      "reference_cooling_time_ps": 75516310689.88559,
+      "status": "FINITE_REFERENCE_COOLING_TIME",
+      "comparison_to_charged_endpoint_weak_lifetime": 292110029.12226135,
+      "applicability": "radial orbit with persistent charge and all encounters eligible; not the decaying G4 trajectory"
+    },
+    {
+      "sector": "neutral_reference",
+      "epsilon": 1.0,
+      "mean_emission_count_multiplier": 1,
+      "initial_pair_excess_energy_gev": 40.990253030982814,
+      "stop_energy_gev": 6.192e-06,
+      "stop_convention": "declared end of linear reference; not capture or annihilation",
+      "full_signed_period_ps": 431.56548453464893,
+      "mean_loss_per_full_signed_period_gev": 7.74e-07,
+      "reference_cooling_time_ps": 15103262137.977112,
+      "status": "FINITE_REFERENCE_COOLING_TIME",
+      "comparison_to_charged_endpoint_weak_lifetime": 58422005.824452244,
+      "applicability": "radial orbit with persistent charge and all encounters eligible; not the decaying G4 trajectory"
+    },
+    {
+      "sector": "neutral_reference",
+      "epsilon": 1.0,
+      "mean_emission_count_multiplier": 2,
+      "initial_pair_excess_energy_gev": 40.990253030982814,
+      "stop_energy_gev": 6.192e-06,
+      "stop_convention": "declared end of linear reference; not capture or annihilation",
+      "full_signed_period_ps": 431.56548453464893,
+      "mean_loss_per_full_signed_period_gev": 1.548e-06,
+      "reference_cooling_time_ps": 7551631068.988556,
+      "status": "FINITE_REFERENCE_COOLING_TIME",
+      "comparison_to_charged_endpoint_weak_lifetime": 29211002.912226122,
+      "applicability": "radial orbit with persistent charge and all encounters eligible; not the decaying G4 trajectory"
+    }
+  ],
+  "first_return_gates": [
+    {
+      "case": "sampled_stable_level7",
+      "radius_multiple": 1.0,
+      "radius_mm": 2.54944419121447e-07,
+      "frame": "lab-frame saved-history gate diagnostic; source CM criterion not yet matched",
+      "radius_choice": "source-motivated scale",
+      "eligibility_bounds": [
+        0.0,
+        1.0
+      ],
+      "epsilon_scenarios": [
+        {
+          "epsilon": 0.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.01,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.01
+          ]
+        },
+        {
+          "epsilon": 0.1,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.1
+          ]
+        },
+        {
+          "epsilon": 1.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            1.0
+          ]
+        }
+      ],
+      "meaning": "GEOMETRIC_ELIGIBILITY_ONLY; ONE_TRIAL_IS_A_DECLARED_MODEL_CHOICE; NO_ANNIHILATION_PROBABILITY"
+    },
+    {
+      "case": "sampled_stable_level7",
+      "radius_multiple": 2.0,
+      "radius_mm": 5.09888838242894e-07,
+      "frame": "lab-frame saved-history gate diagnostic; source CM criterion not yet matched",
+      "radius_choice": "additional sensitivity choice",
+      "eligibility_bounds": [
+        0.0,
+        1.0
+      ],
+      "epsilon_scenarios": [
+        {
+          "epsilon": 0.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.01,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.01
+          ]
+        },
+        {
+          "epsilon": 0.1,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.1
+          ]
+        },
+        {
+          "epsilon": 1.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            1.0
+          ]
+        }
+      ],
+      "meaning": "GEOMETRIC_ELIGIBILITY_ONLY; ONE_TRIAL_IS_A_DECLARED_MODEL_CHOICE; NO_ANNIHILATION_PROBABILITY"
+    },
+    {
+      "case": "sampled_stable_level7",
+      "radius_multiple": 8.0,
+      "radius_mm": 2.039555352971576e-06,
+      "frame": "lab-frame saved-history gate diagnostic; source CM criterion not yet matched",
+      "radius_choice": "additional sensitivity choice",
+      "eligibility_bounds": [
+        0.0,
+        1.0
+      ],
+      "epsilon_scenarios": [
+        {
+          "epsilon": 0.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.01,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.01
+          ]
+        },
+        {
+          "epsilon": 0.1,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.1
+          ]
+        },
+        {
+          "epsilon": 1.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            1.0
+          ]
+        }
+      ],
+      "meaning": "GEOMETRIC_ELIGIBILITY_ONLY; ONE_TRIAL_IS_A_DECLARED_MODEL_CHOICE; NO_ANNIHILATION_PROBABILITY"
+    },
+    {
+      "case": "sampled_stable_level8",
+      "radius_multiple": 1.0,
+      "radius_mm": 2.54944419121447e-07,
+      "frame": "lab-frame saved-history gate diagnostic; source CM criterion not yet matched",
+      "radius_choice": "source-motivated scale",
+      "eligibility_bounds": [
+        0.0,
+        1.0
+      ],
+      "epsilon_scenarios": [
+        {
+          "epsilon": 0.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.01,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.01
+          ]
+        },
+        {
+          "epsilon": 0.1,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.1
+          ]
+        },
+        {
+          "epsilon": 1.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            1.0
+          ]
+        }
+      ],
+      "meaning": "GEOMETRIC_ELIGIBILITY_ONLY; ONE_TRIAL_IS_A_DECLARED_MODEL_CHOICE; NO_ANNIHILATION_PROBABILITY"
+    },
+    {
+      "case": "sampled_stable_level8",
+      "radius_multiple": 2.0,
+      "radius_mm": 5.09888838242894e-07,
+      "frame": "lab-frame saved-history gate diagnostic; source CM criterion not yet matched",
+      "radius_choice": "additional sensitivity choice",
+      "eligibility_bounds": [
+        0.0,
+        1.0
+      ],
+      "epsilon_scenarios": [
+        {
+          "epsilon": 0.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.01,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.01
+          ]
+        },
+        {
+          "epsilon": 0.1,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.1
+          ]
+        },
+        {
+          "epsilon": 1.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            1.0
+          ]
+        }
+      ],
+      "meaning": "GEOMETRIC_ELIGIBILITY_ONLY; ONE_TRIAL_IS_A_DECLARED_MODEL_CHOICE; NO_ANNIHILATION_PROBABILITY"
+    },
+    {
+      "case": "sampled_stable_level8",
+      "radius_multiple": 8.0,
+      "radius_mm": 2.039555352971576e-06,
+      "frame": "lab-frame saved-history gate diagnostic; source CM criterion not yet matched",
+      "radius_choice": "additional sensitivity choice",
+      "eligibility_bounds": [
+        0.0,
+        1.0
+      ],
+      "epsilon_scenarios": [
+        {
+          "epsilon": 0.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.01,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.01
+          ]
+        },
+        {
+          "epsilon": 0.1,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.1
+          ]
+        },
+        {
+          "epsilon": 1.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            1.0
+          ]
+        }
+      ],
+      "meaning": "GEOMETRIC_ELIGIBILITY_ONLY; ONE_TRIAL_IS_A_DECLARED_MODEL_CHOICE; NO_ANNIHILATION_PROBABILITY"
+    },
+    {
+      "case": "sampled_seed1_level7",
+      "radius_multiple": 1.0,
+      "radius_mm": 2.54944419121447e-07,
+      "frame": "lab-frame saved-history gate diagnostic; source CM criterion not yet matched",
+      "radius_choice": "source-motivated scale",
+      "eligibility_bounds": [
+        0.0,
+        0.0
+      ],
+      "epsilon_scenarios": [
+        {
+          "epsilon": 0.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.01,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.1,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 1.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "meaning": "GEOMETRIC_ELIGIBILITY_ONLY; ONE_TRIAL_IS_A_DECLARED_MODEL_CHOICE; NO_ANNIHILATION_PROBABILITY"
+    },
+    {
+      "case": "sampled_seed1_level7",
+      "radius_multiple": 2.0,
+      "radius_mm": 5.09888838242894e-07,
+      "frame": "lab-frame saved-history gate diagnostic; source CM criterion not yet matched",
+      "radius_choice": "additional sensitivity choice",
+      "eligibility_bounds": [
+        0.0,
+        0.0
+      ],
+      "epsilon_scenarios": [
+        {
+          "epsilon": 0.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.01,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.1,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 1.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "meaning": "GEOMETRIC_ELIGIBILITY_ONLY; ONE_TRIAL_IS_A_DECLARED_MODEL_CHOICE; NO_ANNIHILATION_PROBABILITY"
+    },
+    {
+      "case": "sampled_seed1_level7",
+      "radius_multiple": 8.0,
+      "radius_mm": 2.039555352971576e-06,
+      "frame": "lab-frame saved-history gate diagnostic; source CM criterion not yet matched",
+      "radius_choice": "additional sensitivity choice",
+      "eligibility_bounds": [
+        0.0,
+        0.0
+      ],
+      "epsilon_scenarios": [
+        {
+          "epsilon": 0.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.01,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.1,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 1.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "meaning": "GEOMETRIC_ELIGIBILITY_ONLY; ONE_TRIAL_IS_A_DECLARED_MODEL_CHOICE; NO_ANNIHILATION_PROBABILITY"
+    },
+    {
+      "case": "antipodal_seed1_level7",
+      "radius_multiple": 1.0,
+      "radius_mm": 2.54944419121447e-07,
+      "frame": "lab-frame saved-history gate diagnostic; source CM criterion not yet matched",
+      "radius_choice": "source-motivated scale",
+      "eligibility_bounds": [
+        0.0,
+        0.0
+      ],
+      "epsilon_scenarios": [
+        {
+          "epsilon": 0.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.01,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.1,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 1.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "meaning": "GEOMETRIC_ELIGIBILITY_ONLY; ONE_TRIAL_IS_A_DECLARED_MODEL_CHOICE; NO_ANNIHILATION_PROBABILITY"
+    },
+    {
+      "case": "antipodal_seed1_level7",
+      "radius_multiple": 2.0,
+      "radius_mm": 5.09888838242894e-07,
+      "frame": "lab-frame saved-history gate diagnostic; source CM criterion not yet matched",
+      "radius_choice": "additional sensitivity choice",
+      "eligibility_bounds": [
+        0.0,
+        0.0
+      ],
+      "epsilon_scenarios": [
+        {
+          "epsilon": 0.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.01,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.1,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 1.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "meaning": "GEOMETRIC_ELIGIBILITY_ONLY; ONE_TRIAL_IS_A_DECLARED_MODEL_CHOICE; NO_ANNIHILATION_PROBABILITY"
+    },
+    {
+      "case": "antipodal_seed1_level7",
+      "radius_multiple": 8.0,
+      "radius_mm": 2.039555352971576e-06,
+      "frame": "lab-frame saved-history gate diagnostic; source CM criterion not yet matched",
+      "radius_choice": "additional sensitivity choice",
+      "eligibility_bounds": [
+        0.0,
+        0.0
+      ],
+      "epsilon_scenarios": [
+        {
+          "epsilon": 0.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.01,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.1,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 1.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "meaning": "GEOMETRIC_ELIGIBILITY_ONLY; ONE_TRIAL_IS_A_DECLARED_MODEL_CHOICE; NO_ANNIHILATION_PROBABILITY"
+    },
+    {
+      "case": "sampled_seed1_level8",
+      "radius_multiple": 1.0,
+      "radius_mm": 2.54944419121447e-07,
+      "frame": "lab-frame saved-history gate diagnostic; source CM criterion not yet matched",
+      "radius_choice": "source-motivated scale",
+      "eligibility_bounds": [
+        0.0,
+        0.0
+      ],
+      "epsilon_scenarios": [
+        {
+          "epsilon": 0.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.01,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.1,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 1.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "meaning": "GEOMETRIC_ELIGIBILITY_ONLY; ONE_TRIAL_IS_A_DECLARED_MODEL_CHOICE; NO_ANNIHILATION_PROBABILITY"
+    },
+    {
+      "case": "sampled_seed1_level8",
+      "radius_multiple": 2.0,
+      "radius_mm": 5.09888838242894e-07,
+      "frame": "lab-frame saved-history gate diagnostic; source CM criterion not yet matched",
+      "radius_choice": "additional sensitivity choice",
+      "eligibility_bounds": [
+        0.0,
+        0.0
+      ],
+      "epsilon_scenarios": [
+        {
+          "epsilon": 0.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.01,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.1,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 1.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "meaning": "GEOMETRIC_ELIGIBILITY_ONLY; ONE_TRIAL_IS_A_DECLARED_MODEL_CHOICE; NO_ANNIHILATION_PROBABILITY"
+    },
+    {
+      "case": "sampled_seed1_level8",
+      "radius_multiple": 8.0,
+      "radius_mm": 2.039555352971576e-06,
+      "frame": "lab-frame saved-history gate diagnostic; source CM criterion not yet matched",
+      "radius_choice": "additional sensitivity choice",
+      "eligibility_bounds": [
+        0.0,
+        0.0
+      ],
+      "epsilon_scenarios": [
+        {
+          "epsilon": 0.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.01,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.1,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 1.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "meaning": "GEOMETRIC_ELIGIBILITY_ONLY; ONE_TRIAL_IS_A_DECLARED_MODEL_CHOICE; NO_ANNIHILATION_PROBABILITY"
+    },
+    {
+      "case": "antipodal_seed1_level8",
+      "radius_multiple": 1.0,
+      "radius_mm": 2.54944419121447e-07,
+      "frame": "lab-frame saved-history gate diagnostic; source CM criterion not yet matched",
+      "radius_choice": "source-motivated scale",
+      "eligibility_bounds": [
+        0.0,
+        0.0
+      ],
+      "epsilon_scenarios": [
+        {
+          "epsilon": 0.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.01,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.1,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 1.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "meaning": "GEOMETRIC_ELIGIBILITY_ONLY; ONE_TRIAL_IS_A_DECLARED_MODEL_CHOICE; NO_ANNIHILATION_PROBABILITY"
+    },
+    {
+      "case": "antipodal_seed1_level8",
+      "radius_multiple": 2.0,
+      "radius_mm": 5.09888838242894e-07,
+      "frame": "lab-frame saved-history gate diagnostic; source CM criterion not yet matched",
+      "radius_choice": "additional sensitivity choice",
+      "eligibility_bounds": [
+        0.0,
+        0.0
+      ],
+      "epsilon_scenarios": [
+        {
+          "epsilon": 0.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.01,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.1,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 1.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "meaning": "GEOMETRIC_ELIGIBILITY_ONLY; ONE_TRIAL_IS_A_DECLARED_MODEL_CHOICE; NO_ANNIHILATION_PROBABILITY"
+    },
+    {
+      "case": "antipodal_seed1_level8",
+      "radius_multiple": 8.0,
+      "radius_mm": 2.039555352971576e-06,
+      "frame": "lab-frame saved-history gate diagnostic; source CM criterion not yet matched",
+      "radius_choice": "additional sensitivity choice",
+      "eligibility_bounds": [
+        0.0,
+        0.0
+      ],
+      "epsilon_scenarios": [
+        {
+          "epsilon": 0.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.01,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 0.1,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "epsilon": 1.0,
+          "probability_bounds_for_one_assumed_trial": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "meaning": "GEOMETRIC_ELIGIBILITY_ONLY; ONE_TRIAL_IS_A_DECLARED_MODEL_CHOICE; NO_ANNIHILATION_PROBABILITY"
+    }
+  ],
+  "limitations": [
+    "mean emission energy is a loss parameter, not an on-shell glueball spectrum",
+    "no recoil or radiation feedback on trajectories",
+    "no transfer of scalar annihilation or persistent-charge cooling to neutral daughters",
+    "period and emission-count choices are explicit scenarios, not statistical errors",
+    "spin relaxation, angular-momentum loss and capture remain model choices"
+  ],
+  "physical_annihilation_probability": null
+}
