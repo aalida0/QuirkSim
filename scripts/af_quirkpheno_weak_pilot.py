@@ -118,7 +118,21 @@ def main():
     p.add_argument('--prepare-only',action='store_true')
     p.add_argument('--clock-mode',choices=('localized','legacy'),default='localized')
     p.add_argument('--sampled-pion-seeds',type=int,default=0,help='Optional complete forced-pion seed block; 8 seeds gives 20 cases')
+    p.add_argument('--duration-ps',type=float,default=130.)
+    p.add_argument('--case-timeout-seconds',type=int,default=120)
+    p.add_argument('--audit-close-return',action='store_true',help='Audit full step records after each run; requires uproot in this Python environment')
     a=p.parse_args();out=Path(a.output_dir).expanduser().resolve();state=prepare(out,a.clock_mode,a.sampled_pion_seeds)
+    if not math.isfinite(a.duration_ps) or a.duration_ps<=5 or a.case_timeout_seconds<1:
+        raise SystemExit('duration must be finite and >5 ps and timeout must be positive')
+    if a.audit_close_return:
+        try: import uproot  # noqa: F401
+        except ImportError: raise SystemExit('--audit-close-return requires uproot in this Python environment')
+    for case in state['cases']:
+        macro=Path(case['macro'])
+        content=re.sub(r'^/qsim/maxTime .*$',f'/qsim/maxTime {a.duration_ps/1000:.17g} ns',macro.read_text(),flags=re.M)
+        macro.write_text(content);case['macro_sha256']=hashlib.sha256(content.encode()).hexdigest()
+    state['nominal_stop_ps']=a.duration_ps;state['timeout_seconds_per_case']=a.case_timeout_seconds
+    state['close_return_audit_enabled']=a.audit_close_return
     def save(): (out/'manifest.json').write_text(json.dumps(state,indent=2)+'\n')
     save();print(f'Manifest: {out/"manifest.json"}',flush=True)
     if a.prepare_only:return
@@ -150,8 +164,8 @@ def main():
         shutil.copyfile(ASSETS/name,source/'quirkcore/include/quirkcore'/name)
     shutil.copyfile(ASSETS/'QuirkWeakProcess.cc',source/'quirkcore/src/QuirkWeakProcess.cc')
     build=out/'build'
-    def lcg(cmd):
-        return ['timeout','--kill-after=10s','600s','bash','-c',
+    def lcg(cmd, timeout_seconds=600):
+        return ['timeout','--kill-after=10s',str(timeout_seconds)+'s','bash','-c',
                 'source '+shlex.quote(str(LCG))+' && '+cmd]
     cmd='cmake -S '+shlex.quote(str(source))+' -B '+shlex.quote(str(build))
     cmd+=' -DQSIM_WITH_HEPMC3=OFF -DQSIM_WITH_PYTHIA8=OFF && cmake --build '+shlex.quote(str(build))+' -j1'
@@ -163,14 +177,22 @@ def main():
         env={'QP_WEAK_ENABLED':int(case['weak_enabled']),'QP_WEAK_ENDPOINT':case['endpoint'],
              'QP_WEAK_TAU_PS':50,'QP_WEAK_CLOCK_MODE':case['clock_mode'],'QP_NEUTRAL_MASS_GEV':M_NEUTRAL,'QP_WEAK_DIR_SIGN':case.get('pion_rest_y_sign',1),'QP_WEAK_PLAN':case.get('plan_file','')}
         command='env '+' '.join(shlex.quote(k+'='+str(v)) for k,v in env.items())
-        command+=' timeout --kill-after=5s 120s '+shlex.quote(str(exe))
+        command+=' timeout --kill-after=5s '+str(a.case_timeout_seconds)+'s '+shlex.quote(str(exe))
         command+=' --mt -t 1 -n 1 -s 1 -m '+shlex.quote(case['macro'])
-        case['execution']=run_logged(lcg(command),source,out/(case['name']+'.log'),145)
+        case['execution']=run_logged(lcg(command,a.case_timeout_seconds+15),source,out/(case['name']+'.log'),a.case_timeout_seconds+25)
         case['root_exists']=(out/(case['name']+'.root')).is_file()
         save()
         if case['execution']['returncode']!=0 or not case['root_exists']:
             state['numerical_validation']='STOPPED_AFTER_FAILED_CASE';save()
             raise SystemExit('Failed/incomplete: '+case['name']+'; retain and return logs')
+        if a.audit_close_return:
+            from audit_quirkpheno_close_return import audit
+            try: case['close_return']=audit(out/(case['name']+'.root'))
+            except (ValueError, KeyError, OSError) as exc:
+                case['close_return']={'status':'INVALID_INPUT','error':str(exc)}
+                state['numerical_validation']='STOPPED_AFTER_INVALID_CLOSE_RETURN_INPUT';save()
+                raise SystemExit('Close-return audit failed: '+case['name']) from exc
+            save()
     state['numerical_validation']='PENDING_WEAK_ROOT_AND_HANDOFF_AUDIT';save()
     failed=[c['name'] for c in state['cases'] if c['execution']['returncode']!=0 or not c['root_exists']]
     if failed:raise SystemExit('Failed/incomplete: '+', '.join(failed)+'; return logs')

@@ -35,6 +35,31 @@ is a no-recoil limit. A stable-versus-decaying comparison mixes charge, mass,
 and recoil. This pilot does not implement leptonic channels or all multiplet
 production modes and does not certify the Dirac-triplet model globally.
 
+### Close-return post-run censor
+
+`scripts/audit_quirkpheno_close_return.py` checks every saved endpoint step in
+single-event pilot ROOT files. It combines conservative speed-of-light bounds
+over overlapping, asynchronous steps, including records on either side of a
+weak handoff. It refuses missing steps and detects discontinuous sampled
+handoffs. The monitor arms only after a separated interval, so its statement is
+conditional on that arming; the point-production history before arming is not
+covered. An unresolved interval is censored at its start; it is not evidence
+of a contact, quantum transition, or annihilation. The rounding margin is an
+engineering guard, not interval-arithmetic certification. As with all saved
+step analyses, the speed and continuity assumptions apply to the represented
+worldlines, not only their observed endpoints.
+
+The pilot's optional `--audit-close-return` runs this audit after each case and
+stores the compact result in the manifest. `--duration-ps` and
+`--case-timeout-seconds` configure longer runs. The audit requires `uproot` in
+the Python environment and `stepPrescale=1`. It is post-run: it does not stop
+Geant4 online and does not restore a state at the censoring boundary. Full
+trajectory and weak-handoff validation are still required for any physical
+claim. Local checks: five synthetic tests and the existing 20 sampled-pion
+pilot ROOT files. All 20 remained outside the matching radius over their
+common histories from 5 ps through at least 130 ps, with weakest bound
+1.127 mm; this is before the first-return region and is not survival through it.
+
 ## AF runner
 
 `python3 scripts/af_quirkpheno_weak_pilot.py --output-dir <new-directory>`

@@ -27,6 +27,9 @@ def check(output=None):
         plan=Path(tmp)/'plan'
         subprocess.run(['g++','-std=c++17','-O2','-Wall','-Wextra','-Werror','-pedantic',str(here/'native_plan_check.cc'),'-o',str(plan)],check=True)
         subprocess.run([str(plan)],check=True)
+        close=Path(tmp)/'close'
+        subprocess.run(['g++','-std=c++17','-O2','-Wall','-Wextra','-Werror','-pedantic',str(here/'native_close_bound_check.cc'),'-o',str(close)],check=True)
+        subprocess.run([str(close)],check=True)
     reference=benchmark('triplet',225.)
     assert abs(reference['charged_mass_gev']-225.1571702763212)<1e-12
     rates=json.loads((here/'triplet_pion_rate_reference.json').read_text())
