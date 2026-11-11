@@ -1,0 +1,42 @@
+[
+  {
+    "case": "stable_B2_level2",
+    "endpoint": 0,
+    "max_transverse_hermite_minus_linear_mm": 5.881831081276165e-09
+  },
+  {
+    "case": "stable_B2_level2",
+    "endpoint": 1,
+    "max_transverse_hermite_minus_linear_mm": 5.859675077330409e-09
+  },
+  {
+    "case": "stable_B2_level1",
+    "endpoint": 0,
+    "max_transverse_hermite_minus_linear_mm": 2.3173907600931865e-08
+  },
+  {
+    "case": "stable_B2_level1",
+    "endpoint": 1,
+    "max_transverse_hermite_minus_linear_mm": 2.3379635933370375e-08
+  },
+  {
+    "case": "stable_B2_level3",
+    "endpoint": 0,
+    "max_transverse_hermite_minus_linear_mm": 1.4724769275825688e-09
+  },
+  {
+    "case": "stable_B2_level3",
+    "endpoint": 1,
+    "max_transverse_hermite_minus_linear_mm": 1.4736899498705852e-09
+  },
+  {
+    "case": "stable_B2_level4",
+    "endpoint": 0,
+    "max_transverse_hermite_minus_linear_mm": 3.6919028339643177e-10
+  },
+  {
+    "case": "stable_B2_level4",
+    "endpoint": 1,
+    "max_transverse_hermite_minus_linear_mm": 3.689840025333307e-10
+  }
+]
