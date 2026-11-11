@@ -1,0 +1,293 @@
+{
+  "scope": "SPECIFIED_VECTOR_CURRENT_DY_AND_LOCAL_DECAY_AMPLITUDES",
+  "production_model": {
+    "mass_gev": 225.1571702763212,
+    "pair_cm_beta_each": 0.4,
+    "pair_lab_boost_z": 0.25,
+    "incoming_quarks": "massless; transverse current; equal helicity weights",
+    "final_heavy_current": "pure vector; Dirac Y=0 triplet charged pair",
+    "included_in_AF_gun_generator": false
+  },
+  "production_pair_cm_density_real": [
+    [
+      0.49999999999999994,
+      0.0,
+      0.0,
+      0.04347826086956523
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.04347826086956523,
+      0.0,
+      0.0,
+      0.49999999999999994
+    ]
+  ],
+  "production_pair_cm_density_imag": [
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "production_pair_cm_singlet_fraction": 0.0,
+  "lab_canonical_singlet_fraction": 0.001525628412229889,
+  "frame_warning": "Lab spin-only singlet fraction is not the pair-CM annihilation occupation",
+  "source_archive_sha256": "e5e0209c0ebe1f2eca662f5709545b7832d4bdcacea02708e445aca226ff2db0",
+  "local_decay_maps": [
+    {
+      "case": "sampled_seed1_level7",
+      "time_ps": 40.92415536968852,
+      "parent_pdg": 17,
+      "canonical_rotation_angle_rad": 5.064036846581074e-05,
+      "rotation_real": [
+        [
+          0.9999999996794442,
+          1.3586950733930146e-05
+        ],
+        [
+          -1.3586950733931356e-05,
+          0.9999999996794442
+        ]
+      ],
+      "rotation_imag": [
+        [
+          1.533942479144852e-05,
+          -1.4873081263561738e-05
+        ],
+        [
+          -1.4873081263561738e-05,
+          -1.533942479144852e-05
+        ]
+      ],
+      "map_scope": "LOCAL_VERTEX_ONLY; NO_CONTINUOUS_SPIN_TRANSPORT"
+    },
+    {
+      "case": "sampled_seed1_level7",
+      "time_ps": 81.82193478901422,
+      "parent_pdg": -17,
+      "canonical_rotation_angle_rad": 4.146787848792184e-05,
+      "rotation_real": [
+        [
+          0.999999999785052,
+          1.9519147150987942e-05
+        ],
+        [
+          -1.9519147150987807e-05,
+          0.999999999785052
+        ]
+      ],
+      "rotation_imag": [
+        [
+          2.854147997144584e-06,
+          6.383805308680248e-06
+        ],
+        [
+          6.383805308680248e-06,
+          -2.854147997144584e-06
+        ]
+      ],
+      "map_scope": "LOCAL_VERTEX_ONLY; NO_CONTINUOUS_SPIN_TRANSPORT"
+    },
+    {
+      "case": "antipodal_seed1_level7",
+      "time_ps": 40.92415536968852,
+      "parent_pdg": 17,
+      "canonical_rotation_angle_rad": 5.063877262124371e-05,
+      "rotation_real": [
+        [
+          0.9999999996794643,
+          -1.3586522564424183e-05
+        ],
+        [
+          1.3586522564426936e-05,
+          0.9999999996794643
+        ]
+      ],
+      "rotation_imag": [
+        [
+          -1.5338941395722296e-05,
+          1.4872612563853868e-05
+        ],
+        [
+          1.4872612563853868e-05,
+          1.5338941395722296e-05
+        ]
+      ],
+      "map_scope": "LOCAL_VERTEX_ONLY; NO_CONTINUOUS_SPIN_TRANSPORT"
+    },
+    {
+      "case": "antipodal_seed1_level7",
+      "time_ps": 81.82194662195019,
+      "parent_pdg": -17,
+      "canonical_rotation_angle_rad": 4.146978004528272e-05,
+      "rotation_real": [
+        [
+          0.9999999997850321,
+          -1.951991852868439e-05
+        ],
+        [
+          1.9519918528683747e-05,
+          0.9999999997850321
+        ]
+      ],
+      "rotation_imag": [
+        [
+          -2.8552360984259924e-06,
+          -6.384048217642641e-06
+        ],
+        [
+          -6.384048217642641e-06,
+          2.8552360984259924e-06
+        ]
+      ],
+      "map_scope": "LOCAL_VERTEX_ONLY; NO_CONTINUOUS_SPIN_TRANSPORT"
+    },
+    {
+      "case": "sampled_seed1_level8",
+      "time_ps": 40.92415536970012,
+      "parent_pdg": 17,
+      "canonical_rotation_angle_rad": 5.0640368469401e-05,
+      "rotation_real": [
+        [
+          0.9999999996794441,
+          1.3586950733927956e-05
+        ],
+        [
+          -1.358695073392537e-05,
+          0.9999999996794441
+        ]
+      ],
+      "rotation_imag": [
+        [
+          1.53394247916957e-05,
+          -1.4873081266364867e-05
+        ],
+        [
+          -1.4873081266364867e-05,
+          -1.53394247916957e-05
+        ]
+      ],
+      "map_scope": "LOCAL_VERTEX_ONLY; NO_CONTINUOUS_SPIN_TRANSPORT"
+    },
+    {
+      "case": "sampled_seed1_level8",
+      "time_ps": 81.82193478902182,
+      "parent_pdg": -17,
+      "canonical_rotation_angle_rad": 4.146787848678135e-05,
+      "rotation_real": [
+        [
+          0.999999999785052,
+          1.951914715099093e-05
+        ],
+        [
+          -1.9519147150991222e-05,
+          0.999999999785052
+        ]
+      ],
+      "rotation_imag": [
+        [
+          2.8541479928879298e-06,
+          6.383805308722121e-06
+        ],
+        [
+          6.383805308722121e-06,
+          -2.8541479928879298e-06
+        ]
+      ],
+      "map_scope": "LOCAL_VERTEX_ONLY; NO_CONTINUOUS_SPIN_TRANSPORT"
+    },
+    {
+      "case": "antipodal_seed1_level8",
+      "time_ps": 40.92415536970012,
+      "parent_pdg": 17,
+      "canonical_rotation_angle_rad": 5.063877262483954e-05,
+      "rotation_real": [
+        [
+          0.9999999996794643,
+          -1.3586522564427106e-05
+        ],
+        [
+          1.3586522564426264e-05,
+          0.9999999996794643
+        ]
+      ],
+      "rotation_imag": [
+        [
+          -1.533894139596955e-05,
+          1.4872612566656995e-05
+        ],
+        [
+          1.4872612566656995e-05,
+          1.533894139596955e-05
+        ]
+      ],
+      "map_scope": "LOCAL_VERTEX_ONLY; NO_CONTINUOUS_SPIN_TRANSPORT"
+    },
+    {
+      "case": "antipodal_seed1_level8",
+      "time_ps": 81.82194662109052,
+      "parent_pdg": -17,
+      "canonical_rotation_angle_rad": 4.1469780044172097e-05,
+      "rotation_real": [
+        [
+          0.9999999997850321,
+          -1.9519918528691022e-05
+        ],
+        [
+          1.9519918528691445e-05,
+          0.9999999997850321
+        ]
+      ],
+      "rotation_imag": [
+        [
+          -2.8552360942518204e-06,
+          -6.384048217685629e-06
+        ],
+        [
+          -6.384048217685629e-06,
+          2.8552360942518204e-06
+        ]
+      ],
+      "map_scope": "LOCAL_VERTEX_ONLY; NO_CONTINUOUS_SPIN_TRANSPORT"
+    }
+  ],
+  "spin_density_at_first_return": null,
+  "physical_annihilation_probability": null,
+  "missing": [
+    "continuous spin transport under string and EM forces",
+    "spin-dependent radiation and capture",
+    "finite-energy spin-one annihilation",
+    "production wavepacket and spatial matching"
+  ]
+}
