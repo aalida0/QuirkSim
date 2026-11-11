@@ -1,0 +1,31 @@
+{
+  "paths": 2352,
+  "paired_closures": 9408,
+  "truncated_paths": 240,
+  "refinement_checks": [
+    {
+      "case": "benchmark_isotropic_seed1_level8",
+      "gate": 1000.0,
+      "status": "EMISSION_GATE_CLOSED",
+      "relative_time_shift": 0.0
+    },
+    {
+      "case": "benchmark_isotropic_seed1_level8",
+      "gate": 100000.0,
+      "status": "CAPTURED",
+      "relative_time_shift": 2.0197992107375518e-15
+    },
+    {
+      "case": "benchmark_collinear_forward_seed1_level8",
+      "gate": 1000.0,
+      "status": "CAPTURED",
+      "relative_time_shift": 1.8189855291016137e-15
+    },
+    {
+      "case": "benchmark_collinear_forward_seed1_level8",
+      "gate": 100000.0,
+      "status": "CAPTURED",
+      "relative_time_shift": 1.8189855291016137e-15
+    }
+  ]
+}
