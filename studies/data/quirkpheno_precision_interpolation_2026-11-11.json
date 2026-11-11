@@ -1,0 +1,30 @@
+[
+  {
+    "case": "stable_B2_level7",
+    "endpoint": 0,
+    "max_hermite_vs_cubic_spline_mm": 3.2118670118606415e-12
+  },
+  {
+    "case": "stable_B2_level7",
+    "endpoint": 1,
+    "max_hermite_vs_cubic_spline_mm": 3.829635213244551e-12
+  },
+  {
+    "case": "stable_B2_level8",
+    "endpoint": 0,
+    "max_hermite_vs_cubic_spline_mm": 9.054659283648648e-13
+  },
+  {
+    "case": "stable_B2_level8",
+    "endpoint": 1,
+    "max_hermite_vs_cubic_spline_mm": 1.9967803337948723e-12
+  },
+  {
+    "endpoint": 0,
+    "dense_grid_7_8_max_difference_mm": 2.1969187001857917e-08
+  },
+  {
+    "endpoint": 1,
+    "dense_grid_7_8_max_difference_mm": 2.1966337590559416e-08
+  }
+]
