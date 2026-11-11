@@ -6,7 +6,7 @@
   "max_native_python_difference_gev": 1.7053025658242404e-13,
   "local_four_momentum_tolerance_mev": 1e-06,
   "handoff_identity_and_history_negative_tests": "PASS",
-  "patch_application_check": "PASS",
+  "patch_application_check": "PASS_BYTE_EXACT_PINNED_GIT_WORKING_TREE",
   "synthetic_root_audit_and_corruption_rejection": "PASS",
   "full_geant4_build": "NOT_RUN_GEANT4_UNAVAILABLE",
   "causal_transport_validation": "PENDING",
@@ -15,13 +15,21 @@
     "EndpointHandoff.h": "27c7cdf8d356b39d856e32b829428a15a390a5a77f8f11818e8a600fde93b63f",
     "QuirkWeakProcess.cc": "2053606446ef2d8e7abba2803eaaeb7fd69827e4945c51b65948b1dd5f4865d1",
     "QuirkWeakProcess.h": "8523f9e838f8295c1bfcee581657df93a1bcb2acbd69e22a8058dd3a5cf1e8f6",
-    "README.md": "fe9d4f714fea0621c34d4a11c8e6044a805395ccd4aefc44ef2f28eb79d0c783",
+    "README.md": "f97cfaee93b66d2f9e7f6a51c38a4eabe3153d256ee83428e87e186e869a60d2",
     "TwoBodyKinematics.h": "d15db2917e3e35b11305bbcf79b18f2cb9b1ed746d51249ce853e4116b38d48b",
     "UPSTREAM_LICENSE": "8c6db340475136df3c1201d458fa5755698eace76e510471ecc9d857d6083dac",
     "UPSTREAM_NOTICE": "4c09449868b703bc6c9089def700d2bf1654727bd9c3648eb6e9ef8186e0f333",
     "check_audit.py": "e92fd6352a65831d3e3ffcc4af8082e5a4d76f9de1e7f31986f90a02babc4a52",
     "check_native.py": "aafdec8edb2c4f291b884810469db38ad9f187f5afc4b81887a3d263419372d9",
     "native_check.cc": "51644b411a34d9afd8e35d2073836b84ffc3e256878d3e7c29e9dcbcbe49e50d",
-    "weak_handoff.patch": "adecd157baf82a2c84dc4ef80efa9ae3d2255eb3d2b92ce51326a11b96153164"
+    "upstream_preimages.json": "96fe6b9657926fd6869686044942e17bfdc58f8ddaa0c9596db23f231e3b6345",
+    "weak_handoff.patch": "3cc2705a4ca363dc231b6096a0619e6f75d0489c600cd2575d1187251f1b4f19"
+  },
+  "patch_regression": {
+    "old_failure_reproduced": "QuirkStringStore.cc end-of-file extra blank context",
+    "corrected_patch_check": "PASS",
+    "corrected_patch_apply": "PASS",
+    "preimage_blob_ids_verified": 8,
+    "preparation_only_failure_no_geant4_run": true
   }
 }

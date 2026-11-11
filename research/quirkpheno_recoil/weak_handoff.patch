@@ -62,10 +62,10 @@
  
 --- a/quirkcore/src/QuirkStringStore.cc
 +++ b/quirkcore/src/QuirkStringStore.cc
-@@ -22,3 +22,37 @@
+@@ -21,3 +21,37 @@
+   s.SetMaxMergeT(maxMergeT);
    s.SetMaxMergeMag(maxMergeMag);
  }
- 
 +
 +#include "G4Track.hh"
 +#include "G4DynamicParticle.hh"

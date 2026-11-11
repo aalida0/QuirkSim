@@ -8,6 +8,7 @@ import re
 import shlex
 import shutil
 import subprocess
+import sys
 from af_quirkpheno_transport import prepare as stable_prepare, run_logged, LCG, PIN, URL
 
 M_NEUTRAL = 225.
@@ -63,11 +64,23 @@ def main():
     def checked(cmd,cwd,log,seconds):
         r=run_logged(cmd,cwd,out/log,seconds)
         state[log]=r;save()
-        if r['returncode']!=0:raise SystemExit(f'Failed: {log}; retain output directory')
+        if r['returncode']!=0:
+            print('\n'.join((out/log).read_text(errors='replace').splitlines()[-35:]),file=sys.stderr)
+            raise SystemExit(f'Failed: {log}; retain output directory')
     checked(['git','clone',URL,str(source)],out,'clone.log',120)
     checked(['git','checkout','--detach',PIN],source,'checkout.log',60)
     state['observed_source_commit']=subprocess.check_output(['git','rev-parse','HEAD'],cwd=source,text=True).strip()
-    patch=ASSETS/'weak_handoff.patch'
+    if state['observed_source_commit']!=PIN:
+        raise SystemExit('Unexpected upstream revision; refusing patch')
+    preimages=json.loads((ASSETS/'upstream_preimages.json').read_text())
+    state['upstream_preimage_checks']={}
+    for relative,expected in preimages['files'].items():
+        actual=hashlib.sha256((source/relative).read_bytes()).hexdigest()
+        state['upstream_preimage_checks'][relative]=actual==expected['sha256']
+    save()
+    if not all(state['upstream_preimage_checks'].values()):
+        raise SystemExit('Upstream source bytes differ from pinned preimages; refusing patch')
+    patch=ASSETS/'weak_handoff.patch' 
     checked(['git','apply','--check',str(patch)],source,'patch_check.log',60)
     checked(['git','apply',str(patch)],source,'patch_apply.log',60)
     for name in ('EndpointHandoff.h','TwoBodyKinematics.h','QuirkWeakProcess.h'):

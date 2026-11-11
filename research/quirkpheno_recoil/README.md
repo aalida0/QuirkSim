@@ -83,3 +83,14 @@ Partner differences outside a conservative Euclidean future light cone are a
 causality diagnostic, not a certified test of arrival along the actual string.
 Full causal propagation, reflected fronts, total string energy-momentum and
 refinement still require returned trajectories and additional checks.
+
+## Patch preparation correction (2026-11-11)
+
+The first AF invocation stopped at patch_check.log before compilation. The
+original local snapshot had an extra final blank line; the appended StringStore
+hunk therefore expected a line absent from the real checkout. This was reproduced
+against byte-exact upstream files and corrected by regenerating the patch.
+All eight preimage Git blob IDs now independently match GitHub's pinned tree.
+The runner checks their SHA-256 values before applying and prints the end of
+any failed preparation/build log. No whitespace-ignoring or fuzzy patch option
+is used. Native and synthetic checks were rerun; full Geant4 build is still pending.

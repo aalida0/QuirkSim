@@ -1,0 +1,37 @@
+{
+  "upstream_commit": "d91cb27ed3786bc63900faad892513841b5b6ed4",
+  "files": {
+    "quirkcore/include/quirkcore/QuirkInfracolorForce.h": {
+      "sha256": "cda401349092f7b92db60bbd85dd0cfe8bd34c866d574945a5520873f7917b81",
+      "git_blob_sha1": "d78d257d0f96b7161b51e45f431b3e3ff4eabcbf"
+    },
+    "quirkcore/include/quirkcore/QuirkStringStore.h": {
+      "sha256": "495f30a8469746520f66c6cea6a08f8dba4cd4e332015ef31d67a3d9010581e2",
+      "git_blob_sha1": "91233c5a83dc4f8ef750e4a842bb1df93fdac0ed"
+    },
+    "quirkcore/src/QuirkStringStore.cc": {
+      "sha256": "47b353a220953286d596fde61632e34d4bd28529adb9484feeb417d6c56d88df",
+      "git_blob_sha1": "860b5394f1b56e7d8b85eca85b9344a450a0a69a"
+    },
+    "quirkcore/src/QuirkTransportation.cc": {
+      "sha256": "02e7cdc56fe963ac0a2bbfab21bbaab8a5cfe30cce29604a3cfd63f2d733a34a",
+      "git_blob_sha1": "52685a4bb1a967c514aea5265e0b25acad51dc1a"
+    },
+    "quirkcore/src/QuirkWatcher.cc": {
+      "sha256": "c842e6df42aec8821ae68dfa83097a0b51b943cca12bacc88db3991934e15bd4",
+      "git_blob_sha1": "4569233e733a4a506d8c0dc62e12e050bfc7b358"
+    },
+    "quirkcore/include/quirkcore/QuirkPhysics.h": {
+      "sha256": "2de6deca83e8dd53e40bd6984be0023de09342d07fe8b845b64510a4ee2b52dd",
+      "git_blob_sha1": "5afb50cd4e205858220272c3ccb0226a96cefa8f"
+    },
+    "quirkcore/src/QuirkPhysics.cc": {
+      "sha256": "92f1f6a78dfcf1bb615bc1016d703cd37bc8bcbfe1dbd529a11e878ca4859151",
+      "git_blob_sha1": "9a3781939a97752612428ec0b5d71c10e0bedf9b"
+    },
+    "quirksim/src/Actions.cc": {
+      "sha256": "fa3e89c44b5c2dde90e42611f737ec7c0dda1246d0648cabc1fcee3d5bb5c00e",
+      "git_blob_sha1": "c465ab7dec5687b3969a874009ae70a63be8be97"
+    }
+  }
+}
