@@ -7,6 +7,8 @@ Stops before the energy-coordinate interval collapses. Uniform magnetic fields
 act on massive boundaries only; no bulk string electric charge is assumed.
 """
 from bisect import bisect_right, bisect_left
+import json
+import time
 import numpy as np
 from .conformal_boundary import massive_boundary
 from .physics import HBAR_GEV_PS
@@ -229,7 +231,8 @@ class ConformalString:
 
     def advance(self, target_ps, max_step_ps=.02, minimum_interval_ps=1e-8,
                 causal_fraction=.05, max_ray_angle=.025, max_steps=200000,
-                matching_radius_cm=None):
+                matching_radius_cm=None, max_rejected_ray_trials=None,
+                minimum_step_ulps=0, deadline_monotonic=None):
         """Advance until target or explicit chart-collapse cutoff; never cross it."""
         if (not np.isfinite(target_ps) or target_ps < self.t
                 or not np.isfinite(max_step_ps) or max_step_ps <= 0
@@ -238,27 +241,31 @@ class ConformalString:
                 or max_steps < 1 or (matching_radius_cm is not None and
                     (not np.isfinite(matching_radius_cm) or matching_radius_cm <= 0))):
             raise ValueError('invalid time/step/cutoff')
+        if (max_rejected_ray_trials is not None and max_rejected_ray_trials < 1) or minimum_step_ulps < 0:
+            raise ValueError('invalid diagnostic resource/resolution limit')
         steps = 0
         rejected_ray_trials = 0
         event_root_truncations = 0
         min_accepted_step_ps = None
+        trial_context = "no trial yet"
         self.last_advance_diagnostic = None
         def stop(reason, state):
             # Capture only at a stop; do not modify trial steps, histories or state.
             diagnostic = {'reason': reason, 'time_ps': float(self.t),
                 'target_ps': float(target_ps), 'attempted_steps': int(state['steps']),
                 'max_steps': int(max_steps),
+                'max_rejected_ray_trials': max_rejected_ray_trials,
+                'minimum_step_ulps': minimum_step_ulps,
                 'rejected_ray_trials': rejected_ray_trials,
                 'event_root_truncations': event_root_truncations,
                 'min_accepted_step_ps': min_accepted_step_ps,
                 'null_coordinate_ulps_ps': [float(np.spacing(self.a.z[-1])),
                                             float(np.spacing(self.b.z[-1]))],
-                'trial_context': ('last accepted step' if reason == 'STOP_STEP_BUDGET'
-                                  else 'rejected or unresolved trial'),
+                'trial_context': trial_context,
                 'energy_coordinate_interval_ps': float(self.y[1]-self.y[0]),
                 'ray_history_samples': [len(self.a.z), len(self.b.z)],
                 'last_outgoing_null_coordinates_ps': [self.a.z[-1], self.b.z[-1]]}
-            for key in ('h', 'angle', 'rejections', 'az', 'bz'):
+            for key in ('h', 'angle', 'angle_step_ps', 'rejections', 'az', 'bz'):
                 if key in state:
                     diagnostic[key] = float(state[key])
             if 'caps' in state:
@@ -272,6 +279,8 @@ class ConformalString:
             return reason
         while self.t < target_ps:
             steps += 1
+            if deadline_monotonic is not None and time.monotonic() >= deadline_monotonic:
+                return stop('STOP_DIAGNOSTIC_WALL_TIME', locals())
             if steps > max_steps:
                 return stop('STOP_STEP_BUDGET', locals())
             if matching_radius_cm is not None and np.linalg.norm(self.y[5:8]-self.y[2:5]) <= matching_radius_cm*(1+1e-9):
@@ -306,7 +315,16 @@ class ConformalString:
 
             rejections = 0
             while True:
+                if deadline_monotonic is not None and time.monotonic() >= deadline_monotonic:
+                    return stop('STOP_DIAGNOSTIC_WALL_TIME', locals())
+                if minimum_step_ulps:
+                    resolution = max(np.spacing(max(1., abs(t))),
+                                     np.spacing(max(1., abs(self.a.z[-1]))),
+                                     np.spacing(max(1., abs(self.b.z[-1]))))
+                    if h <= minimum_step_ulps*resolution:
+                        return stop('STOP_DIAGNOSTIC_TIME_RESOLUTION', locals())
                 new = trial(h)
+                trial_context = "current unaccepted trial"
                 # Integrate to an incoming discontinuity before reflecting it.
                 # Boundary momentum is continuous; outgoing characteristic is not.
                 from scipy.optimize import brentq
@@ -322,19 +340,25 @@ class ConformalString:
                 if roots:
                     event_root_truncations += 1
                     h = min(roots)
+                    if minimum_step_ulps and h <= minimum_step_ulps*resolution:
+                        return stop('STOP_DIAGNOSTIC_TIME_RESOLUTION', locals())
                     new = trial(h)
                 tn = t+h
                 ql, bout, _ = massive_boundary(new[8:11], self.masses[0],
                                                incident(self.a, tn+new[0], caps[0]))
                 qr, aout, _ = massive_boundary(new[11:14], self.masses[1],
                                                incident(self.b, tn-new[1], caps[1]))
+                angle_step_ps = h
                 angle = max(np.arccos(np.clip(aout@self.a.n[-1], -1., 1.)),
                             np.arccos(np.clip(bout@self.b.n[-1], -1., 1.)))
                 if angle <= max_ray_angle:
                     break
                 h /= 2
+                trial_context = "rejected trial; h is proposed for next trial"
                 rejections += 1
                 rejected_ray_trials += 1
+                if max_rejected_ray_trials is not None and rejected_ray_trials >= max_rejected_ray_trials:
+                    return stop('STOP_DIAGNOSTIC_REJECTION_BUDGET', locals())
                 if rejections > 64:
                     return stop('STOP_UNRESOLVED_NULL_RAY', locals())
                 if t+h == t:
@@ -367,6 +391,7 @@ class ConformalString:
             self.a.append(az, aout)
             self.b.append(bz, bout)
             self.t, self.y = tn, new
+            trial_context = "last accepted step"
             for which, cap in enumerate(caps):
                 argument = tn+(new[0] if which == 0 else -new[1])
                 if cap is not None and abs(argument-cap) <= 32*np.spacing(max(1., abs(cap))):
@@ -381,6 +406,47 @@ class ConformalString:
             if matched:
                 return 'QUANTUM_MATCHING_SURFACE'
         return 'TARGET_REACHED'
+
+    def save_checkpoint(self, path):
+        """Save exact accumulated histories for classical replay, with no pickle."""
+        payload = {key: np.asarray(getattr(self, key)) for key in
+                   ('y', 'masses', 'charges', 'magnetic_field')}
+        payload.update(t=np.asarray(self.t), force=np.asarray(self.force),
+                       track_photons=np.asarray(self.track_photons))
+        for name in ('a', 'b'):
+            history = getattr(self, name)
+            for field in ('z', 'n', 'integrals', 'jumps'):
+                payload[name+'_'+field] = np.asarray(getattr(history, field))
+        metadata = dict(format=1, emissions=self.emissions, reflections=self.reflections,
+                        last_advance_diagnostic=self.last_advance_diagnostic)
+        payload['metadata'] = np.asarray(json.dumps(metadata))
+        # Open explicitly so numpy never silently appends a filename suffix.
+        with open(path, 'wb') as handle:
+            np.savez_compressed(handle, **payload)
+
+    @classmethod
+    def load_checkpoint(cls, path):
+        """Restore solver-owned checkpoints; this does not resume a weak-decay scheduler."""
+        with np.load(path, allow_pickle=False) as payload:
+            metadata = json.loads(str(payload['metadata']))
+            if metadata['format'] != 1:
+                raise ValueError('unsupported characteristic checkpoint version')
+            solver = cls.__new__(cls)
+            for key in ('y', 'masses', 'charges', 'magnetic_field'):
+                setattr(solver, key, payload[key].copy())
+            solver.t, solver.force = float(payload['t']), float(payload['force'])
+            solver.track_photons = bool(payload['track_photons'])
+            for name in ('a', 'b'):
+                history = UnitRayHistory.__new__(UnitRayHistory)
+                for field in ('z', 'jumps'):
+                    setattr(history, field, payload[name+'_'+field].tolist())
+                for field in ('n', 'integrals'):
+                    setattr(history, field, [row.copy() for row in payload[name+'_'+field]])
+                setattr(solver, name, history)
+            solver.emissions = metadata['emissions']
+            solver.reflections = metadata['reflections']
+            solver.last_advance_diagnostic = metadata['last_advance_diagnostic']
+        return solver
 
     def snapshot(self, samples=33):
         """Independent history integrals give string charges and chord closure."""

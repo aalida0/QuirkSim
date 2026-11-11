@@ -1,5 +1,9 @@
 # Targeted doublet diagnostics
 
+**Updated cost guidance:** the 330 ps run below took three hours on AF.
+Do not repeat it unbounded. See
+[precision-limit diagnosis and bounded replay](DOUBLET_STALL_COST_AND_REPLAY_2026-11-11.md).
+
 Instrumentation exposes the last failed `advance` call in the evolution JSON:
 reason, current and target times, attempted steps, per-call budget, energy
 coordinate interval, ray-history sizes, last/null proposed coordinates and

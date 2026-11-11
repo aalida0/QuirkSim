@@ -1,0 +1,22 @@
+{
+  "scope": "DIAGNOSTIC_INFRASTRUCTURE_ONLY_NOT_SOLVER_REPAIR",
+  "focused_tests": {
+    "passed": 24,
+    "reported_seconds": 182.94
+  },
+  "new_control_tests": {
+    "passed": 6
+  },
+  "checkpoint_roundtrip": "identical subsequent state with two weak-induced ray jumps",
+  "replay_cli_smoke": "TARGET_REACHED for short neutral-endpoint continuation",
+  "full_suite_rerun": false,
+  "physical_survival_probability": null,
+  "bounded_cli_smoke": {
+    "integration_budget_seconds": 120,
+    "termination": "STOP_DIAGNOSTIC_WALL_TIME",
+    "time_ps": 39.074465167166885,
+    "checkpoint_written": true,
+    "weak_decays_completed": 1,
+    "note": "Stopped before second weak decay; standalone neutral-only replay is intentionally unavailable for this checkpoint. Does not reproduce the late stall."
+  }
+}

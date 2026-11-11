@@ -5,6 +5,7 @@ or reflect the pair. Nonperturbative radiation and quantum survival stay
 UNKNOWN unless an independently matched quantum kernel is provided.
 """
 import numpy as np
+import time
 from .conformal_characteristics import ConformalString
 from .dynamics import sample_plan, HBARC_GEV_CM
 from .physics import benchmark
@@ -16,7 +17,8 @@ def evolve(representation='triplet', mass_gev=225., lambda_ev=774., seed=25,
            max_ray_angle=.003125, causal_fraction=.00625,
            matching_radius_in_confinement_units=8., observation_step_ps=5.,
            progress=None, max_steps_per_advance=200000,
-           closure_stop_in_reference_units=None):
+           closure_stop_in_reference_units=None, max_rejected_ray_trials=None,
+           minimum_step_ulps=0, wall_time_limit_seconds=None, checkpoint_path=None):
     if (mode not in ('stable', 'recoil') or duration_ps <= 0
             or not np.isfinite(duration_ps) or observation_step_ps <= 0
             or not np.isfinite(matching_radius_in_confinement_units)
@@ -24,6 +26,9 @@ def evolve(representation='triplet', mass_gev=225., lambda_ev=774., seed=25,
         raise ValueError('invalid evolution inputs')
     if closure_stop_in_reference_units is not None and (not np.isfinite(closure_stop_in_reference_units) or closure_stop_in_reference_units <= 0):
         raise ValueError('positive closure stop required')
+    if wall_time_limit_seconds is not None and (not np.isfinite(wall_time_limit_seconds) or wall_time_limit_seconds <= 0):
+        raise ValueError('positive diagnostic wall-time limit required')
+    deadline = None if wall_time_limit_seconds is None else time.monotonic()+wall_time_limit_seconds
     b = benchmark(representation, mass_gev)
     solver = ConformalString.boosted_radial(b['charged_mass_gev'], lambda_ev,
                                            track_photons=True)
@@ -52,7 +57,9 @@ def evolve(representation='triplet', mass_gev=225., lambda_ev=774., seed=25,
         target = min(duration_ps, solver.t+delta)
         status = solver.advance(target, max_step_ps, causal_fraction=causal_fraction,
                                  max_ray_angle=max_ray_angle, matching_radius_cm=radius,
-                                 max_steps=max_steps_per_advance)
+                                 max_steps=max_steps_per_advance,
+                                 max_rejected_ray_trials=max_rejected_ray_trials,
+                                 minimum_step_ulps=minimum_step_ulps, deadline_monotonic=deadline)
         records.append(solver.snapshot(samples=9))
         if (status == 'TARGET_REACHED' and closure_stop_in_reference_units is not None
                 and records[-1]['chord_closure_error_cm'] >=
@@ -71,6 +78,8 @@ def evolve(representation='triplet', mass_gev=225., lambda_ev=774., seed=25,
         if len(records) > 20000:
             status = 'STOP_OBSERVATION_BUDGET'
             break
+    if checkpoint_path is not None:
+        solver.save_checkpoint(checkpoint_path)
     final = solver.snapshot()
     emitted = sum((np.asarray(p, float) for e in solver.emissions
                    for p in e['products_gev'].values()), np.zeros(4))
@@ -83,6 +92,7 @@ def evolve(representation='triplet', mass_gev=225., lambda_ev=774., seed=25,
             'integration': {'max_step_ps': max_step_ps, 'max_ray_angle': max_ray_angle,
                             'causal_fraction': causal_fraction},
             'last_advance_diagnostic': solver.last_advance_diagnostic,
+            'checkpoint_path': str(checkpoint_path) if checkpoint_path is not None else None,
             'max_steps_per_advance': max_steps_per_advance,
             'closure_stop_in_reference_units': closure_stop_in_reference_units,
             'matching_radius_cm': radius, 'weak_plan': plan,

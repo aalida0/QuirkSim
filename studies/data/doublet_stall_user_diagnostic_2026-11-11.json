@@ -1,0 +1,24 @@
+{
+  "evidence": "user-reported final AF diagnostic, not a newly inspected full trajectory",
+  "source_commit": "4d983cbdad9b94e6e21913fd8397f83c87d2d0e4",
+  "reported_wall_hours": 3,
+  "time_ps": 315.081015984348,
+  "attempted_steps_in_final_advance": 162655,
+  "rejected_ray_trials_in_final_advance": 2529693,
+  "event_root_truncations_in_final_advance": 30704,
+  "last_trial_h_ps": 8.282815571546829e-14,
+  "last_ray_angle": 9.608862874569267e-05,
+  "ray_angle_halvings_in_last_trial": 27,
+  "null_coordinate_ulp_ps": 5.684341886080802e-14,
+  "last_h_in_coordinate_ulps": 1.4571283250623766,
+  "proposed_outgoing_null_increments_ps": [
+    0.0,
+    5.684341886080802e-14
+  ],
+  "last_trial_event_roots_ps": [],
+  "energy_coordinate_interval_ps": 0.02845953759887454,
+  "max_closure_over_reference": 1.1481508519432855,
+  "energy_residual_gev": 3.427658157306723e-11,
+  "diagnosis": "terminal representability failure after extreme ray-resolution work; origin of fine ray structure not established",
+  "physical_survival_probability": null
+}

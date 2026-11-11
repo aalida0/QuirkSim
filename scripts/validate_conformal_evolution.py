@@ -36,6 +36,7 @@ def main():
     p.add_argument('--max-refinements', type=int, choices=range(4), default=1)
     p.add_argument('--max-steps-per-advance', type=int, default=200000)
     p.add_argument('--stop-on-closure-failure', action='store_true')
+    p.add_argument('--bounded-diagnostic', action='store_true', help='120 s integration budget, ray rejection cap, resolution guard and replay checkpoint')
     p.add_argument('--output', default='results/conformal_evolution.json')
     a = p.parse_args()
     last_print = [-50.]
@@ -55,7 +56,11 @@ def main():
                    max_step_ps=a.max_step_ps/factor, max_ray_angle=a.ray_angle/factor,
                    causal_fraction=a.causal_fraction/factor, progress=progress,
                    max_steps_per_advance=a.max_steps_per_advance,
-                   closure_stop_in_reference_units=.1 if a.stop_on_closure_failure else None)
+                   closure_stop_in_reference_units=.1 if a.stop_on_closure_failure else None,
+                   max_rejected_ray_trials=50000 if a.bounded_diagnostic else None,
+                   minimum_step_ulps=16 if a.bounded_diagnostic else 0,
+                   wall_time_limit_seconds=120. if a.bounded_diagnostic else None,
+                   checkpoint_path=path.with_suffix('.npz') if a.bounded_diagnostic else None)
         passed = validate(r)
         attempts.append({'refinement': refinement, 'integration': r['integration'],
                          'validation': r['numerical_validation'], 'termination': r['termination']})
