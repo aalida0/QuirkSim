@@ -1,0 +1,253 @@
+--- a/quirkcore/include/quirkcore/QuirkInfracolorForce.h
++++ b/quirkcore/include/quirkcore/QuirkInfracolorForce.h
+@@ -10,6 +10,8 @@
+ #include "G4LorentzVector.hh"
+ 
+ #include <deque>
++#include <cstdint>
++#include <cstring>
+ 
+ class G4Track;
+ 
+@@ -46,6 +48,18 @@
+   G4ThreeVector GetAngMomentum() const;
+   G4ThreeVector GetMomentOfE() const;
+   void Clear();
++  // Exact bit fingerprint of causal state; cached endpoint kinetic state is excluded.
++  std::uint64_t HistoryFingerprint() const {
++    std::uint64_t h=1469598103934665603ULL;
++    auto integer=[&](std::uint64_t n) { h^=n; h*=1099511628211ULL; };
++    auto number=[&](double x) { std::uint64_t n; std::memcpy(&n,&x,sizeof(n)); integer(n); };
++    auto vector=[&](const QuirkStringVector& v) { number(v.x()); number(v.y()); number(v.z()); number(v.mag()); };
++    integer(m_initialized); integer(m_killed); integer(m_firstStep); integer(m_stringVectors.size());
++    vector(m_firstString); vector(m_borrowedString);
++    for (const auto& v:m_stringVectors) vector(v);
++    number(m_initU.x()); number(m_initU.y()); number(m_initU.z()); number(m_initU.t());
++    return h;
++  }
+ 
+   // 4-velocity after the last step, used to restart the string at a crossing
+   void SetVelocity(const G4LorentzVector& u) { m_lastU = u; }
+--- a/quirkcore/include/quirkcore/QuirkStringStore.h
++++ b/quirkcore/include/quirkcore/QuirkStringStore.h
+@@ -5,12 +5,21 @@
+ // Index 0 is the quirk with positive PDG code, 1 the antiquirk.
+ 
+ #include "quirkcore/QuirkInfracolorForce.h"
++#include "quirkcore/EndpointHandoff.h"
++class G4Track;
+ 
+ class QuirkStringStore {
+ public:
+   static QuirkStringStore& instance();
+ 
+   QuirkInfracolorForce& stringFor(G4int pdg) { return (pdg > 0) ? m_strings[0] : m_strings[1]; }
++
++  void beginHandoff(int pdg, int parentID, int daughterPDG);
++  bool isHandoffParent(int pdg, int trackID) const {
++    return m_handoffs[pdg>0 ? 0 : 1].isParent(trackID);
++  }
++  void consumeHandoff(const G4Track& daughter);
++  void verifyNoPendingHandoffs() const;
+ 
+   void configure(
+       G4double stringForce, G4double firstStringLength, G4double maxBoost, G4double maxMergeT, G4double maxMergeMag);
+@@ -35,6 +44,7 @@
+   QuirkStringStore();
+ 
+   QuirkInfracolorForce m_strings[2];
++  EndpointHandoff m_handoffs[2];
+   G4int m_eventID{-1};
+ };
+ 
+--- a/quirkcore/src/QuirkStringStore.cc
++++ b/quirkcore/src/QuirkStringStore.cc
+@@ -22,3 +22,37 @@
+   s.SetMaxMergeMag(maxMergeMag);
+ }
+ 
++
++#include "G4Track.hh"
++#include "G4DynamicParticle.hh"
++#include "G4Exception.hh"
++#include "G4ios.hh"
++#include <sstream>
++
++void QuirkStringStore::beginHandoff(int pdg, int parentID, int daughterPDG) {
++  const int i=pdg>0 ? 0 : 1;
++  if ((pdg>0)!=(daughterPDG>0))
++    G4Exception("beginHandoff","WrongEndpointSign",FatalException,"daughter changed endpoint slot");
++  m_handoffs[i].begin(parentID,daughterPDG,m_strings[i].HistoryFingerprint(),m_strings[1-i].HistoryFingerprint());
++}
++void QuirkStringStore::consumeHandoff(const G4Track& daughter) {
++  const int pdg=daughter.GetDefinition()->GetPDGEncoding(), i=pdg>0 ? 0 : 1;
++  auto& token=m_handoffs[i];
++  const auto a=m_strings[i].HistoryFingerprint(), b=m_strings[1-i].HistoryFingerprint();
++  try { token.consume(daughter.GetParentID(),pdg,a,b); }
++  catch (const std::exception& e) {
++    G4Exception("consumeHandoff","WeakHandoffMismatch",FatalException,e.what());
++  }
++  m_strings[i].SetVelocity(daughter.GetDynamicParticle()->Get4Momentum()/daughter.GetDynamicParticle()->GetMass());
++  m_strings[i].SetKineticEnergy(daughter.GetKineticEnergy());
++  std::ostringstream s;
++  s << "QP_WEAK_JSON {\"kind\":\"handoff\",\"parent_track\":" << daughter.GetParentID()
++    << ",\"daughter_track\":" << daughter.GetTrackID() << ",\"daughter_pdg\":" << pdg
++    << ",\"own_fingerprint\":\"" << a << "\",\"partner_fingerprint\":\"" << b
++    << "\",\"history_preserved\":true}";
++  G4cout << s.str() << G4endl;
++}
++void QuirkStringStore::verifyNoPendingHandoffs() const {
++  if (m_handoffs[0].pending || m_handoffs[1].pending)
++    G4Exception("verifyNoPendingHandoffs","UnconsumedWeakDaughter",FatalException,"neutral daughter never took ownership");
++}
+--- a/quirkcore/src/QuirkTransportation.cc
++++ b/quirkcore/src/QuirkTransportation.cc
+@@ -274,12 +274,18 @@
+   fCurrentTrack = aTrack;
+ 
+   // first string vector at the first step of the pair
+-  QuirkStringStore::instance().stringFor(aTrack->GetDefinition()->GetPDGEncoding()).StartTracking(aTrack);
++  auto& store=QuirkStringStore::instance();
++  const auto pdg=aTrack->GetDefinition()->GetPDGEncoding();
++  if (std::abs(pdg)==9900017 && aTrack->GetCurrentStepNumber()==0)
++    store.consumeHandoff(*aTrack);
++  else
++    store.stringFor(pdg).StartTracking(aTrack);
+ }
+ 
+ void QuirkTransportation::EndTracking() {
+   // killed by anything (envelope, time cut, user actions): the partner must not wait for it
+-  if (nullptr != fCurrentTrack && !QuirkTrackStatus::isSuspended(fCurrentTrack)) {
++  if (nullptr != fCurrentTrack && !QuirkTrackStatus::isSuspended(fCurrentTrack) &&
++      !QuirkStringStore::instance().isHandoffParent(fCurrentTrack->GetDefinition()->GetPDGEncoding(),fCurrentTrack->GetTrackID())) {
+     QuirkStringStore::instance().stringFor(fCurrentTrack->GetDefinition()->GetPDGEncoding()).TrackKilled();
+   }
+   fCurrentTrack = nullptr;
+--- a/quirkcore/src/QuirkWatcher.cc
++++ b/quirkcore/src/QuirkWatcher.cc
+@@ -38,6 +38,10 @@
+       QuirkStringStore::instance().stringFor(track.GetParticleDefinition()->GetPDGEncoding());
+ 
+   m_particleChange.Initialize(track);
++  if (QuirkStringStore::instance().isHandoffParent(track.GetDefinition()->GetPDGEncoding(),track.GetTrackID())) {
++    m_particleChange.ProposeTrackStatus(fStopAndKill);
++    return &m_particleChange;
++  }
+ 
+   if (track.GetCurrentStepNumber() > 1 && !string.IsSourceInitialized()) {
+     // orphan: clear the partner too, keep the hits recorded so far
+--- a/quirkcore/include/quirkcore/QuirkPhysics.h
++++ b/quirkcore/include/quirkcore/QuirkPhysics.h
+@@ -40,6 +40,8 @@
+   const G4double m_stopThreshold;
+   Quirk* m_quirk{nullptr};
+   Quirk* m_antiQuirk{nullptr};
++  Quirk* m_neutral{nullptr};
++  Quirk* m_antiNeutral{nullptr};
+ };
+ 
+ #endif
+--- a/quirkcore/src/QuirkPhysics.cc
++++ b/quirkcore/src/QuirkPhysics.cc
+@@ -3,6 +3,8 @@
+ #include "quirkcore/QuirkStringStore.h"
+ #include "quirkcore/QuirkTransportation.h"
+ #include "quirkcore/QuirkWatcher.h"
++#include "quirkcore/QuirkWeakProcess.h"
++#include <vector>
+ 
+ #include "G4ios.hh"
+ #include "G4Exception.hh"
+@@ -77,13 +79,24 @@
+   }
+   m_quirk = new Quirk("quirk", m_mass, m_charge, m_pdg);
+   m_antiQuirk = new Quirk("antiquirk", m_mass, -m_charge, -m_pdg);
++  if (QPWeakConfig::enabled()) {
++    if (std::abs(m_pdg)!=17 || (QPWeakConfig::endpoint()!=0 && QPWeakConfig::endpoint()!=1) ||
++        m_mass <= (QPWeakConfig::neutralGeV()+0.13957039)*CLHEP::GeV)
++      G4Exception("QuirkPhysics","BadWeakSpecies",FatalException,"weak pilot requires PDG +/-17 and open pion channel");
++    if (table->FindParticle(9900017) || table->FindParticle(-9900017))
++      G4Exception("QuirkPhysics","NeutralCollision",FatalException,"neutral pilot PDG already registered");
++    m_neutral = new Quirk("neutral_quirk",QPWeakConfig::neutralGeV()*CLHEP::GeV,0.,9900017);
++    m_antiNeutral = new Quirk("neutral_antiquirk",QPWeakConfig::neutralGeV()*CLHEP::GeV,0.,-9900017);
++  }
+ }
+ 
+ void QuirkPhysics::ConstructProcess() {
+   // string state of this thread
+   QuirkStringStore::instance().configure(m_stringForce, m_firstStringLength, m_maxBoost, m_maxMergeT, m_maxMergeMag);
+ 
+-  for (Quirk* q : {m_quirk, m_antiQuirk}) {
++  std::vector<Quirk*> species{m_quirk,m_antiQuirk};
++  if (m_neutral) { species.push_back(m_neutral); species.push_back(m_antiNeutral); }
++  for (Quirk* q : species) {
+     G4ProcessManager* pmanager = q->GetProcessManager();
+     if (nullptr == pmanager) {
+       G4Exception("QuirkPhysics::ConstructProcess", "QuirkConfiguration", FatalException,
+@@ -96,12 +109,16 @@
+     auto transport = new QuirkTransportation(m_verbose, m_moveTinySteps, m_crossingLength);
+     transport->SetThresholdTrials(m_looperTrials);
+     pmanager->AddProcess(transport, -1, 0, 0);
++    if (q->GetPDGCharge()!=0.) {
+     pmanager->AddProcess(new G4hMultipleScattering, -1, 1, 1);
+     pmanager->AddProcess(new G4hIonisation, -1, 2, 2);
+     pmanager->AddProcess(new G4hBremsstrahlung, -1, 3, 3);
+     if (m_pairProduction) {
+       pmanager->AddProcess(new G4hPairProduction, -1, 4, 4);
+     }
++    }
++    if (QPWeakConfig::enabled() && q->GetPDGCharge()!=0. && (q->GetPDGEncoding()>0 ? 0 : 1)==QPWeakConfig::endpoint())
++      pmanager->AddProcess(new QuirkWeakProcess(q->GetPDGEncoding()>0 ? m_neutral : m_antiNeutral),-1,-1,6);
+     pmanager->AddProcess(new QuirkWatcher(m_rMax, m_zMax, m_keepStopped, m_stopThreshold), -1, -1, 5);
+     if (m_verbose > 1) {
+       pmanager->DumpInfo();
+--- a/quirksim/src/Actions.cc
++++ b/quirksim/src/Actions.cc
+@@ -13,6 +13,7 @@
+ #include "G4Run.hh"
+ #include "G4Step.hh"
+ #include "G4Track.hh"
++#include "G4DynamicParticle.hh"
+ #include "G4StackManager.hh"
+ #include "G4EventManager.hh"
+ #include "G4Threading.hh"
+@@ -83,7 +84,7 @@
+   am->CreateNtuple("steps", "prescaled quirk steps (mm, ns, MeV)");
+   for (const char* n : {"evt", "q", "step", "vol", "status"})
+     am->CreateNtupleIColumn(n);
+-  for (const char* n : {"x", "y", "z", "t", "px", "py", "pz", "ekin", "edep"})
++  for (const char* n : {"x", "y", "z", "t", "px", "py", "pz", "ekin", "edep", "mass", "charge", "proper", "pdg", "track", "parent", "handoff"})
+     am->CreateNtupleDColumn(n);
+   am->FinishNtuple();
+ }
+@@ -149,6 +150,7 @@
+ }
+ 
+ void EventAction::EndOfEventAction(const G4Event* ev) {
++  QuirkStringStore::instance().verifyNoPendingHandoffs();
+   const QSimConfig& c = qsimConfig();
+   const GeomInfo& g = geomInfo();
+   auto am = G4AnalysisManager::Instance();
+@@ -276,6 +278,8 @@
+     Q.p0 = G4LorentzVector(pre->GetMomentum(), pre->GetTotalEnergy());
+     Q.x0 = pre->GetPosition();
+   }
++  if (t->GetCurrentStepNumber()==1 && std::abs(def->GetPDGEncoding())==9900017)
++    Q.reason=kAlive;
+   ++Q.steps;
+   ++m_ev->stepCount[i];
+   G4TrackStatus status = t->GetTrackStatus();
+@@ -381,6 +385,13 @@
+     am->FillNtupleDColumn(kSteps, 11, Q.pEnd.pz());
+     am->FillNtupleDColumn(kSteps, 12, t->GetKineticEnergy());
+     am->FillNtupleDColumn(kSteps, 13, e);
++    am->FillNtupleDColumn(kSteps, 14, t->GetDynamicParticle()->GetMass());
++    am->FillNtupleDColumn(kSteps, 15, t->GetDynamicParticle()->GetCharge()/CLHEP::eplus);
++    am->FillNtupleDColumn(kSteps, 16, t->GetProperTime());
++    am->FillNtupleDColumn(kSteps, 17, def->GetPDGEncoding());
++    am->FillNtupleDColumn(kSteps, 18, t->GetTrackID());
++    am->FillNtupleDColumn(kSteps, 19, t->GetParentID());
++    am->FillNtupleDColumn(kSteps, 20, QuirkStringStore::instance().isHandoffParent(def->GetPDGEncoding(),t->GetTrackID()) ? 1. : 0.);
+     am->AddNtupleRow(kSteps);
+   }
+ }
