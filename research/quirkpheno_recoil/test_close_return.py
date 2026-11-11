@@ -1,9 +1,25 @@
 import unittest
 import numpy as np
-from quirksim.close_return import monitor, _bound
+from quirksim.close_return import monitor, _bound, speed_cone_window
 
 
 class CloseReturnTest(unittest.TestCase):
+    def test_speed_cones_bound_exact_straight_line_miss(self):
+        t0=np.linspace(0,1,17);t1=np.linspace(.001,.999,20)
+        x0=np.column_stack((.1*t0,np.zeros((len(t0),2))))
+        x1=np.column_stack((.1-.1*t1,np.full(len(t1),.01),np.zeros(len(t1))))
+        r=speed_cone_window(t0,x0,t1,x1,max_grid_spacing_ps=.0001)
+        self.assertLessEqual(r['minimum_separation_lower_bound_mm'],.01)
+        self.assertGreater(r['minimum_separation_lower_bound_mm'],0)
+        self.assertGreaterEqual(r['minimum_separation_upper_bound_mm'],.01)
+
+    def test_speed_cones_do_not_exclude_known_crossing(self):
+        t=np.linspace(0,1,11);z=np.zeros((len(t),2))
+        x0=np.column_stack((.1*t,z));x1=np.column_stack((.1-.1*t,z))
+        r=speed_cone_window(t,x0,t,x1,max_grid_spacing_ps=.001)
+        self.assertEqual(r['minimum_separation_lower_bound_mm'],0)
+        self.assertLess(r['minimum_separation_upper_bound_mm'],1e-8)
+
     def test_randomized_bound_on_asynchronous_linear_paths(self):
         rng=np.random.default_rng(14); n=10000
         a=rng.uniform(-1,1,(n,3)); b=rng.uniform(-1,1,(n,3))

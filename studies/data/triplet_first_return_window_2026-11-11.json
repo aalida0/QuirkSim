@@ -1,0 +1,146 @@
+{
+  "scope": "FIRST_RETURN_WINDOW_NUMERICAL_GEOMETRY",
+  "archive_sha256": "3ada9440e7b1638d15d0762e6ee7105357be06e71a767514c836f9ea6d6f97ba",
+  "physical_annihilation_probability": null,
+  "cases": [
+    {
+      "name": "sampled_stable_level7",
+      "status": "UNRESOLVED",
+      "match_radius_mm": 2.039555352971576e-06,
+      "speed_cone": {
+        "common_window_ps": [
+          220.02043778544447,
+          225.98275031430393
+        ],
+        "minimum_separation_lower_bound_mm": 0.0,
+        "minimum_separation_upper_bound_mm": 3.867206754271351e-06,
+        "upper_bound_witness_time_ps": 223.01512542013947,
+        "grid_spacing_ps": 2.999996240822091e-05,
+        "roundoff_margin_mm": 1e-09,
+        "meaning": "SUBLUMINAL_RECORDED_WORLDLINES_ONLY_NOT_QUANTUM_SURVIVAL",
+        "arithmetic": "FLOATING_POINT_MARGIN_NOT_FORMALLY_CERTIFIED"
+      },
+      "chord_estimate": {
+        "minimum_mm": 2.0690012893502904e-12,
+        "time_ps": 223.01513250768974,
+        "meaning": "PIECEWISE_LINEAR_ESTIMATE_NOT_AN_ERROR_BOUND"
+      }
+    },
+    {
+      "name": "sampled_stable_level8",
+      "status": "UNRESOLVED",
+      "match_radius_mm": 2.039555352971576e-06,
+      "speed_cone": {
+        "common_window_ps": [
+          220.0078833260142,
+          225.99637382255045
+        ],
+        "minimum_separation_lower_bound_mm": 0.0,
+        "minimum_separation_upper_bound_mm": 3.867805295991772e-06,
+        "upper_bound_witness_time_ps": 223.01512542232953,
+        "grid_spacing_ps": 2.999990229557732e-05,
+        "roundoff_margin_mm": 1e-09,
+        "meaning": "SUBLUMINAL_RECORDED_WORLDLINES_ONLY_NOT_QUANTUM_SURVIVAL",
+        "arithmetic": "FLOATING_POINT_MARGIN_NOT_FORMALLY_CERTIFIED"
+      },
+      "chord_estimate": {
+        "minimum_mm": 1.3150098731031884e-12,
+        "time_ps": 223.01513250766283,
+        "meaning": "PIECEWISE_LINEAR_ESTIMATE_NOT_AN_ERROR_BOUND"
+      }
+    },
+    {
+      "name": "sampled_seed1_level7",
+      "status": "OUTSIDE_MATCHING_RADIUS_OVER_WINDOW",
+      "match_radius_mm": 2.039555352971576e-06,
+      "speed_cone": {
+        "common_window_ps": [
+          220.01113075923357,
+          225.98749154845245
+        ],
+        "minimum_separation_lower_bound_mm": 0.0005970090128764437,
+        "minimum_separation_upper_bound_mm": 0.007035316593723611,
+        "upper_bound_witness_time_ps": 222.87062144327658,
+        "grid_spacing_ps": 2.9999853369101853e-05,
+        "roundoff_margin_mm": 1e-09,
+        "meaning": "SUBLUMINAL_RECORDED_WORLDLINES_ONLY_NOT_QUANTUM_SURVIVAL",
+        "arithmetic": "FLOATING_POINT_MARGIN_NOT_FORMALLY_CERTIFIED"
+      },
+      "chord_estimate": {
+        "minimum_mm": 0.004154353309182513,
+        "time_ps": 222.87203466748747,
+        "meaning": "PIECEWISE_LINEAR_ESTIMATE_NOT_AN_ERROR_BOUND"
+      }
+    },
+    {
+      "name": "antipodal_seed1_level7",
+      "status": "OUTSIDE_MATCHING_RADIUS_OVER_WINDOW",
+      "match_radius_mm": 2.039555352971576e-06,
+      "speed_cone": {
+        "common_window_ps": [
+          220.00978782779023,
+          225.98133160275697
+        ],
+        "minimum_separation_lower_bound_mm": 0.00036342752115697303,
+        "minimum_separation_upper_bound_mm": 0.0053683251362436684,
+        "upper_bound_witness_time_ps": 222.99418219190056,
+        "grid_spacing_ps": 2.999991848846901e-05,
+        "roundoff_margin_mm": 1e-09,
+        "meaning": "SUBLUMINAL_RECORDED_WORLDLINES_ONLY_NOT_QUANTUM_SURVIVAL",
+        "arithmetic": "FLOATING_POINT_MARGIN_NOT_FORMALLY_CERTIFIED"
+      },
+      "chord_estimate": {
+        "minimum_mm": 0.0040281782779052625,
+        "time_ps": 222.99423960931972,
+        "meaning": "PIECEWISE_LINEAR_ESTIMATE_NOT_AN_ERROR_BOUND"
+      }
+    },
+    {
+      "name": "sampled_seed1_level8",
+      "status": "OUTSIDE_MATCHING_RADIUS_OVER_WINDOW",
+      "match_radius_mm": 2.039555352971576e-06,
+      "speed_cone": {
+        "common_window_ps": [
+          220.01041585719648,
+          225.99080899659998
+        ],
+        "minimum_separation_lower_bound_mm": 0.001904739356489926,
+        "minimum_separation_upper_bound_mm": 0.004319803015449768,
+        "upper_bound_witness_time_ps": 222.86781178998265,
+        "grid_spacing_ps": 2.9999915420866644e-05,
+        "roundoff_margin_mm": 1e-09,
+        "meaning": "SUBLUMINAL_RECORDED_WORLDLINES_ONLY_NOT_QUANTUM_SURVIVAL",
+        "arithmetic": "FLOATING_POINT_MARGIN_NOT_FORMALLY_CERTIFIED"
+      },
+      "chord_estimate": {
+        "minimum_mm": 0.004154394665804169,
+        "time_ps": 222.87203479189412,
+        "meaning": "PIECEWISE_LINEAR_ESTIMATE_NOT_AN_ERROR_BOUND"
+      }
+    },
+    {
+      "name": "antipodal_seed1_level8",
+      "status": "OUTSIDE_MATCHING_RADIUS_OVER_WINDOW",
+      "match_radius_mm": 2.039555352971576e-06,
+      "speed_cone": {
+        "common_window_ps": [
+          220.0054411522071,
+          225.99218803835743
+        ],
+        "minimum_separation_lower_bound_mm": 0.002336632110316863,
+        "minimum_separation_upper_bound_mm": 0.005303141010032914,
+        "upper_bound_witness_time_ps": 222.99418220401222,
+        "grid_spacing_ps": 2.9999884175358236e-05,
+        "roundoff_margin_mm": 1e-09,
+        "meaning": "SUBLUMINAL_RECORDED_WORLDLINES_ONLY_NOT_QUANTUM_SURVIVAL",
+        "arithmetic": "FLOATING_POINT_MARGIN_NOT_FORMALLY_CERTIFIED"
+      },
+      "chord_estimate": {
+        "minimum_mm": 0.004028209543089312,
+        "time_ps": 222.99423973610936,
+        "meaning": "PIECEWISE_LINEAR_ESTIMATE_NOT_AN_ERROR_BOUND"
+      }
+    }
+  ],
+  "source_commit": "d91cb27ed3786bc63900faad892513841b5b6ed4"
+}

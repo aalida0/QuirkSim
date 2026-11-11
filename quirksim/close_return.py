@@ -8,6 +8,53 @@ import numpy as np
 C_MM_PER_PS = 0.299792458
 
 
+def speed_cone_window(t0, x0, t1, x1, max_grid_spacing_ps=3e-5,
+                      roundoff_margin_mm=1e-9):
+    """Bound the minimum separation over overlapping recorded histories.
+
+    At t, each observed position confines its endpoint within c*|t-t_obs|.
+    Maximize four triangle-inequality lower bounds, using the adjacent sample
+    on each side for each endpoint. The actual distance is 2c-Lipschitz; a
+    uniform grid with spacing h therefore loses at most c*h between queries.
+    This assumes continuous subluminal histories, with a heuristic roundoff
+    guard. It neither interpolates a trajectory nor certifies transport error.
+    """
+    if (not np.isfinite(max_grid_spacing_ps) or max_grid_spacing_ps <= 0
+            or not np.isfinite(roundoff_margin_mm) or roundoff_margin_mm < 0):
+        raise ValueError('positive spacing and nonnegative roundoff guard required')
+    a, xa = _endpoint(t0,x0); b, xb = _endpoint(t1,x1)
+    lo=max(a[0],b[0]); hi=min(a[-1],b[-1])
+    if lo >= hi: raise ValueError('no overlapping time span')
+    cells=int(np.ceil((hi-lo)/max_grid_spacing_ps))
+    if cells > 10000000: raise ValueError('window too large: split into overlapping subwindows')
+    spacing=(hi-lo)/cells
+    grid=np.unique(np.r_[np.linspace(lo,hi,cells+1), a[(a>=lo)&(a<=hi)], b[(b>=lo)&(b<=hi)]])
+    minimum_lower=np.inf; minimum_upper=np.inf; witness=None
+    for offset in range(0,len(grid),100000):
+        g=grid[offset:offset+100000]
+        ia=np.clip(np.searchsorted(a,g),1,len(a)-1)
+        ib=np.clip(np.searchsorted(b,g),1,len(b)-1)
+        lower=np.zeros(len(g)); upper=np.full(len(g),np.inf)
+        for da in (-1,0):
+            for db in (-1,0):
+                j,k=ia+da,ib+db
+                distance=np.linalg.norm(xa[j]-xb[k],axis=1)
+                travel=C_MM_PER_PS*(np.abs(g-a[j])+np.abs(g-b[k]))
+                lower=np.maximum(lower,distance-travel)
+                upper=np.minimum(upper,distance+travel)
+        minimum_lower=min(minimum_lower,float(lower.min()))
+        k=int(np.argmin(upper))
+        if upper[k] < minimum_upper:
+            minimum_upper=float(upper[k]); witness=float(g[k])
+    return {'common_window_ps':[float(lo),float(hi)],
+            'minimum_separation_lower_bound_mm':max(0.,minimum_lower-C_MM_PER_PS*spacing-roundoff_margin_mm),
+            'minimum_separation_upper_bound_mm':minimum_upper+roundoff_margin_mm,
+            'upper_bound_witness_time_ps':witness,'grid_spacing_ps':spacing,
+            'roundoff_margin_mm':roundoff_margin_mm,
+            'meaning':'SUBLUMINAL_RECORDED_WORLDLINES_ONLY_NOT_QUANTUM_SURVIVAL',
+            'arithmetic':'FLOATING_POINT_MARGIN_NOT_FORMALLY_CERTIFIED'}
+
+
 def _bound(a, ta, b, tb, p, tp):
     dt = tb - ta
     travel = C_MM_PER_PS * np.maximum(np.abs(ta-tp), np.abs(tb-tp))
