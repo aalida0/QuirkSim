@@ -36,13 +36,18 @@ It archives committed source under `~/QuirkSim/condor/`, with Condor logs
 there, and writes physics output under
 `/data/aalida/QuirkSim/conformal_validation/`. Every invocation has a unique
 directory. It records the Python executable and dependency versions; the
-shared `.venv` must remain available and unchanged while jobs run. Source and manifest are transferred into Condor scratch; output is written
+shared `.venv` must remain available and unchanged while jobs run. Source, manifest and an archive of installed NumPy/SciPy (including bundled
+native libraries) are transferred into Condor scratch; output is written
 there and transferred back under `~/QuirkSim/condor/RUN/returned/CASE/result/`.
 All Condor working directories, transfer destinations and logs are under home;
 AF forbids submitting jobs with an initial directory under `/data`. The
 `collect` command copies completed results to `/data` after transfer. Worker
 code does not read home source paths or write `/data` directly. The Python
-runtime still uses the absolute shared AF `.venv` path. The wrapper checks
+interpreter still uses the absolute shared AF `.venv` path, but NumPy/SciPy
+are imported from the transferred dependency directory, not worker site-packages.
+Preparation first imports these packages with that exact interpreter. Worker
+preflight checks the Python major/minor ABI, package versions, actual import
+paths and a SciPy matrix exponential before starting the solver. The wrapper checks
 that it exists; this change does not make that runtime portable to workers
 without AF home access. A missing runtime is reported in `bootstrap_error.txt`.
 
@@ -121,3 +126,9 @@ was checked. These are submission-helper checks, not completion of the AF
 The worker uses explicit error checks and no `set -e` or `set -u`.
 Collection can be repeated; incomplete cases remain INCOMPLETE and differing
 previously collected results are never silently overwritten.
+
+A sandbox test used `python -S` to make worker site-packages unavailable;
+the dependency bundle supplied NumPy/SciPy and native libraries, and both
+the dependency preflight and a real 0.1 ps solver calculation passed. No
+worker network installation is needed. Native-library compatibility on AF
+workers remains checked by preflight rather than assumed from this local test.

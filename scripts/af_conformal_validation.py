@@ -1,7 +1,7 @@
 """Pinned-source HTCondor pilots with explicit input/output transfers.
 
 No physics ensemble is implied: these are selected numerical validation cases.
-Preparation uses only the standard library and does not run on the login CPU.
+Preparation archives installed NumPy/SciPy; numerical pilots run on workers.
 """
 import argparse
 import datetime as dt
@@ -14,6 +14,27 @@ import sys
 
 
 BRANCH = "research/variational-worldsheet"
+
+
+def bundle_dependencies(python, destination):
+    """Archive the two runtime dependencies with their bundled native libraries."""
+    script = r'''
+import json, pathlib, sys, tarfile
+import numpy, scipy
+paths = {}
+for module in (numpy, scipy):
+    package = pathlib.Path(module.__file__).resolve().parent
+    paths[package.name] = package
+    for pattern in (module.__name__ + '.libs', module.__name__ + '-*.dist-info'):
+        for path in package.parent.glob(pattern):
+            paths[path.name] = path
+with tarfile.open(sys.argv[1], 'w:gz', compresslevel=1, dereference=True) as archive:
+    for name, path in paths.items():
+        archive.add(path, arcname=name)
+print(json.dumps({'python_abi': list(sys.version_info[:2]),
+                  'numpy': numpy.__version__, 'scipy': scipy.__version__}))
+'''
+    return json.loads(subprocess.check_output([str(python), '-c', script, str(destination)], text=True))
 
 
 def cases(suite):
@@ -75,12 +96,15 @@ def prepare(a):
     subprocess.run(["tar", "-xf", str(archive), "-C", str(source)], check=True)
     freeze = subprocess.check_output([str(python), "-m", "pip", "freeze"], text=True)
     (work / "requirements.freeze.txt").write_text(freeze)
+    dependencies = work / 'dependencies.tar.gz'
+    dependency_versions = bundle_dependencies(python, dependencies)
     manifest = dict(schema=1, source_commit=sha, branch=BRANCH, suite=a.suite,
                     created_utc=stamp, source_dir=str(source), python=str(python),
                     output_dir=str(output), work_dir=str(work),
                     duration_ps=1000., cases=cases(a.suite),
                     scope="SELECTED_NUMERICAL_PILOTS_PHYSICAL_SURVIVAL_UNKNOWN")
     manifest['transport'] = 'CONDOR_TRANSFER_WITH_SHARED_AF_PYTHON_RUNTIME'
+    manifest['bundled_dependencies'] = dependency_versions
     spool = work / 'returned'
     spool.mkdir()
     manifest['return_dir'] = str(spool)
@@ -93,12 +117,13 @@ def prepare(a):
         (spool / case['name']).mkdir()
     worker = work / "worker.sh"
     worker.write_text(f'''#!/bin/bash
-mkdir -p result source || exit 70
+mkdir -p result source dependencies || exit 70
 if [ ! -x {python} ]; then
     echo "AF Python runtime unavailable: {python}. Source transfer is enabled, but this job still requires the AF virtualenv on the worker." | tee result/bootstrap_error.txt >&2
     exit 69
 fi
 tar -xf source.tar -C source || exit 71
+tar -xzf dependencies.tar.gz -C dependencies || exit 72
 exec {python} -u source/scripts/af_conformal_validation.py run manifest.json "$1" --sandbox
 ''')
     worker.chmod(0o755)
@@ -109,7 +134,7 @@ arguments = $(case)
 initialdir = {spool}/$(case)
 should_transfer_files = YES
 when_to_transfer_output = ON_EXIT
-transfer_input_files = {archive},{manifest_path}
+transfer_input_files = {archive},{manifest_path},{dependencies}
 transfer_output_files = result
 stream_output = True
 stream_error = True
@@ -156,7 +181,10 @@ def run(a):
     if (destination / "completion.json").exists() or result_path.exists():
         raise ValueError("Result already exists; prepare a new submission instead of overwriting")
     source = Path.cwd() / "source" if a.sandbox else Path(manifest["source_dir"])
-    env = dict(os.environ, PYTHONPATH=str(source), OPENBLAS_NUM_THREADS="1",
+    import_paths = [str(source)]
+    if a.sandbox:
+        import_paths.append(str(Path.cwd() / 'dependencies'))
+    env = dict(os.environ, PYTHONPATH=os.pathsep.join(import_paths), OPENBLAS_NUM_THREADS="1",
                OMP_NUM_THREADS="1", MKL_NUM_THREADS="1", PYTHONUNBUFFERED="1")
     command = [manifest["python"], "-u", str(source / "scripts/validate_conformal_evolution.py"),
                "--model", case["model"], "--mode", case["mode"],
@@ -170,6 +198,30 @@ def run(a):
                       started_utc=dt.datetime.now(dt.timezone.utc).isoformat())
     (destination / "provenance.json").write_text(json.dumps(provenance, indent=2) + "\n")
     with (destination / "progress.log").open("w") as log:
+        if a.sandbox:
+            # Run under the same interpreter/env as the solver, before expensive work.
+            preflight = r'''
+import json, pathlib, sys
+import numpy, scipy
+from scipy.linalg import expm
+expected = json.loads(sys.argv[1])
+assert list(sys.version_info[:2]) == expected['python_abi'], 'Python ABI differs from bundled packages'
+assert numpy.__version__ == expected['numpy'] and scipy.__version__ == expected['scipy']
+deps = pathlib.Path(sys.argv[2]).resolve()
+assert all(deps in pathlib.Path(m.__file__).resolve().parents for m in (numpy, scipy)), 'Dependency bundle not used'
+assert numpy.allclose(expm(numpy.zeros((2,2))), numpy.eye(2))
+print(json.dumps({'dependency_preflight': 'PASS', 'numpy': numpy.__file__, 'scipy': scipy.__file__, 'python': sys.version}))
+'''
+            check = subprocess.run([manifest['python'], '-c', preflight,
+                                    json.dumps(manifest['bundled_dependencies']),
+                                    str(Path.cwd() / 'dependencies')],
+                                   env=env, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            print(check.stdout, end='', flush=True)
+            log.write(check.stdout); log.flush()
+            if check.returncode:
+                (destination / 'completion.json').write_text(json.dumps(
+                    dict(returncode=check.returncode, stage='DEPENDENCY_PREFLIGHT')) + '\n')
+                raise SystemExit(check.returncode)
         process = subprocess.Popen(command, cwd=source, env=env, text=True,
                                    stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         for line in process.stdout:
