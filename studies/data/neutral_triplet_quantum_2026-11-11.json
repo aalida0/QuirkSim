@@ -1,0 +1,183 @@
+{
+  "scope": "SPECIFIED_LO_SPIN_ZERO_COMPACT_STATE_NOT_TRANSPORT_ANNIHILATION",
+  "model": {
+    "neutral_mass_gev": 225.0,
+    "charged_minus_neutral_gev": 0.15717027632121017,
+    "n_ic": 2,
+    "alpha_ic_potential": 0.04,
+    "alpha_ic_hard": 0.04,
+    "lambda_tension_ev": 774.0,
+    "representation": "DIRAC_SU2_TRIPLET_Y0_IC_FUNDAMENTAL",
+    "ew_scheme": "tree GF MW MZ; alpha_EM derived consistently",
+    "ew_alphaW_sin2W_alphaEM": [
+      0.03392097214492783,
+      0.2230518910035465,
+      0.007566136981604779
+    ],
+    "potential": "fixed-coupling Cornell IC plus single-exchange EW matrix",
+    "flavor_basis": [
+      "Q+ antiQ+",
+      "Q0 antiQ0",
+      "Q- antiQ-"
+    ]
+  },
+  "mesh_checks": [
+    {
+      "state": {
+        "energy_relative_to_neutral_threshold_gev": -0.050706887229197584,
+        "psi_at_origin_gev_three_halves": [
+          0.39118479762586744,
+          3.5590052416982787,
+          0.3911847976258568
+        ],
+        "flavor_probabilities": [
+          3.160472132993084e-05,
+          0.9999367905573403,
+          3.160472132993273e-05
+        ],
+        "points": 4000,
+        "dr_gev_minus1": 0.002221666805520842,
+        "rmax_gev_minus1": 8.88888888888889,
+        "occupation_in_transport": null
+      },
+      "partial_widths_gev": {
+        "ic_gluon_pair": 2.8070532260137348e-06,
+        "W_plus_W_minus": 1.657332366675274e-05,
+        "gamma_gamma": 1.7395909983943e-08,
+        "gamma_Z": 1.1621267682185022e-07,
+        "Z_Z": 1.9141092510066305e-07
+      }
+    },
+    {
+      "state": {
+        "energy_relative_to_neutral_threshold_gev": -0.05070800387795549,
+        "psi_at_origin_gev_three_halves": [
+          0.3933678201174724,
+          3.559850518494282,
+          0.3933678201174872
+        ],
+        "flavor_probabilities": [
+          3.177505305438797e-05,
+          0.9999364498938922,
+          3.177505305438945e-05
+        ],
+        "points": 8000,
+        "dr_gev_minus1": 0.0011109722395811635,
+        "rmax_gev_minus1": 8.88888888888889,
+        "occupation_in_transport": null
+      },
+      "partial_widths_gev": {
+        "ic_gluon_pair": 2.81379636064431e-06,
+        "W_plus_W_minus": 1.659874432840319e-05,
+        "gamma_gamma": 1.7590608885048976e-08,
+        "gamma_Z": 1.1751335499808153e-07,
+        "Z_Z": 1.9355323882907262e-07
+      }
+    },
+    {
+      "state": {
+        "energy_relative_to_neutral_threshold_gev": -0.05070828392501392,
+        "psi_at_origin_gev_three_halves": [
+          0.3938073124570232,
+          3.5600316223236175,
+          0.39380731245703365
+        ],
+        "flavor_probabilities": [
+          3.181782375063995e-05,
+          0.9999363643524992,
+          3.1817823750646495e-05
+        ],
+        "points": 16000,
+        "dr_gev_minus1": 0.0005555208355033366,
+        "rmax_gev_minus1": 8.88888888888889,
+        "occupation_in_transport": null
+      },
+      "partial_widths_gev": {
+        "ic_gluon_pair": 2.8151690410994463e-06,
+        "W_plus_W_minus": 1.6603956246803224e-05,
+        "gamma_gamma": 1.762993724986986e-08,
+        "gamma_Z": 1.1777608655711346e-07,
+        "Z_Z": 1.9398597725436968e-07
+      }
+    },
+    {
+      "state": {
+        "energy_relative_to_neutral_threshold_gev": -0.05070835399682716,
+        "psi_at_origin_gev_three_halves": [
+          0.39389837519161686,
+          3.560070578056876,
+          0.3938983751916531
+        ],
+        "flavor_probabilities": [
+          3.1828528990953825e-05,
+          0.9999363429420194,
+          3.18285289909575e-05
+        ],
+        "points": 32000,
+        "dr_gev_minus1": 0.0002777690974934811,
+        "rmax_gev_minus1": 8.88888888888889,
+        "occupation_in_transport": null
+      },
+      "partial_widths_gev": {
+        "ic_gluon_pair": 2.8154553554615876e-06,
+        "W_plus_W_minus": 1.660504827735013e-05,
+        "gamma_gamma": 1.7638091572369168e-08,
+        "gamma_Z": 1.1783056118052714e-07,
+        "Z_Z": 1.9407570101211524e-07
+      }
+    }
+  ],
+  "last_relative_width_changes": {
+    "ic_gluon_pair": 0.00010170414563437369,
+    "W_plus_W_minus": 6.576929803192577e-05,
+    "gamma_gamma": 0.0004625270290947725,
+    "gamma_Z": 0.0004625270290947725,
+    "Z_Z": 0.00046252702909499455
+  },
+  "sum_modeled_two_boson_widths_gev": 1.9750047986576727e-05,
+  "hbar_over_modeled_sum_ps": 3.3327106716265134e-08,
+  "transport_matching": {
+    "status": "NOT_IDENTIFIABLE_FROM_CLASSICAL_SAMPLE_MEANS",
+    "spin_density_matrix": null,
+    "wavepacket_density_operator": null,
+    "formation_probability": null,
+    "radiation_transition_kernel": null
+  },
+  "gaussian_counterexample": {
+    "scope": "BALLISTIC_GAUSSIAN_CONTACT_ANSATZ_ONLY_NOT_A_PHYSICAL_ERROR_BAND",
+    "recoil_impact_um": 4.154394665804169,
+    "reference_impact_um": 0.0,
+    "same_means_different_widths": [
+      {
+        "transverse_sigma_um": 0.000255,
+        "log_recoil_to_reference_contact_ratio": -132710457.81824015
+      },
+      {
+        "transverse_sigma_um": 0.001,
+        "log_recoil_to_reference_contact_ratio": -8629497.519631065
+      },
+      {
+        "transverse_sigma_um": 0.1,
+        "log_recoil_to_reference_contact_ratio": -862.9497519631067
+      },
+      {
+        "transverse_sigma_um": 1.0,
+        "log_recoil_to_reference_contact_ratio": -8.629497519631066
+      },
+      {
+        "transverse_sigma_um": 10.0,
+        "log_recoil_to_reference_contact_ratio": -0.08629497519631067
+      }
+    ]
+  },
+  "physical_annihilation_probability_with_recoil": null,
+  "physical_annihilation_probability_without_recoil": null,
+  "missing": [
+    "spin-one annihilation and transitions",
+    "formation from production and weak decay",
+    "finite-energy and higher-order hard corrections",
+    "nonperturbative radiation and recoil",
+    "hard/Bohr running-coupling and string-tension scale matching"
+  ],
+  "release": "COMPACT_SPIN_ZERO_MODEL_CALCULATION_ONLY; ITEMS_2_AND_3_UNRESOLVED"
+}
