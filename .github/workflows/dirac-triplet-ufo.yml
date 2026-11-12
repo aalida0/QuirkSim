@@ -1,0 +1,15 @@
+name: Dirac triplet UFO structural checks
+on:
+  push:
+    branches: [feature/dirac-triplet-ew-lo]
+  workflow_dispatch:
+jobs:
+  structural-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Python UFO import and physics-structure checks
+        run: python scripts/validate_dirac_triplet_ufo.py models/DiracTripletEW_UFO
