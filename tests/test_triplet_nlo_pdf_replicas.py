@@ -28,7 +28,7 @@ class TestNNPDFReplicaExtraction(unittest.TestCase):
                 f.write("10 0\n")
                 f.write("1.0 1.0\n")
                 f.write("pdf variations:\n")
-                f.write("101 331700\n")
+                f.write("NNPDF40_nlo_as_01180 101\n")
                 f.write(" ".join(f"{v:.13e}" for v in member_weights) + "\n")
         with (proc / "SubProcesses" / "job_status.pkl").open("wb") as f:
             pickle.dump(jobs,f)
@@ -54,7 +54,7 @@ class TestNNPDFReplicaExtraction(unittest.TestCase):
             source.write_text("scale variations:\n2\n1.0 2.0\n")
             with self.assertRaisesRegex(ValueError,"No 'pdf variations:'"):
                 read_pdf_members(source)
-            source.write_text("pdf variations:\n101\n1 2 3\n")
+            source.write_text("pdf variations:\nNNPDF40_nlo_as_01180 101\n1 2 3\n")
             with self.assertRaisesRegex(ValueError,"Expected 101"):
                 read_pdf_members(source)
 
