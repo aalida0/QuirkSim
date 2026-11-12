@@ -1,0 +1,41 @@
+name: Dirac triplet MG5 LO amplitude smoke
+on:
+  push:
+    branches: [feature/dirac-triplet-ew-lo]
+  workflow_dispatch:
+jobs:
+  mg5-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install MadGraph5_aMC 3.x from upstream
+        run: git clone --depth 1 --branch 3.x https://github.com/mg5amcnlo/mg5amcnlo.git /tmp/mg5amcnlo
+      - name: Generate tree-level Dirac-triplet amplitudes
+        shell: bash
+        run: |
+          set -euo pipefail
+          MODEL="${GITHUB_WORKSPACE}/models/DiracTripletEW_UFO"
+          {
+            echo "import model ${MODEL}"
+            echo 'generate u u~ > q1+ q1- QED=2 QCD=0'
+            echo 'add process d d~ > q2+ q2- QED=2 QCD=0'
+            echo 'output /tmp/DiracTripletPair -f'
+            echo 'generate u d~ > q1+ q0~ QED=2 QCD=0'
+            echo 'add process u d~ > q0 q2+ QED=2 QCD=0'
+            echo 'output /tmp/DiracTripletAssociated -f'
+            echo 'quit'
+          } > /tmp/quirksim_triplet_smoke.mg5
+          python /tmp/mg5amcnlo/bin/mg5_aMC /tmp/quirksim_triplet_smoke.mg5 2>&1 | tee /tmp/mg5_smoke.log
+          test -d /tmp/DiracTripletPair/SubProcesses
+          test -d /tmp/DiracTripletAssociated/SubProcesses
+          grep -q 'q1' /tmp/mg5_smoke.log
+      - name: Save MadGraph smoke logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dirac-triplet-mg5-smoke
+          path: /tmp/mg5_smoke.log
+          if-no-files-found: ignore
