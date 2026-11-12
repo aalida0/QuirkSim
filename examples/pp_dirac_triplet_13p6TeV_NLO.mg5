@@ -1,0 +1,29 @@
+# MadGraph5_aMC NLO-QCD production for Dirac triplet electroweak spectator model.
+# BEFORE RUNNING:
+#   python3 scripts/build_dirac_triplet_nlo_ufo.py \
+#     --mg5-dir "$HOME/codes/Herwig/herwigpp/opt/MG5_aMC_v3_5_1"
+#   python3 scripts/validate_dirac_triplet_nlo_ufo.py \
+#     --mg5-dir "$HOME/codes/Herwig/herwigpp/opt/MG5_aMC_v3_5_1"
+#
+# This card ONLY generates NLO matrix elements. The separate NLO launch
+# requires a suitable *NLO* PDF set and seven-point mu_R/mu_F variations.
+# All final state triplet particles are left stable.
+# For strict electroweak gauge consistency, use equal tree-level masses;
+# apply EW 157 MeV charged-neutral pole splitting in the propagation model.
+#
+# Run from the QuirkSim repository root:
+#   /path/to/MG5_aMC/bin/mg5_aMC examples/pp_dirac_triplet_13p6TeV_NLO.mg5
+
+import model models/DiracTripletEW_NLO_UFO
+
+define p = g u u~ d d~ s s~ c c~ b b~
+
+# NLO QCD corrections to EW Drell-Yan (LO order e^4).
+generate p p > q1+ q1- QCD=0 QED=2 [QCD] @0
+add process p p > q2- q2+ QCD=0 QED=2 [QCD] @1
+add process p p > q1+ q0~ QCD=0 QED=2 [QCD] @2
+add process p p > q0 q2+ QCD=0 QED=2 [QCD] @3
+add process p p > q1- q0 QCD=0 QED=2 [QCD] @4
+add process p p > q0~ q2- QCD=0 QED=2 [QCD] @5
+
+output results/pp_dirac_triplet_13p6TeV_NLO -f
