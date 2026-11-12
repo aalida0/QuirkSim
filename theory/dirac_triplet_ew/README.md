@@ -323,3 +323,34 @@ prediction. See `studies/TRIPLET_NLO_QCD_UFO.md`.
 | Full BSM EW UV/R2 | **NOT CALCULATED / NOT VERIFIED** |
 | NLO QCD+EW UFO | **NOT VALIDATED / NOT RELEASED** |
 | NLO EW xsec at 13.6 TeV | **NOT CALCULATED** |
+
+### Resolved first-stage LoadModel abort (2026-11-12)
+
+FeynArts 3.11 imports successfully on the user workstation; its
+`SetDelayed::wrsym: Symbol Discard is Protected` import warning did not
+prevent `FEYNARTS_IMPORT_OK`. The first stage originally failed **before**
+any physics generation because `TripletDirac.fr` tried to read and append
+to `M$ClassesDescription` during FeynRules' intermediate per-file loading,
+when the SM file is not yet merged. The extension has been corrected to
+declare only the three triplet classes and let `LoadModel[SM.fr,
+TripletDirac.fr]` perform the merge.
+
+The first stage now prints `FR_TRIPLET_MERGED_MODEL_LOADED` after loading,
+uses `qsGeneratedDir` instead of the shadowing global name `out`,
+and exits nonzero if the expected FeynArts `.mod` output is absent.
+It should **not** be mistaken for a completed NLOCT model.
+
+```bash
+cd ~/QuirkSim
+git pull --ff-only origin feature/dirac-triplet-ew-lo
+export FEYNRULES_HOME="$HOME/.Wolfram/Applications/FeynRules"
+# retain FEYNARTS_HOME from actual install
+set -o pipefail
+wolframscript -file theory/dirac_triplet_ew/01_prepare_feynarts.wls \
+  2>&1 | tee results/triplet_ew_stage1.log
+grep -E 'FR_TRIPLET_MERGED_MODEL_LOADED|FR_STAGE1_FEYNARTS_MODEL_OK|ERROR|Abort|::' \
+  results/triplet_ew_stage1.log | tail -n 60
+```
+
+This resolves the identified loading misuse in source; the Mathematica
+renormalization and output have **not** been executed or checked here.
