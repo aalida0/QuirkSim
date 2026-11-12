@@ -45,3 +45,5 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_triplet_ew_stage1_audit.py' -v
       - name: Enforce FeynRules Dirac conjugates and pre-EW nonzero vertices
         run: python -m unittest discover -s tests -p 'test_triplet_feynrules_antifield_syntax.py' -v
+      - name: Verify eight triplet FeynRules FFV interactions
+        run: python -m unittest discover -s tests -p 'test_triplet_ew_tree_vertex_audit.py' -v
