@@ -18,8 +18,8 @@ If[!StringQ[frHome]||StringLength[frHome]==0||
 frHome=ExpandFileName[frHome];
 faHome=ExpandFileName[faHome];
 scriptDir=DirectoryName[ExpandFileName[$InputFileName]];
-out=FileNameJoin[{scriptDir,"generated"}];
-If[!DirectoryQ[out],Print["ERROR: Run stage 01 first"];Exit[2]];
+qsGeneratedRoot=FileNameJoin[{scriptDir,"generated"}];
+If[!DirectoryQ[qsGeneratedRoot],Print["ERROR: Run stage 01 first"];Exit[2]];
 AppendTo[$Path,faHome];
 SetDirectory[faHome];
 Get["FeynArts.m"];
@@ -27,16 +27,16 @@ AppendTo[$Path,frHome];
 SetDirectory[frHome];
 Get["NLOCT.m"];
 
-SetDirectory[out];
-If[!FileExistsQ[FileNameJoin[{out,"DiracTripletEW_QCDEW_FA",
+SetDirectory[qsGeneratedRoot];
+If[!FileExistsQ[FileNameJoin[{qsGeneratedRoot,"DiracTripletEW_QCDEW_FA",
                                   "DiracTripletEW_QCDEW_FA.mod"}]],
    Print["ERROR: stage 01 must produce a FeynArts .mod model file in generated/DiracTripletEW_QCDEW_FA"];Exit[2]];
-If[!FileExistsQ[FileNameJoin[{out,"DiracTripletEW_QCDEW_FA","DiracTripletEW_QCDEW_FA.gen"}]],
+If[!FileExistsQ[FileNameJoin[{qsGeneratedRoot,"DiracTripletEW_QCDEW_FA","DiracTripletEW_QCDEW_FA.gen"}]],
    Print["ERROR: stage 01 must produce a model-specific .gen file for EW CTs; Lorentz.gen is insufficient."];
    Exit[2]
 ];
-qsAuditFile=FileNameJoin[{out,"stage1_log_audit.json"}];
-qsModelStem=FileNameJoin[{out,"DiracTripletEW_QCDEW_FA",
+qsAuditFile=FileNameJoin[{qsGeneratedRoot,"stage1_log_audit.json"}];
+qsModelStem=FileNameJoin[{qsGeneratedRoot,"DiracTripletEW_QCDEW_FA",
                           "DiracTripletEW_QCDEW_FA"}];
 If[!FileExistsQ[qsAuditFile],
    Print["ERROR: stage 01 has no successful log-audit manifest. ",
@@ -60,13 +60,39 @@ If[!AssociationQ[qsHashes] ||
 Print["FR_STAGE1_LOG_AUDIT_PASSED_ONLY: no known rejected-vertex patterns."];
 Print["CAUTION: physics-level NLO EW counterterms are not validated."];
 Print["Starting NLOCT *full* QCD+EW UV/R2 construction. No QCDOnly shortcut ..."];
-WriteCT[
-    "DiracTripletEW_QCDEW_FA/DiracTripletEW_QCDEW_FA",
-    "DiracTripletEW_QCDEW_FA/DiracTripletEW_QCDEW_FA",
-    Output -> "DiracTripletEW_QCDEW_CT",
-    QCDOnly -> False,
-    Exclude4ScalarsCT -> False,
-    Assumptions -> {MQ > 0, MZ > 0, MW > 0}
+qsNLOOutputFile=FileNameJoin[{qsGeneratedRoot,"DiracTripletEW_QCDEW_CT.nlo"}];
+If[FileExistsQ[qsNLOOutputFile],
+   Print["ERROR: existing NLOCT output found: ",qsNLOOutputFile,
+         ". Archive it explicitly before starting a new integration."];
+   Exit[3]
 ];
-Print["NLOCT output attempted in: ",out];
+qsNLOCTResult=Check[
+    WriteCT[
+        "DiracTripletEW_QCDEW_FA/DiracTripletEW_QCDEW_FA",
+        "DiracTripletEW_QCDEW_FA/DiracTripletEW_QCDEW_FA",
+        Output -> "DiracTripletEW_QCDEW_CT",
+        QCDOnly -> False,
+        Exclude4ScalarsCT -> False,
+        Assumptions -> {MQ > 0, MZ > 0, MW > 0}
+    ],
+    $Failed,
+    {Part::partd, Part::partw, Set::partd, Set::partw,
+     First::nofirst, Last::nolast, Function::slotn,
+     StringJoin::string, Power::infy, Infinity::indet}
+];
+If[qsNLOCTResult === $Failed,
+   Print["NLOCT_STAGE2_REJECTED_INVALID_MATHEMATICA_EXPRESSION: ",
+         "one-loop counterterm generation emitted structural errors."];
+   Exit[5]
+];
+If[!FileExistsQ[qsNLOOutputFile] ||
+   FileByteCount[qsNLOOutputFile] < 200,
+   Print["ERROR: NLOCT did not produce a sufficiently populated .nlo file at ",
+         qsNLOOutputFile];
+   Exit[6]
+];
+Print["NLOCT_STAGE2_FILE_WRITTEN_UNVALIDATED: ",qsNLOOutputFile,
+      " (",FileByteCount[qsNLOOutputFile]," bytes)"];
+Print["NLOCT_STAGE2_REQUIRES_LOG_AND_CONTENT_AUDIT"];
+Print["NLOCT output attempted in: ",qsGeneratedRoot];
 Print["WARNING: Counterterms are unvalidated and MUST NOT yet be used for NLO-EW predictions."];
