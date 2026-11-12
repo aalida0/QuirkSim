@@ -20,12 +20,13 @@ If[!FileExistsQ[FileNameJoin[{frHome,"FeynRules.m"}]],
 scriptDir=DirectoryName[ExpandFileName[$InputFileName]];
 modelFile=FileNameJoin[{scriptDir,"TripletDirac.fr"}];
 If[!FileExistsQ[modelFile],Print["Missing ",modelFile];Exit[2]];
-out=FileNameJoin[{scriptDir,"generated"}];
-If[!DirectoryQ[out],CreateDirectory[out]];
+qsGeneratedDir=FileNameJoin[{scriptDir,"generated"}];
+If[!DirectoryQ[qsGeneratedDir],CreateDirectory[qsGeneratedDir]];
 AppendTo[$Path,frHome];
 SetDirectory[frHome];
 Get["FeynRules.m"];
 LoadModel[FileNameJoin[{frHome,"Models","SM","SM.fr"}], modelFile];
+Print["FR_TRIPLET_MERGED_MODEL_LOADED"];
 FeynmanGauge=True;
 Print["Checking new triplet Lagrangian's Hermiticity ..."];
 CheckHermiticity[LTripletDirac];
@@ -33,12 +34,12 @@ Print["Generating EW-field and mass counterterm Lagrangian (QCDOnly=False) ..."]
 LTripletRen = OnShellRenormalization[
     LTripletFull, QCDOnly -> False, FlavorMixing -> False
 ];
-SetDirectory[out];
+SetDirectory[qsGeneratedDir];
 WriteFeynArtsOutput[
     LTripletRen,
     Output -> "DiracTripletEW_QCDEW_FA",
     GenericFile -> False,
     FlavorExpand -> True
 ];
-Print["FeynArts export attempted at: ",out];
+Print["FeynArts export attempted at: ",qsGeneratedDir];
 Print["NOTE: model is NOT yet validated at NLO EW. Inspect generated files, UV finite-parts and renormalization scheme."];
