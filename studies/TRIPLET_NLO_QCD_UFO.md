@@ -439,6 +439,39 @@ for the chosen **same-NLO-PDF** convention (PDF and scale inputs held
 fixed). A separate usual PDF-order-matched LO baseline can be given
 with an LO PDF set if phenomenologically useful.
 
+## Matched LO result and provisional NLO/LO K-factor (November 12, 2026)
+
+The user completed `order=LO`, `fixed_order=on` on the *same six-channel NLO
+process output* at `sqrt(s)=13.6 TeV`, using the previously prepared
+NNPDF40 NLO input and `M_Q=225 GeV` (the exact saved run card should be
+retained with the result):
+
+| Quantity | One spectator hidden color | N_IC=2 spectator |
+|---|---:|---:|
+| Matched LO total | **3.437 ± 0.007 pb** | **6.874 ± 0.014 pb** |
+| NLO central (PDF replicas extraction) | **3.9893368 ± 0.0057 pb** | **7.9786736 ± 0.0114 pb** |
+| NLO/LO fixed-NLO-PDF K-factor | **1.16070 ± 0.00289 (MC only)** | **1.16070 ± 0.00289 (MC only)** |
+| NLO enhancement vs matched LO | **+16.07%** | **+16.07%** |
+| NLO PDF uncertainty | **±0.0573033 pb (1.436%)** | **±0.1146067 pb (1.436%)** |
+
+The ratio uncertainty is obtained by propagating the independently quoted
+LO and NLO integration errors; this is only a diagnostic estimate and
+ignores any statistical correlations. This K-factor uses **the same NLO PDF**
+for numerator and denominator: it is not the conventional ratio between a
+full NLO calculation with NLO PDFs and a LO prediction using LO PDFs.
+The hidden-color multiplicity cancels in the ratio.
+
+Still open for a complete rate uncertainty budget:
+- Seven-point muR/muF scale uncertainty *from the NLO saved weights*:
+  command `scripts/extract_triplet_nlo_7point.py`; result not yet provided.
+- NLO PDF-only 68% CI is computed; alpha_s, NLO EW, hidden-radiation,
+  and model systematics are separate.
+- The currently active `SubProcesses/job_status.pkl` may now refer to
+  the latest **LO integration** rather than the preceding NLO. For the
+  NLO scale envelope, use the JSON output saved **before** running LO,
+  or retrieve the original NLO tables from backup / rerun NLO.
+  Never apply NLO 7-point extraction to LO-overwritten tables.
+
 ## Required physics release gates
 
 1. Python import, six species, eight vector vertices and charge/quirk-number conservation.
