@@ -47,5 +47,6 @@ If[!FileExistsQ[qsModelMod],
    Print["Stage 01 did not finish. Do not run stage 02."];
    Exit[3]
 ];
-Print["FR_STAGE1_FEYNARTS_MODEL_OK: ", qsModelMod];
+Print["FR_STAGE1_FEYNARTS_FILES_WRITTEN_UNVALIDATED: ", qsModelMod];
+Print["STAGE1_REQUIRES_LOG_AUDIT: files written; an external fail-closed log check is mandatory before NLOCT."];
 Print["NOTE: model is NOT yet validated at NLO EW. Inspect generated files, UV finite-parts and renormalization scheme."];
