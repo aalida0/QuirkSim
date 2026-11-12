@@ -13,3 +13,5 @@ jobs:
           python-version: '3.11'
       - name: Python UFO import and physics-structure checks
         run: python scripts/validate_dirac_triplet_ufo.py models/DiracTripletEW_UFO
+      - name: Triplet LHE analyzer synthetic tests
+        run: python -m unittest discover -s tests -p 'test_triplet_lhe_analysis.py' -v
