@@ -110,7 +110,7 @@ def patch_legacy_param_card_writer(destination: Path) -> bool:
     new = "need_writing.sort(key=cmp_to_key(self.order_param))"
     source = source.replace(old, new)
     if "from functools import cmp_to_key" not in source:
-        source = "from functools import cmp_to_key\\n" + source
+        source = "from functools import cmp_to_key\n" + source
     writer.write_text(source, encoding="utf-8")
     return True
 
