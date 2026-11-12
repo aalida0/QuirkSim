@@ -30,7 +30,7 @@ if ((tree_status != 0 || tree_audit_status != 0)); then
 fi
 # Preserve any earlier FeynArts output so a stale .mod cannot pass this run.
 if [[ -d "$MODEL" ]]; then
-  old_name="${MODEL}.previous_$(date -u +%Y%m%dT%H%M%SZ)_$"
+  old_name="${MODEL}.previous_$(date -u +%Y%m%dT%H%M%SZ)_${BASHPID}"
   mv "$MODEL" "$old_name"
   echo "Previous FeynArts model preserved: $old_name"
 fi
