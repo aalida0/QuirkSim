@@ -41,5 +41,11 @@ WriteFeynArtsOutput[
     GenericFile -> False,
     FlavorExpand -> True
 ];
-Print["FeynArts export attempted at: ",qsGeneratedDir];
+qsModelMod=FileNameJoin[{qsGeneratedDir,"DiracTripletEW_QCDEW_FA","DiracTripletEW_QCDEW_FA.mod"}];
+If[!FileExistsQ[qsModelMod],
+   Print["ERROR: FeynArts .mod missing after WriteFeynArtsOutput: ",qsModelMod];
+   Print["Stage 01 did not finish. Do not run stage 02."];
+   Exit[3]
+];
+Print["FR_STAGE1_FEYNARTS_MODEL_OK: ", qsModelMod];
 Print["NOTE: model is NOT yet validated at NLO EW. Inspect generated files, UV finite-parts and renormalization scheme."];
