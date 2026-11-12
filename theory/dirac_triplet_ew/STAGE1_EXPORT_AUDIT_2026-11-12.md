@@ -214,3 +214,48 @@ complete SM and BSM model. The NLOCT engine and renormalization
 scheme need physical scrutiny after any numerical/export success.
 Even a stage2 preflight pass does NOT validate
 `NLOEW` cross sections or authorize publication.
+
+
+## NLOCT Stage 2 initial run: FeynArts model lookup failure
+
+The first stage-2 attempt ran FeynArts 3.11 and NLOCT 1.02,
+passed the saved stage-1 SHA256 check, then failed immediately at
+`Computing CT for the {S} vertices` with
+
+```text
+$Aborted
+InitializeModel::noopen: Cannot open DiracTripletEW_QCDEW_FA/DiracTripletEW_QCDEW_FA.gen.
+NLOCT_STAGE2_REJECTED
+nlo_size_bytes: null
+```
+
+**Root cause:** the generated class/generic model is stored in a nested
+directory under `theory/dirac_triplet_ew/generated/`. FeynArts
+`ReadModelFile` searches `Block[{$Path = $ModelPath},
+System`Private`FindFile[model <> ".gen"]]`, so
+`SetDirectory[generated]` alone does not ensure model lookup.
+The .gen hash is verified and this is a **path resolution failure**,
+not evidence about UV/R2 physics.
+
+**Fix:** In `02_calculate_nloct.wls`, prepend the absolute generated
+model subdirectory to FeynArts `$ModelPath`, resolve both
+`DiracTripletEW_QCDEW_FA.gen` and `.mod` using FeynArts'
+own `FindFile` convention, explicitly check
+`InitializeModel[qsModelName, GenericModel -> qsModelName]`,
+and pass just that common basename to `WriteCT`. The script
+aborts before the heavy CT calculation if lookup or initialization
+fails. The shell driver `run_triplet_ew_stage2.sh` automatically
+archives the failed previous stage2 log before retrying, while
+refusing to overwrite any actual `.nlo` output.
+
+**Next:** pull `feature/dirac-triplet-ew-lo` and rerun
+`bash scripts/run_triplet_ew_stage2.sh` with the existing
+`FEYNRULES_HOME` and `FEYNARTS_HOME` exports. Confirm
+`NLOCT_GENERIC_MODEL_RESOLVED` and
+`NLOCT_FEYNARTS_INITIALIZATION_OK` before the slow UV/R2
+calculation starts. Only NLOCT .nlo generation and the subsequent
+UV/IR gauge tests can establish physical readiness.
+
+Primary source: FeynArts `Initialize.m` source, `ReadModelFile`
+and `$ModelPath`:
+https://github.com/FeynCalc/feynarts-mirror/blob/master/FeynArts/Initialize.m
