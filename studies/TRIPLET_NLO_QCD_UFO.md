@@ -351,6 +351,94 @@ nine-point envelope printed by MG5.
 and scale/PDF variations when you rerun the same process directory.
 Extract the replica statistics now, before performing another integration.
 
+## Confirmed 100-replica PDF RMS and 7-point scale extractor
+
+User's November 12, 2026 local output from 17 saved NLO integration jobs:
+
+| Observable (one hidden-color copy) | Value |
+|---|---:|
+| NNPDF40 central | **3.9893368 pb** |
+| 100-replica mean | 3.9892335 pb |
+| 68%-CL PDF uncertainty (sample RMS) | **0.0573033 pb = 1.436%** |
+| Population-RMS cross-check | 0.0570161 pb |
+| Replica mean minus central | -0.0001033 pb |
+| N_IC=2 central | **7.9786736 pb** |
+| N_IC=2 PDF-only uncertainty | **0.1146067 pb** |
+
+This replica RMS is a PDF-only uncertainty, and **does not** include
+alpha_s variation or the perturbative scale envelope.
+
+To extract a **standard seven-point** scale envelope from the **same**
+17 sets of saved per-job reweighting tables without a new NLO run:
+
+```bash
+cd ~/QuirkSim
+git pull --ff-only origin feature/dirac-triplet-ew-lo
+python3 scripts/extract_triplet_nlo_7point.py \
+  --process results/pp_dirac_triplet_13p6TeV_NLO_NNPDF40 \
+  --run-log results/triplet_nlo_uncertainties.log \
+  --nic 2 \
+  --json-out results/triplet_nlo_normalisation.json \
+  | tee results/triplet_nlo_7point.txt
+```
+
+This script replicates MG5's `wgt_frac`-weighted aggregation of the
+`scale_pdf_dependence.dat` files and verifies that the reconstructed
+central cross section is consistent with the MG5 log and the independent
+PDF-weight central. MadGraph 3.5.1 swaps the scale factor `1.0` to
+the **first element** of each `rw_(r/f)scale` list. The reweighting
+array is ordered with muR fastest, muF slowest. The seven-point envelope
+excludes `(muR,muF)=(0.5,2)` and `(2,0.5)` while the nine-point
+envelope is printed as a consistency check against MG5's
+`+1.5%/-1.1%` summary.
+
+The script reports the central and all nine points for auditing, the
+seven-point absolute/percentage envelope, and the PDF RMS with correct
+`N_IC` normalization. The JSON record captures the numbers **before
+a new integration overwrites the active MG5 job-weight files**.
+
+### Matched LO baseline after preserving the scale/PDF result
+
+MG5_aMC's NLO output directory supports `order=LO` and
+`fixed_order=on`. Only **after** writing the
+`triplet_nlo_normalisation.json` file above, run a separate LO
+integration using the *same* NLO UFO and PDF set, equal quirk
+masses, 13.6 TeV beams and central scale choice:
+
+```bash
+cd ~/QuirkSim
+PROC="$PWD/results/pp_dirac_triplet_13p6TeV_NLO_NNPDF40"
+cat > /tmp/triplet_matched_lo.mg5 <<EOF
+launch $PROC
+order=LO
+fixed_order=on
+shower=off
+done
+set pdlabel lhapdf
+set lhaid 331700
+set iseed 7482
+set req_acc_FO 0.01
+set nevents 0
+set ebeam1 6800
+set ebeam2 6800
+set fixed_ren_scale False
+set fixed_fac_scale False
+set dynamical_scale_choice -1
+set reweight_scale False
+set reweight_PDF False
+done
+quit
+EOF
+"$MG5/bin/mg5_aMC" /tmp/triplet_matched_lo.mg5 \
+  2>&1 | tee results/triplet_matched_lo.log
+```
+
+If the LO run succeeds, the matched perturbative
+`K_NLO/LO = 3.9893368 pb / sigma_LO_same_NLO_PDF` is meaningful
+for the chosen **same-NLO-PDF** convention (PDF and scale inputs held
+fixed). A separate usual PDF-order-matched LO baseline can be given
+with an LO PDF set if phenomenologically useful.
+
 ## Required physics release gates
 
 1. Python import, six species, eight vector vertices and charge/quirk-number conservation.
