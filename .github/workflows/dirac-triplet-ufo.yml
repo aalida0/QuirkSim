@@ -39,3 +39,5 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_triplet_ew_pole_spectrum.py' -v
       - name: Reject incomplete NLO EW candidate UFOs
         run: python -m unittest discover -s tests -p 'test_triplet_nlo_ew_candidate_audit.py' -v
+      - name: Refuse NLO EW with incomplete UFO, and test QED PDF cards
+        run: python -m unittest discover -s tests -p 'test_triplet_qcd_ew_smoke_cards.py' -v
