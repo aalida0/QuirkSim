@@ -542,6 +542,33 @@ checked NLO poles, reconstructed NNPDF replica RMS and the standard
 mass/scale/PDF scheme checks in item 6 are still open, as are all
 NLO+PS and quirk-string/decay interfaces.
 
+## Separate NLO QCD+EW model-development program (not yet validated)
+
+A separate source-level EW effort is recorded at
+`theory/dirac_triplet_ew/README.md`. It contains a minimal
+three-Dirac-species FeynRules add-on with one common tree mass `MQ`,
+the FeynRules/FeynArts/NLOCT three-kernel `QCDOnly -> False`
+build workflow, an experimental `[QCD QED]` MG5 smoke-card
+generator that rejects QCD-only UV/R2 models, and the functional
+one-loop charged-neutral pole-mass splitting calculator in
+`scripts/triplet_ew_pole_spectrum.py`.
+
+The **one-loop spectrum** is implemented and checked independently
+of the production UFO (225 GeV => approximately 161.844 MeV in the
+specified G_F/M_Z/alpha(M_Z) input convention). The full NLO
+EW UV/R2 counterterms and their cancellation in NLO production
+amplitudes are **NOT** yet generated or validated. The original
+QCD-only production UFO and the 3.9893 pb NLO QCD number remain
+the validated physics baseline; they must NOT be relabeled NLO EW.
+
+At NLO EW a `N_IC`-spectator multiplicity is subtle: closed
+virtual quirk loops produce a separate hidden-index trace; the
+full EW correction is not guaranteed to be an overall factor
+`N_IC` times a calculation performed with only one virtual copy.
+A QED PDF with photon partons is required (e.g. NNPDF40 NLO
+QED LHAPDF ID 335900) for the chosen complete EW processes,
+unlike the original QCD-only ID 331700.
+
 ## Provenance
 
 - MadGraph5_aMC source `models/loop_sm` (standard QCD NLO UV/R2),
