@@ -41,3 +41,5 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_triplet_nlo_ew_candidate_audit.py' -v
       - name: Refuse NLO EW with incomplete UFO, and test QED PDF cards
         run: python -m unittest discover -s tests -p 'test_triplet_qcd_ew_smoke_cards.py' -v
+      - name: Reject malformed FeynRules EW FeynArts output logs
+        run: python -m unittest discover -s tests -p 'test_triplet_ew_stage1_audit.py' -v
