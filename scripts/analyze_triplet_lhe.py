@@ -147,7 +147,7 @@ def main():
     print("LO Dirac-triplet hard-production LHE composition")
     print(f"Events: {n}; N_IC: {args.n_ic}")
     print(f"{'Channel':26s} {'N':>6s} {'Fraction':>11s}" +
-          (" {'sigma_LO [pb]':>16s}" if args.sigma_pb is not None else ""))
+          (f" {'sigma_LO [pb]':>16s}" if args.sigma_pb is not None else ""))
     for row in result["channels"]:
         label = f"{row['name']:26s} {row['events']:6d} {100*row['fraction']:10.2f}%"
         if args.sigma_pb is not None:
