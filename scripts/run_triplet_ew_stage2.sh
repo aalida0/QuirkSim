@@ -14,8 +14,9 @@ if [[ -e "$NLO" ]]; then
   exit 2
 fi
 if [[ -e "$LOG" ]]; then
-  echo "ERROR: existing NLOCT stage2 log $LOG; choose a new log path or move it before running." >&2
-  exit 2
+  previous_log="${LOG}.previous_$(date -u +%Y%m%dT%H%M%SZ)_${BASHPID}"
+  mv -- "$LOG" "$previous_log"
+  echo "Previous NLOCT stage-2 log preserved: $previous_log"
 fi
 
 set +e
