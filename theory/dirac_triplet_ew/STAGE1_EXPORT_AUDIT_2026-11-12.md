@@ -155,3 +155,62 @@ re-runs the verified tree probe and attempts EW renormalization
 with a fail-closed log audit. The prior defective EW stage1 export
 was never physics-validated, and this new run may expose further
 SM tadpole renormalization issues.
+
+
+## Follow-up: stage-1 model-specific FeynArts export PASSES the guarded preflight
+
+Latest user-provided stage1 driver output:
+- `FeynRules 2.3.49` with `FeynArts 3.11`.
+- Tree FFV audit: `TREE_FFV_UFO_COMPATIBLE_PRELIMINARY`,
+  eight vertices and no unexpected couplings.
+- `FR_STAGE1_TRIPLET_TREE_VERTEX_COUNT: 8`.
+- `CheckHermiticity`: **hermitian**.
+- `OnShellRenormalization[...,QCDOnly->False]`: this run
+  had no previously observed fatal Mathematica messages. It
+  emitted `Solve::nongen` warnings (nonfatal generic solution warnings),
+  and completed the tadpole redefinition.
+- FeynArts writer: **203 generated vertices** from **219**
+  possible candidate structures, with no previously seen
+  unsupported Lorentz-gen or ignored-vertex messages.
+- Files: `DiracTripletEW_QCDEW_FA.{mod,pars,gen}` written
+  under `theory/dirac_triplet_ew/generated/`.
+- Stage1 audit: `STAGE1_LOG_PREFLIGHT_PASS_NOT_FULL_PHYSICS_CERTIFIED`,
+  all output files present, `blocking_findings: {}`.
+- Status: `STAGE1_LOG_PREFLIGHT_OK`. This is a **source and
+  structural preflight**, not validation of loop EW UV/R2.
+
+Validated generated model SHA256s (for the user-provided run):
+- .mod `4783c579beb2ffcbbda282f50481fbf43f6aa27fd1528c787b16e1941fb28e6f`
+- .pars `04914d33dbb21b471a0b816abc133cc3495d9a2f56110835adb425763940e3a3`
+- .gen `ecebe86804650719d9dc733a1232eec875cf8e746639078fd734e7311721dc6f`
+
+### Move to NLOCT stage 02
+
+The prepared driver `scripts/run_triplet_ew_stage2.sh` now:
+- refuses to overwrite earlier stage-2 logs or `.nlo` files,
+- runs NLOCT in a fresh Wolfram kernel with
+  `WriteCT[classModel, matchingGeneric, QCDOnly->False]`,
+- verifies a successful stage1 log audit and exact SHA256 of
+  `.mod`, `.pars`, `.gen`,
+- checks Mathematica structural diagnostics, and verifies
+  the UV and R2 lists and model provenance in the `.nlo`,
+- emits a stage2 JSON gate used by stage 03.
+
+Commands:
+
+```bash
+cd ~/QuirkSim
+git pull --ff-only origin feature/dirac-triplet-ew-lo
+export FEYNRULES_HOME="$HOME/.Wolfram/Applications/FeynRules"
+export FEYNARTS_HOME="$HOME/.Wolfram/Applications/FeynArts-3.11"
+bash scripts/run_triplet_ew_stage2.sh
+grep -E 'NLOCT_STAGE2|ERROR|::|Writing R2 and UV' \
+  results/triplet_ew_stage2.log | tail -80
+```
+
+**Important:** The NLOCT stage is potentially computationally demanding
+because `QCDOnly->False` requests EW plus QCD loop sectors of the
+complete SM and BSM model. The NLOCT engine and renormalization
+scheme need physical scrutiny after any numerical/export success.
+Even a stage2 preflight pass does NOT validate
+`NLOEW` cross sections or authorize publication.
