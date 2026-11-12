@@ -1,0 +1,18 @@
+# Fixed-order NLO-QCD charged-pair-only Dirac-triplet production.
+# Production of both charged Dirac fields: q1+ q1- and q2- q2+.
+# This EXCLUDES all four charged-neutral associated channels.
+# The cross section below has ONE spectator hidden-color index.
+# N_IC=2 physical rate = 2 x total MG5 rate (under spectator assumption).
+#
+# Run from QuirkSim root only after rebuilding the NLO UFO locally:
+#   "$MG5/bin/mg5_aMC" examples/pp_dirac_triplet_charged_pair_only_13p6TeV_NLO.mg5
+# This file only generates the process; launch/integration separately.
+
+import model models/DiracTripletEW_NLO_UFO
+define p = g u u~ d d~ s s~ c c~ b b~
+
+generate p p > q1+ q1- QCD=0 QED=2 [QCD] @0
+add process p p > q2- q2+ QCD=0 QED=2 [QCD] @1
+
+output results/pp_dirac_triplet_charged_pair_only_NLO -f
+quit
