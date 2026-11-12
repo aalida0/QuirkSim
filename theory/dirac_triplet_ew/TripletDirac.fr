@@ -85,22 +85,22 @@ M$ClassesDescription = Join[M$ClassesDescription, {
   g_W/sqrt(2). No Q-Goldstone Yukawa couplings for a vectorlike
   gauge-invariant mass.
 
-  All neutral and charged interactions are vectorlike.\n  The original QuirkSim DiracTripletEW.fr source uses the same positive\n  current sign. Check the exported photon/Z/W vertices against the\n  validated QuirkSim UFO AND the SM electron vertex before NLO EW.
+  FeynRules uses bar[field] for Dirac conjugation.\n  All neutral and charged interactions are vectorlike.\n  The original QuirkSim DiracTripletEW.fr source uses the same positive\n  current sign. Check the exported photon/Z/W vertices against the\n  validated QuirkSim UFO AND the SM electron vertex before NLO EW.
 *)
 LTripletDirac := Block[{mu},
-    I Qp1bar.Ga[mu].del[Qp1,mu]
-  + I Qzerobar.Ga[mu].del[Qzero,mu]
-  + I Qm2bar.Ga[mu].del[Qm2,mu]
-  - MQ (Qp1bar.Qp1 + Qzerobar.Qzero + Qm2bar.Qm2)
+    I bar[Qp1].Ga[mu].del[Qp1,mu]
+  + I bar[Qzero].Ga[mu].del[Qzero,mu]
+  + I bar[Qm2].Ga[mu].del[Qm2,mu]
+  - MQ (bar[Qp1].Qp1 + bar[Qzero].Qzero + bar[Qm2].Qm2)
 
-  + ee (Qp1bar.Ga[mu].Qp1 - Qm2bar.Ga[mu].Qm2) A[mu]
-  + gw cw (Qp1bar.Ga[mu].Qp1 - Qm2bar.Ga[mu].Qm2) Z[mu]
+  + ee (bar[Qp1].Ga[mu].Qp1 - bar[Qm2].Ga[mu].Qm2) A[mu]
+  + gw cw (bar[Qp1].Ga[mu].Qp1 - bar[Qm2].Ga[mu].Qm2) Z[mu]
 
   + gw (
-       Qp1bar.Ga[mu].Qzero W[mu]
-     + Qzerobar.Ga[mu].Qp1 Wbar[mu]
-     + Qzerobar.Ga[mu].Qm2 W[mu]
-     + Qm2bar.Ga[mu].Qzero Wbar[mu]
+       bar[Qp1].Ga[mu].Qzero W[mu]
+     + bar[Qzero].Ga[mu].Qp1 Wbar[mu]
+     + bar[Qzero].Ga[mu].Qm2 W[mu]
+     + bar[Qm2].Ga[mu].Qzero Wbar[mu]
    )
 ];
 
