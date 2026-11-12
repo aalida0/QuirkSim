@@ -1,0 +1,39 @@
+name: Dirac triplet 13p6 TeV MG5 LHE pilot
+on:
+  workflow_dispatch:
+  push:
+    branches: [feature/dirac-triplet-ew-lo]
+    paths:
+      - 'examples/pp_dirac_triplet_13p6TeV.mg5'
+      - '.github/workflows/triplet-mg5-lhe-pilot.yml'
+jobs:
+  lhe-pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install MadGraph 3.x
+        run: git clone --depth 1 --branch 3.x https://github.com/mg5amcnlo/mg5amcnlo.git /tmp/mg5amcnlo
+      - name: Run 10-event test using actual production card
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          sed -e "s@/home/amine/QuirkSim@${GITHUB_WORKSPACE}@g" \
+              -e 's/set nevents 1000/set nevents 10/' \
+              -e 's/set iseed 12345/set iseed 12346/' \
+              examples/pp_dirac_triplet_13p6TeV.mg5 > /tmp/triplet_pilot.mg5
+          python /tmp/mg5amcnlo/bin/mg5_aMC /tmp/triplet_pilot.mg5 2>&1 | tee /tmp/triplet_pilot.log
+          test -d results/pp_dirac_triplet_13p6TeV_LO/Events/run_01
+          find results/pp_dirac_triplet_13p6TeV_LO/Events -maxdepth 3 -type f
+          test -f results/pp_dirac_triplet_13p6TeV_LO/Events/run_01/unweighted_events.lhe.gz
+      - name: Upload generator log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: triplet-13p6-localsmoke
+          path: /tmp/triplet_pilot.log
+          if-no-files-found: ignore
