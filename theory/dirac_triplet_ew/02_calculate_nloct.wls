@@ -17,7 +17,7 @@ If[!StringQ[frHome]||StringLength[frHome]==0||
    Print["ERROR: FEYNRULES_HOME and FEYNARTS_HOME required"];Exit[2]];
 frHome=ExpandFileName[frHome];
 faHome=ExpandFileName[faHome];
-scriptDir=DirectoryName[$InputFileName];
+scriptDir=DirectoryName[ExpandFileName[$InputFileName]];
 out=FileNameJoin[{scriptDir,"generated"}];
 If[!DirectoryQ[out],Print["ERROR: Run stage 01 first"];Exit[2]];
 AppendTo[$Path,faHome];
