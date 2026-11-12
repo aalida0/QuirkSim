@@ -54,7 +54,7 @@ def audit(log_path: Path, model_dir: Path) -> dict:
     # Recent stage 1 uses a "FILES_WRITTEN" banner; accept historical 'OK' banner
     # only as proof that the files were written, not as proof of correctness.
     exists={s:(model_dir/(model_dir.name+s)).is_file()
-            for s in (".mod",".pars")}
+            for s in (".mod",".pars",".gen")}
     signals={s:(s in text) for s in PASS_SIGNALS}
     signals["export_reported"]=(
         "FR_STAGE1_FEYNARTS_MODEL_OK" in text or
