@@ -33,3 +33,5 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_triplet_nlo_inclusive_cards.py' -v
       - name: Test NNPDF NLO uncertainty extraction without Python LHAPDF
         run: python -m unittest discover -s tests -p 'test_triplet_nlo_pdf_replicas.py' -v
+      - name: Test seven-point NLO scale reweight extraction
+        run: python -m unittest discover -s tests -p 'test_triplet_nlo_7point.py' -v
