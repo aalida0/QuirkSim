@@ -1,0 +1,268 @@
+{
+  "scope": "SPECIFIED_LO_G_EVEN_COMPACT_P_STATES_NOT_FORMATION_PROBABILITY",
+  "compact_input_sha256": "894656b4ada6786e284a08a4561fecd214a3b9d91bec40f92341b1bedbade59d",
+  "model": {
+    "neutral_mass_gev": 225.0,
+    "charged_minus_neutral_gev": 0.15717027632121017,
+    "n_ic": 2,
+    "alpha_ic_potential": 0.04,
+    "alpha_ic_hard": 0.04,
+    "lambda_tension_ev": 774.0,
+    "representation": "DIRAC_SU2_TRIPLET_Y0_IC_FUNDAMENTAL",
+    "ew_scheme": "tree GF MW MZ; alpha_EM derived consistently",
+    "ew_alphaW_sin2W_alphaEM": [
+      0.03392097214492783,
+      0.2230518910035465,
+      0.007566136981604779
+    ],
+    "potential": "fixed-coupling Cornell IC plus single-exchange EW matrix",
+    "flavor_basis": [
+      "Q+ antiQ+",
+      "Q0 antiQ0",
+      "Q- antiQ-"
+    ]
+  },
+  "twisted_charge_conjugation_checks": {
+    "gauge_conjugation_residual": 0.0,
+    "double_conjugation_residual": 0.0,
+    "mass_splitting_residual": 0.0,
+    "scope": "minimal gauge kinetic and symmetric split-mass algebra; excludes G-breaking higher-dimension operators"
+  },
+  "neutral_source_G_even_selection": {
+    "1S0": {
+      "L": 0,
+      "S": 0,
+      "G": 1,
+      "allowed_from_source_with_G_even_radiation": true
+    },
+    "3S1": {
+      "L": 0,
+      "S": 1,
+      "G": -1,
+      "allowed_from_source_with_G_even_radiation": false
+    },
+    "3P0": {
+      "L": 1,
+      "S": 1,
+      "G": 1,
+      "allowed_from_source_with_G_even_radiation": true
+    },
+    "3P1": {
+      "L": 1,
+      "S": 1,
+      "G": 1,
+      "allowed_from_source_with_G_even_radiation": true
+    },
+    "3P2": {
+      "L": 1,
+      "S": 1,
+      "G": 1,
+      "allowed_from_source_with_G_even_radiation": true
+    }
+  },
+  "hard_coefficient_checks": [
+    {
+      "channel": "ic_gluon_pair",
+      "relative_matrix_change": 1.849401655007823e-08,
+      "J_averaged_derivative_kernel_gev_minus4": {
+        "0": 2.3535369792482498e-11,
+        "1": 3.8370194429950014e-27,
+        "2": 6.276098616557214e-12
+      }
+    },
+    {
+      "channel": "W_plus_W_minus",
+      "relative_matrix_change": 1.8991056695543178e-08,
+      "J_averaged_derivative_kernel_gev_minus4": {
+        "0": 3.4490507964402345e-11,
+        "1": 4.4415422562013453e-13,
+        "2": 9.992168334350062e-12
+      }
+    },
+    {
+      "channel": "gamma_gamma",
+      "relative_matrix_change": 1.8494009631033513e-08,
+      "J_averaged_derivative_kernel_gev_minus4": {
+        "0": 8.420724198009104e-13,
+        "1": -1.619794392053811e-28,
+        "2": 2.245526454673152e-13
+      }
+    },
+    {
+      "channel": "gamma_Z",
+      "relative_matrix_change": 1.880828615450665e-08,
+      "J_averaged_derivative_kernel_gev_minus4": {
+        "0": 5.9511970824897956e-12,
+        "1": 5.811472252528062e-14,
+        "2": 1.665290211182162e-12
+      }
+    },
+    {
+      "channel": "Z_Z",
+      "relative_matrix_change": 1.914612592187237e-08,
+      "J_averaged_derivative_kernel_gev_minus4": {
+        "0": 1.0454748899087393e-11,
+        "1": 1.6774219486862668e-13,
+        "2": 3.112315156786439e-12
+      }
+    }
+  ],
+  "states": [
+    {
+      "energy_gev": -0.012656277029495566,
+      "radial_derivative_at_origin_gev_5halves": [
+        0.14114451178360998,
+        4.276976535842014,
+        0.14114451178856444
+      ],
+      "points": 4000,
+      "dr_gev_inverse": 0.0029622224073611227,
+      "flavor_probabilities": [
+        4.8633568829549505e-11,
+        0.9999999999027327,
+        4.863356883122035e-11
+      ],
+      "partial_widths_gev": {
+        "0": {
+          "ic_gluon_pair": 4.3797917645436385e-11,
+          "W_plus_W_minus": 3.214520486424127e-10,
+          "gamma_gamma": 3.2038989686816743e-14,
+          "gamma_Z": 2.2642986216694315e-13,
+          "Z_Z": 3.977800296978181e-13
+        },
+        "1": {
+          "ic_gluon_pair": 0.0,
+          "W_plus_W_minus": 4.1395240071887016e-12,
+          "gamma_gamma": 0.0,
+          "gamma_Z": 2.211136419929175e-15,
+          "Z_Z": 6.3822188271058295e-15
+        },
+        "2": {
+          "ic_gluon_pair": 1.1679444715179717e-11,
+          "W_plus_W_minus": 9.312715790593111e-11,
+          "gamma_gamma": 8.543730590268823e-15,
+          "gamma_Z": 6.336060254085581e-14,
+          "Z_Z": 1.1841669536449096e-13
+        }
+      },
+      "sum_modeled_widths_gev": {
+        "0": 3.659062151694006e-10,
+        "1": 4.148117362435736e-12,
+        "2": 1.0499692364960645e-10
+      },
+      "proper_lifetime_from_modeled_channels_ps": {
+        "0": 0.001798854268149758,
+        "1": 0.15867727438490412,
+        "2": 0.006268868972738394
+      }
+    },
+    {
+      "energy_gev": -0.01265625726433095,
+      "radial_derivative_at_origin_gev_5halves": [
+        0.14084008379198357,
+        4.2768322600608215,
+        0.14084008375209126
+      ],
+      "points": 8000,
+      "dr_gev_inverse": 0.0014812963194415511,
+      "flavor_probabilities": [
+        4.859423145644032e-11,
+        0.9999999999028149,
+        4.8594231455863504e-11
+      ],
+      "partial_widths_gev": {
+        "0": {
+          "ic_gluon_pair": 4.37834491394318e-11,
+          "W_plus_W_minus": 3.213867587020392e-10,
+          "gamma_gamma": 3.1900931927808736e-14,
+          "gamma_Z": 2.2545416350575466e-13,
+          "Z_Z": 3.960659737923407e-13
+        },
+        "1": {
+          "ic_gluon_pair": 0.0,
+          "W_plus_W_minus": 4.138683230852867e-12,
+          "gamma_gamma": 0.0,
+          "gamma_Z": 2.2016085121524198e-15,
+          "Z_Z": 6.354717497089438e-15
+        },
+        "2": {
+          "ic_gluon_pair": 1.1675586446908613e-11,
+          "W_plus_W_minus": 9.310824290255032e-11,
+          "gamma_gamma": 8.506915187836017e-15,
+          "gamma_Z": 6.308757823885084e-14,
+          "Z_Z": 1.1790643134708713e-13
+        }
+      },
+      "sum_modeled_widths_gev": {
+        "0": 3.6582362891069694e-10,
+        "1": 4.147239556862109e-12,
+        "2": 1.049733302742327e-10
+      },
+      "proper_lifetime_from_modeled_channels_ps": {
+        "0": 0.0017992603672429247,
+        "1": 0.15871086004928478,
+        "2": 0.006270277938029447
+      }
+    },
+    {
+      "energy_gev": -0.012656252321597616,
+      "radial_derivative_at_origin_gev_5halves": [
+        0.14040861446295544,
+        4.2767549236162195,
+        0.14040861435963967
+      ],
+      "points": 16000,
+      "dr_gev_inverse": 0.0007406944473377821,
+      "flavor_probabilities": [
+        4.858454633830718e-11,
+        0.9999999999028308,
+        4.8584546338258654e-11
+      ],
+      "partial_widths_gev": {
+        "0": {
+          "ic_gluon_pair": 4.3765388754736446e-11,
+          "W_plus_W_minus": 3.2131273146826214e-10,
+          "gamma_gamma": 3.1705771705968786e-14,
+          "gamma_Z": 2.2407490334294515e-13,
+          "Z_Z": 3.936429623429106e-13
+        },
+        "1": {
+          "ic_gluon_pair": 0.0,
+          "W_plus_W_minus": 4.137729939334894e-12,
+          "gamma_gamma": 0.0,
+          "gamma_Z": 2.1881397393087694e-15,
+          "Z_Z": 6.3158412636531e-15
+        },
+        "2": {
+          "ic_gluon_pair": 1.1670770344319175e-11,
+          "W_plus_W_minus": 9.308679663733468e-11,
+          "gamma_gamma": 8.454872461968673e-15,
+          "gamma_Z": 6.270162757783875e-14,
+          "Z_Z": 1.1718511557643417e-13
+        }
+      },
+      "sum_modeled_widths_gev": {
+        "0": 3.657275438603904e-10,
+        "1": 4.146233920337856e-12,
+        "2": 1.049459085972701e-10
+      },
+      "proper_lifetime_from_modeled_channels_ps": {
+        "0": 0.0017997330743873643,
+        "1": 0.15874935412384197,
+        "2": 0.006271916320491237
+      }
+    }
+  ],
+  "last_mesh_relative_width_change": {
+    "0": 0.0002626540297373525,
+    "1": 0.00024248334596166377,
+    "2": 0.000261225178728397
+  },
+  "limitations": [
+    "Derivative-matched LO two-vector channels; higher multiplicity and radiative corrections omitted.",
+    "Degenerate hard masses and fixed-coupling spin-independent potential; splitting only in potential thresholds.",
+    "P-state spin-orbit/hyperfine splittings and capture occupations not calculated.",
+    "G-parity requires minimal Y=0 vectorlike couplings and no G-breaking operators.",
+    "The AF gun is a classical branch, not a coherent source amplitude; G selection is a specified physical production model."
+  ]
+}

@@ -42,7 +42,7 @@ def fit_recoil_windows(archive):
         manifest=json.load(tar.extractfile('manifest.json'))
         for case in manifest['cases']:
             if not case['weak_enabled']:continue
-            if case.get('window_fit_status','BOTH_NEUTRAL_AT_FIRST_RETURN')!='BOTH_NEUTRAL_AT_FIRST_RETURN':continue
+            if case.get('window_fit_status','BOTH_NEUTRAL_AT_FIRST_RETURN') not in ('BOTH_NEUTRAL_AT_FIRST_RETURN','BOTH_NEUTRAL_AT_FIRST_POSTNEUTRAL_RETURN'):continue
             beta=case.get('pair_boost_z',.25);gamma=1/math.sqrt(1-beta*beta)
             pair=[];momenta=[]
             with np.load(io.BytesIO(tar.extractfile(case['name']+'.npz').read()),allow_pickle=False) as a:

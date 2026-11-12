@@ -1,0 +1,1326 @@
+{
+  "scope": "CLOSED_DECLARED_G_EVEN_LOWEST_COMPACT_SUBSPACE_NOT_INCLUSIVE_PHYSICAL_RATE",
+  "inputs_sha256": {
+    "triplet_frozen_closure_2026-11-12.json": "b268c6d963934b19b1727e25d40a13f36c49412e729730e472bb386303cb04f8",
+    "triplet_pwave_2026-11-12.json": "365a20fa560ca795296518b5a80215d9c5ccc86b881d44b8be17044b9ebe8ecd",
+    "neutral_triplet_quantum_2026-11-11.json": "894656b4ada6786e284a08a4561fecd214a3b9d91bec40f92341b1bedbade59d",
+    "triplet_ensemble_v1_audit.tar.gz": "ca6ff21c5447efa156a65732430be467d27ba993ab8218558e329d6be6773cf1"
+  },
+  "compact_widths_gev": {
+    "1S0": 1.9750047986576727e-05,
+    "3P0": 3.657275438603904e-10,
+    "3P1": 4.146233920337856e-12,
+    "3P2": 1.049459085972701e-10
+  },
+  "cases": [
+    {
+      "case": "benchmark_isotropic_seed1_level8",
+      "point": "benchmark",
+      "mode": "isotropic",
+      "seed": 1,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "benchmark_collinear_forward_seed1_level8",
+      "point": "benchmark",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "benchmark_collinear_backward_seed1_level8",
+      "point": "benchmark",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "benchmark_isotropic_seed4_level8",
+      "point": "benchmark",
+      "mode": "isotropic",
+      "seed": 4,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "benchmark_collinear_forward_seed4_level8",
+      "point": "benchmark",
+      "mode": "collinear_forward",
+      "seed": 4,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "benchmark_collinear_backward_seed4_level8",
+      "point": "benchmark",
+      "mode": "collinear_backward",
+      "seed": 4,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "benchmark_isotropic_seed7_level8",
+      "point": "benchmark",
+      "mode": "isotropic",
+      "seed": 7,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "benchmark_collinear_forward_seed7_level8",
+      "point": "benchmark",
+      "mode": "collinear_forward",
+      "seed": 7,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "benchmark_collinear_backward_seed7_level8",
+      "point": "benchmark",
+      "mode": "collinear_backward",
+      "seed": 7,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "tilted_isotropic_seed1_level8",
+      "point": "tilted",
+      "mode": "isotropic",
+      "seed": 1,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "tilted_collinear_forward_seed1_level8",
+      "point": "tilted",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "tilted_collinear_backward_seed1_level8",
+      "point": "tilted",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "tilted_isotropic_seed4_level8",
+      "point": "tilted",
+      "mode": "isotropic",
+      "seed": 4,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "tilted_collinear_forward_seed4_level8",
+      "point": "tilted",
+      "mode": "collinear_forward",
+      "seed": 4,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "tilted_collinear_backward_seed4_level8",
+      "point": "tilted",
+      "mode": "collinear_backward",
+      "seed": 4,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "tilted_isotropic_seed7_level8",
+      "point": "tilted",
+      "mode": "isotropic",
+      "seed": 7,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "tilted_collinear_forward_seed7_level8",
+      "point": "tilted",
+      "mode": "collinear_forward",
+      "seed": 7,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "tilted_collinear_backward_seed7_level8",
+      "point": "tilted",
+      "mode": "collinear_backward",
+      "seed": 7,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "faster_isotropic_seed1_level8",
+      "point": "faster",
+      "mode": "isotropic",
+      "seed": 1,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "faster_collinear_forward_seed1_level8",
+      "point": "faster",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "faster_collinear_backward_seed1_level8",
+      "point": "faster",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "faster_isotropic_seed3_level8",
+      "point": "faster",
+      "mode": "isotropic",
+      "seed": 3,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "faster_collinear_forward_seed3_level8",
+      "point": "faster",
+      "mode": "collinear_forward",
+      "seed": 3,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "faster_collinear_backward_seed3_level8",
+      "point": "faster",
+      "mode": "collinear_backward",
+      "seed": 3,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "faster_isotropic_seed4_level8",
+      "point": "faster",
+      "mode": "isotropic",
+      "seed": 4,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "faster_collinear_forward_seed4_level8",
+      "point": "faster",
+      "mode": "collinear_forward",
+      "seed": 4,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "faster_collinear_backward_seed4_level8",
+      "point": "faster",
+      "mode": "collinear_backward",
+      "seed": 4,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "faster_isotropic_seed7_level8",
+      "point": "faster",
+      "mode": "isotropic",
+      "seed": 7,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "faster_collinear_forward_seed7_level8",
+      "point": "faster",
+      "mode": "collinear_forward",
+      "seed": 7,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "faster_collinear_backward_seed7_level8",
+      "point": "faster",
+      "mode": "collinear_backward",
+      "seed": 7,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "faster_isotropic_seed8_level8",
+      "point": "faster",
+      "mode": "isotropic",
+      "seed": 8,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "faster_collinear_forward_seed8_level8",
+      "point": "faster",
+      "mode": "collinear_forward",
+      "seed": 8,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "faster_collinear_backward_seed8_level8",
+      "point": "faster",
+      "mode": "collinear_backward",
+      "seed": 8,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "zero_field_isotropic_seed1_level8",
+      "point": "zero_field",
+      "mode": "isotropic",
+      "seed": 1,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "zero_field_collinear_forward_seed1_level8",
+      "point": "zero_field",
+      "mode": "collinear_forward",
+      "seed": 1,
+      "capture_time_ps": 150995599107.94998,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.1,
+          "upper": 0.1,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 1.0,
+          "upper": 1.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "zero_field_collinear_backward_seed1_level8",
+      "point": "zero_field",
+      "mode": "collinear_backward",
+      "seed": 1,
+      "capture_time_ps": 151311852543.32654,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.1,
+          "upper": 0.1,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 1.0,
+          "upper": 1.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "zero_field_isotropic_seed4_level8",
+      "point": "zero_field",
+      "mode": "isotropic",
+      "seed": 4,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "zero_field_collinear_forward_seed4_level8",
+      "point": "zero_field",
+      "mode": "collinear_forward",
+      "seed": 4,
+      "capture_time_ps": 150998205679.13235,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.1,
+          "upper": 0.1,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 1.0,
+          "upper": 1.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "zero_field_collinear_backward_seed4_level8",
+      "point": "zero_field",
+      "mode": "collinear_backward",
+      "seed": 4,
+      "capture_time_ps": 151314888595.52792,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.1,
+          "upper": 0.1,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 1.0,
+          "upper": 1.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "zero_field_isotropic_seed7_level8",
+      "point": "zero_field",
+      "mode": "isotropic",
+      "seed": 7,
+      "capture_time_ps": null,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "zero_field_collinear_forward_seed7_level8",
+      "point": "zero_field",
+      "mode": "collinear_forward",
+      "seed": 7,
+      "capture_time_ps": 150991902162.5489,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.1,
+          "upper": 0.1,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 1.0,
+          "upper": 1.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    },
+    {
+      "case": "zero_field_collinear_backward_seed7_level8",
+      "point": "zero_field",
+      "mode": "collinear_backward",
+      "seed": 7,
+      "capture_time_ps": 151287381045.65994,
+      "baseline_compact_occupation_envelopes_by_matching_fraction": {
+        "0.0": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "0.1": {
+          "lower": 0.1,
+          "upper": 0.1,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        },
+        "1.0": {
+          "lower": 1.0,
+          "upper": 1.0,
+          "scope": "SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE"
+        }
+      },
+      "one_ns_capture_only_annihilation": {
+        "lower": 0.0,
+        "upper": 0.0,
+        "spin_status": "ZERO_POST_CAPTURE_AGE"
+      }
+    }
+  ],
+  "population_accounting": [
+    {
+      "point": "benchmark",
+      "all_isotropic_seeds": 8,
+      "both_neutral_qualified": 3,
+      "neutral_fraction_exact_binomial_95pct_interval": [
+        0.08523341413725354,
+        0.7551367836334484
+      ],
+      "conditional_forced_pion_sample_annihilation_interval_all_categories": [
+        0.0,
+        0.625
+      ],
+      "all_branching_channels_sample_interval": [
+        0.0,
+        0.6427488555073315
+      ],
+      "statistical_interpretation": "pilot seed sample only; interval is a missing-category envelope, not a confidence interval or production prediction"
+    },
+    {
+      "point": "tilted",
+      "all_isotropic_seeds": 8,
+      "both_neutral_qualified": 3,
+      "neutral_fraction_exact_binomial_95pct_interval": [
+        0.08523341413725354,
+        0.7551367836334484
+      ],
+      "conditional_forced_pion_sample_annihilation_interval_all_categories": [
+        0.0,
+        0.625
+      ],
+      "all_branching_channels_sample_interval": [
+        0.0,
+        0.6427488555073315
+      ],
+      "statistical_interpretation": "pilot seed sample only; interval is a missing-category envelope, not a confidence interval or production prediction"
+    },
+    {
+      "point": "faster",
+      "all_isotropic_seeds": 8,
+      "both_neutral_qualified": 5,
+      "neutral_fraction_exact_binomial_95pct_interval": [
+        0.2448632163665516,
+        0.9147665858627465
+      ],
+      "conditional_forced_pion_sample_annihilation_interval_all_categories": [
+        0.0,
+        0.375
+      ],
+      "all_branching_channels_sample_interval": [
+        0.0,
+        0.4045814258455527
+      ],
+      "statistical_interpretation": "pilot seed sample only; interval is a missing-category envelope, not a confidence interval or production prediction"
+    },
+    {
+      "point": "zero_field",
+      "all_isotropic_seeds": 8,
+      "both_neutral_qualified": 3,
+      "neutral_fraction_exact_binomial_95pct_interval": [
+        0.08523341413725354,
+        0.7551367836334484
+      ],
+      "conditional_forced_pion_sample_annihilation_interval_all_categories": [
+        0.0,
+        0.625
+      ],
+      "all_branching_channels_sample_interval": [
+        0.0,
+        0.6427488555073315
+      ],
+      "statistical_interpretation": "pilot seed sample only; interval is a missing-category envelope, not a confidence interval or production prediction"
+    }
+  ],
+  "pion_branching": 0.9760480104211656,
+  "missing_non_pion_pair_probability": 0.047330281352884196,
+  "assumptions": [
+    "Minimal two-color vectorlike Y=0 Lagrangian with exact G and G-even production/radiation.",
+    "At matching, compact support is restricted to lowest 1S0 and 3P_J levels; higher states remain outside this closure.",
+    "Matching fractions are scenarios, not measured probabilities; eta=1 is the ideal absorbing boundary.",
+    "Widths are LO modeled two-boson widths, with no imported scalar/Majorana rates.",
+    "Non-pion channels and 0/1-decay histories retain explicit unknown outcomes.",
+    "CP intervals assume independent lifetime/direction seeds at each fixed point; points share seeds and are not independent.",
+    "No PDF weights or inclusive detector-time annihilation probability are inferred."
+  ],
+  "release": {
+    "specified_compact_spin_sector_calculation": "COMPLETE_AT_DECLARED_LO_TWO_VECTOR_ORDER",
+    "conditional_capture_to_annihilation_implementation": "COMPLETE_FOR_DECLARED_SUBSPACE",
+    "unique_physical_formation_probability": "NOT_ESTABLISHED",
+    "production_weighted_inclusive_result": "REQUIRES_ADDITIONAL_INPUT_AND_TRANSPORT"
+  }
+}

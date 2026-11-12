@@ -1,10 +1,17 @@
 import math
 import unittest
 from scipy.integrate import quad
-from quirksim.physical_closure import capture_annihilation_interval,centrifugal_action_floor
+from quirksim.physical_closure import capture_annihilation_interval,centrifugal_action_floor,compact_subspace_interval
 
 
 class PhysicalClosureTest(unittest.TestCase):
+    def test_complete_compact_subspace_removes_arbitrary_spin_fraction(self):
+        widths=[1e-5,1e-10,4e-12]
+        interval=compact_subspace_interval(.7,10.,widths)
+        self.assertAlmostEqual(interval['lower'],.7,places=14);self.assertEqual(interval['upper'],.7)
+        short=compact_subspace_interval(.7,.01,widths)
+        self.assertLess(short['lower'],short['upper'])
+        with self.assertRaises(ValueError):compact_subspace_interval(1.,1.,[1e-5,0.])
     def test_missing_triplet_sector_is_not_assigned_zero_annihilation(self):
         r=capture_annihilation_interval(.8,1.,1e-5,.25)
         self.assertAlmostEqual(r['lower'],.2);self.assertAlmostEqual(r['upper'],.8)

@@ -152,16 +152,27 @@ def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output-dir',type=Path,required=True)
     p.add_argument('--seeds',type=int,default=8);p.add_argument('--prepare-only',action='store_true')
     p.add_argument('--pack-only',action='store_true');p.add_argument('--case-timeout-seconds',type=int,default=120)
+    p.add_argument('--workers',type=int,default=1,help='Independent one-CPU cases in parallel; use allocated node CPUs')
+    p.add_argument('--duration-ps',type=float,help='Optional longer transport horizon')
     a=p.parse_args();out=a.output_dir.expanduser().resolve()
-    if a.case_timeout_seconds<1:raise SystemExit('case timeout must be positive')
+    if a.case_timeout_seconds<1 or a.workers<1:raise SystemExit('case timeout and workers must be positive')
+    if a.duration_ps is not None and (not math.isfinite(a.duration_ps) or a.duration_ps<=0):raise SystemExit('positive finite duration required')
     if a.prepare_only and a.pack_only:raise SystemExit('choose prepare-only or pack-only')
     if a.pack_only:print('Upload:',package(out));return
     if not a.prepare_only:
         try:import uproot  # noqa: F401
         except ImportError:raise SystemExit('uproot is required for automatic local audit and compact packaging')
-    state=prepare(out,a.seeds);print('Manifest:',out/'manifest.json','Cases:',len(state['cases']),flush=True)
+    state=prepare(out,a.seeds)
+    state['parallel_case_workers']=a.workers
+    if a.duration_ps is not None:
+        for case in state['cases']:
+            path=Path(case['macro']);macro=re.sub(r'^/qsim/maxTime .*$',f'/qsim/maxTime {a.duration_ps/1000:.17g} ns',path.read_text(),flags=re.M)
+            path.write_text(macro);case['macro_sha256']=hashlib.sha256(macro.encode()).hexdigest();case['nominal_stop_ps']=a.duration_ps
+        state['nominal_stop_ps']=a.duration_ps
+    (out/'manifest.json').write_text(json.dumps(state,indent=2)+'\n')
+    print('Manifest:',out/'manifest.json','Cases:',len(state['cases']),flush=True)
     if a.prepare_only:return
-    execute(state,out,a.case_timeout_seconds,False)
+    execute(state,out,a.case_timeout_seconds,False,a.workers)
     print('Upload:',package(out),flush=True)
 
 

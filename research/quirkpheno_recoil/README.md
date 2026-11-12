@@ -6,10 +6,16 @@ its NOTICE credits the ATLAS quirk extension and Geant4 transportation.
 Keep upstream LICENSE/NOTICE in the checked-out source. This directory stores
 an integration patch and new source, not a second independent transport solver.
 
-**Status: first deterministic AF pilot compiled and local handoff checks passed.
-The UI precision and localized clock passed the ten-case AF check at 66eef0b1.
-Micrometre directional recoil is resolved in the deterministic pilot.
-The new sampled-plan/two-endpoint extension is pending Geant4 verification.**
+**Current status (12 November 2026): the 116-case sampled two-endpoint AF
+ensemble passed its local audit. The neutral compact spin-one P-wave
+two-vector calculation and conditional G-even S/P occupation envelope are
+implemented. The new parallel, longer-duration AF continuation is prepared
+but has not been executed. A unique physical formation probability and a
+production-weighted inclusive annihilation result are not established.**
+
+See [current calculation and AF handoff](../../studies/TRIPLET_SPIN_CLOSURE_AND_AF_HANDOFF_2026-11-12.md).
+The earlier sections below describe the incremental pilot history; a
+statistical 1/4 singlet occupation is not the current physical default.
 Do not merge into stable code.
 
 The patch registers neutral Quirk definitions with sign-preserving endpoint

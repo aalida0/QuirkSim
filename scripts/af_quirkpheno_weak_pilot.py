@@ -10,6 +10,7 @@ import shlex
 import shutil
 import subprocess
 import sys
+from concurrent.futures import ThreadPoolExecutor,as_completed
 from af_quirkpheno_transport import prepare as stable_prepare, run_logged, LCG, PIN, URL
 
 M_NEUTRAL = 225.
@@ -138,8 +139,10 @@ def main():
     if a.prepare_only:return
     execute(state,out,a.case_timeout_seconds,a.audit_close_return)
 
-def execute(state,out,case_timeout_seconds=120,audit_close_return=False):
+def execute(state,out,case_timeout_seconds=120,audit_close_return=False,workers=1):
     """Build the pinned adapter once and run an already prepared manifest."""
+    if type(workers) is not int or workers<1:raise ValueError('workers must be a positive integer')
+    state['parallel_case_workers']=workers
     def save(): (out/'manifest.json').write_text(json.dumps(state,indent=2)+'\n')
     if not LCG.is_file():raise SystemExit(f'Missing Geant4 setup: {LCG}')
     source=out/'source'
@@ -177,8 +180,7 @@ def execute(state,out,case_timeout_seconds=120,audit_close_return=False):
     checked(lcg(cmd),source,'build.log',620)
     state['build']=state['build.log'];save()
     exe=build/'quirksim/quirksim'
-    for case in state['cases']:
-        print('Running '+case['name'],flush=True)
+    def run_case(case):
         env={'QP_WEAK_ENABLED':int(case['weak_enabled']),'QP_WEAK_ENDPOINT':case['endpoint'],
              'QP_WEAK_TAU_PS':50,'QP_WEAK_CLOCK_MODE':case['clock_mode'],'QP_NEUTRAL_MASS_GEV':M_NEUTRAL,'QP_WEAK_DIR_SIGN':case.get('pion_rest_y_sign',1),'QP_WEAK_PLAN':case.get('plan_file','')}
         env.update(QP_WEAK_DIRECTION_MODE=case.get('direction_mode','planned'),QP_WEAK_COLLINEAR_SIGN=case.get('collinear_sign',1))
@@ -186,8 +188,14 @@ def execute(state,out,case_timeout_seconds=120,audit_close_return=False):
         command='env '+' '.join(shlex.quote(k+'='+str(v)) for k,v in env.items())
         command+=' timeout --kill-after=5s '+str(case_timeout_seconds)+'s '+shlex.quote(str(exe))
         command+=' --mt -t 1 -n 1 -s 1 -m '+shlex.quote(case['macro'])
-        case['execution']=run_logged(lcg(command,case_timeout_seconds+15),source,out/(case['name']+'.log'),case_timeout_seconds+25)
-        case['root_exists']=(out/(case['name']+'.root')).is_file()
+        execution=run_logged(lcg(command,case_timeout_seconds+15),source,out/(case['name']+'.log'),case_timeout_seconds+25)
+        return case,execution,(out/(case['name']+'.root')).is_file()
+    pool=ThreadPoolExecutor(max_workers=workers)
+    pending=[pool.submit(run_case,case) for case in state['cases']]
+    try:
+      for future in as_completed(pending):
+        case,case['execution'],case['root_exists']=future.result()
+        print('Finished '+case['name'],flush=True)
         save()
         if case['execution']['returncode']!=0 or not case['root_exists']:
             state['numerical_validation']='STOPPED_AFTER_FAILED_CASE';save()
@@ -200,6 +208,8 @@ def execute(state,out,case_timeout_seconds=120,audit_close_return=False):
                 state['numerical_validation']='STOPPED_AFTER_INVALID_CLOSE_RETURN_INPUT';save()
                 raise SystemExit('Close-return audit failed: '+case['name']) from exc
             save()
+    finally:
+        pool.shutdown(wait=True,cancel_futures=True)
     state['numerical_validation']='PENDING_WEAK_ROOT_AND_HANDOFF_AUDIT';save()
     failed=[c['name'] for c in state['cases'] if c['execution']['returncode']!=0 or not c['root_exists']]
     if failed:raise SystemExit('Failed/incomplete: '+', '.join(failed)+'; return logs')

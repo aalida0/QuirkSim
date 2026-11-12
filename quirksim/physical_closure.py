@@ -3,6 +3,20 @@ import math
 from .physics import HBAR_GEV_PS
 
 
+def compact_subspace_interval(capture_probability,capture_age_ps,widths_gev):
+    """Any density supported on a specified diagonal compact decay subspace.
+
+    Requires the supplied widths to cover the support; it does not determine
+    capture occupation or include unlisted/metastable states.
+    """
+    widths=tuple(widths_gev)
+    if not widths or any(not math.isfinite(w) or w<=0 for w in widths):
+        raise ValueError('positive finite width for every admitted compact sector required')
+    low=capture_annihilation_interval(capture_probability,capture_age_ps,min(widths),1.)['lower']
+    high=capture_annihilation_interval(capture_probability,capture_age_ps,max(widths),1.)['upper']
+    return {'lower':low,'upper':high,'scope':'SPECIFIED_COMPACT_SUBSPACE_OCCUPATION_ENVELOPE'}
+
+
 def capture_annihilation_interval(capture_probability,capture_age_ps,width_gev,
                                   singlet_fraction=None):
     """Keep uncalculated spin-sector annihilation unknown, rather than zero.
