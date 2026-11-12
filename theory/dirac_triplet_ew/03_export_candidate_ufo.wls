@@ -19,8 +19,8 @@ If[!FileExistsQ[nlo],
 AppendTo[$Path,frHome];
 SetDirectory[frHome];
 Get["FeynRules.m"];
-LoadModel["SM.fr"];
-Get[FileNameJoin[{scriptDir,"TripletDirac.fr"}]];
+LoadModel[FileNameJoin[{frHome,"Models","SM","SM.fr"}],
+          FileNameJoin[{scriptDir,"TripletDirac.fr"}]];
 FeynmanGauge=True;
 Get[nlo];
 If[!ValueQ[UV$vertlist]||!ValueQ[R2$vertlist],
