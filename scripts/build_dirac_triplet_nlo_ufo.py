@@ -112,6 +112,18 @@ def build(mg5:Path, destination:Path, force:bool=False):
             raise FileNotFoundError(file)
         with file.open("a",encoding="utf-8") as f:
             f.write("\n"+content)
+    # Old loop_sm restrict cards are parameter cards for a pure SM model.
+    # MG5 automatically imports restrict_default.dat, which must include
+    # external MASS entries for *every* BSM mass, otherwise import fails.
+    for restriction in destination.glob("restrict_*.dat"):
+        contents=restriction.read_text(encoding="utf-8")
+        masses=(" 9000111 2.250000e+02 # MQC\n"
+                " 9000112 2.250000e+02 # MQ0\n")
+        if "Block MASS" not in contents:
+            raise ValueError(f"Cannot find MASS block in {restriction}")
+        if "9000111" not in contents and "9000112" not in contents:
+            contents=contents.replace("Block MASS", "Block MASS\n"+masses,1)
+            restriction.write_text(contents,encoding="utf-8")
     manifest={
         "base_model":"MG5_aMC models/loop_sm (upstream NLO QCD CT)",
         "base_git_commit":upstream_version(mg5),
