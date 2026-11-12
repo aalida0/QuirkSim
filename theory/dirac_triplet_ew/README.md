@@ -118,6 +118,48 @@ https://www.lhapdf.org/pdfsets.html .
 The SM / quirk amplitudes must include photon-induced Born
 channels consistently if they are of the chosen coupling order.
 
+## Workstation setup: FeynArts is the missing dependency
+
+On the current workstation:
+- FeynRules is installed at `$HOME/.Wolfram/Applications/FeynRules`.
+- NLOCT.m is installed inside the same FeynRules directory.
+- `find $HOME/.Wolfram $HOME/.Mathematica $HOME/codes -name FeynArts.m`
+  returned no results as of 2026-11-12.
+
+Use FeynArts 3.11 for an initial compatibility test with the
+FeynRules 2.3.x/NLOCT generation; its use in a FeynRules/NLOCT
+1.02 setup is documented in the public Zee-Babu implementation.
+The official download URL is
+`https://feynarts.de/FeynArts-3.11.tar.gz`; the FeynArts
+author also distributes 3.12, which can be tested separately.
+
+```bash
+cd ~/QuirkSim
+export FEYNRULES_HOME="$HOME/.Wolfram/Applications/FeynRules"
+export WOLFRAM_APP_ROOT="$HOME/.Wolfram/Applications"
+mkdir -p "$WOLFRAM_APP_ROOT"
+curl -fL --retry 3 -o /tmp/FeynArts-3.11.tar.gz \
+  https://feynarts.de/FeynArts-3.11.tar.gz
+tar -tzf /tmp/FeynArts-3.11.tar.gz >/dev/null
+tar -xzf /tmp/FeynArts-3.11.tar.gz -C "$WOLFRAM_APP_ROOT"
+export FEYNARTS_HOME="$WOLFRAM_APP_ROOT/FeynArts-3.11"
+test -f "$FEYNARTS_HOME/FeynArts.m"
+test -f "$FEYNRULES_HOME/NLOCT.m"
+wolframscript -code 'AppendTo[$Path,Environment["FEYNARTS_HOME"]]; Get["FeynArts.m"]; Print["FEYNARTS_IMPORT_OK"]'
+```
+
+If the tarball has a different top-level directory name, set
+`FEYNARTS_HOME` to the directory that directly contains
+`FeynArts.m`; do not assume FeynArts is installed elsewhere.
+Run stage 01 first; stage 02 requires its exported model, and stage
+03 requires the `.nlo` file emitted by stage 02.
+
+**Risk**: Stage 01 and later Wolfram scripts are source-level
+prototypes and have not passed Mathematica's vertex or NLOCT
+calculations. Record the first-stage log and correct model-specific
+FeynRules syntax/renormalization choices before trying stage 02.
+Do not interpret installed dependencies as a completed EW UFO.
+
 ## Implemented in QuirkSim
 
 ### A. One-loop EW pole-mass difference — functional, tested
