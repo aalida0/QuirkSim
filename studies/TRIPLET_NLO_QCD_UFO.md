@@ -461,16 +461,66 @@ for numerator and denominator: it is not the conventional ratio between a
 full NLO calculation with NLO PDFs and a LO prediction using LO PDFs.
 The hidden-color multiplicity cancels in the ratio.
 
-Still open for a complete rate uncertainty budget:
-- Seven-point muR/muF scale uncertainty *from the NLO saved weights*:
-  command `scripts/extract_triplet_nlo_7point.py`; result not yet provided.
-- NLO PDF-only 68% CI is computed; alpha_s, NLO EW, hidden-radiation,
-  and model systematics are separate.
-- The currently active `SubProcesses/job_status.pkl` may now refer to
-  the latest **LO integration** rather than the preceding NLO. For the
-  NLO scale envelope, use the JSON output saved **before** running LO,
-  or retrieve the original NLO tables from backup / rerun NLO.
-  Never apply NLO 7-point extraction to LO-overwritten tables.
+The seven-point NLO scale uncertainty was subsequently **recovered
+and verified** from the NLO run (see numerical result below). Outstanding
+items for a broader publication-level theory assessment include independent
+electroweak-production cross-checks, alpha_s/PDF-set variations, potential
+NLO EW and infracolor effects, and additional quirk mass benchmarks.
+The active `SubProcesses/job_status.pkl` may now reflect the later LO run:
+use the *already-saved NLO JSON*, never the overwritten LO job weights.
+
+## Completed 7-point NLO scale-envelope validation — 225 GeV benchmark
+
+On November 12, 2026 the user independently ran
+`scripts/extract_triplet_nlo_7point.py` on the saved **17 NLO integration jobs**
+*before* the matched LO integration. The output was preserved as
+`results/triplet_nlo_normalisation.json` (1.3 kB, local machine) and
+`results/triplet_nlo_7point.txt`.
+
+The reconstructed central `3.9893368 pb` exactly matches the PDF-member
+central and agrees with MadGraph's rounded `3.989 pb` summary.
+
+| muR/mu0 | muF/mu0 | Cross section (pb) | Standard 7-point? |
+|---:|---:|---:|---|
+| 0.5 | 0.5 | 4.0477817 | Yes — **maximum** |
+| 0.5 | 1.0 | 4.0380961 | Yes |
+| 0.5 | 2.0 | 4.0438984 | No — antipodal |
+| 1.0 | 0.5 | 4.0021631 | Yes |
+| 1.0 | 1.0 | 3.9893368 | Yes — **central** |
+| 1.0 | 2.0 | 3.9898075 | Yes |
+| 2.0 | 0.5 | 3.9634451 | No — antipodal |
+| 2.0 | 1.0 | 3.9480101 | Yes |
+| 2.0 | 2.0 | 3.9440466 | Yes — **minimum** |
+
+The two antipodal pairs are *not* extrema; hence the standard 7-point
+and complete 9-point envelopes happen to coincide:
+
+- **7-point NLO scale:** +0.058445/-0.045290 pb
+  (**+1.465%/-1.135%**) for one hidden-color copy.
+- **PDF-only NNPDF40 68% RMS:** +/-0.0573033 pb (**1.436%**).
+- **MC integration:** +/-0.0057 pb.
+- For **N_IC=2** spectators the central and errors are doubled:
+  `7.9786736 pb`, `+0.116890/-0.090580 pb` (scale),
+  `+/-0.1146067 pb` (PDF), `+/-0.0114 pb` (MC).
+
+One-hidden-color final benchmark (independent errors **quoted separately**):
+
+```text
+sigma_NLO(pp -> all six Dirac-triplet DY channels; sqrt(s)=13.6 TeV,
+          mQ=225 GeV, NNPDF40_nlo_as_01180, N_IC spectator=1)
+   = 3.9893 (+0.0584/-0.0453) [7pt scale]
+            +/- 0.0573 [68%-CL PDF replica RMS]
+            +/- 0.0057 [MC integration] pb
+
+sigma_LO (same NLO PDF and central scale) = 3.437 +/- 0.007 pb
+K_NLO/LO(same NLO PDF) = 1.1607 +/- 0.0029 (MC integration only)
+```
+
+The seven-point envelope does **not** include PDF or alpha_s uncertainty.
+The fixed-NLO-PDF K factor is not the conventional NLO(PDF-NLO)/LO(PDF-LO)
+ratio. The result is a **validated fixed-order NLO QCD production
+benchmark**, not yet a completed NLO+PS QuirkSim event-production chain or
+a full infracolor calculation.
 
 ## Required physics release gates
 
@@ -485,9 +535,12 @@ Still open for a complete rate uncertainty budget:
 6. Independent gauge and charge conjugation checks, plus at least one
    external electroweak DY reference calculation for the NLO K factor.
 
-Item 4 has been validated for a single representative channel with both
-MG5 3.5.1 and 3.8.1; the complete inclusive six-channel NLO rate,
-its uncertainties, and the external comparison in items 5--6 remain open.
+Items 1--5 are satisfied for the **M=225 GeV fixed-order spectator production
+benchmark** to the stated level: MG5 3.5.1 locally generated, integrated,
+checked NLO poles, reconstructed NNPDF replica RMS and the standard
+7-point scale envelope. Independent external comparisons and wider
+mass/scale/PDF scheme checks in item 6 are still open, as are all
+NLO+PS and quirk-string/decay interfaces.
 
 ## Provenance
 
