@@ -20,7 +20,7 @@
   an SM-only NLO EW UFO and assume its UV/R2 sector is complete.
 *)
 
-If[!ValueQ[M$ClassesDescription] || !ValueQ[M$Parameters],
+If[!ValueQ[M$ClassesDescription],
    Print["TripletDirac.fr requires the Standard Model (SM.fr) to be loaded first."];
    Abort[]
 ];
@@ -43,7 +43,7 @@ M$ClassesDescription = Join[M$ClassesDescription, {
   F[62] == {
     ClassName -> Qzero,
     SelfConjugate -> False,
-    Mass -> {MQ, 225.0},
+    Mass -> MQ,
     Width -> 0,
     QuantumNumbers -> {Q -> 0, QuirkNumber -> 1},
     PropagatorLabel -> "Q0",
@@ -57,7 +57,7 @@ M$ClassesDescription = Join[M$ClassesDescription, {
   F[63] == {
     ClassName -> Qm2,
     SelfConjugate -> False,
-    Mass -> {MQ, 225.0},
+    Mass -> MQ,
     Width -> 0,
     QuantumNumbers -> {Q -> -1, QuirkNumber -> 1},
     PropagatorLabel -> "Q2-",
@@ -72,18 +72,10 @@ M$ClassesDescription = Join[M$ClassesDescription, {
 
 (*
   One external real mass, unlike the QCD-only UFO's two legacy mass slots.
-  FeynRules should emit one MASS-block entry for MQ (PDG 9000112).
-  Before publication check the exported UFO really gives common masses.
+  FeynRules defines MQ from the first Mass declaration (PDG 9000111),
+  then references the SAME symbol for the other triplet species.\n  Before publication verify the common-mass restrictions in the UFO.
 *)
-M$Parameters = Join[M$Parameters, {
-  MQ == {
-    ParameterType -> External,
-    BlockName -> MASS,
-    OrderBlock -> 9000112,
-    Value -> 225.0,
-    Description -> "Gauge-invariant common Dirac triplet mass in GeV"
-  }
-}];
+
 
 (*
   Our SU(2) gauge current is
