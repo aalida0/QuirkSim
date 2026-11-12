@@ -191,6 +191,75 @@ If hidden color is a spectator and there are N_IC degenerate copies, use
 `sigma_physical = N_IC * sigma_NLO`. Keep this normalization **outside**
 the UFO to avoid accidentally double-counting its hidden degrees of freedom.
 
+## Inclusive NLO internal-PDF integration (local MG5 3.5.1)
+
+Local six-channel `pp` NLO run at `sqrt(s)=13.6 TeV` and equal
+tree-level quirk masses of 225 GeV completed successfully:
+
+| Quantity | Local result |
+|---|---:|
+| Inclusive NLO partonic hard-process sum (one spectator hidden-color copy) | **3.746 +/- 0.0055 pb** |
+| MG5 reported 9-point scale envelope | **+1.5% / -1.1%** |
+| Grid-setup estimate | 3.752 +/- 0.0098 pb |
+| UV/IR poles | 16 successful 20/20 phase-space checks listed in local log |
+| N_IC=2 spectator-rescaled diagnostic rate | 7.492 +/- 0.011 pb |
+
+These numbers are from MG5's **internal PDF setup** and do NOT give
+an externally verified NLO PDF/alpha_s-consistent prediction.
+The numerical error is an integration uncertainty, *not* a PDF or
+perturbative theory uncertainty. The nine-point envelope is not necessarily
+the standard seven-point muR/muF envelope, and its small magnitude must
+not be interpreted as complete theoretical accuracy.
+
+Do **not** compare this rate to the prior 2.779 pb LO run as an official
+K factor, because the old LO sample used different PDF/scale/mass
+settings. A valid K factor requires matched electroweak inputs, scales,
+masses, PDFs and flavour scheme.
+
+### Explicit NLO LHAPDF production configuration
+
+For an example modern 5-flavour NLO set use
+`NNPDF40_nlo_as_01180` (LHAPDF **331700**, alpha_s(MZ)=0.118).
+A user reported multiple existing `lhapdf-config` installations.
+Choose a single working executable and verify `--version`, `--libdir`,
+`--datadir`, and that the PDF files are installed and visible.
+
+```bash
+export LHACFG="$HOME/codes/tools/MG5_aMC/HEPTools/lhapdf6_py3/bin/lhapdf-config"
+"$LHACFG" --version
+"$LHACFG" --libdir
+"$LHACFG" --datadir
+# If the chosen data directory does not contain the set, install it
+# with that LHAPDF installation's lhapdf manager before continuing.
+PDFDIR="$("$LHACFG" --datadir)"
+test -f "$PDFDIR/NNPDF40_nlo_as_01180/NNPDF40_nlo_as_01180.info"
+```
+
+To configure **the exact MG5 instance used for QuirkSim**, run a
+dedicated configuration script before generating the new NLO directory:
+
+```bash
+cat > /tmp/quirksim_set_lhapdf.mg5 <<EOF
+set lhapdf $LHACFG
+quit
+EOF
+"$MG5/bin/mg5_aMC" /tmp/quirksim_set_lhapdf.mg5
+python3 scripts/prepare_triplet_nlo_inclusive.py \
+  --pdf lhapdf --lhaid 331700 --accuracy 0.01 \
+  --output-dir results/pp_dirac_triplet_13p6TeV_NLO_NNPDF40 \
+  --card-dir results/triplet_nlo_cards_NNPDF40
+"$MG5/bin/mg5_aMC" results/triplet_nlo_cards_NNPDF40/triplet_six_nlo_generate.mg5 \
+  2>&1 | tee results/triplet_six_nlo_NNPDF40_generate.log
+"$MG5/bin/mg5_aMC" results/triplet_nlo_cards_NNPDF40/triplet_six_nlo_integrate.mg5 \
+  2>&1 | tee results/triplet_six_nlo_NNPDF40_integrate.log
+```
+
+Verify that the actual run card records `pdlabel=lhapdf`, `lhaid=331700`,
+the correct LHAPDF prefix and the exact PDF set name. Reweight or
+rerun to evaluate PDF replica uncertainty and a standard seven-point
+scale envelope before release. N_IC should be multiplied **once** outside
+the UFO.
+
 ## Required physics release gates
 
 1. Python import, six species, eight vector vertices and charge/quirk-number conservation.
