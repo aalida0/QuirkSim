@@ -19,12 +19,30 @@ jobs:
           python-version: '3.11'
       - name: Clone reference MadGraph NLO model
         run: git clone --depth 1 --branch 3.x https://github.com/mg5amcnlo/mg5amcnlo.git /tmp/mg5amcnlo
+      - name: Test MG5 3.5.1 legacy Python 2 parameter-card writer compatibility
+        run: python -m unittest discover -s tests -p 'test_nlo_ufo_legacy_writer.py' -v
       - name: Build and structurally validate NLO UFO
         shell: bash
         run: |
           set -euo pipefail
           python scripts/build_dirac_triplet_nlo_ufo.py --mg5-dir /tmp/mg5amcnlo
           python scripts/validate_dirac_triplet_nlo_ufo.py --mg5-dir /tmp/mg5amcnlo
+      - name: Reproduce legacy 3.5.1 writer using upstream SM fixture
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          writer=Path("/tmp/mg5amcnlo/models/loop_sm/write_param_card.py")
+          old="need_writing.sort(key=cmp_to_key(self.order_param))"
+          assert old in writer.read_text(), "Current reference writer changed; update fixture"
+          writer.write_text(writer.read_text().replace(old,"need_writing.sort(self.order_param)"))
+          PY
+          python scripts/build_dirac_triplet_nlo_ufo.py --mg5-dir /tmp/mg5amcnlo \
+            --output /tmp/DiracTripletEW_NLO_LegacyUFO
+          python scripts/validate_dirac_triplet_nlo_ufo.py --mg5-dir /tmp/mg5amcnlo \
+            --model /tmp/DiracTripletEW_NLO_LegacyUFO
+          grep -q '__import__' /tmp/DiracTripletEW_NLO_LegacyUFO/write_param_card.py
       - name: Generate actual MG5 NLO QCD virtual and FKS subtraction amplitudes
         shell: bash
         run: |
