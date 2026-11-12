@@ -102,6 +102,47 @@ For true NLO+PS generation, use MC@NLO matching and propagate LHE
 weights, including negative weights, correctly; the current
 LO Pythia8 JSONL adapter is not yet NLO-weight aware.
 
+## Verified NLO QCD numerical pilot (MG5_aMC 3.8.1)
+
+GitHub Actions [run 43255774024](https://github.com/aalida0/QuirkSim/actions/runs/43255774024)
+successfully completed a fixed-order NLO integration on November 12, 2026
+for **only** `u u~ > q1+ q1-` at 13.6 TeV using the internal pilot PDF settings
+and `req_acc_FO=0.05`.
+
+| Diagnostic | Result |
+|---|---|
+| Born/virtual/real/FKS generation | PASS |
+| Pole cancellation | 20/20 phase-space points at tolerance 1e-5 |
+| Soft/collinear tests | PASS |
+| MadLoop evaluations | 1,030 stable / 1,030 |
+| Single-channel NLO hadronic contribution | 0.1757 +/- 0.00093 pb (Monte Carlo error) |
+| MadLoop reduction | CutTools, double precision |
+
+**This is not the inclusive pp triplet production cross section.** It omits
+other initial flavours and five remaining charge channels; scale/PDF
+uncertainties and the spectator `N_IC` multiplicity are not represented in
+the quoted pilot number.
+
+### MG5_aMC 3.5.1 compatibility
+
+The older `loop_sm/write_param_card.py` contains the Python-2-only
+`need_writing.sort(self.order_param)`. QuirkSim's builder now patches
+this in its *copied* model using
+`sort(key=__import__('functools').cmp_to_key(self.order_param))`.
+The original installed MadGraph files are not modified.
+
+The user confirmed local structural validation with MG5 3.5.1:
+6 states, 8 EW vertices, 103 CT vertices and a generated parameter card.
+**Local 3.5.1 NLO amplitude generation is the next compatibility gate**;
+the completed numerical NLO result used 3.8.1.
+
+A six-final-state NLO generation run had all six Born/FKS/virtual
+processes generated, but its CI script failed an incorrect log assertion:
+MadGraph printed six lines of `Generated 1 subprocesses`, not one line
+of `Generated 6 subprocesses`. That assertion is now corrected in
+`.github/workflows/triplet-nlo-six-channel.yml` and will be evaluated
+by its replacement workflow run.
+
 ## Required physics release gates
 
 1. Python import, six species, eight vector vertices and charge/quirk-number conservation.
