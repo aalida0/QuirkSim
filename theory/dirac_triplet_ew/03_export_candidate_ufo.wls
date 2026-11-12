@@ -16,6 +16,22 @@ If[!FileExistsQ[nlo],
    Print["ERROR: Missing ",nlo, ". Run stage 02 and inspect errors."];
    Exit[2]
 ];
+qsStage2AuditFile=FileNameJoin[{out,"stage2_log_audit.json"}];
+If[!FileExistsQ[qsStage2AuditFile],
+   Print["ERROR: stage-2 NLOCT audit manifest missing; use ",
+         "scripts/run_triplet_ew_stage2.sh before UFO export."];
+   Exit[3]
+];
+qsStage2Audit=Import[qsStage2AuditFile,"RawJSON"];
+If[!TrueQ[Lookup[qsStage2Audit,"preflight_pass",False]],
+   Print["ERROR: stage-2 audit failed; candidate UFO export refused."];
+   Exit[3]
+];
+If[FileHash[nlo,"SHA256","HexString"]=!=Lookup[qsStage2Audit,"nlo_sha256",""],
+   Print["ERROR: NLOCT .nlo file has changed since stage-2 audit."];
+   Exit[3]
+];
+Print["FR_STAGE2_PREFLIGHT_PASS_NOT_PHYSICS_CERTIFIED"];
 AppendTo[$Path,frHome];
 SetDirectory[frHome];
 Get["FeynRules.m"];
