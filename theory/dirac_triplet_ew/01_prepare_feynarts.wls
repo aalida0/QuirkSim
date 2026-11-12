@@ -61,15 +61,17 @@ SetDirectory[qsGeneratedDir];
 WriteFeynArtsOutput[
     LTripletRen,
     Output -> "DiracTripletEW_QCDEW_FA",
-    GenericFile -> False,
+    GenericFile -> True,
     FlavorExpand -> True
 ];
-qsModelMod=FileNameJoin[{qsGeneratedDir,"DiracTripletEW_QCDEW_FA","DiracTripletEW_QCDEW_FA.mod"}];
-If[!FileExistsQ[qsModelMod],
-   Print["ERROR: FeynArts .mod missing after WriteFeynArtsOutput: ",qsModelMod];
+qsModelStem=FileNameJoin[{qsGeneratedDir,"DiracTripletEW_QCDEW_FA",
+                            "DiracTripletEW_QCDEW_FA"}];
+qsModelMod=qsModelStem<>".mod";
+If[!And@@(FileExistsQ[qsModelStem<>#]&/@{".mod",".pars",".gen"}),
+   Print["ERROR: FeynArts .mod, .pars and .gen required but not all generated at ",qsModelStem];
    Print["Stage 01 did not finish. Do not run stage 02."];
    Exit[3]
 ];
-Print["FR_STAGE1_FEYNARTS_FILES_WRITTEN_UNVALIDATED: ", qsModelMod];
+Print["FR_STAGE1_FEYNARTS_FILES_WRITTEN_UNVALIDATED: ", qsModelStem, " (.mod, .pars, .gen)"];
 Print["STAGE1_REQUIRES_LOG_AUDIT: files written; an external fail-closed log check is mandatory before NLOCT."];
 Print["NOTE: model is NOT yet validated at NLO EW. Inspect generated files, UV finite-parts and renormalization scheme."];
