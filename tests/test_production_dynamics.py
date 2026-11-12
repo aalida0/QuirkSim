@@ -76,3 +76,39 @@ def test_incompatible_weak_mass_scheme_fails():
     ev['endpoints'][0]['mass_gev']=226.
     with pytest.raises(ValueError,match='mass'):
         validated_endpoints(ev)
+
+
+def test_barrel_first_outward_crossings_keep_charge_per_endpoint():
+    ev=record()
+    p=ProductionParameters(mode='stable',duration_ps=.3,max_step_ps=.02,
+        b_tesla=0.,layer_radii_cm=(0.0001,0.0005))
+    out=simulate_produced(ev,p)
+    crossings=out['first_outward_barrel_crossings']
+    assert out['barrel_layer_radii_cm']==[0.0001,0.0005]
+    assert len(crossings)>=2
+    assert all(c['time_ps']>=0 and c['radius_cm']>0 for c in crossings)
+    assert all(abs(c['charge_at_crossing_e'])==
+               abs(out['initial_charges_e'][c['endpoint']]) for c in crossings)
+    assert any(c['endpoint']==0 and c['charge_at_crossing_e']==1 for c in crossings)
+    assert any(c['endpoint']==1 and c['charge_at_crossing_e']==0 for c in crossings)
+
+
+def test_barrel_radii_must_be_positive_sorted():
+    with pytest.raises(ValueError,match='layer radii'):
+        ProductionParameters(layer_radii_cm=(5.0,3.0))
+    with pytest.raises(ValueError,match='layer radii'):
+        ProductionParameters(layer_radii_cm=(0.0,))
+
+
+def test_record_decay_vertex_coordinates():
+    # Choose a long enough window to observe charged->neutral transitions.
+    ev=record(9000111,-9000111)
+    p=ProductionParameters(mode='recoil',seed=8,duration_ps=1000.,
+                           max_step_ps=2.,layer_radii_cm=(.01,.1))
+    out=simulate_produced(ev,p)
+    assert out['n_weak_decays']>=1
+    for d in out['decays']:
+        assert len(d['position_cm'])==3
+        assert all(math.isfinite(x) for x in d['position_cm'])
+        assert d['radius_cm']==pytest.approx(math.hypot(*d['position_cm'][:2]))
+        assert d['time_ps']<=p.duration_ps
