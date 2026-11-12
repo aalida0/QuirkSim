@@ -43,3 +43,5 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_triplet_qcd_ew_smoke_cards.py' -v
       - name: Reject malformed FeynRules EW FeynArts output logs
         run: python -m unittest discover -s tests -p 'test_triplet_ew_stage1_audit.py' -v
+      - name: Enforce FeynRules Dirac conjugates and pre-EW nonzero vertices
+        run: python -m unittest discover -s tests -p 'test_triplet_feynrules_antifield_syntax.py' -v
