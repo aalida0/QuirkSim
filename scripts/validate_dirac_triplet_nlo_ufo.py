@@ -70,7 +70,10 @@ def check(mg5_dir:Path, model_dir:Path):
     assert mod.coupling_orders.QED.perturbative_expansion==0
     with tempfile.TemporaryDirectory() as tmp:
         card=Path(tmp)/"param_card.dat"
-        mod.write_param_card.ParamCardWriter(str(card),generic=True)
+        # loop_sm ships a legacy standalone writer with absolute imports;
+        # supply the actual packaged parameter objects explicitly.
+        ext=[p for p in mod.all_parameters if p.nature=='external']
+        mod.write_param_card.ParamCardWriter(str(card),list_of_parameters=ext,generic=False)
         card_text=card.read_text()
         for code in (9000111,9000112):
             assert str(code) in card_text
