@@ -21,7 +21,9 @@
 
 (* This extension declares only its own classes. FeynRules LoadModel
    automatically merges them with SM.fr. SM classes are unavailable
-   while the individual input files are first read for merging. *)\n\nM$ClassesDescription = {
+   while the individual input files are first read for merging. *)
+
+M$ClassesDescription = {
   F[61] == {
     ClassName -> Qp1,
     SelfConjugate -> False,
