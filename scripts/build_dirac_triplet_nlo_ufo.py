@@ -11,6 +11,7 @@ from MG5's validated loop_sm. Do not invent triplet QCD counterterms.
 """
 from __future__ import annotations
 import argparse
+import hashlib
 import json
 from pathlib import Path
 import shutil
@@ -94,6 +95,31 @@ def upstream_version(root: Path) -> str|None:
     except (OSError,subprocess.CalledProcessError):
         return None
 
+def patch_legacy_param_card_writer(destination: Path) -> bool:
+    """Repair Python-2 comparator sorting in old loop_sm parameter-card writers.
+
+    MG5 3.5.1 may still have `need_writing.sort(self.order_param)`, which
+    raises TypeError under Python 3. This changes only the *copied* UFO model,
+    never the MG5 installation; newer loop_sm writers are left untouched.
+    """
+    writer = destination / "write_param_card.py"
+    source = writer.read_text(encoding="utf-8")
+    old = "need_writing.sort(self.order_param)"
+    if old not in source:
+        return False
+    new = "need_writing.sort(key=cmp_to_key(self.order_param))"
+    source = source.replace(old, new)
+    if "from functools import cmp_to_key" not in source:
+        source = "from functools import cmp_to_key\\n" + source
+    writer.write_text(source, encoding="utf-8")
+    return True
+
+
+def file_sha256(path: Path) -> str:
+    """Record upstream file provenance even if MG5 came from a tarball."""
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
 def build(mg5:Path, destination:Path, force:bool=False):
     mg5=mg5.resolve()
     src=mg5/"models"/"loop_sm"
@@ -106,6 +132,7 @@ def build(mg5:Path, destination:Path, force:bool=False):
             raise ValueError("Refusing to overwrite MG5 loop_sm")
         shutil.rmtree(destination)
     shutil.copytree(src,destination)
+    compat_patched = patch_legacy_param_card_writer(destination)
     for filename, content in ADDITIONS.items():
         file=destination/filename
         if not file.is_file():
@@ -137,6 +164,13 @@ def build(mg5:Path, destination:Path, force:bool=False):
     manifest={
         "base_model":"MG5_aMC models/loop_sm (upstream NLO QCD CT)",
         "base_git_commit":upstream_version(mg5),
+        "base_loop_sm_sha256": {
+            filename: file_sha256(src / filename) for filename in
+            ("CT_vertices.py", "CT_couplings.py", "CT_parameters.py",
+             "vertices.py", "couplings.py", "particles.py",
+             "write_param_card.py")
+        },
+        "legacy_python2_param_card_writer_patched": compat_patched,
         "scope":"pp -> Dirac Y=0 triplet: full LO EW + NLO QCD corrections only",
         "is_fully_dynamical_quirk_model":False,
         "nlo_qcd_uv_r2":"inherited SM QCD counterterms unchanged",
@@ -150,7 +184,9 @@ def build(mg5:Path, destination:Path, force:bool=False):
         json.dumps(manifest,indent=2)+"\n",encoding="utf-8")
     print("Built NLO-QCD triplet UFO:",destination)
     print("SM QCD UV/R2 sector inherited from:",src)
-    print("Upstream MG5 commit:",manifest["base_git_commit"])
+    print("Upstream MG5 commit:",manifest["base_git_commit"] or
+          "(not a Git checkout; original files identified by SHA256)")
+    print("Legacy parameter-card writer patched for Python 3:", compat_patched)
     return destination
 
 def main():
