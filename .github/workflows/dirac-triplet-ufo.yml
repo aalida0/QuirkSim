@@ -47,3 +47,5 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_triplet_feynrules_antifield_syntax.py' -v
       - name: Verify eight triplet FeynRules FFV interactions
         run: python -m unittest discover -s tests -p 'test_triplet_ew_tree_vertex_audit.py' -v
+      - name: Reject incomplete NLOCT EW UV-R2 stage2 files
+        run: python -m unittest discover -s tests -p 'test_triplet_ew_stage2_audit.py' -v
