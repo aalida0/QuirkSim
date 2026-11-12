@@ -28,9 +28,12 @@ SetDirectory[frHome];
 Get["NLOCT.m"];
 
 SetDirectory[out];
+If[!FileExistsQ[FileNameJoin[{out,"DiracTripletEW_QCDEW_FA",
+                                  "DiracTripletEW_QCDEW_FA.mod"}]],
+   Print["ERROR: stage 01 must produce a FeynArts .mod model file in generated/DiracTripletEW_QCDEW_FA"];Exit[2]];
 Print["Starting NLOCT *full* QCD+EW UV/R2 construction. No QCDOnly shortcut ..."];
 WriteCT[
-    "DiracTripletEW_QCDEW_FA",
+    "DiracTripletEW_QCDEW_FA/DiracTripletEW_QCDEW_FA",
     "Lorentz",
     Output -> "DiracTripletEW_QCDEW_CT",
     QCDOnly -> False,
