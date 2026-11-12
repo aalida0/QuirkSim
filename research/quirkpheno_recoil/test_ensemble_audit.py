@@ -51,6 +51,7 @@ class EnsembleAuditTest(unittest.TestCase):
             (out/(c['name']+'.log')).write_text('\n'.join('QP_WEAK_JSON '+json.dumps(r) for r in records))
             (out/'manifest.json').write_text(json.dumps(state))
             result=audit(out);self.assertTrue(result['local_checks_pass'],result)
+            self.assertEqual(result,audit(out,step_size=1))
             records[0]['pion_mev'][1]+=.01
             (out/(c['name']+'.log')).write_text('\n'.join('QP_WEAK_JSON '+json.dumps(r) for r in records))
             self.assertFalse(audit(out)['local_checks_pass'])

@@ -158,12 +158,19 @@ def main():
     if a.case_timeout_seconds<1 or a.workers<1:raise SystemExit('case timeout and workers must be positive')
     if a.duration_ps is not None and (not math.isfinite(a.duration_ps) or a.duration_ps<=0):raise SystemExit('positive finite duration required')
     if a.prepare_only and a.pack_only:raise SystemExit('choose prepare-only or pack-only')
-    if a.pack_only:print('Upload:',package(out));return
+    if a.pack_only:
+        saved=json.loads((out/'manifest.json').read_text())
+        if saved.get('postneutral_packaging',saved.get('nominal_stop_ps',0)>=1000):
+            from package_triplet_postneutral import package as package_late
+            print('Upload:',package_late(out))
+        else:print('Upload:',package(out))
+        return
     if not a.prepare_only:
         try:import uproot  # noqa: F401
         except ImportError:raise SystemExit('uproot is required for automatic local audit and compact packaging')
     state=prepare(out,a.seeds)
     state['parallel_case_workers']=a.workers
+    state['postneutral_packaging']=a.duration_ps is not None
     if a.duration_ps is not None:
         for case in state['cases']:
             path=Path(case['macro']);macro=re.sub(r'^/qsim/maxTime .*$',f'/qsim/maxTime {a.duration_ps/1000:.17g} ns',path.read_text(),flags=re.M)
@@ -173,7 +180,10 @@ def main():
     print('Manifest:',out/'manifest.json','Cases:',len(state['cases']),flush=True)
     if a.prepare_only:return
     execute(state,out,a.case_timeout_seconds,False,a.workers)
-    print('Upload:',package(out),flush=True)
+    if a.duration_ps is not None:
+        from package_triplet_postneutral import package as package_late
+        print('Upload:',package_late(out),flush=True)
+    else:print('Upload:',package(out),flush=True)
 
 
 if __name__=='__main__':main()

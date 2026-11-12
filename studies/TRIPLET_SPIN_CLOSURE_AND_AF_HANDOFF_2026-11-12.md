@@ -133,12 +133,12 @@ git pull --ff-only origin research/quirkpheno-weak-recoil-pilot
 out=/data/aalida/QuirkSim/triplet_late32_$(date -u +%Y%m%dT%H%M%SZ)
 python scripts/af_triplet_recoil_ensemble.py --seeds 32 --workers 4 \
   --duration-ps 4000 --case-timeout-seconds 600 --output-dir "$out"
-python scripts/package_triplet_postneutral.py "$out"
 ```
 
-The first command builds once, then runs four independent processes. The
-second exports only compact post-neutral windows, logs and provenance; ROOT
-files stay on AF. Failed transport/audit cases stop the procedure. Histories
+The wrapper builds once, then runs four independent processes and exports
+compact post-neutral windows, logs and provenance; ROOT files stay on AF.
+The standalone post-neutral packager can recover completed runs without
+rerunning transport. Failed transport/audit cases stop the procedure. Histories
 with no resolved post-neutral minimum remain explicitly censored. Synthetic
 ROOT round-trip tests check that the compact archive preserves those counts.
 
