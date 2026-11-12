@@ -36,10 +36,10 @@ def check(folder):
         assert sum(p.charge for p in v.particles)==0,v.name
         assert sum(getattr(p,"QuirkNumber",0) for p in v.particles)==0,v.name
         assert list(v.couplings)==[(0,0)]
-    assert [p.name for p in V.V_Q10_Wp.particles]==["q1-","q0","w+"]
-    assert [p.name for p in V.V_Q10_Wm.particles]==["q0~","q1+","w-"]
-    assert [p.name for p in V.V_Q02_Wp.particles]==["q0~","q2-","w+"]
-    assert [p.name for p in V.V_Q02_Wm.particles]==["q2+","q0","w-"]
+    assert [p.name for p in V.V_Q10_Wp.particles]==["q1-","q0","W+"]
+    assert [p.name for p in V.V_Q10_Wm.particles]==["q0~","q1+","W-"]
+    assert [p.name for p in V.V_Q02_Wp.particles]==["q0~","q2-","W+"]
+    assert [p.name for p in V.V_Q02_Wm.particles]==["q2+","q0","W-"]
     assert C.GC_Q1_A.value=="complex(0,1)*ee"
     assert C.GC_Q2_A.value=="-complex(0,1)*ee"
     assert C.GC_Q1_Z.value=="complex(0,1)*ee*cw/sw"
