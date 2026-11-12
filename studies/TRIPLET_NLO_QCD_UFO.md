@@ -299,6 +299,58 @@ and `reweight_PDF` are documented in its NLO run card. Use the
 compiled LHAPDF interface; the separate Python-based systematics
 module can require LHAPDF Python bindings.
 
+## NNPDF4.0 replica-uncertainty recovery (November 12, 2026)
+
+The second six-channel NLO run with `reweight_PDF=True` returned
+
+```text
+Total cross section: 3.989e+00 +- 5.7e-03 pb
+Dynamical_scale_choice -1 (envelope of 9 values): +1.5% -1.1%
+PDF variation: 331700 (101 members; combination method unknown): 3.989e+00 pb
+```
+
+The central value agrees with the previous 3.991 pb integration.
+The absence of a PDF uncertainty does **not** mean 0% PDF error.
+
+**Root cause verified from MG5_aMC 3.5.1 source:**
+`madgraph/interface/amcatnlo_run_interface.py`,
+`pdf_scale_from_reweighting()`. If
+`misc.import_python_lhapdf()` fails, the code marks the PDF uncertainty
+type as `unknown` instead of computing `getPDFSet(...).uncertainty(...)`.
+The underlying 101 member-weighted fixed-order cross sections are still
+written to `SubProcesses/P*/all_G*/scale_pdf_dependence.dat`. This
+does not affect fixed-order integration through the compiled LHAPDF
+interface.
+
+**Recovery without rebuilding LHAPDF or rerunning MG5:**
+
+```bash
+cd ~/QuirkSim
+git pull --ff-only origin feature/dirac-triplet-ew-lo
+python3 scripts/extract_triplet_nlo_pdf_replicas.py \
+  --process results/pp_dirac_triplet_13p6TeV_NLO_NNPDF40 \
+  --run-log results/triplet_nlo_uncertainties.log \
+  --nic 2
+```
+
+The Python script reconstructs each PDF member cross section by
+**exactly** replicating MG5's summation over job directories weighted by
+`wgt_frac` from the trusted local `SubProcesses/job_status.pkl`, then
+uses the sample standard deviation across the 100 NNPDF replicas for a
+68%-CL PDF-only uncertainty. It asserts that the reconstructed central
+matches the original MG5 summary within 1%. The 100-replica
+population-RMS is printed as a convention cross-check.
+
+This method is restricted to `NNPDF40_nlo_as_01180` and assumes its
+standard 101-member central-plus-replicas organization. It does **not**
+include an alpha_s uncertainty. A full scale uncertainty should use the
+appropriate seven-point muR/muF envelope rather than the default
+nine-point envelope printed by MG5.
+
+**Preservation caution:** MG5 overwrites `SubProcesses/job_status.pkl`
+and scale/PDF variations when you rerun the same process directory.
+Extract the replica statistics now, before performing another integration.
+
 ## Required physics release gates
 
 1. Python import, six species, eight vector vertices and charge/quirk-number conservation.
