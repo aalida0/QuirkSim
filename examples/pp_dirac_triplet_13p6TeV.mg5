@@ -27,11 +27,9 @@ add process p p > q0~ q2- QED=2 QCD=0 @5
 # No tree-level q0 q0~ Drell-Yan for the Y=0 triplet.
 output results/pp_dirac_triplet_13p6TeV_LO -f
 
-# Create a small parton-level LHE sample (no shower / detector).
+# Create a parton-level LHE sample (no shower or detector plugins available).
+# Do not enter shower=OFF etc.: MG5 reports those switches as 'Not Avail.'.
 launch results/pp_dirac_triplet_13p6TeV_LO
-shower=OFF
-detector=OFF
-analysis=OFF
 done
 
 # 13.6 TeV LHC beam energy and test sample size.
@@ -45,8 +43,8 @@ set use_syst False
 # To test exact tree-level gauge degeneracy, set both to 225.
 set param_card MASS 9000111 225.15717
 set param_card MASS 9000112 225.0
-set param_card MASS 9000113 225.15717
+# q2- shares MQC with q1+; a second MASS 9000113 entry is derived/ignored.
 
-# Keep default MG5 PDFs for this smoke test.
+# Keep MG5's built-in PDFs for this first smoke test.
 # For quantitative production, explicitly choose a validated LHAPDF LO set.
 done

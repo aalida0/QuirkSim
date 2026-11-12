@@ -16,7 +16,7 @@ MODEL_NAME = "DiracTripletEW_UFO"
 REQUIRED_BASE = (
     "__init__.py", "object_library.py", "particles.py", "parameters.py",
     "couplings.py", "vertices.py", "lorentz.py", "coupling_orders.py",
-    "function_library.py",
+    "function_library.py", "write_param_card.py",
 )
 
 # '+' and '-' form part of MadGraph particle names; q1- != q2-.
@@ -104,10 +104,10 @@ def build_model(sm_ufo: Path, out: Path, *, force: bool = False) -> Path:
             raise ValueError('Refusing --force on a directory not built by this script')
         shutil.rmtree(out)
     out.mkdir(parents=True)
-    # Copy only UFO code and the standard SM parameter card, not generated caches,
-    # decay tables, SM restriction cards, or MG5-specific restrict helper files.
+    # Keep write_param_card.py: MG5 3.5.x executes it to produce param_card.dat.
+    # Do not copy decays.py or SM restriction-specific helper code.
     for f in sm_ufo.iterdir():
-        if f.suffix == '.py' and f.name not in ('decays.py', 'build_restrict.py', 'write_param_card.py'):
+        if f.suffix == '.py' and f.name not in ('decays.py', 'build_restrict.py'):
             shutil.copy2(f, out / f.name)
         elif f.name == 'param_card.dat':
             # Card is kept only as a reference. MadGraph regenerates the authoritative
