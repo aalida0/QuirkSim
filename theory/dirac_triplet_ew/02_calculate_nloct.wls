@@ -57,6 +57,44 @@ If[!AssociationQ[qsHashes] ||
    Print["ERROR: FeynArts .mod/.pars changed since the stage-1 log audit."];
    Exit[3]
 ];
+(* FeynArts searches its model files via $ModelPath, NOT simply via
+   SetDirectory or Mathematica's ordinary $Path. The files are in a
+   subdirectory of generated/, so register that exact directory and
+   use the common model basename for both .mod and .gen. *)
+qsModelName="DiracTripletEW_QCDEW_FA";
+qsModelDir=DirectoryName[qsModelStem];
+If[!ListQ[$ModelPath],
+   Print["ERROR: FeynArts $ModelPath is not a list after FeynArts.m load."];
+   Exit[4]
+];
+$ModelPath=DeleteDuplicates[Prepend[$ModelPath,qsModelDir]];
+qsGenericFound=Block[{$Path=$ModelPath},
+    System`Private`FindFile[qsModelName<>".gen"]];
+qsClassesFound=Block[{$Path=$ModelPath},
+    System`Private`FindFile[qsModelName<>".mod"]];
+Print["NLOCT_FEYNARTS_MODELPATH_ADDED: ",qsModelDir];
+Print["NLOCT_GENERIC_MODEL_RESOLVED: ",qsGenericFound];
+Print["NLOCT_CLASSES_MODEL_RESOLVED: ",qsClassesFound];
+If[!StringQ[qsGenericFound] || !StringQ[qsClassesFound] ||
+   !FileExistsQ[qsGenericFound] || !FileExistsQ[qsClassesFound],
+   Print["NLOCT_STAGE2_REJECTED_MODELPATH: FeynArts cannot locate the",
+         " .gen and .mod even though the stage1 SHA256 audit passed."];
+   Exit[4]
+];
+qsInitResult=Check[
+    InitializeModel[qsModelName,GenericModel->qsModelName],
+    $Failed,
+    {InitializeModel::noopen,InitializeModel::incomp1,
+     InitializeModel::incomp2,InitializeModel::nogeneric,
+     InitializeModel::rhs1,InitializeModel::rhs2,
+     InitializeModel::rhs3,InitializeModel::nosymb}
+];
+If[qsInitResult=!=True,
+   Print["NLOCT_STAGE2_REJECTED_MODEL_INITIALIZATION: ",
+         "FeynArts could not initialize the generated .gen/.mod pair."];
+   Exit[4]
+];
+Print["NLOCT_FEYNARTS_INITIALIZATION_OK"];
 Print["FR_STAGE1_LOG_AUDIT_PASSED_ONLY: no known rejected-vertex patterns."];
 Print["CAUTION: physics-level NLO EW counterterms are not validated."];
 Print["Starting NLOCT *full* QCD+EW UV/R2 construction. No QCDOnly shortcut ..."];
@@ -68,8 +106,8 @@ If[FileExistsQ[qsNLOOutputFile],
 ];
 qsNLOCTResult=Check[
     WriteCT[
-        "DiracTripletEW_QCDEW_FA/DiracTripletEW_QCDEW_FA",
-        "DiracTripletEW_QCDEW_FA/DiracTripletEW_QCDEW_FA",
+        qsModelName,
+        qsModelName,
         Output -> "DiracTripletEW_QCDEW_CT",
         QCDOnly -> False,
         Exclude4ScalarsCT -> False,
