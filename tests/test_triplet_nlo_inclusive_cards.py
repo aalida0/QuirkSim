@@ -35,8 +35,10 @@ class TestTripletNLOInclusiveCards(unittest.TestCase):
             self.assertIn("set ebeam2 6800",b)
             self.assertNotIn("set pdlabel",b)
             self.assertNotIn("set lhaid",b)
+            (root/"nlo").mkdir()
             with self.assertRaises(FileExistsError):
-                (root/"nlo").mkdir()
+                make_cards(model=model,output_dir=root/"nlo",
+                           card_dir=root/"other_cards")
     def test_lhapdf_mode_card(self):
         with tempfile.TemporaryDirectory() as d:
             root=Path(d)
