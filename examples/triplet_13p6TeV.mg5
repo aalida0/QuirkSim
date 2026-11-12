@@ -1,0 +1,9 @@
+# Example commands for a Dirac Y=0 EW triplet in MG5_aMC.
+# Build/install TripletEW_UFO under MG5_aMC/models before running.
+import model TripletEW_UFO
+generate p p > q1+ q1- QED=2 QCD=0
+add process p p > q2- q2+ QED=2 QCD=0
+output triplet_ew_lo -f
+# For launch, configure Cards/run_card.dat with ebeam1=6800, ebeam2=6800.
+# Check MASS 9000112 (MQ0) and MASS 9000111 (MQC) in the param card.
+# Distinct production channels and subprocess rates still need checking.
