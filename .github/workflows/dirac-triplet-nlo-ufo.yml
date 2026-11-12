@@ -1,0 +1,55 @@
+name: Dirac triplet NLO QCD UFO validation
+on:
+  push:
+    branches: [feature/dirac-triplet-ew-lo]
+    paths:
+      - 'scripts/build_dirac_triplet_nlo_ufo.py'
+      - 'scripts/validate_dirac_triplet_nlo_ufo.py'
+      - 'models/DiracTripletEW_UFO/QUIRKSIM_SCOPE.md'
+      - '.github/workflows/dirac-triplet-nlo-ufo.yml'
+  workflow_dispatch:
+jobs:
+  nlo-model:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Clone reference MadGraph NLO model
+        run: git clone --depth 1 --branch 3.x https://github.com/mg5amcnlo/mg5amcnlo.git /tmp/mg5amcnlo
+      - name: Build and structurally validate NLO UFO
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/build_dirac_triplet_nlo_ufo.py --mg5-dir /tmp/mg5amcnlo
+          python scripts/validate_dirac_triplet_nlo_ufo.py --mg5-dir /tmp/mg5amcnlo
+      - name: Generate actual MG5 NLO QCD virtual and FKS subtraction amplitudes
+        shell: bash
+        run: |
+          set -euo pipefail
+          MODEL="${GITHUB_WORKSPACE}/models/DiracTripletEW_NLO_UFO"
+          {
+            echo "import model ${MODEL}"
+            echo 'generate u u~ > q1+ q1- QED=2 QCD=0 [QCD]'
+            echo 'output /tmp/triplet_nlo_charged -f'
+            echo 'import model '${MODEL}
+            echo 'generate u d~ > q1+ q0~ QED=2 QCD=0 [QCD]'
+            echo 'output /tmp/triplet_nlo_associated -f'
+            echo 'quit'
+          } > /tmp/triplet_nlo.mg5
+          python /tmp/mg5amcnlo/bin/mg5_aMC /tmp/triplet_nlo.mg5 2>&1 | tee /tmp/triplet_nlo.log
+          test -d /tmp/triplet_nlo_charged/SubProcesses
+          test -d /tmp/triplet_nlo_associated/SubProcesses
+          grep -iq "NLO" /tmp/triplet_nlo.log
+      - name: Upload validated NLO UFO source and logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dirac-triplet-nlo-ufo-model
+          path: |
+            models/DiracTripletEW_NLO_UFO/
+            /tmp/triplet_nlo.log
+            /tmp/triplet_nlo.mg5
+          if-no-files-found: ignore
