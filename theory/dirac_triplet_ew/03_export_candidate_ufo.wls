@@ -9,7 +9,7 @@ frHome=Environment["FEYNRULES_HOME"];
 If[!StringQ[frHome]||StringLength[frHome]==0,
    Print["ERROR: FEYNRULES_HOME required"];Exit[2]];
 frHome=ExpandFileName[frHome];
-scriptDir=DirectoryName[$InputFileName];
+scriptDir=DirectoryName[ExpandFileName[$InputFileName]];
 out=FileNameJoin[{scriptDir,"generated"}];
 nlo=FileNameJoin[{out,"DiracTripletEW_QCDEW_CT.nlo"}];
 If[!FileExistsQ[nlo],
