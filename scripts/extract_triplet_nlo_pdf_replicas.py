@@ -44,6 +44,11 @@ def read_pdf_members(path: Path) -> list[float]:
                 values_line = next(stream, None)
                 if metadata is None or values_line is None:
                     raise ValueError(f"Incomplete PDF variations block: {path}")
+                tokens = metadata.split()
+                if not tokens or tokens[0] != SET_NAME:
+                    raise ValueError(
+                        f"Expected PDF set {SET_NAME} in {path}, got {metadata.strip()!r}"
+                    )
                 try:
                     values = [float(v.replace("D", "E").replace("d", "e"))
                               for v in values_line.split()]
