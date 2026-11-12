@@ -182,7 +182,7 @@ def execute(state,out,case_timeout_seconds=120,audit_close_return=False,workers=
     exe=build/'quirksim/quirksim'
     def run_case(case):
         env={'QP_WEAK_ENABLED':int(case['weak_enabled']),'QP_WEAK_ENDPOINT':case['endpoint'],
-             'QP_WEAK_TAU_PS':50,'QP_WEAK_CLOCK_MODE':case['clock_mode'],'QP_NEUTRAL_MASS_GEV':M_NEUTRAL,'QP_WEAK_DIR_SIGN':case.get('pion_rest_y_sign',1),'QP_WEAK_PLAN':case.get('plan_file','')}
+             'QP_WEAK_TAU_PS':50,'QP_WEAK_CLOCK_MODE':case['clock_mode'],'QP_NEUTRAL_MASS_GEV':case.get('neutral_mass_gev',M_NEUTRAL),'QP_WEAK_DIR_SIGN':case.get('pion_rest_y_sign',1),'QP_WEAK_PLAN':case.get('plan_file','')}
         env.update(QP_WEAK_DIRECTION_MODE=case.get('direction_mode','planned'),QP_WEAK_COLLINEAR_SIGN=case.get('collinear_sign',1))
         env['QP_WEAK_CONTROL_BOOST_Z']=case.get('pair_boost_z',0.)
         command='env '+' '.join(shlex.quote(k+'='+str(v)) for k,v in env.items())

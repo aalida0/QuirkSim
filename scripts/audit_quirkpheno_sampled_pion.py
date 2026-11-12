@@ -72,7 +72,7 @@ def audit(path,progress=False,step_size='8 MB'):
             checks['at_most_two_decays']=len(decays)<=2
             handle=Path(path)/(name+'.root') if is_directory else archive.extractfile(prefix+name+'.root')
             with uproot.open(handle,object_cache=None,array_cache=None) as root:
-                e=root['events'].arrays(library='ak');summaries=stream_endpoints(root['steps'],step_size,manifest['neutral_mass_gev'])
+                e=root['events'].arrays(library='ak');summaries=stream_endpoints(root['steps'],step_size,case.get('neutral_mass_gev',manifest['neutral_mass_gev']))
             checks['one_event']=len(e)==1
             for q in (0,1):
                 s=summaries[q];ds=[d for d in decays if (d['parent_pdg']>0)==(q==0)]
@@ -83,7 +83,7 @@ def audit(path,progress=False,step_size='8 MB'):
                 checks[f'q{q}_rows']=s['rows']==int(e['q_steps'][0][q]) and s['rows']>0
                 checks[f'q{q}_last_row_matches_event']=s['rows']>0 and abs(s['last_time']-float(e['q_te'][0][q])*1000)<1e-8
                 checks[f'q{q}_finite']=s['finite'];checks[f'q{q}_clock_order']=s['clock_order'];checks[f'q{q}_time_order']=s['time_order']
-                checks[f'q{q}_initial_mass']=abs(s.get('initial_mass',0)-manifest['mass_gev']*1000)<1e-6
+                checks[f'q{q}_initial_mass']=abs(s.get('initial_mass',0)-case.get('mass_gev',manifest['mass_gev'])*1000)<1e-6
                 if did_decay:
                     checks[f'q{q}_neutral_mass_charge']=s['neutral_ok']
                 if case['weak_enabled'] and not did_decay:
