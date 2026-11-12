@@ -1,0 +1,115 @@
+(*
+  QuirkSim vectorlike Dirac SU(2)L Y=0 triplet, broken-phase FeynRules add-on.
+
+  This SOURCE LAGRANGIAN is NOT a renormalized NLO EW UFO.
+  Load *after* the stock SM.fr:
+      LoadModel["SM.fr"];
+      Get["/path/to/TripletDirac.fr"];
+  In the SM.fr conventions: ee, gw=ee/sw, sw, cw and V[3] W (W+)
+  and Wbar (W-). The three Dirac fields are Qp1, Qzero, Qm2.
+  At tree level all share the SAME gauge-invariant mass MQ.
+  Their physical charged-neutral pole-mass splitting is computed
+  separately by scripts/triplet_ew_pole_spectrum.py.
+
+  There is no coupling to hidden gluons, Higgs or SM leptons.
+  Gauge interactions are exact vector currents; a Dirac triplet is
+  two Weyl triplets, distinct from the minimal type-III Majorana triplet.
+  All three Dirac fields carry the SAME conserved quirk number.
+  Warning: quantum corrections require simultaneous renormalization of
+  the full SM and BSM gauge sectors; do not append the LO vertices to
+  an SM-only NLO EW UFO and assume its UV/R2 sector is complete.
+*)
+
+If[!ValueQ[M$ClassesDescription] || !ValueQ[M$Parameters],
+   Print["TripletDirac.fr requires the Standard Model (SM.fr) to be loaded first."];
+   Abort[]
+];
+
+M$ClassesDescription = Join[M$ClassesDescription, {
+  F[61] == {
+    ClassName -> Qp1,
+    SelfConjugate -> False,
+    Mass -> {MQ, 225.0},
+    Width -> 0,
+    QuantumNumbers -> {Q -> 1, QuirkNumber -> 1},
+    PropagatorLabel -> "Q1+",
+    PropagatorType -> Straight,
+    PropagatorArrow -> Forward,
+    PDG -> 9000111,
+    ParticleName -> "q1+",
+    AntiParticleName -> "q1-",
+    FullName -> "Dirac triplet component T3=+1"
+  },
+  F[62] == {
+    ClassName -> Qzero,
+    SelfConjugate -> False,
+    Mass -> {MQ, 225.0},
+    Width -> 0,
+    QuantumNumbers -> {Q -> 0, QuirkNumber -> 1},
+    PropagatorLabel -> "Q0",
+    PropagatorType -> Straight,
+    PropagatorArrow -> Forward,
+    PDG -> 9000112,
+    ParticleName -> "q0",
+    AntiParticleName -> "q0~",
+    FullName -> "Dirac triplet component T3=0"
+  },
+  F[63] == {
+    ClassName -> Qm2,
+    SelfConjugate -> False,
+    Mass -> {MQ, 225.0},
+    Width -> 0,
+    QuantumNumbers -> {Q -> -1, QuirkNumber -> 1},
+    PropagatorLabel -> "Q2-",
+    PropagatorType -> Straight,
+    PropagatorArrow -> Forward,
+    PDG -> 9000113,
+    ParticleName -> "q2-",
+    AntiParticleName -> "q2+",
+    FullName -> "Dirac triplet component T3=-1"
+  }
+}];
+
+(*
+  One external real mass, unlike the QCD-only UFO's two legacy mass slots.
+  FeynRules should emit one MASS-block entry for MQ (PDG 9000112).
+  Before publication check the exported UFO really gives common masses.
+*)
+M$Parameters = Join[M$Parameters, {
+  MQ == {
+    ParameterType -> External,
+    BlockName -> MASS,
+    OrderBlock -> 9000112,
+    Value -> 225.0,
+    Description -> "Gauge-invariant common Dirac triplet mass in GeV"
+  }
+}];
+
+(*
+  Our SU(2) gauge current is
+      -g_W W^a_mu bar(Q) gamma^mu T^a_adj Q,
+  with T3=diag(1,0,-1) and T+ matrix entries sqrt(2);
+  charged currents consequently have coefficient g_W rather than
+  g_W/sqrt(2). No Q-Goldstone Yukawa couplings for a vectorlike
+  gauge-invariant mass.
+
+  All neutral and charged interactions are vectorlike.
+*)
+LTripletDirac := Block[{mu},
+    I Qp1bar.Ga[mu].del[Qp1,mu]
+  + I Qzerobar.Ga[mu].del[Qzero,mu]
+  + I Qm2bar.Ga[mu].del[Qm2,mu]
+  - MQ (Qp1bar.Qp1 + Qzerobar.Qzero + Qm2bar.Qm2)
+
+  - ee (Qp1bar.Ga[mu].Qp1 - Qm2bar.Ga[mu].Qm2) A[mu]
+  - gw cw (Qp1bar.Ga[mu].Qp1 - Qm2bar.Ga[mu].Qm2) Z[mu]
+
+  - gw (
+       Qp1bar.Ga[mu].Qzero W[mu]
+     + Qzerobar.Ga[mu].Qp1 Wbar[mu]
+     + Qzerobar.Ga[mu].Qm2 W[mu]
+     + Qm2bar.Ga[mu].Qzero Wbar[mu]
+   )
+];
+
+LTripletFull := LSM + LTripletDirac;
