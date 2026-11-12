@@ -31,6 +31,30 @@ SetDirectory[out];
 If[!FileExistsQ[FileNameJoin[{out,"DiracTripletEW_QCDEW_FA",
                                   "DiracTripletEW_QCDEW_FA.mod"}]],
    Print["ERROR: stage 01 must produce a FeynArts .mod model file in generated/DiracTripletEW_QCDEW_FA"];Exit[2]];
+qsAuditFile=FileNameJoin[{out,"stage1_log_audit.json"}];
+qsModelStem=FileNameJoin[{out,"DiracTripletEW_QCDEW_FA",
+                          "DiracTripletEW_QCDEW_FA"}];
+If[!FileExistsQ[qsAuditFile],
+   Print["ERROR: stage 01 has no successful log-audit manifest. ",
+         "Use scripts/run_triplet_ew_stage1.sh and fix errors first."];
+   Exit[3]
+];
+qsAudit=Import[qsAuditFile,"RawJSON"];
+If[!TrueQ[Lookup[qsAudit,"accepted_for_nloct_preflight",False]],
+   Print["ERROR: stage 01 FeynArts model failed fail-closed log audit; ",
+         "NLOCT would consume malformed vertices."];
+   Exit[3]
+];
+qsHashes=Lookup[qsAudit,"model_sha256",<||>];
+If[!AssociationQ[qsHashes] ||
+   !And@@Table[
+      FileHash[qsModelStem<>ext,"SHA256","HexString"]===Lookup[qsHashes,ext,""],
+      {ext,{".mod",".pars"}}],
+   Print["ERROR: FeynArts .mod/.pars changed since the stage-1 log audit."];
+   Exit[3]
+];
+Print["FR_STAGE1_LOG_AUDIT_PASSED_ONLY: no known rejected-vertex patterns."];
+Print["CAUTION: physics-level NLO EW counterterms are not validated."];
 Print["Starting NLOCT *full* QCD+EW UV/R2 construction. No QCDOnly shortcut ..."];
 WriteCT[
     "DiracTripletEW_QCDEW_FA/DiracTripletEW_QCDEW_FA",
