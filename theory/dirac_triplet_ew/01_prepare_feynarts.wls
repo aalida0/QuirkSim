@@ -29,6 +29,18 @@ LoadModel[FileNameJoin[{frHome,"Models","SM","SM.fr"}], modelFile];
 Print["FR_TRIPLET_MERGED_MODEL_LOADED"];
 FeynmanGauge=True;
 Print["Checking new triplet Lagrangian's Hermiticity ..."];
+qsSourceLagrangian=LTripletDirac;
+If[Head[qsSourceLagrangian] === Symbol || qsSourceLagrangian === 0,
+   Print["ERROR: LTripletDirac is undefined or zero. Do NOT renormalize."];
+   Exit[5]
+];
+qsTreeVertices=FeynmanRules[qsSourceLagrangian,
+                          ScreenOutput->False,MaxParticles->3];
+Print["FR_STAGE1_TRIPLET_TREE_VERTEX_COUNT: ",Length[qsTreeVertices]];
+If[!ListQ[qsTreeVertices]||Length[qsTreeVertices]<8,
+   Print["ERROR: fewer than 8 tree vertices; refusing false-positive hermiticity test."];
+   Exit[5]
+];
 CheckHermiticity[LTripletDirac];
 Print["Generating EW-field and mass counterterm Lagrangian (QCDOnly=False) ..."];
 LTripletRen = Check[
