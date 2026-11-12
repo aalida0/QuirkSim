@@ -35,6 +35,8 @@ def read_records(path):
 def quantile(sorted_values, proportion):
     if not sorted_values:
         return None
+    if len(sorted_values)==1:
+        return sorted_values[0]
     x = (len(sorted_values)-1)*proportion
     lo=int(x)
     hi=min(lo+1, len(sorted_values)-1)
