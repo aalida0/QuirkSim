@@ -1,0 +1,37 @@
+(* Dirac vectorlike triplet, SU(2)_L rep 3, hypercharge Y=0. *)
+(* Electroweak-only model extension; load after FeynRules SM.fr. *)
+M$ModelName = "QuirkSimDiracTripletEW";
+M$Information = {Authors -> {"QuirkSim"}, Version -> "0.2 (pending runtime checks)"};
+M$ClassesDescription = {
+ F[21] == {ClassName->Q1, SelfConjugate->False, Indices->{},
+   Mass->{MQC,225.0}, Width->{WQ1,0.0}, QuantumNumbers->{Q->1},
+   ParticleName->"q1+", AntiParticleName->"q1-", PDG->9000111,
+   PropagatorLabel->"Q1", PropagatorType->Straight, PropagatorArrow->Forward},
+ F[22] == {ClassName->QN, SelfConjugate->False, Indices->{},
+   Mass->{MQ0,225.0}, Width->{WQN,0.0}, QuantumNumbers->{Q->0},
+   ParticleName->"q0", AntiParticleName->"q0~", PDG->9000112,
+   PropagatorLabel->"QN", PropagatorType->Straight, PropagatorArrow->Forward},
+ F[23] == {ClassName->Q2, SelfConjugate->False, Indices->{},
+   Mass->{MQC,225.0}, Width->{WQ2,0.0}, QuantumNumbers->{Q->-1},
+   ParticleName->"q2-", AntiParticleName->"q2+", PDG->9000113,
+   PropagatorLabel->"Q2", PropagatorType->Straight, PropagatorArrow->Forward}
+};
+(* T3=Diag[1,0,-1], T+ has two sqrt(2) entries. W+=g/sqrt(2)*T+.
+   Coupling ee/sw, vectorlike (NO left-chirality projector).
+   Tree gauge symmetry needs MQC=MQ0, default 225 GeV.
+   A positive one-loop MQC-MQ0 is only a pole-mass improvement. *)
+LTripletKinetic := Block[{mu},
+  I Q1bar.Ga[mu].del[Q1,mu]
+  + I QNbar.Ga[mu].del[QN,mu]
+  + I Q2bar.Ga[mu].del[Q2,mu]];
+LTripletMass := - MQC (Q1bar.Q1 + Q2bar.Q2) - MQ0 QNbar.QN;
+LTripletNC := Block[{mu},
+  ee A[mu] (Q1bar.Ga[mu].Q1 - Q2bar.Ga[mu].Q2)
+  + (ee cw/sw) Z[mu] (Q1bar.Ga[mu].Q1 - Q2bar.Ga[mu].Q2)];
+LTripletCC := Block[{mu},
+  (ee/sw) ( W[mu] (Q1bar.Ga[mu].QN + QNbar.Ga[mu].Q2)
+  + Wbar[mu] (QNbar.Ga[mu].Q1 + Q2bar.Ga[mu].QN))];
+LTriplet := LTripletKinetic + LTripletMass + LTripletNC + LTripletCC;
+L := LSM + LTriplet;
+(* No SU(N_IC) gluons/hidden charge in UFO, no weak pion decays.
+   Runtime FeynRules validation and independent MG5 checks pending. *)

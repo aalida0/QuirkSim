@@ -12,7 +12,7 @@ import os
 from pathlib import Path
 import shutil
 
-MODEL_NAME = "TripletEW_UFO"
+MODEL_NAME = "DiracTripletEW_UFO"
 REQUIRED_BASE = (
     "__init__.py", "object_library.py", "particles.py", "parameters.py",
     "couplings.py", "vertices.py", "lorentz.py", "coupling_orders.py",
@@ -27,22 +27,22 @@ EXTRA = {
 MQ0 = Parameter(name='MQ0', nature='external', type='real',
     value=225.0, texname='m_{Q^0}', lhablock='MASS', lhacode=[9000112])
 MQC = Parameter(name='MQC', nature='external', type='real',
-    value=225.15717, texname='m_{Q^\\pm}', lhablock='MASS', lhacode=[9000111])
+    value=225.0, texname='m_{Q^\\pm}', lhablock='MASS', lhacode=[9000111])
 ''',
     "particles.py": r'''
 # --- QuirkSim charged/neutral Dirac triplet (color=1 is a PROXY) ---
 # PDG assignments are custom to this toy and NOT official PDG registrations.
 Q1p = Particle(pdg_code=9000111, name='q1+', antiname='q1-', spin=2,
     color=1, mass=Param.MQC, width=Param.ZERO, texname='Q_1^+',
-    antitexname='Q_1^-', charge=1, GhostNumber=0, LeptonNumber=0, Y=0)
+    antitexname='Q_1^-', charge=1, GhostNumber=0, LeptonNumber=0, QuirkNumber=1, Y=0)
 Q1m = Q1p.anti()
 Q0 = Particle(pdg_code=9000112, name='q0', antiname='q0~', spin=2,
     color=1, mass=Param.MQ0, width=Param.ZERO, texname='Q^0',
-    antitexname='\\bar{Q}^0', charge=0, GhostNumber=0, LeptonNumber=0, Y=0)
+    antitexname='\\bar{Q}^0', charge=0, GhostNumber=0, LeptonNumber=0, QuirkNumber=1, Y=0)
 Q0bar = Q0.anti()
 Q2m = Particle(pdg_code=9000113, name='q2-', antiname='q2+', spin=2,
     color=1, mass=Param.MQC, width=Param.ZERO, texname='Q_2^-',
-    antitexname='Q_2^+', charge=-1, GhostNumber=0, LeptonNumber=0, Y=0)
+    antitexname='Q_2^+', charge=-1, GhostNumber=0, LeptonNumber=0, QuirkNumber=1, Y=0)
 Q2p = Q2m.anti()
 ''',
     "couplings.py": r'''
