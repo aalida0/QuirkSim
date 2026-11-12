@@ -1,0 +1,52 @@
+# QuirkSim: pp -> Dirac SU(2)L triplet, LO Drell-Yan, sqrt(s) = 13.6 TeV
+# Run from ~/QuirkSim:
+#   ~/codes/Herwig/herwigpp/opt/MG5_aMC_v3_5_1/bin/mg5_aMC examples/pp_dirac_triplet_13p6TeV.mg5
+#
+# All six hard-production final states are included in ONE inclusive sample.
+# Infracolor is NOT simulated in MG5; new particles remain stable.
+# Total physical LO EW rate, under spectator-infracolor assumptions:
+#   sigma_quirk = N_IC * sigma_MG5
+
+import model /home/amine/QuirkSim/models/DiracTripletEW_UFO
+
+# Explicitly include five light parton flavors.
+define p = g u u~ d d~ s s~ c c~ b b~
+
+# Charged-pair production: gamma*/Z*.
+generate p p > q1+ q1- QED=2 QCD=0 @0
+add process p p > q2- q2+ QED=2 QCD=0 @1
+
+# W+ associated production.
+add process p p > q1+ q0~ QED=2 QCD=0 @2
+add process p p > q0 q2+ QED=2 QCD=0 @3
+
+# W- associated production.
+add process p p > q1- q0 QED=2 QCD=0 @4
+add process p p > q0~ q2- QED=2 QCD=0 @5
+
+# No tree-level q0 q0~ Drell-Yan for the Y=0 triplet.
+output results/pp_dirac_triplet_13p6TeV_LO -f
+
+# Create a small parton-level LHE sample (no shower / detector).
+launch results/pp_dirac_triplet_13p6TeV_LO
+shower=OFF
+detector=OFF
+analysis=OFF
+done
+
+# 13.6 TeV LHC beam energy and test sample size.
+set nevents 1000
+set ebeam1 6800
+set ebeam2 6800
+set iseed 12345
+set use_syst False
+
+# Loop-improved benchmark masses (GeV): Delta m = 157.17 MeV.
+# To test exact tree-level gauge degeneracy, set both to 225.
+set param_card MASS 9000111 225.15717
+set param_card MASS 9000112 225.0
+set param_card MASS 9000113 225.15717
+
+# Keep default MG5 PDFs for this smoke test.
+# For quantitative production, explicitly choose a validated LHAPDF LO set.
+done
