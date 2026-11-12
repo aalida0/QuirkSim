@@ -260,6 +260,45 @@ rerun to evaluate PDF replica uncertainty and a standard seven-point
 scale envelope before release. N_IC should be multiplied **once** outside
 the UFO.
 
+## NNPDF4.0 NLO central-rate integration (user local MG5 3.5.1)
+
+On 2026-11-12 the six-final-state inclusive fixed-order NLO run completed
+with `pdlabel=lhapdf`, requested set ID `331700`
+(`NNPDF40_nlo_as_01180`), LHAPDF 6.5.5, `sqrt(s)=13.6 TeV`,
+degenerate triplet masses `M=225 GeV`, one spectator hidden-color copy.
+
+| Quantity | Result |
+|---|---:|
+| Fixed-order NLO central rate, 1 hidden color | **3.991 ± 0.0057 pb** |
+| Grid-setup estimate | 3.997 ± 0.010 pb |
+| For `N_IC=2` under spectator-index assumptions | **7.982 ± 0.0114 pb** |
+| Pole cancellation | 16 reported checks, each 20/20 points at 1e-5 |
+| PDF set chosen in MG5 run card | `pdlabel=lhapdf`, `lhaid=331700` |
+| PDF provenance from installed .info | `SetIndex=331700`, `NumMembers=101`, `OrderQCD=1`, `AlphaS_MZ=0.1180024` |
+| Compared with internal-PDF NLO central | 3.746 ± 0.0055 pb (NOT a K factor) |
+
+The MG5 log prints `Failed to access python version of LHAPDF`
+but then `INFO: Using LHAPDF v6.5.5 interface for PDFs`. This indicates
+the compiled LHAPDF interface is available; missing Python bindings
+do not invalidate the central fixed-order calculation. Before final
+release, cross-check the stored `Cards/run_card.dat` and banner
+to confirm `lhaid 331700` was used, and exclude any PDF-loading
+error messages.
+
+**This is a central NLO QCD result, not a fully uncertainty-qualified
+prediction.** Integration error is not a theory uncertainty. The printed
+9-point scale envelope is not necessarily the standard 7-point envelope.
+NLO PDF replica uncertainty and a scale-envelope prescription need to be
+reported. A true NLO K factor requires an LO run with matched NLO PDFs,
+alpha_s, electroweak parameters, scales, final-state masses and flavour
+scheme (in addition to the conventional LO-PDF LO baseline as appropriate).
+
+For NLO fixed-order scale/PDF uncertainties, MadGraph's on-the-fly
+reweighting options `reweight_scale`, `rw_rscale`, `rw_fscale`
+and `reweight_PDF` are documented in its NLO run card. Use the
+compiled LHAPDF interface; the separate Python-based systematics
+module can require LHAPDF Python bindings.
+
 ## Required physics release gates
 
 1. Python import, six species, eight vector vertices and charge/quirk-number conservation.
