@@ -79,13 +79,13 @@ M$ClassesDescription = Join[M$ClassesDescription, {
 
 (*
   Our SU(2) gauge current is
-      -g_W W^a_mu bar(Q) gamma^mu T^a_adj Q,
+      +g_W W^a_mu bar(Q) gamma^mu T^a_adj Q in the\n  positive-vertex-sign convention of the existing QuirkSim UFO,
   with T3=diag(1,0,-1) and T+ matrix entries sqrt(2);
   charged currents consequently have coefficient g_W rather than
   g_W/sqrt(2). No Q-Goldstone Yukawa couplings for a vectorlike
   gauge-invariant mass.
 
-  All neutral and charged interactions are vectorlike.
+  All neutral and charged interactions are vectorlike.\n  The original QuirkSim DiracTripletEW.fr source uses the same positive\n  current sign. Check the exported photon/Z/W vertices against the\n  validated QuirkSim UFO AND the SM electron vertex before NLO EW.
 *)
 LTripletDirac := Block[{mu},
     I Qp1bar.Ga[mu].del[Qp1,mu]
@@ -93,10 +93,10 @@ LTripletDirac := Block[{mu},
   + I Qm2bar.Ga[mu].del[Qm2,mu]
   - MQ (Qp1bar.Qp1 + Qzerobar.Qzero + Qm2bar.Qm2)
 
-  - ee (Qp1bar.Ga[mu].Qp1 - Qm2bar.Ga[mu].Qm2) A[mu]
-  - gw cw (Qp1bar.Ga[mu].Qp1 - Qm2bar.Ga[mu].Qm2) Z[mu]
+  + ee (Qp1bar.Ga[mu].Qp1 - Qm2bar.Ga[mu].Qm2) A[mu]
+  + gw cw (Qp1bar.Ga[mu].Qp1 - Qm2bar.Ga[mu].Qm2) Z[mu]
 
-  - gw (
+  + gw (
        Qp1bar.Ga[mu].Qzero W[mu]
      + Qzerobar.Ga[mu].Qp1 Wbar[mu]
      + Qzerobar.Ga[mu].Qm2 W[mu]
