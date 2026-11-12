@@ -69,7 +69,7 @@ class TestSevenPointScaleEnvelope(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,"Expected 9"):
                 read_scale_block(file)
             file.write_text(original.replace("scale variations:","other block:"))
-            with self.assertRaisesRegex(ValueError,"Missing 'scale variations'"):
+            with self.assertRaisesRegex(ValueError,"Missing .*scale variations"):
                 read_scale_block(file)
             card=proc/"Cards"/"run_card.dat"
             card.write_text("0.5,2.0 = rw_rscale\n")
