@@ -124,12 +124,23 @@ def build(mg5:Path, destination:Path, force:bool=False):
         if "9000111" not in contents and "9000112" not in contents:
             contents=contents.replace("Block MASS", "Block MASS\n"+masses,1)
             restriction.write_text(contents,encoding="utf-8")
+    # Work in a standard massless-five-flavour initial-state scheme.
+    # The old loop_sm default has MB=4.7 GeV; for p including b/bbar
+    # NLO massless-parton PDFs this is not a consistent default.
+    # Preserve a named 4F/massive-b restriction for explicit studies.
+    (destination/"restrict_massive_b.dat").write_text(
+        (destination/"restrict_default.dat").read_text(encoding="utf-8"),
+        encoding="utf-8")
+    (destination/"restrict_default.dat").write_text(
+        (destination/"restrict_no_b_mass.dat").read_text(encoding="utf-8"),
+        encoding="utf-8")
     manifest={
         "base_model":"MG5_aMC models/loop_sm (upstream NLO QCD CT)",
         "base_git_commit":upstream_version(mg5),
         "scope":"pp -> Dirac Y=0 triplet: full LO EW + NLO QCD corrections only",
         "is_fully_dynamical_quirk_model":False,
         "nlo_qcd_uv_r2":"inherited SM QCD counterterms unchanged",
+        "initial_flavour_scheme":"massless u d s c b; restrict_no_b_mass is the default",
         "triplet_color":"SU(3)c singlet; hidden SU(N_IC) index not represented",
         "cross_section_hidden_multiplicity":"multiply by N_IC only under spectator hidden-color assumptions",
         "weak_decay_implementation":"not represented; QuirkSim propagator outside UFO",
