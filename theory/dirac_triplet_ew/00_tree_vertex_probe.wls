@@ -28,8 +28,22 @@ Print["FR_TRIPLET_CLASS_DECLARATIONS_PRESENT: ",
 If[!And@@qsTripletClassCheck,
    Print["ERROR: Missing one or more Dirac triplet classes after LoadModel."];
    Exit[3]];
+qsTripletLagrangian=LTripletDirac;
+qsTripletLagrangianText=ToString[InputForm[qsTripletLagrangian]];
+Print["FR_TRIPLET_LAGRANGIAN_HEAD: ", Head[qsTripletLagrangian]];
+Print["FR_TRIPLET_LAGRANGIAN_PREVIEW: ",
+      StringTake[qsTripletLagrangianText,UpTo[1000]]];
+If[Head[qsTripletLagrangian] === Symbol ||
+   qsTripletLagrangian === 0 ||
+   StringContainsQ[qsTripletLagrangianText,"bar[Qp1]"] ||
+   StringContainsQ[qsTripletLagrangianText,"bar[Qzero]"] ||
+   StringContainsQ[qsTripletLagrangianText,"bar[Qm2]"],
+   Print["ERROR: triplet Lagrangian missing, zero, or contains unrecognized bar[psi] antifields."];
+   Exit[3]
+];
+Print["FR_TRIPLET_LAGRANGIAN_DECLARATION_OK"];
 Print["FR_TREE_PROBE_START"];
-qsV=FeynmanRules[LTripletDirac,ScreenOutput->False,MaxParticles->3];
+qsV=FeynmanRules[qsTripletLagrangian,ScreenOutput->False,MaxParticles->3];
 Print["FR_TREE_VERTEX_COUNT: ",Length[qsV]];
 If[!ListQ[qsV] || Length[qsV]<8,
    Print["ERROR: fewer than 8 triplet tree vertices; cannot proceed to EW NLO."];
