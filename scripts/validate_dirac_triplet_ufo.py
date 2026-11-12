@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Python-level UFO import and structural validation (NOT MadGraph amplitudes)."""
 import sys
+import tempfile
 from pathlib import Path
 
 def check(folder):
@@ -48,6 +49,17 @@ def check(folder):
     for v in all_vertices:
         if P.Q0 in v.particles or P.Q0bar in v.particles:
             assert P.a not in v.particles and P.Z not in v.particles
+    # Actual MG5 3.5.1 bug regression: parameter-card writer must be bundled.
+    writer = folder / "write_param_card.py"
+    assert writer.is_file(), "Missing write_param_card.py for MG5 3.5.1"
+    from write_param_card import ParamCardWriter
+    with tempfile.TemporaryDirectory() as td:
+        card = Path(td) / "param_card.dat"
+        ParamCardWriter(str(card), generic=True)
+        text = card.read_text(encoding="utf-8")
+        assert "9000111" in text and "9000112" in text and "9000113" in text
+        assert "QNUMBERS 9000112" in text, "Neutral Dirac QNUMBERS missing"
+    print("PASS: independent parameter card generated with three triplet PDGs")
     print("PASS: 6 Dirac species, 8 EW vertices, 0 neutral-diagonal A/Z")
     print("PASS: all BSM vertices conserve electric charge and quirk number")
     print(f"Loaded {len(all_particles)} particles, {len(all_vertices)} vertices")
