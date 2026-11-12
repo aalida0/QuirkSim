@@ -1,22 +1,55 @@
-# QuirkSim DiracTripletEW_UFO (LO electroweak spectator-infracolor benchmark)
+# QuirkSim Dirac triplet: LO and NLO-QCD production model scope
 
-Independently added SU(2)L Dirac triplet Y=0 to the canonical MadGraph SM UFO.
-Three Dirac fields q1+ (PDG 9000111), q0 (9000112), q2- (9000113) and three separate antiparticles.
-Tree-level vectorlike A/Z/W couplings; full T+=sqrt(2) ladder => W coefficient e/sin(thetaW).
-Eight FFV new vertices. Neutral q0 has no diagonal A or Z coupling.
-Tree-level gauge-invariant mass choice is MQC=MQ0=225 GeV, the default.
-The loop-improved charged mass may be set to 225.15717 GeV at production-level accuracy.
-No dynamic SU(N_IC) gauge gluons or SU(N_IC) index. For pure LO Drell–Yan, multiply cross sections by N_IC if spectator-color assumptions apply.
-No weak pion decays, string dynamics, hidden radiation, or annihilation. New particles width=0 so propagation/decay is done by QuirkSim.
-Do not confuse this with a full quirk UFO. Matrix-element-level MadGraph numerical checks are still pending.
+This directory (`DiracTripletEW_UFO`) is the **original LO electroweak
+prototype**. It is validated for six hard Drell--Yan channels and their
+charge assignments, including MadGraph LO amplitudes and 1,000-event
+production. It has **no one-loop SM-QCD UV/R2 counterterms**.
 
-Provenance: Base SM UFO from mg5amcnlo/mg5amcnlo '3.x' models/sm, extended by QuirkSim.
-Companion model builder, tests and source are in scripts/ and FeynRules/ of this branch.
+For **NLO QCD**, use the reproducible model generator in:
 
-Example (inside MadGraph):
-import model DiracTripletEW_UFO
-generate u u~ > q1+ q1- QED=2 QCD=0
-output triplet_uu -f
+```bash
+python3 scripts/build_dirac_triplet_nlo_ufo.py \
+  --mg5-dir /path/to/MG5_aMC --force
+python3 scripts/validate_dirac_triplet_nlo_ufo.py \
+  --mg5-dir /path/to/MG5_aMC
+```
 
-Charge-conserving W+ example:
-generate u d~ > q1+ q0~ QED=2 QCD=0
+It produces `models/DiracTripletEW_NLO_UFO/`, based on MadGraph's NLO
+`loop_sm` and retaining its validated SM-QCD UV/R2 sector. QuirkSim
+adds the complete eight tree-level vectorlike triplet electroweak vertices
+and correct charge-conjugate particles; the new triplet does not couple
+to SU(3)c, so no additional BSM QCD counterterms are required.
+
+### Lagrangian / mass convention
+
+Three Dirac fields q1+ (PDG 9000111), q0 (PDG 9000112), q2-
+(PDG 9000113), with three separate antiparticles. They form **one**
+vectorlike SU(2)L triplet with Y=0; there are not six triplets.
+
+Tree-level A/Z/W interactions have T3=(+1,0,-1), W coefficient g2
+and identical vector couplings to left- and right-handed components.
+The neutral field has no diagonal photon/Z tree coupling.
+
+Gauge invariant tree mass is MQC=MQ0=M (default 225 GeV).
+The 157 MeV charged-neutral mass splitting used in QuirkSim is a
+one-loop *electroweak pole-mass correction*, not an independent
+gauge-invariant tree-level mass term. For NLO-QCD production use
+degenerate electroweak masses and apply splitting in the subsequent
+weak-decay propagation. A split-mass hard UFO is only an approximation.
+
+### What is not included
+
+The triplet is represented as an SU(3)c singlet with an **unrepresented
+infracolor index**. The NLO-QCD partonic cross section can be multiplied
+by N_IC for degenerate spectator hidden colors. There are no hidden
+gluons, infracolor radiation, hadronization, string worldsheets,
+quirkonium/annihilation or weak pion decay vertices inside either UFO.
+These require the independent QuirkSim simulation stage.
+
+Neither UFO contains NLO electroweak corrections or a gauge-invariant
+dynamical infracolor completion. The NLO-QCD UFO is complete **within
+its explicitly restricted perturbative production scope**, not a full
+physical model of all quirk processes.
+
+See `studies/TRIPLET_NLO_QCD_UFO.md` for physics scope, source
+provenance, NLO validation and numerical cross-section requirements.
