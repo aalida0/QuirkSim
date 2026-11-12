@@ -24,6 +24,7 @@ class TestStage1LogGate(unittest.TestCase):
                 m.mkdir()
                 (m/(m.name+".mod")).write_text("fake model")
                 (m/(m.name+".pars")).write_text("fake parameters")
+                (m/(m.name+".gen")).write_text("fake model-specific generic")
             return audit(log,m)
 
     def test_clean_log_with_model_files_only_passes_log_preflight(self):
@@ -54,6 +55,19 @@ class TestStage1LogGate(unittest.TestCase):
         r=self.check("",models=False)
         self.assertFalse(r["accepted_for_nloct_preflight"])
 
+    def test_missing_generic_file_must_fail(self):
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d)
+            log=root/"stage1.log"
+            log.write_text(GOOD_LOG)
+            m=root/"DiracTripletEW_QCDEW_FA"
+            m.mkdir()
+            (m/(m.name+".mod")).write_text("fake")
+            (m/(m.name+".pars")).write_text("fake")
+            r=audit(log,m)
+            self.assertFalse(r["accepted_for_nloct_preflight"])
+            self.assertFalse(r["model_files_exist"][".gen"])
+
     def test_no_loaded_marker_must_fail(self):
         with tempfile.TemporaryDirectory() as d:
             root=Path(d)
@@ -64,6 +78,7 @@ class TestStage1LogGate(unittest.TestCase):
             m.mkdir()
             (m/(m.name+".mod")).write_text("fake")
             (m/(m.name+".pars")).write_text("fake")
+            (m/(m.name+".gen")).write_text("fake")
             self.assertFalse(audit(log,m)["accepted_for_nloct_preflight"])
 
 
