@@ -31,8 +31,19 @@ FeynmanGauge=True;
 Print["Checking new triplet Lagrangian's Hermiticity ..."];
 CheckHermiticity[LTripletDirac];
 Print["Generating EW-field and mass counterterm Lagrangian (QCDOnly=False) ..."];
-LTripletRen = OnShellRenormalization[
-    LTripletFull, QCDOnly -> False, FlavorMixing -> False
+LTripletRen = Check[
+    OnShellRenormalization[
+        LTripletFull, QCDOnly -> False, FlavorMixing -> False
+    ],
+    $Failed,
+    {Part::partd, Part::partw, Set::partd, Set::partw,
+     First::nofirst, Function::slotn, StringJoin::string}
+];
+If[LTripletRen === $Failed,
+   Print["FR_STAGE1_RENORM_INVALID: an unresolved Mathematica error occurred ",
+         "inside OnShellRenormalization. FeynArts export was NOT attempted."];
+   Print["Do NOT run NLOCT until the EW renormalization scheme is repaired."];
+   Exit[4]
 ];
 SetDirectory[qsGeneratedDir];
 WriteFeynArtsOutput[
