@@ -49,3 +49,5 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_triplet_ew_tree_vertex_audit.py' -v
       - name: Reject incomplete NLOCT EW UV-R2 stage2 files
         run: python -m unittest discover -s tests -p 'test_triplet_ew_stage2_audit.py' -v
+      - name: Verify NLOCT FeynArts model search-path regression
+        run: python -m unittest discover -s tests -p 'test_triplet_ew_nloct_modelpath.py' -v
