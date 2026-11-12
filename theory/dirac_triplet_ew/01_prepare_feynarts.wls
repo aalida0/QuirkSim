@@ -17,7 +17,7 @@ frHome=ExpandFileName[frHome];
 If[!FileExistsQ[FileNameJoin[{frHome,"FeynRules.m"}]],
    Print["ERROR: no FeynRules.m at ",frHome];Exit[2]
 ];
-scriptDir=DirectoryName[$InputFileName];
+scriptDir=DirectoryName[ExpandFileName[$InputFileName]];
 modelFile=FileNameJoin[{scriptDir,"TripletDirac.fr"}];
 If[!FileExistsQ[modelFile],Print["Missing ",modelFile];Exit[2]];
 out=FileNameJoin[{scriptDir,"generated"}];
