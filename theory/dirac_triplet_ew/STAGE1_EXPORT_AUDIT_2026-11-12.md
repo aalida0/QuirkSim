@@ -112,3 +112,46 @@ been independently validated.
 
 Reference: FeynRules 2.0 paper, arXiv:1310.1921, Section
 on fermion class naming and anti[psi].
+
+## Follow-up: eight triplet tree vertices PASS (user Mathematica output)
+
+The corrected `TripletDirac.fr` with proper `Qp1bar`,
+`Qzerobar`, `Qm2bar` generated exactly **8**
+`FeynmanRules[LTripletDirac,MaxParticles->3]` FFV vertices,
+consistent with the previously validated NLO QCD model:
+
+| Fermion | Antifermion | Boson | Coefficient / gamma^mu |
+|---|---|---|---|
+| Qm2 | Qm2bar | A | `-i ee` |
+| Qp1 | Qp1bar | A | `+i ee` |
+| Qp1 | Qzerobar | Wbar | `+i ee/sw` |
+| Qzero | Qp1bar | W | `+i ee/sw` |
+| Qm2 | Qzerobar | W | `+i ee/sw` |
+| Qzero | Qm2bar | Wbar | `+i ee/sw` |
+| Qm2 | Qm2bar | Z | `-i cw ee/sw` |
+| Qp1 | Qp1bar | Z | `+i cw ee/sw` |
+
+The tree FFV test has **no evidence of a missing or unexpected
+coupling**. It does not independently establish gauge Ward identities
+or full one-loop EW renormalization.
+
+Additional implemented checks:
+- `scripts/audit_triplet_ew_tree_vertices.py` parses the Mathematica
+  log and checks the eight FFV coefficients against hard-coded validated
+  QCD-UFO expectations, refusing missing, duplicated, wrong-sign,
+  chiral or wrong-normalization vertices;
+- `scripts/run_triplet_ew_stage1.sh` now runs that tree audit and
+  aborts before renormalization if it fails.
+- `01_prepare_feynarts.wls` now uses `GenericFile -> True`, generating
+  a **matching model-specific .gen** rather than filtering every
+  interaction against `Lorentz.gen`, which previously ignored vertices.
+- `02_calculate_nloct.wls` now uses the corresponding model-specific
+  generic file, and the stage-1 preflight requires .mod, .pars and
+  .gen with matching SHA256 hashes.
+
+**Next local action**: after pulling the branch, run
+`bash scripts/run_triplet_ew_stage1.sh` (NOT stage2). It
+re-runs the verified tree probe and attempts EW renormalization
+with a fail-closed log audit. The prior defective EW stage1 export
+was never physics-validated, and this new run may expose further
+SM tadpole renormalization issues.
