@@ -35,3 +35,7 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_triplet_nlo_pdf_replicas.py' -v
       - name: Test seven-point NLO scale reweight extraction
         run: python -m unittest discover -s tests -p 'test_triplet_nlo_7point.py' -v
+      - name: Validate one-loop triplet EW mass-splitting benchmark
+        run: python -m unittest discover -s tests -p 'test_triplet_ew_pole_spectrum.py' -v
+      - name: Reject incomplete NLO EW candidate UFOs
+        run: python -m unittest discover -s tests -p 'test_triplet_nlo_ew_candidate_audit.py' -v
