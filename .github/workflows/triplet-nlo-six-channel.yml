@@ -1,0 +1,53 @@
+name: Dirac triplet all six channels at NLO QCD
+on:
+  push:
+    branches: [feature/dirac-triplet-ew-lo]
+    paths:
+      - '.github/workflows/triplet-nlo-six-channel.yml'
+  workflow_dispatch:
+jobs:
+  six-channel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Get MG5 and generate spectator NLO-QCD UFO
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone --depth 1 --branch 3.x https://github.com/mg5amcnlo/mg5amcnlo.git /tmp/mg5amcnlo
+          python scripts/build_dirac_triplet_nlo_ufo.py --mg5-dir /tmp/mg5amcnlo
+          python scripts/validate_dirac_triplet_nlo_ufo.py --mg5-dir /tmp/mg5amcnlo
+      - name: Generate all six partonic final-state channels with real, virtual and subtraction terms
+        shell: bash
+        run: |
+          set -euo pipefail
+          MODEL="${GITHUB_WORKSPACE}/models/DiracTripletEW_NLO_UFO"
+          {
+            echo "import model ${MODEL}"
+            echo 'generate u u~ > q1+ q1- QED=2 QCD=0 [QCD]'
+            echo 'add process u u~ > q2- q2+ QED=2 QCD=0 [QCD]'
+            echo 'add process u d~ > q1+ q0~ QED=2 QCD=0 [QCD]'
+            echo 'add process u d~ > q0 q2+ QED=2 QCD=0 [QCD]'
+            echo 'add process d u~ > q1- q0 QED=2 QCD=0 [QCD]'
+            echo 'add process d u~ > q0~ q2- QED=2 QCD=0 [QCD]'
+            echo 'output /tmp/triplet_nlo_six -f'
+            echo 'quit'
+          } > /tmp/triplet_nlo_six.mg5
+          python /tmp/mg5amcnlo/bin/mg5_aMC /tmp/triplet_nlo_six.mg5 2>&1 | tee /tmp/triplet_nlo_six.log
+          test -d /tmp/triplet_nlo_six/SubProcesses
+          grep -q 'Generating virtual matrix element' /tmp/triplet_nlo_six.log
+          grep -q 'Generating FKS-subtracted matrix elements' /tmp/triplet_nlo_six.log
+          grep -q 'Generated 6 subprocesses' /tmp/triplet_nlo_six.log
+      - name: Upload NLO six-channel process log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: triplet-nlo-six-channel
+          path: |
+            /tmp/triplet_nlo_six.log
+            /tmp/triplet_nlo_six.mg5
+          if-no-files-found: ignore
