@@ -41,7 +41,7 @@ jobs:
           test -d /tmp/triplet_nlo_six/SubProcesses
           grep -q 'Generating virtual matrix element' /tmp/triplet_nlo_six.log
           grep -q 'Generating FKS-subtracted matrix elements' /tmp/triplet_nlo_six.log
-          grep -q 'Generated 6 subprocesses' /tmp/triplet_nlo_six.log
+          test "$(grep -c 'INFO: Generated 1 subprocesses' /tmp/triplet_nlo_six.log)" -eq 6
       - name: Upload NLO six-channel process log
         if: always()
         uses: actions/upload-artifact@v4
