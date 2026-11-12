@@ -21,6 +21,9 @@ from .physics import benchmark
 
 CHARGES = {9000111:1, -9000111:-1, 9000112:0, -9000112:0,
            9000113:-1, -9000113:1}
+# Approximate ATLAS barrel pixel layer cylinder radii, in cm.
+# NOT a sensor geometry: no finite z, endcaps, modules or hit efficiencies.
+ATLAS_PIXEL_BARREL_RADII_CM = (3.325, 5.05, 8.85, 12.25)
 
 
 @dataclass(frozen=True)
@@ -34,6 +37,7 @@ class ProductionParameters:
     mode: str = 'recoil'
     force_model: str = 'ng_endpoint'
     mass_tolerance_gev: float = 0.002
+    layer_radii_cm: tuple = ATLAS_PIXEL_BARREL_RADII_CM
 
     def __post_init__(self):
         if self.mode not in ('stable','no_recoil','recoil'):
@@ -45,6 +49,11 @@ class ProductionParameters:
             raise ValueError('positive numerical and physical parameters required')
         if not math.isfinite(self.b_tesla):
             raise ValueError('invalid magnetic field')
+        radii = tuple(self.layer_radii_cm)
+        if (not radii or any(not math.isfinite(r) or r<=0 for r in radii)
+                or any(a>=b for a,b in zip(radii,radii[1:]))):
+            raise ValueError('layer radii must be positive, strictly increasing')
+
 
 
 def read_events(path, limit=0):
@@ -115,6 +124,9 @@ def simulate_produced(event, params: ProductionParameters):
     t=0.
     decays=[]
     minima=[]
+    # The first outward crossing is recorded even if it occurs *after* decay.
+    # A charged crossing is not a detector hit: barrel length is unbounded here.
+    first_outward_crossings = {}
     first_decay_time=None
     bvec=np.array([0.,0.,params.b_tesla])
     while t < params.duration_ps-1e-10:
@@ -146,8 +158,20 @@ def simulate_produced(event, params: ProductionParameters):
             clock.terminal=True
             return clock
 
+        # Integrator root finds: outward crossings of infinite barrel
+        # cylinders, for both endpoints whether or not they are charged.
+        layer_keys=[(i,float(radius)) for i in range(2)
+                    for radius in params.layer_radii_cm]
+        def make_radius_crossing(i,radius):
+            def cross(_t,z):
+                return math.hypot(z[3*i],z[3*i+1])-radius
+            cross.direction=1
+            cross.terminal=False
+            return cross
+
         sol=solve_ivp(rhs,(t,params.duration_ps),y,method='DOP853',
-            events=[close_min]+[make_decay_clock(i) for i in active],
+            events=([close_min]+[make_decay_clock(i) for i in active]
+                    +[make_radius_crossing(i,r) for i,r in layer_keys]),
             rtol=2e-9,atol=1e-10,max_step=params.max_step_ps)
         if not sol.success:
             raise RuntimeError(sol.message)
@@ -155,6 +179,22 @@ def simulate_produced(event, params: ProductionParameters):
             if tt>1e-6:
                 minima.append({'time_ps':float(tt),'separation_cm':
                               float(np.linalg.norm(yy[:3]-yy[3:6]))})
+        first_layer_idx=1+len(active)
+        for j,(i,radius) in enumerate(layer_keys):
+            key=(i,radius)
+            if key in first_outward_crossings:
+                continue
+            if not len(sol.t_events[first_layer_idx+j]):
+                continue
+            tt=float(sol.t_events[first_layer_idx+j][0])
+            zz=sol.y_events[first_layer_idx+j][0]
+            first_outward_crossings[key]={
+                'endpoint':i, 'radius_cm':radius, 'time_ps':tt,
+                'z_cm':float(zz[3*i+2]),
+                'phi_rad':math.atan2(zz[3*i+1],zz[3*i]),
+                'charge_at_crossing_e':int(charges[i]),
+                'initial_charge_e':int(endpoints[i]['charge_e']),
+            }
         y=sol.y[:,-1].copy()
         t=float(sol.t[-1])
         triggered=[idx for idx in range(len(active)) if len(sol.t_events[idx+1])]
@@ -172,7 +212,10 @@ def simulate_produced(event, params: ProductionParameters):
                  if key!='daughter'}
         decays.append({'endpoint':i,'parent_pdg':int(endpoints[i]['pdg_id']),
                        'emitted_charge_e':charges[i],
-                       'time_ps':t,'channel':channel,'emitted_p4_gev':emitted})
+                       'time_ps':t,'channel':channel,
+                       'position_cm':[float(c) for c in y[3*i:3*i+3]],
+                       'radius_cm':math.hypot(y[3*i],y[3*i+1]),
+                       'emitted_p4_gev':emitted})
         charges[i]=0
         masses[i]=225.
         if first_decay_time is None: first_decay_time=t
@@ -187,6 +230,10 @@ def simulate_produced(event, params: ProductionParameters):
         'initial_charged_endpoints':initially_charged,
         'final_charged_endpoints':sum(q!=0 for q in charges),
         'n_weak_decays':len(decays),'decays':decays,'turning_points':minima,
+        'barrel_layer_radii_cm':list(params.layer_radii_cm),
+        'first_outward_barrel_crossings':
+            sorted(first_outward_crossings.values(),
+                   key=lambda x:(x['radius_cm'],x['endpoint'])),
         'post_decay_closest_separation_cm':
             min((x['separation_cm'] for x in later),default=None),
         'end_time_ps':t,'pair_pt_gev':event['pair_pt_gev'],
@@ -195,5 +242,7 @@ def simulate_produced(event, params: ProductionParameters):
         'caveats':['Pythia8 QCD ISR/FSR only, no infracolor emission',
                    'straight-string endpoint-force approximation, not worldsheet',
                    'no annihilation, energy loss or detector response',
-                   'initially neutral endpoints cannot decay again']
+                   'initially neutral endpoints cannot decay again',
+                   'infinite barrel cylinders, no z acceptance, endcaps or sensor hits',
+                   'no per-layer charge deposition or reconstruction efficiency']
     }
