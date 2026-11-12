@@ -34,7 +34,9 @@ def check(mg5_dir:Path, model_dir:Path):
     assert len(mod.all_particles)==len(base.all_particles)+6
     assert len(mod.all_vertices)==len(base.all_vertices)+8
     assert len(mod.all_CTvertices)==len(base.all_CTvertices)
-    assert len(mod.CT_couplings.all_couplings)==len(base.CT_couplings.all_couplings)
+    # The UFO module exports one shared all_couplings registry for both
+    # tree and CT couplings; five new EW tree couplings are expected.
+    assert len(mod.all_couplings)==len(base.all_couplings)+5
     assert len(mod.CT_parameters.all_CTparameters)==len(base.CT_parameters.all_CTparameters)
     assert any("UV" in v.name or "R2" in v.name for v in mod.all_CTvertices)
     for bsm in (V.V_Q1_A,V.V_Q2_A,V.V_Q1_Z,V.V_Q2_Z,
