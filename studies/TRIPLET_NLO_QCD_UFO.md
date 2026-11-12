@@ -133,15 +133,63 @@ The original installed MadGraph files are not modified.
 
 The user confirmed local structural validation with MG5 3.5.1:
 6 states, 8 EW vertices, 103 CT vertices and a generated parameter card.
-**Local 3.5.1 NLO amplitude generation is the next compatibility gate**;
-the completed numerical NLO result used 3.8.1.
+Local MG5_aMC 3.5.1 has now **passed** NLO process generation, compilation,
+20/20 UV/IR pole-cancellation checks, and one-channel fixed-order integration.
+The local and 3.8.1 pilot rates agree: **0.1757 ± 0.00093 pb** (internal PDF,
+only \`u u~ > q1+ q1-\`, no N_IC factor). This does not determine the
+six-channel inclusive rate or full NLO PDF/scale uncertainties.
 
-A six-final-state NLO generation run had all six Born/FKS/virtual
-processes generated, but its CI script failed an incorrect log assertion:
-MadGraph printed six lines of `Generated 1 subprocesses`, not one line
-of `Generated 6 subprocesses`. That assertion is now corrected in
-`.github/workflows/triplet-nlo-six-channel.yml` and will be evaluated
-by its replacement workflow run.
+All six charged-pair and charged--neutral NLO processes successfully
+generated Born, real-emission, virtual and FKS contributions in CI
+[run 43270607758](https://github.com/aalida0/QuirkSim/actions/runs/43270607758).
+(The earlier failed CI was due solely to its assertion expecting one aggregate
+six-subprocess message rather than six one-subprocess messages.)
+
+## Inclusive six-final-state fixed-order NLO calculation
+
+The command-card builder `scripts/prepare_triplet_nlo_inclusive.py` creates
+**two separate MG5 command cards** so first-time MadLoop library installation
+cannot consume commands intended for a later launch. It includes five-flavour
+incoming partons and all six physical Drell--Yan final states.
+
+```bash
+cd ~/QuirkSim
+git pull --ff-only origin feature/dirac-triplet-ew-lo
+export MG5="$HOME/codes/Herwig/herwigpp/opt/MG5_aMC_v3_5_1"
+
+# PILOT (diagnostic internal PDFs; choose a new --output-dir if it exists)
+python3 scripts/prepare_triplet_nlo_inclusive.py --pdf internal \
+  --output-dir results/pp_dirac_triplet_13p6TeV_NLO \
+  --card-dir results/triplet_nlo_cards --accuracy 0.02
+"$MG5/bin/mg5_aMC" results/triplet_nlo_cards/triplet_six_nlo_generate.mg5 \
+  2>&1 | tee results/triplet_six_nlo_generation.log
+"$MG5/bin/mg5_aMC" results/triplet_nlo_cards/triplet_six_nlo_integrate.mg5 \
+  2>&1 | tee results/triplet_six_nlo_integration.log
+```
+
+Do not interpret this internal-PDF result as the final physical total rate.
+For final NLO QCD cross sections, install/configure LHAPDF in MG5 first,
+choose an existing **NLO** 5F PDF set and central-member ID, and generate a
+**different** output directory:
+
+```bash
+python3 scripts/prepare_triplet_nlo_inclusive.py \
+  --pdf lhapdf --lhaid YOUR_NLO_LHAPDF_ID \
+  --output-dir results/pp_dirac_triplet_13p6TeV_NLO_LHAPDF \
+  --card-dir results/triplet_nlo_cards_lhapdf \
+  --accuracy 0.01
+```
+
+The builder does not install PDFs. Verify `lhapdf-config`, actual PDF
+membership, its alpha_s(MZ), and central 5F scheme first. Propagate PDF
+uncertainty and an appropriate 7-point scale envelope separately. Default MG5
+scale summaries may use a **nine-point** envelope rather than the standard
+seven-point one.
+
+The inclusive MG5 result still represents **one hidden-color copy**.
+If hidden color is a spectator and there are N_IC degenerate copies, use
+`sigma_physical = N_IC * sigma_NLO`. Keep this normalization **outside**
+the UFO to avoid accidentally double-counting its hidden degrees of freedom.
 
 ## Required physics release gates
 
@@ -156,7 +204,9 @@ by its replacement workflow run.
 6. Independent gauge and charge conjugation checks, plus at least one
    external electroweak DY reference calculation for the NLO K factor.
 
-Items 4--6 are **not certified by structural tests alone**.
+Item 4 has been validated for a single representative channel with both
+MG5 3.5.1 and 3.8.1; the complete inclusive six-channel NLO rate,
+its uncertainties, and the external comparison in items 5--6 remain open.
 
 ## Provenance
 
