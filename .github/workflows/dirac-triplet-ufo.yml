@@ -31,3 +31,5 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_triplet_recoil_encounters.py' -v
       - name: Check reproducible six-channel NLO production cards
         run: python -m unittest discover -s tests -p 'test_triplet_nlo_inclusive_cards.py' -v
+      - name: Test NNPDF NLO uncertainty extraction without Python LHAPDF
+        run: python -m unittest discover -s tests -p 'test_triplet_nlo_pdf_replicas.py' -v
