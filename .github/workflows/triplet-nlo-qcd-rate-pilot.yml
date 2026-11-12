@@ -1,0 +1,55 @@
+name: Dirac triplet NLO QCD first numeric rate pilot
+on:
+  push:
+    branches: [feature/dirac-triplet-ew-lo]
+    paths:
+      - '.github/workflows/triplet-nlo-qcd-rate-pilot.yml'
+  workflow_dispatch:
+jobs:
+  one-channel-fo-pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Obtain MG5 3.8.1
+        run: git clone --depth 1 --branch 3.x https://github.com/mg5amcnlo/mg5amcnlo.git /tmp/mg5amcnlo
+      - name: Build NLO QCD UFO
+        shell: bash
+        run: |
+          python scripts/build_dirac_triplet_nlo_ufo.py --mg5-dir /tmp/mg5amcnlo
+          python scripts/validate_dirac_triplet_nlo_ufo.py --mg5-dir /tmp/mg5amcnlo
+      - name: Integrate a single NLO partonic channel at coarse accuracy
+        shell: bash
+        run: |
+          set -euo pipefail
+          {
+            echo "import model ${GITHUB_WORKSPACE}/models/DiracTripletEW_NLO_UFO"
+            echo 'generate u u~ > q1+ q1- QCD=0 QED=2 [QCD]'
+            echo 'output /tmp/triplet_nlo_fixed_order -f'
+            echo 'launch /tmp/triplet_nlo_fixed_order'
+            echo 'order=NLO'
+            echo 'fixed_order=on'
+            echo 'shower=off'
+            echo 'done'
+            echo 'set iseed=7481'
+            echo 'set req_acc_FO=0.05'
+            echo 'set nevents 0'
+            echo 'set ebeam1 6800'
+            echo 'set ebeam2 6800'
+            echo 'done'
+            echo 'quit'
+          } > /tmp/first_numeric_nlo.mg5
+          python /tmp/mg5amcnlo/bin/mg5_aMC /tmp/first_numeric_nlo.mg5 2>&1 | tee /tmp/first_numeric_nlo.log
+          grep -iE 'Cross-section|cross section|Total cross|pb|NLO|virt|pole|error' /tmp/first_numeric_nlo.log | tail -80
+      - name: Save pilot diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: triplet-nlo-rate-pilot
+          path: |
+            /tmp/first_numeric_nlo.log
+            /tmp/first_numeric_nlo.mg5
+          if-no-files-found: ignore
