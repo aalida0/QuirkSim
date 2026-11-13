@@ -72,20 +72,60 @@ Get["FeynRules.m"];
 LoadModel[FileNameJoin[{frHome,"Models","SM","SM.fr"}],
           FileNameJoin[{scriptDir,"TripletDirac.fr"}]];
 FeynmanGauge=True;
-Get[nlo];
-If[!ValueQ[UV$vertlist]||!ValueQ[R2$vertlist],
-   Print["ERROR: NLOCT output lacks UV$vertlist or R2$vertlist."];Exit[2]
+Print["NLOCT_STAGE3_LOADING_FULL_COUNTERTERMS: large input file ",
+      FileByteCount[nlo], " bytes. Inspect available memory."];
+qsReadNLOCT=Check[Get[nlo],$Failed,
+    {Part::partd,Part::partw,Set::partd,Function::slotn,StringJoin::string,
+     Power::infy,Infinity::indet}];
+If[qsReadNLOCT===$Failed,
+   Print["ERROR: NLOCT counterterm definitions failed during Get[nlo]."];
+   Exit[5]
+];
+If[!ValueQ[UV$vertlist]||!ValueQ[R2$vertlist]||
+   !ListQ[UV$vertlist]||!ListQ[R2$vertlist],
+   Print["ERROR: NLOCT output lacks parseable UV$vertlist or R2$vertlist."];
+   Exit[5]
 ];
 If[Length[UV$vertlist]==0||Length[R2$vertlist]==0,
-   Print["ERROR: NLOCT output has no UV or R2 vertices."];Exit[2]
+   Print["ERROR: NLOCT output has no UV or R2 vertices."];
+   Exit[5]
+];
+Print["NLOCT_STAGE3_COUNTERTERMS_LOADED: UV=",Length[UV$vertlist],
+      ", R2=",Length[R2$vertlist]];
+qsCandidateName="DiracTripletEW_QCDEW_CANDIDATE_UFO";
+qsCandidatePath=FileNameJoin[{out,qsCandidateName}];
+If[DirectoryQ[qsCandidatePath],
+   Print["ERROR: candidate UFO directory already exists; do not overwrite ",
+         qsCandidatePath];
+   Exit[6]
 ];
 SetDirectory[out];
-WriteUFO[
-  LTripletFull,
-  UVCounterterms -> UV$vertlist,
-  R2Vertices -> R2$vertlist,
-  Output -> "DiracTripletEW_QCDEW_CANDIDATE_UFO"
+qsExportResult=Check[
+    WriteUFO[
+      LTripletFull,
+      UVCounterterms -> UV$vertlist,
+      R2Vertices -> R2$vertlist,
+      Output -> qsCandidateName
+    ],
+    $Failed,
+    {Part::partd,Part::partw,Set::partd,Function::slotn,StringJoin::string,
+     Power::infy,Infinity::indet}
 ];
+If[qsExportResult===$Failed,
+   Print["NLOCT_STAGE3_REJECTED: Mathematica reported a structural error ",
+         "in UFO generation; the partial directory, if any, is unvalidated."];
+   Exit[7]
+];
+qsMandatory={"particles.py","vertices.py","parameters.py","couplings.py",
+             "CT_vertices.py","CT_couplings.py","CT_parameters.py"};
+qsMissing=Select[qsMandatory,
+    !FileExistsQ[FileNameJoin[{qsCandidatePath,#}]] &];
+If[Length[qsMissing]>0,
+   Print["NLOCT_STAGE3_REJECTED: missing UFO files: ",qsMissing];
+   Exit[8]
+];
+Print["NLOCT_STAGE3_CANDIDATE_FILES_PRESENT_UNVALIDATED: ",
+      qsCandidatePath];
 Print["UFO candidate exported. Its name is deliberate: NOT CERTIFIED."];
 Print["STOP: Do not quote NLO EW production or use as an approved UFO before
  UV/IR pole cancellation, photon-PDF, SM reduction, and SU2 Ward identity tests."];
