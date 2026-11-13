@@ -55,3 +55,5 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_triplet_nloct_content_inspection.py' -v
       - name: Distinguish external-triplet UV-R2 CTs from internal-loop symbols
         run: python -m unittest discover -s tests -p 'test_triplet_nloct_vertex_headers.py' -v
+      - name: Check NLOCT UV-R2-CTparameter export contract
+        run: python -m unittest discover -s tests -p 'test_triplet_ew_nloct_export_contract.py' -v
