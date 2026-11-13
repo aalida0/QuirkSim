@@ -3,6 +3,7 @@
 #include "G4ParticleChange.hh"
 #include <cstdlib>
 #include "quirkcore/SampledPionPlan.h"
+#include "quirkcore/GeneralWeakPlan.h"
 #include <cfloat>
 #include <string>
 class G4ParticleDefinition;
@@ -22,7 +23,12 @@ inline const PionPairPlan* sampledPlan() {
   static thread_local const PionPairPlan plan=loadPionPairPlan(path);
   return &plan;
 }
+inline const QPWeak::WeakPair* generalPlan() {
+  const char* path=std::getenv("QP_WEAK_GENERAL_PLAN");if(!path||!*path)return nullptr;
+  static thread_local const auto plan=QPWeak::loadWeakPlan(path);return &plan;
+}
 inline double tauPs(int pdg) {
+  if(const auto* p=generalPlan())return p->endpoint[pdg>0?0:1].properPs;
   const auto* plan=sampledPlan();return plan ? plan->endpoint[pdg>0 ? 0 : 1].properPs : tauPs();
 }
 inline std::array<double,3> pionDirection(int pdg) {
@@ -40,6 +46,7 @@ public:
 protected:
   G4double GetMeanFreePath(const G4Track&, G4double, G4ForceCondition*) override { return DBL_MAX; }
 private:
+  G4VParticleChange* generalDecay(const G4Track&);
   const G4ParticleDefinition* m_neutral;
   G4ParticleChange m_change;
 };

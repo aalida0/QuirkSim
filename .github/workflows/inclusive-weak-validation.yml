@@ -1,0 +1,23 @@
+name: Inclusive weak adapter checks
+on:
+  push:
+    branches: [research/quirkpheno-weak-recoil-pilot]
+    paths:
+      - 'quirksim/weak_plan.py'
+      - 'research/quirkpheno_recoil/GeneralWeakPlan.h'
+      - 'research/quirkpheno_recoil/QuirkWeakProcess.*'
+      - 'scripts/*inclusive_weak.py'
+      - 'tests/test_inclusive_native_validation.py'
+      - '.github/workflows/inclusive-weak-validation.yml'
+  workflow_dispatch:
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e '.[test]' uproot
+      - run: python -m pytest tests/test_inclusive_native_validation.py tests/test_complete_decays.py research/quirkpheno_recoil/test_af_original_grid_targets.py -q
+      - run: python research/quirkpheno_recoil/check_native.py
