@@ -44,6 +44,16 @@ class TestNLOCTLegs(unittest.TestCase):
         self.assertNotIn("Qm2bar",r["explicit_triplet_external_header_counts"]["UV"])
         self.assertEqual(r["unparsed_examples"],[])
 
+    def test_triplet_only_inside_coefficient_is_not_a_pass(self):
+        # A huge UV expression can contain Qp1 thousands of times
+        # without being a counterterm with a triplet external leg.
+        sample=SAMPLE.replace("{{Qp1bar, Qp1, A}", "{{e, ebar, A}")
+        sample=sample.replace("{{Qzerobar, Qzero, Z}", "{{d, dbar, Z}")
+        r=run_case(sample)
+        self.assertEqual(r["status"],"HEADERS_NEED_MANUAL_REVIEW")
+        self.assertEqual(r["explicit_triplet_external_header_counts"]["UV"],{})
+        self.assertEqual(r["explicit_triplet_external_header_counts"]["R2"],{})
+
     def test_broken_record_is_not_a_pass(self):
         r=run_case(SAMPLE.replace("{{u, ubar, Z}, function", "broken function"))
         self.assertEqual(r["status"],"HEADERS_NEED_MANUAL_REVIEW")
