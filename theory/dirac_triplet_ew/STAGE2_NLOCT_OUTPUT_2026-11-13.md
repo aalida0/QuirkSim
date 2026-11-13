@@ -95,3 +95,58 @@ source, in addition to the existing stage2 log audit.
 
 **STATUS: NLOCT_OUTPUT_GENERATED / CONTENT_AUDIT_PENDING /
 NLO_EW_PHYSICS_NOT_CERTIFIED.**
+
+
+## Verified structural audit from workstation (2026-11-13)
+
+The user ran BOTH audits successfully on the same generated NLOCT file:
+
+```text
+NLOCT_STAGE2_STRUCTURAL_PREFLIGHT_PASS_NOT_PHYSICS_CERTIFIED
+CONTENT_STRUCTURAL_SCREEN_PASS_NOT_PHYSICS_CERTIFIED
+size:      142907954 bytes (~136.29 MiB)
+sha256:    58094c1ae9e3127bfdc1bfee4126fe017bd5c4a4cb99e8ec39d22862a9e699ba
+lines:     457
+R2:        206 approximate record lines
+UV:        213 approximate record lines
+CTparam:   present; list structurally closed
+longest R2 line: 19098 bytes
+longest UV line: 2552509 bytes
+nonfinite tokens: none
+blocking findings: none
+```
+
+The `R2` section mentions `Qp1` 61 times, `Qzero` 71,
+`Qm2` 61. In the `UV` section, `Qp1` appears 5149 times,
+`Qzero` 5127, `Qm2` 4981. **These are whole-expression
+token occurrences, NOT independent vertex counts and NOT proof
+of triplet external-leg counterterms.** In particular, UV
+expressions can mention triplet masses and fields in internal
+loops for otherwise SM external legs.
+
+A narrower follow-up tool,
+`scripts/inspect_triplet_nloct_vertex_headers.py`, now
+streams the `R2$vertlist` and `UV$vertlist` records and
+extracts the *external fields* (first item of the NLOCT
+`{external-fields, coefficient}` pair) separately from the
+large loop coefficient. It reports distinct headers and triplet
+external-leg occurrences, with representative headers (never
+megabyte expressions). A passing structural parse remains
+**NOT a proof of EW gauge or UV/IR consistency**.
+
+Run:
+
+```bash
+cd ~/QuirkSim
+git pull --ff-only origin feature/dirac-triplet-ew-lo
+python3 scripts/inspect_triplet_nloct_vertex_headers.py \
+  --nlo theory/dirac_triplet_ew/generated/DiracTripletEW_QCDEW_CT.nlo \
+  --output results/triplet_ew_nloct_header_audit.json
+```
+
+Stage 03 now requires this matching header-audit manifest,
+in addition to both earlier SHA256-matched audit manifests.
+**Do not call the candidate UFO an NLO EW prediction** until
+amplitude-level UV cancellation, QED real-emission/IR
+subtraction, gauge independence, and hidden-index multiplicity
+have been demonstrated.
