@@ -168,6 +168,27 @@ If[Length[qsMissing]>0,
    Print["NLOCT_STAGE3_REJECTED: missing UFO files: ",qsMissing];
    Exit[8]
 ];
+(* Record the original NLOCT CT-parameter count. When this is zero,
+   FeynRules may correctly omit CT_parameters.py. The structural audit
+   must distinguish that case from a silently lost nonempty CT list. *)
+qsStage3ManifestFile=FileNameJoin[{qsCandidatePath,
+                                  "quirksim_stage3_manifest.json"}];
+qsStage3Manifest=<|
+   "schema_version"->1,
+   "ct_parameters_count"->Length[FR$CTparam],
+   "uv_entries_count"->Length[UV$vertlist],
+   "r2_entries_count"->Length[R2$vertlist],
+   "nlo_sha256"->FileHash[nlo,"SHA256","HexString"]
+|>;
+qsStage3ManifestResult=Check[
+   Export[qsStage3ManifestFile,qsStage3Manifest,"RawJSON"],$Failed
+];
+If[qsStage3ManifestResult===$Failed ||
+   !FileExistsQ[qsStage3ManifestFile],
+   Print["NLOCT_STAGE3_REJECTED: failed to record CT manifest."];
+   Exit[8]
+];
+Print["NLOCT_STAGE3_CT_MANIFEST_RECORDED: ",qsStage3ManifestFile];
 Print["NLOCT_STAGE3_CANDIDATE_FILES_PRESENT_UNVALIDATED: ",
       qsCandidatePath];
 Print["UFO candidate exported. Its name is deliberate: NOT CERTIFIED."];
