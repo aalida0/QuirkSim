@@ -90,6 +90,13 @@ If[Length[UV$vertlist]==0||Length[R2$vertlist]==0,
    Print["ERROR: NLOCT output has no UV or R2 vertices."];
    Exit[5]
 ];
+If[!ValueQ[FR$CTparam] || !ListQ[FR$CTparam],
+   Print["ERROR: NLOCT source lacks its FR$CTparam list; ",
+         "UFO export would drop required auxiliary counterterm definitions."];
+   Exit[5]
+];
+Print["NLOCT_STAGE3_CT_PARAMETER_COUNT: ",Length[FR$CTparam]];
+
 Print["NLOCT_STAGE3_COUNTERTERMS_LOADED: UV=",Length[UV$vertlist],
       ", R2=",Length[R2$vertlist]];
 qsCandidateName="DiracTripletEW_QCDEW_CANDIDATE_UFO";
@@ -105,6 +112,8 @@ qsExportResult=Check[
       LTripletFull,
       UVCounterterms -> UV$vertlist,
       R2Vertices -> R2$vertlist,
+      CTParameters -> FR$CTparam,
+      AddDecays -> False,
       Output -> qsCandidateName
     ],
     $Failed,
