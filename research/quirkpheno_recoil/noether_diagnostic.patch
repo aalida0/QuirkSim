@@ -1,0 +1,35 @@
+--- a/quirkcore/include/quirkcore/QuirkInfracolorForce.h
++++ b/quirkcore/include/quirkcore/QuirkInfracolorForce.h
+@@ -45,6 +45,8 @@
+   G4double GetMaxExpRapidity() const { return m_maxExpRapidity; }
+   G4int GetNStrings() const { return m_stringVectors.size(); }
+   G4LorentzVector GetSumStrings() const;
++  // Startup seed/debt is not a physical causal contour. Skip it explicitly.
++  bool NoetherReady() const { return m_initialized && !m_firstStep && m_borrowedString.t()==0.; }
+   G4ThreeVector GetAngMomentum() const;
+   G4ThreeVector GetMomentOfE() const;
+   void Clear();
+--- a/quirksim/src/Actions.cc
++++ b/quirksim/src/Actions.cc
+@@ -1,4 +1,5 @@
+ #include "Actions.hh"
++#include "quirkcore/NativeNoether.h"
+ #include "Geometry.hh"
+ #include "PrimaryGenerator.hh"
+ #include "QSimConfig.hh"
+@@ -150,6 +151,7 @@
+ }
+ 
+ void EventAction::EndOfEventAction(const G4Event* ev) {
++  QPNativeNoether::finish();
+   QuirkStringStore::instance().verifyNoPendingHandoffs();
+   const QSimConfig& c = qsimConfig();
+   const GeomInfo& g = geomInfo();
+@@ -269,6 +271,7 @@
+   EventAction::Quirk& Q = m_ev->q[i];
+   const G4StepPoint* pre = step->GetPreStepPoint();
+   const G4StepPoint* post = step->GetPostStepPoint();
++  QPNativeNoether::step(step);
+   const G4int vol = pre->GetPhysicalVolume()->GetCopyNo();
+   const VolInfo& vi = g.vols[vol];
+ 

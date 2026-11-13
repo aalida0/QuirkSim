@@ -3,6 +3,7 @@
 #include "quirkcore/QuirkTrackStatus.h"
 #include "quirkcore/TwoBodyKinematics.h"
 #include "quirkcore/DirectionControl.h"
+#include "quirkcore/NativeNoether.h"
 #include "G4DynamicParticle.hh"
 #include "G4ParticleTable.hh"
 #include "G4Track.hh"
@@ -49,6 +50,8 @@ G4VParticleChange* QuirkWeakProcess::PostStepDoIt(const G4Track& track, const G4
     child->SetTouchableHandle(track.GetTouchableHandle());
     return child;
   };
+  auto nv=[](const QPWeak::Four& v){return QPNoether::V{v[0],v[1],v[2],v[3]};};
+  QPNativeNoether::vertex(track,nv(k.daughter),{nv(k.pion)});
   auto* daughter=make(m_neutral,k.daughter);
   // This is a continuing endpoint worldline, so retain its accumulated proper clock.
   daughter->SetProperTime(track.GetProperTime());
@@ -119,6 +122,9 @@ G4VParticleChange* QuirkWeakProcess::generalDecay(const G4Track& track) {
     if(j==0)child->SetProperTime(track.GetProperTime());
     children.push_back(child);
   }
+  std::vector<QPNoether::V> emitted;
+  for(size_t j=1;j<products.size();++j){const auto& v=products[j].p4;emitted.push_back({v[0],v[1],v[2],v[3]});}
+  const auto& v=products[0].p4;QPNativeNoether::vertex(track,{v[0],v[1],v[2],v[3]},emitted);
   auto& store=QuirkStringStore::instance();
   store.beginHandoff(pdg,track.GetTrackID(),m_neutral->GetPDGEncoding());
   m_change.SetNumberOfSecondaries(static_cast<G4int>(children.size()));
