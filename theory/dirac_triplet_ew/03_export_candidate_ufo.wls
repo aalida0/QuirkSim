@@ -47,6 +47,23 @@ If[Lookup[qsContentReport,"status",""]=!=
          "does not match the file being exported."];
    Exit[4]
 ];
+qsHeaderAuditFile=FileNameJoin[{qsProjectRoot,"results",
+                                 "triplet_ew_nloct_header_audit.json"}];
+If[!FileExistsQ[qsHeaderAuditFile],
+    Print["ERROR: missing UV/R2 external-leg header audit. Run ",
+          "python3 scripts/inspect_triplet_nloct_vertex_headers.py ",
+          "before candidate UFO export."];
+    Exit[4]
+];
+qsHeaderAudit=Import[qsHeaderAuditFile,"RawJSON"];
+If[Lookup[qsHeaderAudit,"status",""]=!=
+     "HEADERS_PARSED_REQUIRE_PHYSICS_VALIDATION" ||
+   Lookup[qsHeaderAudit,"file_sha256",""]=!=FileHash[nlo,"SHA256","HexString"],
+    Print["ERROR: UV/R2 vertex headers are malformed or have an ",
+          "input hash mismatch; do not export the UFO."];
+    Exit[4]
+];
+Print["NLOCT_UV_R2_EXTERNAL_HEADERS_PARSED_ONLY"];
 Print["NLOCT_CONTENT_STRUCTURAL_SCREEN_PASS_NOT_PHYSICS_CERTIFIED"];
 Print["FR_STAGE2_PREFLIGHT_PASS_NOT_PHYSICS_CERTIFIED"];
 AppendTo[$Path,frHome];
