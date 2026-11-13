@@ -233,3 +233,77 @@ and independent MG5 ultraviolet and infrared
 cancellation tests. The correct `N_IC=2`
 virtual-loop multiplicities remain unresolved;
 **no NLO QCD+EW physics result is certified yet**.
+
+## Stage 3 12-hour interruption, fixed output-path collision (2026-11-13)
+
+The first local UFO-export attempt was interrupted by the user's
+computer shutting down after approximately 12 hours. Import of
+`DiracTripletEW_QCDEW_CT.nlo` had succeeded:
+
+```text
+NLOCT_STAGE3_CT_PARAMETER_COUNT: 0
+NLOCT_STAGE3_COUNTERTERMS_LOADED: UV=213, R2=206
+SetDirectory::badfile: The specified argument, out, should be a valid string or File object.
+ --- Universal FeynRules Output (UFO) v 1.1 ---
+101 vertices obtained.
+```
+
+The `out` variable in `03_export_candidate_ufo.wls` was
+shadowed/redefined after loading FeynRules. As a result the
+`SetDirectory[out]` call failed but Mathematica continued.
+The subsequent PC shutdown terminated the in-memory export;
+there is no automatic `WriteUFO` checkpoint.
+
+**Source fixes:**
+- Replace `out` with unique `qsStage3GeneratedRoot`
+  everywhere in stage3.
+- After loading the SM+triplet model, immediately test
+  `SetDirectory[qsStage3GeneratedRoot]` *before*
+  `Get[nlo]`, and test again before `WriteUFO`.
+- Add `QUIRKSIM_STAGE3_PREFLIGHT_ONLY=1` option:
+  perform SHA256/content guards, load FeynRules/model,
+  verify output directory, then exit **without
+  loading the 136 MiB counterterms**.
+- Stage3 runner now rejects `SetDirectory::badfile`
+  and `SetDirectory::cdir`, and accepts
+  `WOLFRAMSCRIPT_BIN` to select a licensed
+  Wolfram executable installed in a user-specific path.
+- The first attempt's `FR$CTparam` was an empty
+  list (0 parameters). Requiring `CT_parameters.py`
+  in this case was a false failure: the file is
+  now mandatory only when the list is nonempty.
+- Regression checks added in
+  `tests/test_triplet_ew_nloct_export_contract.py`
+  and CI completed successfully for the static checks.
+
+Recheck partial directories from the interrupted run,
+including the old FeynRules installation directory:
+
+```bash
+find "$HOME/.Wolfram/Applications/FeynRules" \
+     "$HOME/QuirkSim/theory/dirac_triplet_ew/generated" \
+     -maxdepth 2 -name 'DiracTripletEW_QCDEW_CANDIDATE_UFO' \
+     -type d -print
+```
+
+Do **not** treat any partial folder as a usable UFO; archive
+it before attempting a fresh export.
+
+Run the *cheap* preflight first:
+
+```bash
+cd ~/QuirkSim
+git pull --ff-only origin feature/dirac-triplet-ew-lo
+export FEYNRULES_HOME="$HOME/.Wolfram/Applications/FeynRules"
+QUIRKSIM_STAGE3_PREFLIGHT_ONLY=1 \
+ wolframscript -file theory/dirac_triplet_ew/03_export_candidate_ufo.wls
+```
+
+Only after `NLOCT_STAGE3_PREFLIGHT_ONLY_PASS` should
+the full guarded export be considered on a stable/powered
+workstation, or a Condor worker with a **properly licensed**
+Wolfram installation.
+
+The 136-MiB counterterm file and source-audit reports
+remain usable and do **not** need NLOCT regeneration.
+**No complete candidate UFO has been produced yet.**
