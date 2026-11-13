@@ -169,3 +169,67 @@ and model-content review have been completed.
 
 The old trusted NLO-QCD UFO is unchanged. No measured
 NLO-EW cross section exists.
+
+## UV/R2 external-vertex header audit — PASS (2026-11-13)
+
+The workstation ran
+`scripts/inspect_triplet_nloct_vertex_headers.py` on the
+full 142,907,954-byte NLOCT counterterm file, SHA256
+`58094c1ae9e3127bfdc1bfee4126fe017bd5c4a4cb99e8ec39d22862a9e699ba`.
+
+Result: `HEADERS_PARSED_REQUIRE_PHYSICS_VALIDATION`,
+206 unique R2 and 213 unique UV external-leg records parsed,
+0 unparsed, 0 review reasons.
+
+The generated external-leg lists **directly include triplet states**:
+- R2: Qp1 5, Qzero 5, Qm2 5 external-header appearances.
+- UV: Qp1 5, Qzero 7, Qm2 5 external-header appearances.
+- The list explicitly contains `{{anti[Qp1],1},{Qp1,2}}`,
+  `{{anti[Qzero],1},{Qzero,2}}`,
+  and `{{anti[Qm2],1},{Qm2,2}}` for both UV and R2.
+
+These header appearances are *not* one-to-one numerical
+counts of independent coupling coefficients or diagrams.
+They demonstrate actual triplet external counterterm
+structures, beyond triplet references buried in
+coefficients of SM-only vertices.
+
+### Correct NLOCT -> WriteUFO export contract
+
+A source audit of FeynRules'
+`Interfaces/UFO/PYIntMain.m` revealed that the full
+one-loop export has **three** independent inputs:
+
+```mathematica
+WriteUFO[LTripletFull,
+  UVCounterterms -> UV$vertlist,
+  R2Vertices -> R2$vertlist,
+  CTParameters -> FR$CTparam,
+  AddDecays -> False,
+  Output -> "DiracTripletEW_QCDEW_CANDIDATE_UFO"]
+```
+
+Earlier stage3 passed only the first two, thereby
+risking omission of auxiliary CT parameter definitions.
+This has now been corrected in
+`03_export_candidate_ufo.wls` and regression-tested.
+A nonempty `FR$CTparam` is preserved; an empty
+valid list is also permitted. **Do not quote any
+candidate UFO generated before this change.**
+
+The guarded stage3 runner can now be invoked on the
+user's machine, but it is expected to require substantially
+more memory than the 136 MiB symbolic input on disk:
+
+```bash
+cd ~/QuirkSim
+git pull --ff-only origin feature/dirac-triplet-ew-lo
+export FEYNRULES_HOME="$HOME/.Wolfram/Applications/FeynRules"
+bash scripts/run_triplet_ew_stage3.sh
+```
+
+The candidate must then undergo Python UFO import
+and independent MG5 ultraviolet and infrared
+cancellation tests. The correct `N_IC=2`
+virtual-loop multiplicities remain unresolved;
+**no NLO QCD+EW physics result is certified yet**.
