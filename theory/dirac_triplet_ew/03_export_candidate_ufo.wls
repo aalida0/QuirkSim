@@ -10,13 +10,13 @@ If[!StringQ[frHome]||StringLength[frHome]==0,
    Print["ERROR: FEYNRULES_HOME required"];Exit[2]];
 frHome=ExpandFileName[frHome];
 scriptDir=DirectoryName[ExpandFileName[$InputFileName]];
-out=FileNameJoin[{scriptDir,"generated"}];
-nlo=FileNameJoin[{out,"DiracTripletEW_QCDEW_CT.nlo"}];
+qsStage3GeneratedRoot=FileNameJoin[{scriptDir,"generated"}];
+nlo=FileNameJoin[{qsStage3GeneratedRoot,"DiracTripletEW_QCDEW_CT.nlo"}];
 If[!FileExistsQ[nlo],
    Print["ERROR: Missing ",nlo, ". Run stage 02 and inspect errors."];
    Exit[2]
 ];
-qsStage2AuditFile=FileNameJoin[{out,"stage2_log_audit.json"}];
+qsStage2AuditFile=FileNameJoin[{qsStage3GeneratedRoot,"stage2_log_audit.json"}];
 If[!FileExistsQ[qsStage2AuditFile],
    Print["ERROR: stage-2 NLOCT audit manifest missing; use ",
          "scripts/run_triplet_ew_stage2.sh before UFO export."];
@@ -72,11 +72,29 @@ Get["FeynRules.m"];
 LoadModel[FileNameJoin[{frHome,"Models","SM","SM.fr"}],
           FileNameJoin[{scriptDir,"TripletDirac.fr"}]];
 FeynmanGauge=True;
+(* Fail before reading the 136 MiB CT definitions if FeynRules shadows
+   a short path-variable name. Directory[] at this moment is frHome. *)
+If[!DirectoryQ[qsStage3GeneratedRoot],
+   Print["ERROR: generated output root does not exist: ",qsStage3GeneratedRoot];
+   Exit[5]
+];
+qsStage3BeforeLoadDir=Check[SetDirectory[qsStage3GeneratedRoot],$Failed,
+                             {SetDirectory::badfile,SetDirectory::cdir}];
+If[qsStage3BeforeLoadDir===$Failed ||
+   Directory[]=!=qsStage3GeneratedRoot,
+   Print["NLOCT_STAGE3_REJECTED_BAD_OUTPUT_DIRECTORY_PRELOAD: ",Directory[]];
+   Exit[5]
+];
+Print["NLOCT_STAGE3_OUTPUT_DIRECTORY_PREFLIGHT_OK: ",Directory[]];
+If[Environment["QUIRKSIM_STAGE3_PREFLIGHT_ONLY"]==="1",
+   Print["NLOCT_STAGE3_PREFLIGHT_ONLY_PASS: no heavy counterterms loaded; exiting."];
+   Exit[0]
+];
 Print["NLOCT_STAGE3_LOADING_FULL_COUNTERTERMS: large input file ",
       FileByteCount[nlo], " bytes. Inspect available memory."];
 qsReadNLOCT=Check[Get[nlo],$Failed,
     {Part::partd,Part::partw,Set::partd,Function::slotn,StringJoin::string,
-     Power::infy,Infinity::indet}];
+     SetDirectory::badfile,SetDirectory::cdir,Power::infy,Infinity::indet}];
 If[qsReadNLOCT===$Failed,
    Print["ERROR: NLOCT counterterm definitions failed during Get[nlo]."];
    Exit[5]
@@ -100,13 +118,24 @@ Print["NLOCT_STAGE3_CT_PARAMETER_COUNT: ",Length[FR$CTparam]];
 Print["NLOCT_STAGE3_COUNTERTERMS_LOADED: UV=",Length[UV$vertlist],
       ", R2=",Length[R2$vertlist]];
 qsCandidateName="DiracTripletEW_QCDEW_CANDIDATE_UFO";
-qsCandidatePath=FileNameJoin[{out,qsCandidateName}];
+qsCandidatePath=FileNameJoin[{qsStage3GeneratedRoot,qsCandidateName}];
 If[DirectoryQ[qsCandidatePath],
    Print["ERROR: candidate UFO directory already exists; do not overwrite ",
          qsCandidatePath];
    Exit[6]
 ];
-SetDirectory[out];
+qsStage3SetDirectory=Check[
+    SetDirectory[qsStage3GeneratedRoot],
+    $Failed,
+    {SetDirectory::badfile, SetDirectory::cdir}
+];
+If[qsStage3SetDirectory===$Failed ||
+   Directory[]=!=qsStage3GeneratedRoot,
+   Print["NLOCT_STAGE3_REJECTED_BAD_OUTPUT_DIRECTORY: expected ",
+         qsStage3GeneratedRoot, " but got ", Directory[]];
+   Exit[6]
+];
+Print["NLOCT_STAGE3_OUTPUT_DIRECTORY_OK: ",Directory[]];
 qsExportResult=Check[
     WriteUFO[
       LTripletFull,
