@@ -51,3 +51,5 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_triplet_ew_stage2_audit.py' -v
       - name: Verify NLOCT FeynArts model search-path regression
         run: python -m unittest discover -s tests -p 'test_triplet_ew_nloct_modelpath.py' -v
+      - name: Stream-audit large NLOCT UV and R2 content
+        run: python -m unittest discover -s tests -p 'test_triplet_nloct_content_inspection.py' -v
