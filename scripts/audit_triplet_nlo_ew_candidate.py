@@ -21,7 +21,6 @@ from pathlib import Path
 REQUIRED_FILES=(
     "particles.py", "parameters.py", "vertices.py", "couplings.py",
     "coupling_orders.py", "CT_vertices.py", "CT_couplings.py",
-    "CT_parameters.py",
 )
 # FeynRules exports particle class names variously; all three must be found
 # in the *tree-level particle file*, and CTs must involve triplet fields.
@@ -39,6 +38,25 @@ def inspect_ufo(path: Path) -> dict:
     missing=[n for n in REQUIRED_FILES if not (path/n).is_file()]
     if missing:
         raise ValueError("Missing mandatory UFO files: "+", ".join(missing))
+    # FeynRules may omit CT_parameters.py if NLOCT supplied no auxiliary
+    # counterterm parameters. Require the exporter provenance manifest in
+    # that case; otherwise we cannot distinguish valid omission from loss.
+    ct_file=path/"CT_parameters.py"
+    manifest_path=path/"quirksim_stage3_manifest.json"
+    ct_count=None
+    if manifest_path.is_file():
+        try:
+            manifest=json.loads(manifest_path.read_text(encoding="utf-8"))
+            ct_count=manifest["ct_parameters_count"]
+        except (ValueError, KeyError, TypeError) as exc:
+            raise ValueError("Invalid stage3 CT manifest") from exc
+        if type(ct_count) is not int or ct_count<0:
+            raise ValueError("Invalid ct_parameters_count in stage3 manifest")
+    if not ct_file.is_file() and ct_count!=0:
+        raise ValueError(
+            "Missing mandatory UFO files: CT_parameters.py "
+            "(no verified zero-CT-parameter stage3 manifest)"
+        )
     particle_tree=ast.parse((path/"particles.py").read_text(encoding="utf-8"))
     ct_tree=ast.parse((path/"CT_vertices.py").read_text(encoding="utf-8"))
     names={n.id.lower() for n in ast.walk(particle_tree) if isinstance(n,ast.Name)}
