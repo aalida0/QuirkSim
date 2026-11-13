@@ -12,6 +12,9 @@ class TestNLOEWGuard(unittest.TestCase):
         path.mkdir()
         for x in REQUIRED_FILES:
             (path/x).write_text("# synthetic test fixture\n")
+        # The ordinary fixture represents an exporter that wrote the optional
+        # CT_parameters.py; its omission is tested explicitly below.
+        (path/"CT_parameters.py").write_text("# synthetic CT parameters\n")
         (path/"particles.py").write_text("Qp1=object()\nQzero=object()\nQm2=object()\n")
         (path/"CT_vertices.py").write_text(
             "CTVertex(name='uv',type='UV',particles=[P.Qp1,P.Qp1,P.A])\n"
