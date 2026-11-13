@@ -121,11 +121,29 @@ def inspect(path: Path, *, samples: int=SAMPLE_LIMIT) -> dict:
           "initial_header_examples":examples,
           "unparsed_examples":strange,
           "warning":"Header tokens may be renumbered by FeynArts. A clean result is NOT a physics certification."}
+    # Zero explicit triplet external legs may reflect FeynArts class
+    # renumbering, but that must be demonstrated by mapping the class
+    # declarations; never greenlight the UFO solely because triplet
+    # tokens appeared thousands of times inside coefficients.
     nloct["status"]=(
        "HEADERS_PARSED_REQUIRE_PHYSICS_VALIDATION" if
        counts.get("UV",0)>0 and counts.get("R2",0)>0 and
        counts.get("UV_unparsed",0)==0 and counts.get("R2_unparsed",0)==0
+       and bool(explicit_external["UV"]) and bool(explicit_external["R2"])
        else "HEADERS_NEED_MANUAL_REVIEW")
+    nloct["review_reasons"]=[]
+    if not explicit_external["UV"]:
+        nloct["review_reasons"].append(
+            "No explicit Dirac triplet fields in UV vertex *headers*;"
+            " verify FeynArts class mapping before stage 3.")
+    if not explicit_external["R2"]:
+        nloct["review_reasons"].append(
+            "No explicit Dirac triplet fields in R2 vertex *headers*;"
+            " verify FeynArts class mapping before stage 3.")
+    for sec in ("UV","R2"):
+        if counts.get(sec+"_unparsed",0):
+            nloct["review_reasons"].append(
+                f"Found malformed {sec} record headers.")
     return nloct
 
 
@@ -143,7 +161,7 @@ def main():
         "status","file_sha256","records_parsed",
         "explicit_triplet_external_header_counts",
         "distinct_external_legs_counts","most_frequent_headers",
-        "initial_header_examples","unparsed_examples","warning")},indent=2))
+        "initial_header_examples","unparsed_examples","review_reasons","warning")},indent=2))
     print("Report written:",args.output)
     if report["status"]!="HEADERS_PARSED_REQUIRE_PHYSICS_VALIDATION":
         raise SystemExit("NLOCT external-leg headers need manual review; no UFO export is warranted.")
