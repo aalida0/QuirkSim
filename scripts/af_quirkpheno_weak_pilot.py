@@ -168,7 +168,7 @@ def execute(state,out,case_timeout_seconds=120,audit_close_return=False,workers=
     patch=ASSETS/'weak_handoff.patch' 
     checked(['git','apply','--check',str(patch)],source,'patch_check.log',60)
     checked(['git','apply',str(patch)],source,'patch_apply.log',60)
-    for name in ('EndpointHandoff.h','TwoBodyKinematics.h','ProperTimeClock.h','SampledPionPlan.h','DirectionControl.h','GeneralWeakPlan.h','NoetherCharges.h','NativeNoether.h','QuirkWeakProcess.h'):
+    for name in ('EndpointHandoff.h','TwoBodyKinematics.h','ProperTimeClock.h','SampledPionPlan.h','DirectionControl.h','GeneralWeakPlan.h','NoetherCharges.h','EncounterRecorder.h','NativeNoether.h','QuirkWeakProcess.h'):
         shutil.copyfile(ASSETS/name,source/'quirkcore/include/quirkcore'/name)
     shutil.copyfile(ASSETS/'QuirkWeakProcess.cc',source/'quirkcore/src/QuirkWeakProcess.cc')
     checked(['git','apply','--check',str(ASSETS/'noether_diagnostic.patch')],source,'noether_patch_check.log',60)
@@ -190,15 +190,22 @@ def execute(state,out,case_timeout_seconds=120,audit_close_return=False,workers=
             env.update(QP_NOETHER_OUTPUT=str(out/(case['name']+'.noether.jsonl')),QP_NOETHER_BZ_T=case['field_tesla'])
         env.update(QP_WEAK_DIRECTION_MODE=case.get('direction_mode','planned'),QP_WEAK_COLLINEAR_SIGN=case.get('collinear_sign',1))
         env['QP_WEAK_CONTROL_BOOST_Z']=case.get('pair_boost_z',0.)
+        if state.get('physical_weak_ensemble'):
+            env['QP_ENCOUNTER_OUTPUT']=str(out/(case['name']+'.encounters.jsonl'))
         command='env '+' '.join(shlex.quote(k+'='+str(v)) for k,v in env.items())
         command+=' timeout --kill-after=5s '+str(case_timeout_seconds)+'s '+shlex.quote(str(exe))
         command+=' --mt -t 1 -n 1 -s 1 -m '+shlex.quote(case['macro'])
         execution=run_logged(lcg(command,case_timeout_seconds+15),source,out/(case['name']+'.log'),case_timeout_seconds+25)
         return case,execution,(out/(case['name']+'.root')).is_file()
+    preflight=set(state.get('conservation_preflight_cases',[]))
+    if preflight and not preflight.issubset({c['name'] for c in state['cases']}):raise ValueError('unknown preflight case')
+    batches=([[c for c in state['cases'] if c['name'] in preflight],
+              [c for c in state['cases'] if c['name'] not in preflight]] if preflight else [state['cases']])
     pool=ThreadPoolExecutor(max_workers=workers)
-    pending=[pool.submit(run_case,case) for case in state['cases']]
     try:
-      for future in as_completed(pending):
+      for batch_index,batch in enumerate(batches):
+       pending=[pool.submit(run_case,case) for case in batch]
+       for future in as_completed(pending):
         case,case['execution'],case['root_exists']=future.result()
         print('Finished '+case['name'],flush=True)
         save()
@@ -213,6 +220,17 @@ def execute(state,out,case_timeout_seconds=120,audit_close_return=False,workers=
                 state['numerical_validation']='STOPPED_AFTER_INVALID_CLOSE_RETURN_INPUT';save()
                 raise SystemExit('Close-return audit failed: '+case['name']) from exc
             save()
+       if preflight and batch_index==0:
+        from audit_physical_weak import audit_case
+        validation=[]
+        for case in batch:
+            try:validation.append(audit_case(out,case))
+            except (ValueError,KeyError,OSError,TypeError) as exc:validation.append({'name':case['name'],'status':'UNKNOWN_INCOMPLETE','error':str(exc)})
+        state['conservation_preflight']=validation;save()
+        if any(r['status']!='PASS_CLASSICAL_PILOT' for r in validation):
+            state['numerical_validation']='STOPPED_AFTER_LONG_WINDOW_CONSERVATION_PREFLIGHT';save()
+            raise SystemExit('Long-window conservation preflight failed; remaining ensemble was not submitted. Return compact summary.')
+        print('Long-window conservation preflight passed; running remaining ensemble.',flush=True)
     finally:
         pool.shutdown(wait=True,cancel_futures=True)
     state['numerical_validation']='PENDING_WEAK_ROOT_AND_HANDOFF_AUDIT';save()

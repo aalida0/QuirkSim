@@ -12,6 +12,10 @@ on:
       - 'research/quirkpheno_recoil/*Noether*'
       - 'research/quirkpheno_recoil/*noether*'
       - 'scripts/*noether.py'
+      - 'scripts/*physical_weak*.py'
+      - 'tests/test_physical_weak_ensemble.py'
+      - 'research/quirkpheno_recoil/*Encounter*'
+      - 'research/quirkpheno_recoil/*encounter*'
       - 'scripts/af_quirkpheno_weak_pilot.py'
       - '.github/workflows/inclusive-weak-validation.yml'
   workflow_dispatch:
@@ -24,5 +28,5 @@ jobs:
         with:
           python-version: '3.11'
       - run: python -m pip install -e '.[test]' uproot
-      - run: python -m pytest tests/test_native_noether.py tests/test_inclusive_native_validation.py tests/test_complete_decays.py research/quirkpheno_recoil/test_af_original_grid_targets.py -q
+      - run: python -m pytest tests/test_physical_weak_ensemble.py tests/test_native_noether.py tests/test_inclusive_native_validation.py tests/test_complete_decays.py research/quirkpheno_recoil/test_af_original_grid_targets.py -q
       - run: python research/quirkpheno_recoil/check_native.py

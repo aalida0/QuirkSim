@@ -8,7 +8,7 @@ C=.299792458
 BUDGET={'energy_mev':1e-3,'momentum_mev':1e-3,'orbital_mev_mm':1e-3,'contour_mm':1e-8}
 
 
-def audit_stream(path,field,weak,duration):
+def audit_stream(path,field,weak,duration,expected_vertices=None):
     maxima={k:0. for k in BUDGET};n=0;vertices=set();reasons=set();pairs=[];before=None;previous_step=-1
     last=None;first_reference=None
     with path.open() as stream:
@@ -42,7 +42,8 @@ def audit_stream(path,field,weak,duration):
             if before is None or d['vertices']!=before[0]+1:raise ValueError('unpaired vertex snapshot')
             pairs.append(float(abs(corrected-before[1]).max()));before=None
         last=d
-    expected=2 if weak else 0
+    expected=(2 if weak else 0) if expected_vertices is None else expected_vertices
+    if expected not in (0,1,2):raise ValueError("invalid expected vertex count")
     if n<3 or last is None or last['reason']!='end_event':raise ValueError('missing/short/endless diagnostic stream')
     if last['vertices']!=expected or vertices!=set(range(expected+1)) or len(pairs)!=expected:raise ValueError('incomplete weak-vertex coverage')
     if before is not None:raise ValueError('incomplete vertex pair')
