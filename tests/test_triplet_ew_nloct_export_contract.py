@@ -32,6 +32,22 @@ class TestNLOEWExportContract(unittest.TestCase):
             self.assertIn(marker,s)
             self.assertLess(s.index(marker),s.index("Get[nlo]"))
 
+    def test_directory_shadowing_regression(self):
+        s=STAGE3.read_text()
+        self.assertIn("qsStage3GeneratedRoot",s)
+        self.assertNotIn("SetDirectory[out]",s)
+        self.assertNotIn("FileNameJoin[{out,",s)
+        self.assertIn("NLOCT_STAGE3_OUTPUT_DIRECTORY_PREFLIGHT_OK",s)
+        self.assertIn("NLOCT_STAGE3_OUTPUT_DIRECTORY_OK",s)
+        self.assertIn('Environment["QUIRKSIM_STAGE3_PREFLIGHT_ONLY"]',s)
+        self.assertLess(s.index("NLOCT_STAGE3_OUTPUT_DIRECTORY_PREFLIGHT_OK"),
+                        s.index("Get[nlo]"))
+
+    def test_empty_ctparam_must_not_require_ct_parameters_file(self):
+        s=STAGE3.read_text()
+        self.assertIn('If[Length[FR$CTparam]>0,{"CT_parameters.py"},{}]',s)
+        self.assertIn("CTParameters -> FR$CTparam",s)
+
     def test_candidate_deliberately_not_certified(self):
         s=STAGE3.read_text()
         self.assertIn("DiracTripletEW_QCDEW_CANDIDATE_UFO",s)
