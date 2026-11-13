@@ -53,3 +53,5 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_triplet_ew_nloct_modelpath.py' -v
       - name: Stream-audit large NLOCT UV and R2 content
         run: python -m unittest discover -s tests -p 'test_triplet_nloct_content_inspection.py' -v
+      - name: Distinguish external-triplet UV-R2 CTs from internal-loop symbols
+        run: python -m unittest discover -s tests -p 'test_triplet_nloct_vertex_headers.py' -v
