@@ -154,8 +154,14 @@ If[qsExportResult===$Failed,
          "in UFO generation; the partial directory, if any, is unvalidated."];
    Exit[7]
 ];
-qsMandatory={"particles.py","vertices.py","parameters.py","couplings.py",
-             "CT_vertices.py","CT_couplings.py","CT_parameters.py"};
+(* FeynRules 2.3.x only needs a separate CT_parameters.py if NLOCT
+   supplied auxiliary CT parameters. A valid FR$CTparam == {} cannot
+   require an otherwise unused file. *)
+qsMandatory=Join[
+    {"particles.py","vertices.py","parameters.py","couplings.py",
+     "CT_vertices.py","CT_couplings.py"},
+    If[Length[FR$CTparam]>0,{"CT_parameters.py"},{}]
+];
 qsMissing=Select[qsMandatory,
     !FileExistsQ[FileNameJoin[{qsCandidatePath,#}]] &];
 If[Length[qsMissing]>0,
