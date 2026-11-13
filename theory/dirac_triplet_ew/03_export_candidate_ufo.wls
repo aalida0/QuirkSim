@@ -31,6 +31,23 @@ If[FileHash[nlo,"SHA256","HexString"]=!=Lookup[qsStage2Audit,"nlo_sha256",""],
    Print["ERROR: NLOCT .nlo file has changed since stage-2 audit."];
    Exit[3]
 ];
+qsProjectRoot=DirectoryName[DirectoryName[scriptDir]];
+qsContentReportFile=FileNameJoin[{qsProjectRoot,"results",
+                                  "triplet_ew_nloct_content_report.json"}];
+If[!FileExistsQ[qsContentReportFile],
+   Print["ERROR: large NLOCT content report is missing; run ",
+         "python3 scripts/inspect_triplet_nloct_large.py first."];
+   Exit[4]
+];
+qsContentReport=Import[qsContentReportFile,"RawJSON"];
+If[Lookup[qsContentReport,"status",""]=!=
+     "CONTENT_STRUCTURAL_SCREEN_PASS_NOT_PHYSICS_CERTIFIED" ||
+   Lookup[qsContentReport,"sha256",""]=!=FileHash[nlo,"SHA256","HexString"],
+   Print["ERROR: NLOCT .nlo content inspection failed, or saved SHA256 ",
+         "does not match the file being exported."];
+   Exit[4]
+];
+Print["NLOCT_CONTENT_STRUCTURAL_SCREEN_PASS_NOT_PHYSICS_CERTIFIED"];
 Print["FR_STAGE2_PREFLIGHT_PASS_NOT_PHYSICS_CERTIFIED"];
 AppendTo[$Path,frHome];
 SetDirectory[frHome];
