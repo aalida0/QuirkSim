@@ -4,6 +4,11 @@
 set -Eeuo pipefail
 cd "$(dirname "$0")/.."
 mkdir -p results
+WOLFRAMSCRIPT_BIN="${WOLFRAMSCRIPT_BIN:-wolframscript}"
+if ! command -v "$WOLFRAMSCRIPT_BIN" >/dev/null 2>&1; then
+  echo "ERROR: no wolframscript found at WOLFRAMSCRIPT_BIN=$WOLFRAMSCRIPT_BIN" >&2
+  exit 2
+fi
 
 LOG="${1:-results/triplet_ew_stage3.log}"
 UFO="theory/dirac_triplet_ew/generated/DiracTripletEW_QCDEW_CANDIDATE_UFO"
@@ -22,7 +27,7 @@ echo "WARNING: importing a 136-MiB NLOCT file may require substantially"
 echo "more RAM in Mathematica than its on-disk size. Never treat output"
 echo "presence as NLO-EW physics validation."
 set +e
-wolframscript -file theory/dirac_triplet_ew/03_export_candidate_ufo.wls \
+"$WOLFRAMSCRIPT_BIN" -file theory/dirac_triplet_ew/03_export_candidate_ufo.wls \
   2>&1 | tee "$LOG"
 rc=${PIPESTATUS[0]}
 set -e
@@ -30,7 +35,7 @@ if ((rc != 0)); then
   echo "NLOCT_STAGE3_REJECTED: Mathematica exit status $rc" >&2
   exit 1
 fi
-if grep -Eq '(NLOCT_STAGE3_REJECTED|ERROR:|\$Aborted|InitializeModel::noopen|Vertex is ignored)' "$LOG"; then
+if grep -Eq '(NLOCT_STAGE3_REJECTED|ERROR:|\\$Aborted|InitializeModel::noopen|SetDirectory::badfile|SetDirectory::cdir|Vertex is ignored)' "$LOG"; then
   echo "NLOCT_STAGE3_REJECTED: see log for missing files/Mathematica errors" >&2
   exit 1
 fi
