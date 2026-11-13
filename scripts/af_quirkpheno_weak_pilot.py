@@ -168,11 +168,13 @@ def execute(state,out,case_timeout_seconds=120,audit_close_return=False,workers=
     patch=ASSETS/'weak_handoff.patch' 
     checked(['git','apply','--check',str(patch)],source,'patch_check.log',60)
     checked(['git','apply',str(patch)],source,'patch_apply.log',60)
-    for name in ('EndpointHandoff.h','TwoBodyKinematics.h','ProperTimeClock.h','SampledPionPlan.h','DirectionControl.h','GeneralWeakPlan.h','NoetherCharges.h','EncounterRecorder.h','NativeNoether.h','QuirkWeakProcess.h'):
+    for name in ('EndpointHandoff.h','TwoBodyKinematics.h','ProperTimeClock.h','SampledPionPlan.h','DirectionControl.h','GeneralWeakPlan.h','NoetherCharges.h','EncounterRecorder.h','StableMassShell.h','NativeNoether.h','QuirkWeakProcess.h'):
         shutil.copyfile(ASSETS/name,source/'quirkcore/include/quirkcore'/name)
     shutil.copyfile(ASSETS/'QuirkWeakProcess.cc',source/'quirkcore/src/QuirkWeakProcess.cc')
     checked(['git','apply','--check',str(ASSETS/'noether_diagnostic.patch')],source,'noether_patch_check.log',60)
     checked(['git','apply',str(ASSETS/'noether_diagnostic.patch')],source,'noether_patch_apply.log',60)
+    checked(['git','apply','--check',str(ASSETS/'stable_mass_shell.patch')],source,'shell_patch_check.log',60)
+    checked(['git','apply',str(ASSETS/'stable_mass_shell.patch')],source,'shell_patch_apply.log',60)
     build=out/'build'
     def lcg(cmd, timeout_seconds=600):
         return ['timeout','--kill-after=10s',str(timeout_seconds)+'s','bash','-c',
@@ -186,6 +188,7 @@ def execute(state,out,case_timeout_seconds=120,audit_close_return=False,workers=
         env={'QP_WEAK_ENABLED':int(case['weak_enabled']),'QP_WEAK_ENDPOINT':case['endpoint'],
              'QP_WEAK_TAU_PS':50,'QP_WEAK_CLOCK_MODE':case['clock_mode'],'QP_NEUTRAL_MASS_GEV':case.get('neutral_mass_gev',M_NEUTRAL),'QP_WEAK_DIR_SIGN':case.get('pion_rest_y_sign',1),'QP_WEAK_PLAN':case.get('plan_file','')}
         env['QP_WEAK_GENERAL_PLAN']=case.get('general_plan_file','')
+        env['QP_SPATIAL_MASS_SHELL']=1 if state.get('spatial_mass_shell') else 0
         if state.get('noether_diagnostic'):
             env.update(QP_NOETHER_OUTPUT=str(out/(case['name']+'.noether.jsonl')),QP_NOETHER_BZ_T=case['field_tesla'])
         env.update(QP_WEAK_DIRECTION_MODE=case.get('direction_mode','planned'),QP_WEAK_COLLINEAR_SIGN=case.get('collinear_sign',1))
@@ -230,7 +233,7 @@ def execute(state,out,case_timeout_seconds=120,audit_close_return=False,workers=
         if any(r['status']!='PASS_CLASSICAL_PILOT' for r in validation):
             state['numerical_validation']='STOPPED_AFTER_LONG_WINDOW_CONSERVATION_PREFLIGHT';save()
             raise SystemExit('Long-window conservation preflight failed; remaining ensemble was not submitted. Return compact summary.')
-        print('Long-window conservation preflight passed; running remaining ensemble.',flush=True)
+        print('Long-window conservation preflight passed; running remaining ensemble.' if batches[1] else 'Preflight-only complete; no further cases scheduled.',flush=True)
     finally:
         pool.shutdown(wait=True,cancel_futures=True)
     state['numerical_validation']='PENDING_WEAK_ROOT_AND_HANDOFF_AUDIT';save()

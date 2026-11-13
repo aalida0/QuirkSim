@@ -11,7 +11,7 @@ from af_quirkpheno_weak_pilot import execute
 from audit_physical_weak import audit_and_pack
 
 
-def prepare(out,seeds=8,duration=1000.):
+def prepare(out,seeds=8,duration=1000.,preflight_only=False):
     if type(seeds) is not int or not 1<=seeds<=64 or not math.isfinite(duration) or duration<=150:raise ValueError('require 1..64 seeds and finite duration >150 ps')
     state=prepare_reference(out);templates={}
     cases=[]
@@ -39,6 +39,15 @@ def prepare(out,seeds=8,duration=1000.):
         p.write_text(text);c.update(macro_sha256=hashlib.sha256(p.read_bytes()).hexdigest(),nominal_stop_ps=duration)
     state.update(cases=cases,physical_weak_ensemble=True,suite='physical_weak_ensemble',scope='INCLUSIVE_LO_WEAK_FIXED_PRODUCTION_FINITE_WINDOW_NO_RADIATION_NO_CAPTURE',nominal_stop_ps=duration,sampled_seeds=list(range(1,seeds+1)),validation_clocks_ps=None,decay_clock='independent exponential proper times and inclusive channels from benchmark LO rates',independent_events_per_field=seeds,paired_controls_are_not_independent_events=True,numerical_validation='NOT_RUN')
     state['conservation_preflight_cases']=[c['name'] for c in cases if c['seed']==1 and c['field_tesla']==0 and c['mode']=='recoil']
+    state.update(spatial_mass_shell=True,mass_shell_policy='retain spatial string impulse, E=hypot(m,|p|) when no EM kick; legacy projection for charged field steps',preflight_only=preflight_only)
+    if preflight_only:
+        selected=set(state['conservation_preflight_cases'])
+        for c in cases:
+            if c['name'] not in selected:
+                for suffix in ('.mac','.card','.weakplan'):
+                    p=out/(c['name']+suffix)
+                    if p.exists():p.unlink()
+        state.update(cases=[c for c in cases if c['name'] in selected],sampled_seeds=[1],independent_events_per_field=1,scope='SPATIAL_MASS_SHELL_TWO_RESOLUTION_PREFLIGHT_ONLY_NO_POPULATION')
     root=Path(__file__).resolve().parents[1]
     for path in ('scripts/af_physical_weak_ensemble.py','scripts/audit_physical_weak.py'):
         state['driver_sha256'][path]=hashlib.sha256((root/path).read_bytes()).hexdigest()
@@ -46,11 +55,11 @@ def prepare(out,seeds=8,duration=1000.):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output-dir',required=True,type=Path);p.add_argument('--workers',type=int,default=4);p.add_argument('--seeds',type=int,default=8);p.add_argument('--duration-ps',type=float,default=1000.);p.add_argument('--case-timeout-seconds',type=int,default=1200);p.add_argument('--prepare-only',action='store_true');p.add_argument('--audit-only',action='store_true');a=p.parse_args()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output-dir',required=True,type=Path);p.add_argument('--workers',type=int,default=4);p.add_argument('--seeds',type=int,default=8);p.add_argument('--duration-ps',type=float,default=1000.);p.add_argument('--case-timeout-seconds',type=int,default=1200);p.add_argument('--preflight-only',action='store_true');p.add_argument('--prepare-only',action='store_true');p.add_argument('--audit-only',action='store_true');a=p.parse_args()
     if a.workers<1 or a.case_timeout_seconds<1:p.error('positive workers and timeout required')
     out=a.output_dir.expanduser().resolve()
     if a.audit_only:print(audit_and_pack(out));sys.exit(0)
-    state=prepare(out,a.seeds,a.duration_ps);print('Manifest:',out/'manifest.json','Cases:',len(state['cases']),flush=True)
+    state=prepare(out,a.seeds,a.duration_ps,a.preflight_only);print('Manifest:',out/'manifest.json','Cases:',len(state['cases']),flush=True)
     if not a.prepare_only:
         try:execute(state,out,a.case_timeout_seconds,workers=a.workers)
         finally:audit_and_pack(out)

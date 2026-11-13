@@ -10,7 +10,7 @@ BUDGET={'energy_mev':1e-3,'momentum_mev':1e-3,'orbital_mev_mm':1e-3,'contour_mm'
 
 def audit_stream(path,field,weak,duration,expected_vertices=None):
     maxima={k:0. for k in BUDGET};n=0;vertices=set();reasons=set();pairs=[];before=None;previous_step=-1
-    last=None;first_reference=None
+    last=None;first_reference=None;components={k:0. for k in ("M01","M02","M03","M12","M13","M23")}
     with path.open() as stream:
       for line in stream:
         d=json.loads(line);n+=1
@@ -31,6 +31,8 @@ def audit_stream(path,field,weak,duration,expected_vertices=None):
         elif not (np.array_equal(array('initial_p_mev',4),first_reference[0]) and np.array_equal(array('initial_j_mev_mm',16),first_reference[1])):raise ValueError('production reference changed')
         if d['step']<previous_step:raise ValueError('step ordering reversed')
         previous_step=d['step'];vertices.add(d['vertices']);reasons.add(d['reason'])
+        for key,index in zip(components,(1,2,3,6,7,11)):
+            if field==0 or key=='M12':components[key]=max(components[key],abs(float(j[index])))
         maxima['energy_mev']=max(maxima['energy_mev'],abs(float(p[0])))
         if field==0:maxima['momentum_mev']=max(maxima['momentum_mev'],float(abs(p[1:]).max()))
         # All six orbital Lorentz generators at B=0; only Jz at uniform Bz.
@@ -51,7 +53,7 @@ def audit_stream(path,field,weak,duration,expected_vertices=None):
     if times.shape!=(2,) or not np.isfinite(times).all() or min(times)<duration:raise ValueError('premature endpoint termination')
     failed=[k for k,v in maxima.items() if v>BUDGET[k]]
     if pairs and max(pairs)>1e-6:failed.append('vertex_charge_jump')
-    return dict(status='FAIL' if failed else 'PASS_SAMPLED_CLASSICAL_CHARGES',failed=failed,snapshots=n,max_residuals=maxima,vertex_pairs=len(pairs),max_vertex_jump_native=max(pairs,default=0.),end_lab_times_ps=times.tolist(),momentum_gate='ALL_COMPONENTS' if field==0 else 'NOT_CONSERVED_EXTERNAL_FIELD',angular_gate='ALL_SIX_LORENTZ_GENERATORS' if field==0 else 'AXIAL_JZ_WITH_EXTERNAL_TORQUE_ONLY')
+    return dict(status='FAIL' if failed else 'PASS_SAMPLED_CLASSICAL_CHARGES',failed=failed,snapshots=n,max_residuals=maxima,orbital_component_max_mev_mm={k:v for k,v in components.items() if field==0 or k=='M12'},vertex_pairs=len(pairs),max_vertex_jump_native=max(pairs,default=0.),end_lab_times_ps=times.tolist(),momentum_gate='ALL_COMPONENTS' if field==0 else 'NOT_CONSERVED_EXTERNAL_FIELD',angular_gate='ALL_SIX_LORENTZ_GENERATORS' if field==0 else 'AXIAL_JZ_WITH_EXTERNAL_TORQUE_ONLY')
 
 
 def audit_and_pack(out):

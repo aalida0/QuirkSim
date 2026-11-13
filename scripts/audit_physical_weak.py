@@ -75,7 +75,9 @@ def summarize(state,rows):
         channels=Counter(v['channel'] for r in selected for v in r.get('decays',[]))
         cohorts.append(dict(field_tesla=field,independent_events=len(selected),qualified_events=sum(r['status']=='PASS_CLASSICAL_PILOT' for r in selected),decay_counts=dict(counts),observed_decay_channels=dict(channels),note='Finite-window, fixed-production pilot. Controls/refinements are not additional independent events.'))
         for seed in state['sampled_seeds']:
-            paired=[next(r for r in rows if r['seed']==seed and r['field_tesla']==field and r['level']==8 and r['mode']==mode) for mode in ('recoil','collinear_forward','collinear_backward')]
+            paired=[next((r for r in rows if r['seed']==seed and r['field_tesla']==field and r['level']==8 and r['mode']==mode),None) for mode in ('recoil','collinear_forward','collinear_backward')]
+            if any(r is None for r in paired):
+                comparisons.append(dict(seed=seed,field_tesla=field,status='NOT_RUN_REQUIRED_CONTROLS'));continue
             r=dict(seed=seed,field_tesla=field,status='CENSORED_OR_UNQUALIFIED',case_statuses=[v['status'] for v in paired])
             if all(v['status']=='PASS_CLASSICAL_PILOT' and v['geometry']['first_return'] is not None for v in paired):
                 v=[x['geometry']['first_return'] for x in paired]

@@ -1,0 +1,38 @@
+--- a/quirkcore/src/QuirkHyperbolaStep.cc
++++ b/quirkcore/src/QuirkHyperbolaStep.cc
+@@ -1,4 +1,5 @@
+ #include "quirkcore/QuirkHyperbolaStep.h"
++#include "quirkcore/StableMassShell.h"
+ #include "quirkcore/QuirkHyperbolaStepper.h"
+ #include "quirkcore/QuirkInfracolorForce.h"
+ 
+@@ -95,6 +96,7 @@
+   m_time += dTime;
+   m_momentum += force * (m_stringIn.lv() - m_stringOut.lv());
+ 
++  G4bool electromagneticKick = false;
+   // electromagnetic field, evaluated at the step midpoint
+   if (nullptr != m_stepper->GetField()) {
+     G4ThreeVector p = m_position - dPosition.vect() / 2;
+@@ -104,12 +106,19 @@
+     G4ThreeVector B(field[0], field[1], field[2]);
+     G4ThreeVector E(field[3], field[4], field[5]);
+     G4double charge = m_stepper->GetCharge();
++    electromagneticKick = charge != 0. && (E.mag2() != 0. || B.mag2() != 0.);
+     G4ThreeVector dMomField = E * dTime + dPosition.vect().cross(B);
+     m_momentum += charge * G4LorentzVector(CLHEP::c_light * dMomField, E * dPosition.vect());
+   }
+ 
+-  // renormalize the 4-momentum to the mass shell
+-  m_momentum *= mass / m_momentum.m();
++  // Without an EM kick the analytic string impulse preserves p^2=m^2.
++  // Repeated scalar rescaling adds a biased spatial impulse at roundoff level.
++  // Keep the established field-kick projection whenever an EM field acts.
++  if (QPTransport::spatialShellEnabled() && !electromagneticKick) {
++    m_momentum.setE(QPTransport::shellEnergy(mass, m_momentum.px(), m_momentum.py(), m_momentum.pz()));
++  } else {
++    m_momentum *= mass / m_momentum.m();
++  }
+ }
+ 
+ void QuirkHyperbolaStep::Dump(G4double y[]) const {
