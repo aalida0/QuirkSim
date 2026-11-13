@@ -1,5 +1,6 @@
 """Fail-closed audit for candidate Dirac-triplet NLO QCD+EW UFOs."""
 import tempfile
+import json
 import unittest
 from pathlib import Path
 import sys
@@ -41,6 +42,37 @@ class TestNLOEWGuard(unittest.TestCase):
             (path/"CT_parameters.py").unlink()
             with self.assertRaisesRegex(ValueError,"Missing mandatory"):
                 inspect_ufo(path)
+    def test_empty_ctparams_manifest_allows_missing_file(self):
+        with tempfile.TemporaryDirectory() as d:
+            path=Path(d)/"model"
+            self.make_ufo(path)
+            (path/"CT_parameters.py").unlink(missing_ok=True)
+            (path/"quirksim_stage3_manifest.json").write_text(
+                json.dumps({"schema_version":1,"ct_parameters_count":0})
+            )
+            self.assertTrue(inspect_ufo(path)["passes_basic_triplet_ct_gate"])
+
+    def test_nonempty_ctparams_manifest_rejects_missing_file(self):
+        with tempfile.TemporaryDirectory() as d:
+            path=Path(d)/"model"
+            self.make_ufo(path)
+            (path/"CT_parameters.py").unlink(missing_ok=True)
+            (path/"quirksim_stage3_manifest.json").write_text(
+                json.dumps({"schema_version":1,"ct_parameters_count":2})
+            )
+            with self.assertRaisesRegex(ValueError,"CT_parameters.py"):
+                inspect_ufo(path)
+
+    def test_malformed_ctparams_manifest_rejected(self):
+        with tempfile.TemporaryDirectory() as d:
+            path=Path(d)/"model"
+            self.make_ufo(path)
+            (path/"quirksim_stage3_manifest.json").write_text(
+                json.dumps({"ct_parameters_count":True})
+            )
+            with self.assertRaisesRegex(ValueError,"Invalid ct_parameters_count"):
+                inspect_ufo(path)
+
     def test_missing_triplet_particles_rejected(self):
         with tempfile.TemporaryDirectory() as d:
             path=Path(d)/"model"
