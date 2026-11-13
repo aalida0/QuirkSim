@@ -93,8 +93,8 @@ source, in addition to the existing stage2 log audit.
    document UV/IR pole cancellations and reproducible
    finite cross sections before quoting NLO QCD+EW.
 
-**STATUS: NLOCT_OUTPUT_GENERATED / CONTENT_AUDIT_PENDING /
-NLO_EW_PHYSICS_NOT_CERTIFIED.**
+**STATUS: NLOCT_OUTPUT_GENERATED / TWO_STRUCTURAL_AUDITS_PASS /
+EXTERNAL_VERTEX_HEADER_AUDIT_PENDING / NLO_EW_PHYSICS_NOT_CERTIFIED.**
 
 
 ## Verified structural audit from workstation (2026-11-13)
@@ -150,3 +150,22 @@ in addition to both earlier SHA256-matched audit manifests.
 amplitude-level UV cancellation, QED real-emission/IR
 subtraction, gauge independence, and hidden-index multiplicity
 have been demonstrated.
+
+## Candidate UFO export is guarded, not approved for physics
+
+`03_export_candidate_ufo.wls` now requires the stage-2 log audit,
+the large-file streaming audit, and the targeted UV/R2 external-leg
+header audit to refer to **the exact same .nlo SHA256**. It refuses
+overwriting a pre-existing candidate UFO. It checks Mathematica
+counterterm loading and the presence of the expected UFO and
+`CT_*.py` files, and prints `UNVALIDATED` markers.
+
+An optional guarded shell driver is
+`bash scripts/run_triplet_ew_stage3.sh`. The Mathematica
+`Get` step needs to materialize the full 136-MiB symbolic NLOCT
+input and can consume far more RAM than the file size. No stage-3
+run has been reported yet. Do not run it until the header audit
+and model-content review have been completed.
+
+The old trusted NLO-QCD UFO is unchanged. No measured
+NLO-EW cross section exists.
